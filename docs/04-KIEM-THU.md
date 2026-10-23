@@ -21,7 +21,7 @@ Python 3.12.14, Django 5.2.18, psycopg 3.3.6, PostgreSQL 17 (image postgres:17-a
 | Responsive | Đạt | Desktop 1440 px, mobile 390 px, tablet 768 px; không tràn ngang toàn trang; menu mobile hoạt động |
 | JavaScript | Đạt | Không có pageerror trong luồng browser smoke |
 | `check --deploy --fail-level WARNING` | Đạt với cấu hình production thử nghiệm | DEBUG=0 và secret ngẫu nhiên tạm thời; không phải bằng chứng đã bật HTTPS hoặc public deployment |
-| GitHub Actions | Chưa chạy trên GitHub | Đã có workflow test/build; chưa push repository |
+| GitHub Actions | Chưa xác minh kết quả trên GitHub | Đã có workflow test/build; xem tab Actions của repository để theo dõi |
 | Thanh toán thật, SMS/email, tải lớn, restore backup | Chưa thực hiện | Ngoài phạm vi bản dựng |
 
 Các kiểm thử ban đầu phát hiện lỗi tên alias aggregate khi tính trung bình và thiếu savepoint khi bắt đánh giá trùng. Mã đã sửa và bộ test chạy lại thành công. Build Docker online ban đầu gặp DNS trong container; giải pháp dùng wheel tải trên host và cài offline đã build thành công. Đây là chẩn đoán và xử lý lỗi môi trường, không phải thay đổi phiên bản để né test.
@@ -70,4 +70,4 @@ Không xem PID hoặc port mở là tiêu chí đủ; browser smoke kiểm tra h
 
 ## 6. Kết luận nghiệm thu bản phát triển
 
-Quy trình phát triển và trình diễn cốt lõi chạy được trên môi trường hiện tại, có Docker và hướng dẫn tái lập. Mã nguồn và tài liệu được lưu trong checkout; chưa được push lên GitHub hoặc triển khai công khai. Cấu hình môi trường cloud được lưu nháp để người dùng xem và publish; việc publish và phục hồi ở task mới là bước riêng, chưa được tuyên bố đã kiểm chứng.
+Quy trình phát triển và trình diễn cốt lõi chạy được trên môi trường hiện tại, có Docker và hướng dẫn tái lập. Mã nguồn và tài liệu được lưu trong checkout và đã đẩy lên nhánh main của repository GitHub tunato2807-del/ptpmhdtuong theo yêu cầu người dùng. Ứng dụng chưa được triển khai thành dịch vụ công khai. Cấu hình môi trường cloud được lưu nháp để người dùng xem và publish; việc publish và phục hồi ở task mới là bước riêng, chưa được tuyên bố đã kiểm chứng.
