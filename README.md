@@ -71,6 +71,7 @@ Kiểm tra giao diện/luồng trình duyệt tùy chọn:
 .venv/bin/pip install -r requirements-dev.txt
 .venv/bin/python -m playwright install chromium
 .venv/bin/python scripts/browser_smoke.py
+.venv/bin/python scripts/customer_ui_smoke.py
 ```
 
 Ứng dụng ở cổng 8000 phải đang chạy với dữ liệu demo. Có thể đặt `BROWSER_EXECUTABLE` để dùng Chromium cài sẵn. Script tạo tài khoản kiểm thử riêng, kiểm tra luồng đặt, hủy, check-in, thanh toán, hóa đơn, đánh giá và responsive; sau đó xóa đúng các bản ghi do tài khoản này tạo trong database local. Không chạy script này với một hệ thống production.
@@ -84,6 +85,8 @@ Bản Word tổng hợp: [Báo cáo phân tích, thiết kế và triển khai](
 3. [Hướng dẫn triển khai và trình diễn](docs/03-TRIEN-KHAI.md)
 4. [Kết quả kiểm thử](docs/04-KIEM-THU.md)
 5. [80 tên cột tiếng Việt và kiểu dữ liệu](docs/05-TEN-COT-DU-LIEU.md)
+6. [Giao diện khách hàng, ảnh thật và chuyển động](docs/06-GIAO-DIEN-KHACH-HANG.md)
+7. [Nguồn ảnh và giấy phép font](docs/NGUON-TAI-NGUYEN.md)
 
 Sơ đồ Mermaid gốc nằm trong `docs/diagrams/`, ảnh giao diện trong `docs/screenshots/`. Bộ báo cáo và mã nguồn là hai phần của cùng một dự án; các mô tả tính năng dựa trên mã hiện có, không coi các khẳng định hoàn thành trong tài liệu đầu vào là kết quả kiểm thử.
 
@@ -114,3 +117,9 @@ docs/                    Phân tích, thiết kế, triển khai, kiểm thử
 `.env.example` liệt kê biến; có thể sao chép thành `.env` và sửa. Không commit `.env`, secret, dữ liệu PostgreSQL hoặc bản backup. Development tạo secret ngẫu nhiên tại `.local/django.secret`. Production bắt buộc đặt `DJANGO_SECRET_KEY`, `DJANGO_DEBUG=0`, `DJANGO_ALLOWED_HOSTS`, host database và mật khẩu riêng; bật HTTPS. Nếu đứng sau reverse proxy, cấu hình trust proxy và CSRF origin đúng hạ tầng, không tin header proxy từ Internet trực tiếp.
 
 Phiên bản này phục vụ học tập và trình diễn; ứng dụng chưa được triển khai thành dịch vụ công khai. Cần thêm rate limiting đăng nhập, quy trình khôi phục mật khẩu/email xác minh, giám sát, backup và kiểm tra tải theo hạ tầng trước vận hành thật. Thẻ chỉ mô phỏng; chưa tích hợp VNPay/MoMo, SMS/email, ứng dụng mobile, AI gợi ý tóc, hoàn tiền hoặc lịch đổi ca nhiều ngày. Thông báo hiện lưu trong ứng dụng, không gửi ra bên ngoài.
+
+## Giao diện khách hàng mới
+
+Trang chủ dùng ảnh chụp WebP, font tiếng Việt local, bộ lọc dịch vụ, bộ sưu tập phong cách kéo ngang và menu mobile. Chọn dịch vụ/chi nhánh/stylist đưa lựa chọn vào form đặt lịch. Có hiệu ứng xuất hiện khi cuộn, hover và chuyển ảnh; tự tắt chuyển động theo cài đặt reduced motion. Xem [ảnh desktop](docs/screenshots/home-desktop-top.png) và [ảnh điện thoại](docs/screenshots/home-mobile-top.png).
+
+Bản cập nhật này không cần migration mới. Sau khi tải mã mới, chạy `.venv/bin/python manage.py collectstatic --noinput` rồi khởi động lại web; nếu dùng Docker thì build lại image. Cấu hình CSS và JavaScript nằm trong `static/css/customer.css` và `static/js/customer.js`.

@@ -117,7 +117,7 @@ Các thuộc tính lưu trữ trong sơ đồ lớp được trình bày theo t�
 
 | Màn hình | Thành phần và hành vi |
 |---|---|
-| Trang chủ | Hero minh họa local, dịch vụ với giá/thời lượng, chi nhánh, stylist, CTA đặt lịch |
+| Trang chủ | Hero ảnh chụp local, chọn chi nhánh nhanh, dịch vụ có bộ lọc, bộ sưu tập cuộn ngang, stylist, CTA đặt lịch |
 | Đặt lịch | 3 phần: chi nhánh, dịch vụ, stylist/thời gian; khung giờ tải JSON; tóm tắt giá; chống response cũ ghi đè khi đổi lựa chọn nhanh |
 | Lịch cá nhân | Lịch đang hoạt động, lịch sử 30 bản gần nhất, điểm và 5 thông báo gần nhất |
 | Chi tiết | Mã, thời gian, chi nhánh, stylist, ghế, snapshot dịch vụ, thao tác theo role/state |
@@ -126,7 +126,7 @@ Các thuộc tính lưu trữ trong sơ đồ lớp được trình bày theo t�
 | Báo cáo | Khoảng ngày, chi nhánh, tổng/đếm/trung bình, bảng hóa đơn, CSV |
 | Admin | Danh mục, tài khoản, ca làm; view-only lịch, hóa đơn, đánh giá, audit |
 
-Màu chủ đạo xanh đậm `#24332b`, kem `#f7f7f2`, cam đất `#bd6946`. Không phụ thuộc font hoặc ảnh từ CDN. Dùng label/fieldset phù hợp, focus bàn phím, aria-live cho khung giờ, xác nhận thao tác quan trọng và chế độ in phiếu. Bảng rộng cuộn trong vùng riêng, không làm tràn cả trang trên mobile.
+Giao diện khách hàng dùng nền kem `#f8f7f4`, chữ than `#222321`, cam đất `#bd4c2f`, font Be Vietnam Pro và ảnh chụp WebP local. Không gian vận hành giữ xanh đậm `#24332b` và cam đất `#bd6946`. Không phụ thuộc font hoặc ảnh từ CDN. Chuyển động hỗ trợ reduced motion; menu mobile và bộ lọc có trạng thái truy cập. Chi tiết bản thiết kế mới tại [Giao diện khách hàng](06-GIAO-DIEN-KHACH-HANG.md). Dùng label/fieldset phù hợp, focus bàn phím, aria-live cho khung giờ, xác nhận thao tác quan trọng và chế độ in phiếu. Bảng rộng cuộn trong vùng riêng, không làm tràn cả trang trên mobile.
 
 ## 8. Thiết kế HTTP và quyền
 

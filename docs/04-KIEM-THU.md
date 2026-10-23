@@ -19,13 +19,16 @@ Python 3.12.14, Django 5.2.18, psycopg 3.3.6, PostgreSQL 17 (image postgres:17-a
 | Gunicorn + WhiteNoise + PostgreSQL | Đạt | Container web chạy 2 workers, /health/ trả database postgresql, trang và static phục vụ được |
 | Browser smoke local | Đạt | Đi hết đăng ký/đặt/hủy/check-in/phục vụ/thanh toán mô phỏng/hóa đơn/đánh giá/CSV |
 | Browser smoke qua web container | Đạt | Cùng luồng nghiệp vụ qua Gunicorn/WhiteNoise |
-| Responsive | Đạt | Desktop 1440 px, mobile 390 px, tablet 768 px; không tràn ngang toàn trang; menu mobile hoạt động |
+| Responsive | Đạt | Giao diện khách hàng 320/360/390/768/1024/1440 px; không tràn ngang; menu mobile/Escape hoạt động |
+| Customer UI smoke | Đạt | Bộ lọc, bộ sưu tập, preselect dịch vụ/stylist/chi nhánh, đăng nhập giữ lựa chọn, reduced motion, không JavaScript, ảnh/font local |
 | JavaScript | Đạt | Không có pageerror trong luồng browser smoke |
 | `check --deploy --fail-level WARNING` | Đạt với cấu hình production thử nghiệm | DEBUG=0 và secret ngẫu nhiên tạm thời; không phải bằng chứng đã bật HTTPS hoặc public deployment |
 | GitHub Actions | Chưa xác minh kết quả trên GitHub | Đã có workflow test/build; xem tab Actions của repository để theo dõi |
 | Thanh toán thật, SMS/email, tải lớn, restore backup | Chưa thực hiện | Ngoài phạm vi bản dựng |
 
 Các kiểm thử ban đầu phát hiện lỗi tên alias aggregate khi tính trung bình và thiếu savepoint khi bắt đánh giá trùng. Mã đã sửa và bộ test chạy lại thành công. Sau khi đổi tên 80 cột sang tiếng Việt không dấu, 35 kiểm thử và browser smoke đã chạy lại thành công; dữ liệu và kiểu dữ liệu PostgreSQL được đối chiếu trước/sau migration. Build Docker online ban đầu gặp DNS trong container; giải pháp dùng wheel tải trên host và cài offline đã build thành công. Đây là chẩn đoán và xử lý lỗi môi trường, không phải thay đổi phiên bản để né test.
+
+Sau thiết kế lại giao diện, script check thu thập static trước khi chạy Django tests để manifest luôn chứa CSS, ảnh và font mới. Workflow GitHub tạo virtualenv trước khi gọi script này. Bộ UI smoke mới kiểm tra độc lập tương tác khách hàng; kết quả chi tiết ở `docs/validation/customer-redesign.txt`.
 
 ## 3. Các nhóm kiểm thử nghiệp vụ
 
@@ -60,7 +63,7 @@ Không xem PID hoặc port mở là tiêu chí đủ; browser smoke kiểm tra h
 
 ## 5. Hình minh họa
 
-![Trang chủ desktop](screenshots/home-desktop.png)
+![Trang chủ desktop](screenshots/home-desktop-top.png)
 
 ![Tổng quan vận hành desktop](screenshots/dashboard-desktop.png)
 

@@ -83,6 +83,8 @@ def home(request):
 def booking(request):
     initial = {'date': timezone.localdate() + timedelta(days=1)}
     if request.GET.get('branch', '').isdigit(): initial['branch'] = request.GET['branch']
+    if request.GET.get('service', '').isdigit(): initial['services'] = [request.GET['service']]
+    if request.GET.get('employee', '').isdigit(): initial['employee'] = request.GET['employee']
     form = BookingForm(request.POST or None, initial=initial, user=request.user)
     if request.method == 'POST' and form.is_valid():
         d = form.cleaned_data
