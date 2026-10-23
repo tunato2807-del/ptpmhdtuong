@@ -1,0 +1,16 @@
+flowchart LR
+    H["Trang chủ"] --> L["Đăng nhập / đăng ký"]
+    H --> B["Đặt lịch"]
+    L --> B
+    B --> D["Chi tiết lịch hẹn"]
+    H --> M["Lịch của tôi"]
+    M --> D
+    D --> I["Hóa đơn / In phiếu"]
+    D --> R["Đánh giá"]
+    L --> O["Tổng quan quản lý"]
+    O --> D
+    O --> S["Ca làm / lịch stylist"]
+    O --> C["Khách hàng"]
+    O --> F["Dịch vụ / chi nhánh"]
+    O --> E["Báo cáo / CSV"]
+    F --> A["Django Admin (quản trị hệ thống)"]

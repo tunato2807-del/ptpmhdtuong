@@ -1,0 +1,69 @@
+classDiagram
+  class User {
+    +username
+    +full_name
+    +role
+    +branch
+    +points
+    +is_operator
+    +initials
+  }
+  class Branch {
+    +name
+    +opens_at
+    +closes_at
+    +active
+  }
+  class Employee {
+    +name
+    +specialty
+    +active
+  }
+  class Chair {
+    +name
+    +active
+  }
+  class Shift {
+    +start_at
+    +end_at
+  }
+  class Service {
+    +name
+    +kind
+    +price
+    +duration
+  }
+  class Appointment {
+    +start_at
+    +end_at
+    +status
+    +code
+    +total
+  }
+  class AppointmentItem {
+    +name
+    +price
+    +duration
+  }
+  class Invoice {
+    +total
+    +method
+    +paid_at
+    +code
+  }
+  class Review {
+    +rating
+    +comment
+  }
+  Branch "1" --> "*" Employee
+  Branch "1" --> "*" Chair
+  Branch "1" --> "*" Appointment
+  Employee "1" --> "*" Shift
+  Employee "1" --> "*" Appointment
+  User "1" --> "*" Appointment : customer
+  Chair "0..1" --> "*" Appointment
+  Appointment "1" *-- "1..*" AppointmentItem
+  Service "1" --> "*" AppointmentItem
+  Appointment "1" --> "0..1" Invoice
+  Appointment "1" --> "0..1" Review
+  User "1" --> "*" Invoice : cashier

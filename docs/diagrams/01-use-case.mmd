@@ -1,0 +1,23 @@
+flowchart LR
+    guest["Khách vãng lai"]
+    customer["Khách hàng"]
+    reception["Lễ tân"]
+    manager["Quản trị viên"]
+    subgraph system["HỆ THỐNG GENTLEMAN"]
+      browse(["Xem chi nhánh, dịch vụ, stylist"])
+      account(["Đăng ký / đăng nhập"])
+      booking(["Đặt / hủy lịch"])
+      available(["Kiểm tra khả dụng và xung đột"])
+      history(["Xem lịch, thông báo, hóa đơn"])
+      review(["Đánh giá sau dịch vụ"])
+      checkin(["Check-in / phân ghế / phục vụ"])
+      payment(["Thanh toán / hoàn thành"])
+      reports(["Báo cáo / xuất CSV"])
+      catalog(["Quản trị danh mục, nhân sự, ca làm"])
+    end
+    guest --> browse & account
+    customer --> booking & history & review
+    booking -.->|"include"| available
+    reception --> checkin & payment & reports & booking
+    manager --> catalog & reports & checkin & payment
+    style system fill:#f5f5ee,stroke:#87977a

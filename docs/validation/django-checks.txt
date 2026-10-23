@@ -1,0 +1,13 @@
+System check identified no issues (0 silenced).
+No changes detected
+Creating test database for alias 'default'...
+.................................
+----------------------------------------------------------------------
+Ran 33 tests in 22.670s
+
+OK
+Destroying test database for alias 'default'...
+Found 33 test(s).
+System check identified no issues (0 silenced).
+
+0 static files copied to '/workspace/ptpmhdtuong/staticfiles', 130 unmodified, 362 post-processed.

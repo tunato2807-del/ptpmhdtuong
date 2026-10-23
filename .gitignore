@@ -1,0 +1,10 @@
+.venv/
+.env
+.local/
+__pycache__/
+*.py[cod]
+staticfiles/
+test-results/
+.coverage
+*.sqlite3
+.build-wheels/*.whl

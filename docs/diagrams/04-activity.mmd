@@ -1,0 +1,19 @@
+flowchart TD
+    A(["Khách chọn dịch vụ và giờ"]) --> B{"Còn khả dụng?"}
+    B -->|Không| A
+    B -->|Có| C["BOOKED · lưu snapshot, thông báo"]
+    C --> D{"Khách đến?"}
+    D -->|"Hủy hợp lệ"| E["CANCELLED · giải phóng chỗ"]
+    D -->|"Quá giờ, không đến"| F["NO_SHOW"]
+    D -->|"Trong ngày, ghế sẵn sàng"| G["CHECKED_IN · phân ghế"]
+    G --> H{"Stylist đã rảnh?"}
+    H -->|Chưa| G
+    H -->|Có| I["IN_SERVICE"]
+    I --> J{"Phương thức?"}
+    J -->|Tiền mặt| K["Ghi nhận đã nhận tiền"]
+    J -->|"Thẻ mô phỏng"| L["Xác nhận nội bộ"]
+    K --> M["Transaction: hóa đơn + điểm + hoàn thành + sự kiện"]
+    L --> M
+    M --> N["COMPLETED"]
+    N --> O["Khách xem hóa đơn, đánh giá một lần"]
+    O --> P(["Kết thúc"])

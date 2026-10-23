@@ -1,0 +1,30 @@
+sequenceDiagram
+    actor C as Khách hàng
+    participant UI as Booking UI
+    participant V as BookingView + Form
+    participant S as BookingService
+    participant DB as PostgreSQL
+    participant E as EventPublisher
+    C->>UI: Chi nhánh, dịch vụ, stylist, ngày
+    UI->>V: GET /api/khung-gio/
+    V->>DB: Đọc ca làm và lịch đang giữ chỗ
+    V-->>UI: Giờ trống, thời lượng, tổng giá
+    C->>UI: Chọn giờ, xác nhận
+    UI->>V: POST /dat-lich/ + CSRF
+    V->>V: Xác thực, làm sạch dữ liệu, kiểm tra phạm vi
+    V->>S: book(customer, actor, branch, employee, services, start)
+    S->>DB: BEGIN, khóa branch, kiểm tra lại ca và lịch
+    S->>DB: Khóa customer, kiểm tra lịch khách
+    alt Còn khả dụng
+        S->>DB: INSERT Appointment + AppointmentItems
+        Note over DB: Exclusion constraint là lớp bảo vệ cuối
+        S->>E: publish(AppointmentEvent)
+        E->>DB: INSERT AuditLog + Notification
+        S->>DB: COMMIT
+        S-->>V: Mã lịch hẹn
+        V-->>UI: Redirect chi tiết lịch
+    else Có xung đột hoặc dữ liệu không hợp lệ
+        S->>DB: ROLLBACK
+        S-->>V: ValidationError / IntegrityError
+        V-->>UI: Thông báo chọn lại giờ
+    end

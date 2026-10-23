@@ -1,0 +1,1 @@
+{% if messages %}<div class="messages" aria-live="polite">{% for message in messages %}<div class="alert {{ message.tags }}"><span>{{ message }}</span><button type="button" class="dismiss" aria-label="Đóng thông báo">×</button></div>{% endfor %}</div>{% endif %}

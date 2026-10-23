@@ -1,0 +1,98 @@
+erDiagram
+    BRANCH ||--o{ USER : "phụ trách"
+    BRANCH ||--o{ EMPLOYEE : "có"
+    BRANCH ||--o{ CHAIR : "có"
+    BRANCH ||--o{ APPOINTMENT : "phục vụ"
+    USER ||--o{ APPOINTMENT : "đặt"
+    EMPLOYEE ||--o{ SHIFT : "làm"
+    EMPLOYEE ||--o{ APPOINTMENT : "thực hiện"
+    CHAIR o|--o{ APPOINTMENT : "phân khi check-in"
+    APPOINTMENT ||--|{ APPOINTMENT_ITEM : "gồm"
+    SERVICE ||--o{ APPOINTMENT_ITEM : "snapshot"
+    APPOINTMENT ||--o| INVOICE : "thanh toán"
+    APPOINTMENT ||--o| REVIEW : "đánh giá"
+    USER ||--o{ INVOICE : "thu ngân"
+    USER ||--o{ NOTIFICATION : "nhận"
+    USER o|--o{ AUDIT_LOG : "thao tác"
+    APPOINTMENT o|--o{ AUDIT_LOG : "lưu vết"
+    BRANCH {
+      bigint id PK
+      varchar name UK
+      time opens_at
+      time closes_at
+      boolean active
+    }
+    USER {
+      bigint id PK
+      varchar username UK
+      varchar role
+      bigint branch_id FK
+      integer points
+    }
+    EMPLOYEE {
+      bigint id PK
+      bigint branch_id FK
+      varchar name
+      boolean active
+    }
+    SHIFT {
+      bigint id PK
+      bigint employee_id FK
+      timestamptz start_at
+      timestamptz end_at
+    }
+    CHAIR {
+      bigint id PK
+      bigint branch_id FK
+      varchar name
+    }
+    SERVICE {
+      bigint id PK
+      varchar name UK
+      integer price
+      integer duration
+      varchar kind
+    }
+    APPOINTMENT {
+      bigint id PK
+      bigint customer_id FK
+      bigint employee_id FK
+      bigint branch_id FK
+      bigint chair_id FK
+      timestamptz start_at
+      timestamptz end_at
+      varchar status
+    }
+    APPOINTMENT_ITEM {
+      bigint id PK
+      bigint appointment_id FK
+      bigint service_id FK
+      varchar name
+      integer price
+      integer duration
+    }
+    INVOICE {
+      bigint id PK
+      bigint appointment_id FK,UK
+      bigint cashier_id FK
+      integer total
+      varchar method
+      timestamptz paid_at
+    }
+    REVIEW {
+      bigint id PK
+      bigint appointment_id FK,UK
+      integer rating
+      varchar comment
+    }
+    NOTIFICATION {
+      bigint id PK
+      bigint recipient_id FK
+      varchar message
+    }
+    AUDIT_LOG {
+      bigint id PK
+      bigint actor_id FK
+      bigint appointment_id FK
+      varchar action
+    }

@@ -1,0 +1,52 @@
+classDiagram
+    class BookingService {
+      +validate_slot()
+      +available_slots()
+      +book()
+      +transition()
+    }
+    class PaymentFactory {
+      +create(method) PaymentStrategy
+    }
+    class PaymentStrategy {
+      <<interface>>
+      +method
+      +validate(confirmation)
+    }
+    class CashPayment {
+      +validate(confirmation)
+    }
+    class MockPayment {
+      +validate(confirmation)
+    }
+    class AppointmentPublisher {
+      +observers
+      +publish(event)
+    }
+    class AppointmentEvent {
+      +appointment
+      +actor
+      +message
+    }
+    class Observer {
+      <<interface>>
+      +update(event)
+    }
+    class AuditObserver {
+      +update(event)
+    }
+    class NotificationObserver {
+      +update(event)
+    }
+    BookingService --> PaymentFactory
+    PaymentFactory ..> CashPayment
+    PaymentFactory ..> MockPayment
+    PaymentStrategy <|.. CashPayment
+    PaymentStrategy <|.. MockPayment
+    BookingService --> AppointmentPublisher
+    AppointmentPublisher --> AppointmentEvent
+    AppointmentPublisher o-- Observer
+    Observer <|.. AuditObserver
+    Observer <|.. NotificationObserver
+    note for BookingService "Nhóm hàm tại services.py, không phải một class Python"
+    note for PaymentStrategy "Interface theo duck typing"

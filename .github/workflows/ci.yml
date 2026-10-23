@@ -1,0 +1,25 @@
+name: Django validation
+on: [push, pull_request]
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: gentleman
+          POSTGRES_USER: gentleman
+          POSTGRES_PASSWORD: local-demo-only
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U gentleman -d gentleman"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: bash scripts/check.sh
+      - run: docker build -t gentleman:ci .

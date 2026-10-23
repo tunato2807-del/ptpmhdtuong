@@ -1,0 +1,11 @@
+{% load static %}<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#222b26"><meta name="description" content="GENTLEMAN — Đặt lịch cắt tóc nam, chọn stylist và quản lý chuỗi cửa hàng."><title>{% block title %}GENTLEMAN · Phong cách của bạn{% endblock %}</title><link rel="stylesheet" href="{% static 'css/app.css' %}"><script src="{% static 'js/app.js' %}" defer></script>{% block head %}{% endblock %}</head>
+<body class="{% block body_class %}{% endblock %}">
+<a href="#main" class="skip-link">Chuyển đến nội dung</a>
+{% block layout %}
+<header class="public-header"><a class="brand" href="{% url 'home' %}"><span class="brand-mark">G<span>✂︎</span></span><span>GENTLEMAN<small>BARBER HOUSE</small></span></a><nav aria-label="Điều hướng chính"><a href="{% url 'home' %}#dich-vu">Dịch vụ</a><a href="{% url 'home' %}#chi-nhanh">Chi nhánh</a><a href="{% url 'home' %}#stylist">Đội ngũ stylist</a>{% if user.is_authenticated %}<a href="{% url 'my_appointments' %}">Lịch của tôi</a>{% if user.is_operator %}<a href="{% url 'dashboard' %}">Quản lý ↗︎</a>{% endif %}{% else %}<a href="{% url 'login' %}">Đăng nhập</a>{% endif %}</nav><a class="btn btn-primary small" href="{% url 'booking' %}">Đặt lịch ngay <span>↗︎</span></a></header>
+<main id="main">{% include 'partials/messages.html' %}{% block content %}{% endblock %}</main>
+<footer class="public-footer"><a class="brand" href="{% url 'home' %}">GENTLEMAN<small>BARBER HOUSE</small></a><p>Chăm chút diện mạo. Khơi mở tự tin.</p><span>© {% now 'Y' %} GENTLEMAN · Dự án học tập</span>{% if user.is_authenticated %}<form action="{% url 'logout' %}" method="post">{% csrf_token %}<button class="text-button">Đăng xuất</button></form>{% endif %}</footer>
+{% endblock %}
+{% block scripts %}{% endblock %}
+</body></html>
