@@ -16,83 +16,83 @@ erDiagram
     USER o|--o{ AUDIT_LOG : "thao tác"
     APPOINTMENT o|--o{ AUDIT_LOG : "lưu vết"
     BRANCH {
-      bigint id PK
-      varchar name UK
-      time opens_at
-      time closes_at
-      boolean active
+      bigint machinhanh PK
+      varchar tenchinhanh UK
+      time giomocua
+      time giodongcua
+      boolean hoatdong
     }
     USER {
-      bigint id PK
-      varchar username UK
-      varchar role
-      bigint branch_id FK
-      integer points
+      bigint manguoidung PK
+      varchar tendangnhap UK
+      varchar vaitro
+      bigint machinhanh FK
+      integer diemtichluy
     }
     EMPLOYEE {
-      bigint id PK
-      bigint branch_id FK
-      varchar name
-      boolean active
+      bigint manhanvien PK
+      bigint machinhanh FK
+      varchar hoten
+      boolean hoatdong
     }
     SHIFT {
-      bigint id PK
-      bigint employee_id FK
-      timestamptz start_at
-      timestamptz end_at
+      bigint macalam PK
+      bigint manhanvien FK
+      timestamptz thoigianbatdau
+      timestamptz thoigianketthuc
     }
     CHAIR {
-      bigint id PK
-      bigint branch_id FK
-      varchar name
+      bigint maghe PK
+      bigint machinhanh FK
+      varchar tenghe
     }
     SERVICE {
-      bigint id PK
-      varchar name UK
-      integer price
-      integer duration
-      varchar kind
+      bigint madichvu PK
+      varchar tendichvu UK
+      integer giatien
+      integer thoiluong
+      varchar loaidichvu
     }
     APPOINTMENT {
-      bigint id PK
-      bigint customer_id FK
-      bigint employee_id FK
-      bigint branch_id FK
-      bigint chair_id FK
-      timestamptz start_at
-      timestamptz end_at
-      varchar status
+      bigint malichhen PK
+      bigint makhachhang FK
+      bigint manhanvien FK
+      bigint machinhanh FK
+      bigint maghe FK
+      timestamptz thoigianbatdau
+      timestamptz thoigianketthuc
+      varchar trangthai
     }
     APPOINTMENT_ITEM {
-      bigint id PK
-      bigint appointment_id FK
-      bigint service_id FK
-      varchar name
-      integer price
-      integer duration
+      bigint machitiet PK
+      bigint malichhen FK
+      bigint madichvu FK
+      varchar tendichvu
+      integer giatien
+      integer thoiluong
     }
     INVOICE {
-      bigint id PK
-      bigint appointment_id FK,UK
-      bigint cashier_id FK
-      integer total
-      varchar method
-      timestamptz paid_at
+      bigint mahoadon PK
+      bigint malichhen FK,UK
+      bigint mathungan FK
+      integer tongthanhtoan
+      varchar phuongthucthanhtoan
+      timestamptz thoigianthanhtoan
     }
     REVIEW {
-      bigint id PK
-      bigint appointment_id FK,UK
-      integer rating
-      varchar comment
+      bigint madanhgia PK
+      bigint malichhen FK,UK
+      integer sosao
+      varchar binhluan
     }
     NOTIFICATION {
-      bigint id PK
-      bigint recipient_id FK
-      varchar message
+      bigint mathongbao PK
+      bigint manguoinhan FK
+      varchar noidung
     }
     AUDIT_LOG {
-      bigint id PK
-      bigint actor_id FK
-      bigint appointment_id FK
-      varchar action
+      bigint manhatky PK
+      bigint manguoithaotac FK
+      bigint malichhen FK
+      varchar hanhdong
     }

@@ -11,7 +11,8 @@ Python 3.12.14, Django 5.2.18, psycopg 3.3.6, PostgreSQL 17 (image postgres:17-a
 | `bash scripts/setup.sh` chạy lại | Đạt | Không có migration mới; vẫn 3 chi nhánh, 6 stylist, 6 dịch vụ, 102 lịch mẫu; không nhân đôi dữ liệu |
 | `manage.py check` | Đạt | 0 vấn đề |
 | `makemigrations --check --dry-run` | Đạt | No changes detected |
-| `manage.py test salon.tests --noinput` | Đạt | 33 test đã thực thi, 0 failed, 0 errors, 0 skipped |
+| `manage.py test salon.tests --noinput` | Đạt | 35 test đã thực thi, 0 failed, 0 errors, 0 skipped |
+| Migration tên cột tiếng Việt | Đạt | 80 cột/12 bảng; kiểu dữ liệu và toàn bộ bản ghi giữ nguyên; kiểm tra cả nâng cấp và hoàn tác |
 | `collectstatic --noinput` | Đạt | Static và manifest tạo thành công; chạy lại giữ nguyên tài nguyên không đổi |
 | `scripts/start.sh` | Đạt | Bật DB, kiểm tra migration, khởi động Django; health và trang chủ phản hồi thành công |
 | Docker image | Đạt | Build bằng wheelhouse trên cloud; artifact tải qua HTTPS, pip không tắt TLS |
@@ -24,7 +25,7 @@ Python 3.12.14, Django 5.2.18, psycopg 3.3.6, PostgreSQL 17 (image postgres:17-a
 | GitHub Actions | Chưa xác minh kết quả trên GitHub | Đã có workflow test/build; xem tab Actions của repository để theo dõi |
 | Thanh toán thật, SMS/email, tải lớn, restore backup | Chưa thực hiện | Ngoài phạm vi bản dựng |
 
-Các kiểm thử ban đầu phát hiện lỗi tên alias aggregate khi tính trung bình và thiếu savepoint khi bắt đánh giá trùng. Mã đã sửa và bộ test chạy lại thành công. Build Docker online ban đầu gặp DNS trong container; giải pháp dùng wheel tải trên host và cài offline đã build thành công. Đây là chẩn đoán và xử lý lỗi môi trường, không phải thay đổi phiên bản để né test.
+Các kiểm thử ban đầu phát hiện lỗi tên alias aggregate khi tính trung bình và thiếu savepoint khi bắt đánh giá trùng. Mã đã sửa và bộ test chạy lại thành công. Sau khi đổi tên 80 cột sang tiếng Việt không dấu, 35 kiểm thử và browser smoke đã chạy lại thành công; dữ liệu và kiểu dữ liệu PostgreSQL được đối chiếu trước/sau migration. Build Docker online ban đầu gặp DNS trong container; giải pháp dùng wheel tải trên host và cài offline đã build thành công. Đây là chẩn đoán và xử lý lỗi môi trường, không phải thay đổi phiên bản để né test.
 
 ## 3. Các nhóm kiểm thử nghiệp vụ
 
@@ -33,6 +34,7 @@ Các kiểm thử ban đầu phát hiện lỗi tên alias aggregate khi tính t
 | Đặt lịch | Nhiều dịch vụ, tổng thời lượng, snapshot không đổi sau sửa giá | FR03, FR04 |
 | Khả dụng | Ca làm, giờ mở/đóng, thời gian quá khứ, 30 ngày, bước 15 phút | FR02, FR03 |
 | Xung đột | Stylist trùng, hai lịch sát giờ, khách trùng ở chi nhánh khác, bypass service bị DB chặn | FR04 |
+| Migration cột | So sánh dữ liệu và kiểu PostgreSQL trước/sau, hoàn tác rồi nâng cấp lại, giữ FK và nhóm quyền đăng nhập | Toàn vẹn schema |
 | Đồng thời | Hai thread với hai connection cùng đặt một stylist/giờ, chỉ một lịch được ghi | FR04 |
 | Hủy/no-show | Hủy giải phóng chỗ; hạn 2 giờ; no-show chỉ sau giờ kết thúc | FR05 |
 | Lễ tân | Đặt hộ đúng khách, actor đúng; khách ngoài phạm vi bị từ chối | FR01, FR12 |

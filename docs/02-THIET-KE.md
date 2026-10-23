@@ -33,24 +33,24 @@ Nguồn: thiết kế từ yêu cầu và mã triển khai. Đây là sơ đồ 
 
 ![Sơ đồ 2.2: mô hình thực thể và quan hệ](diagrams/02-er.svg)
 
-PostgreSQL lưu Unicode bằng `varchar/text`, thời gian bằng `timestamptz`. Tất cả bảng nghiệp vụ có `id bigint` làm khóa chính. Các trường bắt buộc không nhận NULL trừ khi ghi rõ. Tên bảng thực tế có tiền tố `salon_`. Django còn quản lý các bảng auth, group, permission, session và admin log.
+PostgreSQL lưu Unicode bằng `varchar/text`, thời gian bằng `timestamptz`. Tất cả bảng nghiệp vụ có khóa chính `bigint`, đặt tên theo đối tượng: `manguoidung`, `machinhanh`, `malichhen`… Các trường bắt buộc không nhận NULL trừ khi ghi rõ. Tên bảng thực tế có tiền tố `salon_`. Các cột trong 12 bảng nghiệp vụ dùng tiếng Việt viết liền không dấu qua `db_column`, ví dụ `hoten`, `sodienthoai`, `thoigianbatdau`. Django còn quản lý các bảng auth, group, permission, session và admin log theo quy ước framework. Xem `05-TEN-COT-DU-LIEU.md` để đối chiếu đầy đủ 80 cột với tên thuộc tính Python; kiểu dữ liệu không thay đổi.
 
 ### 3.1 Từ điển dữ liệu
 
 | Bảng | Các trường chính | Ràng buộc và ý nghĩa |
 |---|---|---|
-| User | username varchar(150), password varchar(128), full_name varchar(100), phone varchar(10), email varchar(254), role varchar(20), branch_id FK nullable, points integer, is_active, is_staff, is_superuser, date_joined | Username unique; phone theo mẫu 10 số; role customer/receptionist/manager; password lưu hash; điểm không âm. Kế thừa thêm trường chuẩn AbstractUser |
-| Branch | name varchar(100), address varchar(250), phone varchar(10), opens_at time, closes_at time, active boolean | Tên unique; đóng sau mở; không hỗ trợ ca mở qua nửa đêm |
-| Service | name varchar(100), description text, kind varchar(10), price integer, duration integer, active boolean | Giá >=1.000 VNĐ; thời lượng 15–240 phút; kind hair/care/combo; tên unique |
-| Employee | name varchar(100), branch_id FK, specialty varchar(150), bio varchar(250), active boolean | Stylist thuộc đúng một chi nhánh; lịch sử không đổi chi nhánh qua Admin |
-| Chair | branch_id FK, name varchar(30), active boolean | Unique (branch_id, name); không đổi chi nhánh qua Admin |
-| Shift | employee_id FK, start_at timestamptz, end_at timestamptz | end > start; exclusion stylist + khoảng thời gian; form Admin yêu cầu trong giờ mở cửa |
-| Appointment | customer_id FK, branch_id FK, employee_id FK, chair_id FK nullable, start_at, end_at timestamptz, status varchar(20), note varchar(500), created_at | end > start; exclusion stylist và ghế trên lịch đang giữ; ghế chỉ phân khi check-in |
-| AppointmentItem | appointment_id FK, service_id FK, name varchar(100), price integer, duration integer | Unique (appointment_id, service_id); snapshot tên/giá/thời lượng lúc đặt |
-| Invoice | appointment_id FK unique, total integer, method varchar(10), paid_at timestamptz, cashier_id FK | 0 hoặc 1 hóa đơn mỗi lịch; bản ghi là giao dịch đã nhận tiền, không có bản ghi pending |
-| Review | appointment_id FK unique, rating smallint, comment varchar(500), created_at | 1–5 sao ở cả validator và DB; server giới hạn chủ lịch đã hoàn thành |
-| Notification | recipient_id FK, message varchar(250), created_at | Thông báo trong ứng dụng, không gửi email/SMS |
-| AuditLog | actor_id FK nullable, appointment_id FK nullable, action varchar(100), created_at | Nhật ký actor thực tế; quan hệ SET NULL nếu đối tượng liên quan bị xóa hợp lệ |
+| User | manguoidung bigint, tendangnhap varchar(150), matkhau varchar(128), hoten varchar(100), sodienthoai varchar(10), thudientu varchar(254), vaitro varchar(20), machinhanh bigint nullable, diemtichluy integer, hoatdong boolean, lanhanvien boolean, laquantri boolean, ngaythamgia timestamptz, landangnhapcuoi timestamptz nullable, ten varchar(150), ho varchar(150) | tendangnhap unique; sodienthoai 10 số; vaitro customer/receptionist/manager; matkhau lưu hash; điểm không âm |
+| Branch | machinhanh bigint, tenchinhanh varchar(100), diachi varchar(250), sodienthoai varchar(10), giomocua time, giodongcua time, hoatdong boolean | Tên unique; đóng sau mở; không hỗ trợ mở qua nửa đêm |
+| Service | madichvu bigint, tendichvu varchar(100), mota text, loaidichvu varchar(10), giatien integer, thoiluong integer, hoatdong boolean | Giá >=1.000 VNĐ; thời lượng 15–240 phút; loại hair/care/combo; tên unique |
+| Employee | manhanvien bigint, hoten varchar(100), machinhanh bigint, chuyenmon varchar(150), gioithieu varchar(250), hoatdong boolean | Stylist thuộc một chi nhánh; không đổi chi nhánh lịch sử qua Admin |
+| Chair | maghe bigint, machinhanh bigint, tenghe varchar(30), hoatdong boolean | Unique (machinhanh, tenghe) |
+| Shift | macalam bigint, manhanvien bigint, thoigianbatdau timestamptz, thoigianketthuc timestamptz | Kết thúc sau bắt đầu; exclusion nhân viên + khoảng thời gian; trong giờ mở cửa |
+| Appointment | malichhen bigint, makhachhang bigint, machinhanh bigint, manhanvien bigint, maghe bigint nullable, thoigianbatdau timestamptz, thoigianketthuc timestamptz, trangthai varchar(20), ghichu varchar(500), ngaytao timestamptz | Kết thúc sau bắt đầu; exclusion stylist/ghế trên lịch đang giữ; phân ghế khi check-in |
+| AppointmentItem | machitiet bigint, malichhen bigint, madichvu bigint, tendichvu varchar(100), giatien integer, thoiluong integer | Unique (malichhen, madichvu); snapshot tên/giá/thời lượng |
+| Invoice | mahoadon bigint, malichhen bigint unique, tongthanhtoan integer, phuongthucthanhtoan varchar(10), thoigianthanhtoan timestamptz, mathungan bigint | 0 hoặc 1 hóa đơn/lịch; bản ghi là giao dịch đã nhận tiền |
+| Review | madanhgia bigint, malichhen bigint unique, sosao smallint, binhluan varchar(500), ngaytao timestamptz | 1–5 sao ở validator và DB; chỉ chủ lịch đã hoàn thành |
+| Notification | mathongbao bigint, manguoinhan bigint, noidung varchar(250), ngaytao timestamptz | Thông báo nội bộ, không gửi email/SMS |
+| AuditLog | manhatky bigint, manguoithaotac bigint nullable, malichhen bigint nullable, hanhdong varchar(100), ngaytao timestamptz | Nhật ký actor thực tế; FK SET NULL khi đối tượng bị xóa hợp lệ |
 
 Các FK liên quan lịch sử tài chính dùng `PROTECT` để không xóa mất khách, chi nhánh, stylist, dịch vụ và hóa đơn. Dòng dịch vụ dùng CASCADE từ lịch hẹn, nhưng lịch có hóa đơn bị PROTECT. Notification có thể CASCADE khi xóa tài khoản. Trong giao diện vận hành, dữ liệu cũ được ngừng hoạt động thay vì xóa.
 
@@ -58,7 +58,7 @@ Các FK liên quan lịch sử tài chính dùng `PROTECT` để không xóa m�
 
 Chi nhánh, stylist, ca làm, dịch vụ và khách tách riêng để tránh lặp dữ liệu chủ. Quan hệ lịch–dịch vụ là nhiều–nhiều qua AppointmentItem. Invoice/Review là một–không hoặc một với lịch hẹn. Dữ liệu tên, giá và thời lượng được lặp có chủ ý trong AppointmentItem để ghi nhận thỏa thuận lúc đặt; đây là snapshot nghiệp vụ, không phải tham chiếu đến giá hiện hành.
 
-Tổng hóa đơn bằng tổng `AppointmentItem.price`. Điểm bằng `invoice.total // 10000`. Không dùng số dấu phẩy động cho VNĐ; không nhận giá hoặc tổng tiền từ client. Mã hiển thị LH00001/HD00001 được suy ra từ PK, không tạo bộ đếm thủ công.
+Tổng hóa đơn bằng tổng cột `giatien` của các dòng dịch vụ. Điểm bằng `tongthanhtoan // 10000` (trong Python tương ứng `AppointmentItem.price` và `invoice.total`). Không dùng số dấu phẩy động cho VNĐ; không nhận giá hoặc tổng tiền từ client. Mã hiển thị LH00001/HD00001 được suy ra từ PK, không tạo bộ đếm thủ công.
 
 ### 3.3 Chỉ mục và ràng buộc lịch
 
@@ -66,12 +66,12 @@ Migration tạo extension `btree_gist` và các exclusion constraints:
 
 ```sql
 EXCLUDE USING gist (
-  employee_id WITH =,
-  tstzrange(start_at, end_at) WITH &&
-) WHERE (status IN ('booked', 'checked_in', 'in_service'));
+  manhanvien WITH =,
+  tstzrange(thoigianbatdau, thoigianketthuc) WITH &&
+) WHERE (trangthai IN ('booked', 'checked_in', 'in_service'));
 ```
 
-Ghế áp dụng tương tự với `chair_id IS NOT NULL`; ca làm dùng employee + range không có điều kiện trạng thái. Range mặc định `[)` cho phép sát giờ. Index B-tree `(branch_id, start_at)` và `(customer_id, start_at)` hỗ trợ các truy vấn lịch theo phạm vi; FK có index tự động. Điều kiện `.date()` hiện ưu tiên rõ ràng cho đồ án; khi dữ liệu lớn nên đổi sang khoảng UTC và đo bằng EXPLAIN.
+Ghế áp dụng tương tự với `maghe IS NOT NULL`; ca làm dùng employee + range không có điều kiện trạng thái. Range mặc định `[)` cho phép sát giờ. Index B-tree `(machinhanh, thoigianbatdau)` và `(makhachhang, thoigianbatdau)` hỗ trợ các truy vấn lịch theo phạm vi; FK có index tự động. Điều kiện `.date()` hiện ưu tiên rõ ràng cho đồ án; khi dữ liệu lớn nên đổi sang khoảng UTC và đo bằng EXPLAIN.
 
 ### 3.4 Giao dịch và truy cập đồng thời
 
@@ -109,7 +109,7 @@ API khả dụng không giữ chỗ. Form xác nhận mới tạo transaction. N
 - **Strategy:** hai payment strategy triển khai cùng giao thức `method`, `validate(confirmation)`, được chọn khi checkout. Không có logic ngân hàng thật.
 - **Observer:** AppointmentPublisher giữ các subscriber AuditObserver/NotificationObserver; mỗi sự kiện gọi `update(event)`. Việc ghi hai đầu ra cùng transaction bảo đảm không gửi thông báo thành công cho lịch rollback. Khi thêm email/SMS cần dùng transactional outbox và worker sau commit; không gọi dịch vụ ngoài trong transaction hiện tại.
 
-Sơ đồ dùng interface theo duck typing; `BookingService` là tên nhóm trách nhiệm của các hàm trong `services.py`, không khai báo thêm lớp rỗng chỉ để khớp hình vẽ. Các lớp dữ liệu miền và quan hệ nằm trong ERD cùng các Django model tương ứng.
+Các thuộc tính lưu trữ trong sơ đồ lớp được trình bày theo tên cột SQL tiếng Việt; code, total, is_operator và initials là thuộc tính tính toán, không phải cột SQL. Mã Python giữ API ổn định thông qua ánh xạ db_column. Sơ đồ dùng interface theo duck typing; `BookingService` là tên nhóm trách nhiệm của các hàm trong `services.py`, không khai báo thêm lớp rỗng chỉ để khớp hình vẽ. Các lớp dữ liệu miền và quan hệ nằm trong ERD cùng các Django model tương ứng.
 
 ## 7. Giao diện và điều hướng
 

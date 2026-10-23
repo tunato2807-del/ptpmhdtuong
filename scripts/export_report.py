@@ -73,7 +73,7 @@ def image(path, caption):
     p=doc.add_paragraph(caption); p.alignment=WD_ALIGN_PARAGRAPH.CENTER
     for r in p.runs: r.italic=True; r.font.size=Pt(10)
 
-for filename in ['01-PHAN-TICH.md','02-THIET-KE.md','03-TRIEN-KHAI.md','04-KIEM-THU.md']:
+for filename in ['01-PHAN-TICH.md','02-THIET-KE.md','03-TRIEN-KHAI.md','04-KIEM-THU.md','05-TEN-COT-DU-LIEU.md']:
     doc.add_page_break()
     lines=(DOCS/filename).read_text().splitlines()
     i=0

@@ -36,6 +36,10 @@ docker compose stop
 
 `seed_demo` idempotent: không đặt lại mật khẩu, không nhân đôi lịch mẫu; bổ sung ca cho ngày hiện tại và 30 ngày tới. Lịch mẫu có thời điểm tương đối ở lần nạp đầu; sau nhiều ngày, tổng quan có thể không có lịch mẫu hôm nay nhưng lịch sử vẫn còn. Không xóa dữ liệu để làm mới demo; có thể đặt lịch mới qua giao diện. Không chạy `docker compose down -v` hoặc xóa `.local/pgdata` nếu chưa có backup.
 
+### Nâng cấp bản đã cài sang tên cột tiếng Việt
+
+Dừng tiến trình web cũ, cập nhật mã nguồn và chạy `.venv/bin/python manage.py migrate --noinput`, sau đó khởi động lại bằng `bash scripts/start.sh`. Migration `0002_vietnamese_column_names` đổi tên 80 cột tại chỗ, giữ nguyên kiểu dữ liệu và dữ liệu hiện có. Không xóa database, không sửa migration 0001 đã có và không nạp lại dữ liệu để thực hiện đổi tên. Với Docker, rebuild và khởi động web để entrypoint chạy migration trước khi bật Gunicorn. Xem bảng đối chiếu tại `05-TEN-COT-DU-LIEU.md`.
+
 ## 2. Kịch bản bảo vệ đồ án khoảng 10 phút
 
 1. Giới thiệu vấn đề chờ đợi, trùng lịch và đối soát doanh thu; chỉ ra ba vai trò.

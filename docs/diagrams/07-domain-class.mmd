@@ -1,59 +1,59 @@
 classDiagram
   class User {
-    +username
-    +full_name
-    +role
-    +branch
-    +points
+    +tendangnhap
+    +hoten
+    +vaitro
+    +machinhanh
+    +diemtichluy
     +is_operator
     +initials
   }
   class Branch {
-    +name
-    +opens_at
-    +closes_at
-    +active
+    +tenchinhanh
+    +giomocua
+    +giodongcua
+    +hoatdong
   }
   class Employee {
-    +name
-    +specialty
-    +active
+    +hoten
+    +chuyenmon
+    +hoatdong
   }
   class Chair {
-    +name
-    +active
+    +tenghe
+    +hoatdong
   }
   class Shift {
-    +start_at
-    +end_at
+    +thoigianbatdau
+    +thoigianketthuc
   }
   class Service {
-    +name
-    +kind
-    +price
-    +duration
+    +tendichvu
+    +loaidichvu
+    +giatien
+    +thoiluong
   }
   class Appointment {
-    +start_at
-    +end_at
-    +status
+    +thoigianbatdau
+    +thoigianketthuc
+    +trangthai
     +code
     +total
   }
   class AppointmentItem {
-    +name
-    +price
-    +duration
+    +tendichvu
+    +giatien
+    +thoiluong
   }
   class Invoice {
-    +total
-    +method
-    +paid_at
+    +tongthanhtoan
+    +phuongthucthanhtoan
+    +thoigianthanhtoan
     +code
   }
   class Review {
-    +rating
-    +comment
+    +sosao
+    +binhluan
   }
   Branch "1" --> "*" Employee
   Branch "1" --> "*" Chair
@@ -67,3 +67,4 @@ classDiagram
   Appointment "1" --> "0..1" Invoice
   Appointment "1" --> "0..1" Review
   User "1" --> "*" Invoice : cashier
+  note for User "Tên thuộc tính lưu trữ theo cột SQL; Python ánh xạ qua db_column"

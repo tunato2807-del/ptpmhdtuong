@@ -83,8 +83,15 @@ Bản Word tổng hợp: [Báo cáo phân tích, thiết kế và triển khai](
 2. [Thiết kế kiến trúc, dữ liệu, UML và giao diện](docs/02-THIET-KE.md)
 3. [Hướng dẫn triển khai và trình diễn](docs/03-TRIEN-KHAI.md)
 4. [Kết quả kiểm thử](docs/04-KIEM-THU.md)
+5. [80 tên cột tiếng Việt và kiểu dữ liệu](docs/05-TEN-COT-DU-LIEU.md)
 
 Sơ đồ Mermaid gốc nằm trong `docs/diagrams/`, ảnh giao diện trong `docs/screenshots/`. Bộ báo cáo và mã nguồn là hai phần của cùng một dự án; các mô tả tính năng dựa trên mã hiện có, không coi các khẳng định hoàn thành trong tài liệu đầu vào là kết quả kiểm thử.
+
+## Tên thuộc tính trong bảng dữ liệu
+
+Cột PostgreSQL trong 12 bảng nghiệp vụ dùng tiếng Việt viết liền không dấu: `hoten`, `sodienthoai`, `machinhanh`, `thoigianbatdau`, `trangthai`… Kiểu dữ liệu và dữ liệu hiện có được giữ nguyên. Django dùng `db_column` để ánh xạ, vì vậy tên thuộc tính Python và giao thức đăng nhập/API vẫn tương thích. Các bảng kỹ thuật của Django giữ quy ước framework.
+
+Nếu đã cài bản trước, chạy `.venv/bin/python manage.py migrate --noinput` để áp dụng `0002_vietnamese_column_names`. Migration đổi tên tại chỗ, có thể hoàn tác; không xóa database hoặc nạp lại dữ liệu. Chi tiết và kiểu dữ liệu từng cột có trong `docs/05-TEN-COT-DU-LIEU.md`.
 
 ## Cấu trúc
 

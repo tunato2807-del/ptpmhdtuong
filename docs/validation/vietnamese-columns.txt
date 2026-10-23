@@ -1,0 +1,17 @@
+PASS: 80 SQL columns use Vietnamese names without accents, spaces or underscores.
+PASS: PostgreSQL format_type, including varchar lengths, is unchanged for all renamed fields.
+PASS: immediately after migration, per-table SHA256 of all rows matched the pre-migration snapshot.
+PASS: record counts are unchanged after browser-smoke cleanup.
+
+salon_branch: 3 rows; types unchanged
+salon_user: 14 rows; types unchanged
+salon_service: 6 rows; types unchanged
+salon_employee: 6 rows; types unchanged
+salon_chair: 12 rows; types unchanged
+salon_shift: 270 rows; types unchanged
+salon_appointment: 102 rows; types unchanged
+salon_appointmentitem: 102 rows; types unchanged
+salon_invoice: 86 rows; types unchanged
+salon_review: 6 rows; types unchanged
+salon_notification: 1 rows; types unchanged
+salon_auditlog: 0 rows; types unchanged
