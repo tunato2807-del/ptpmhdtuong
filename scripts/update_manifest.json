@@ -1,0 +1,473 @@
+{
+  "ref": "9727c9ff7f3535eab12de594714ab0fda3baf538",
+  "files": [
+    {
+      "path": ".env.example",
+      "sha256": "a01e11e4f7ee97956fd62cee11a78d9c2c59f575dfd3dd74b4809580dad7b863"
+    },
+    {
+      "path": "README.md",
+      "sha256": "00e338dcd01f986a0b86da5eba35adafa81f1de7b87910792cb8db7752373059"
+    },
+    {
+      "path": "config/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "config/settings.py",
+      "sha256": "5fce741a8062f2838c498731890b5163b09efd79f930cdce9fe047849f4c109c"
+    },
+    {
+      "path": "config/urls.py",
+      "sha256": "aea538f8534efeb44940e95853d89911952179b3796c313bbbe1a04787a0253d"
+    },
+    {
+      "path": "config/wsgi.py",
+      "sha256": "c1ed832c2a0786feb5149ed553edb97a0dec3abf91f510bb5ebedf9214833c53"
+    },
+    {
+      "path": "manage.py",
+      "sha256": "6c2cb33dc41f230c6b5719d6e0ba86060aaf7c410bb8d92f5bf9c8d720cc24f1"
+    },
+    {
+      "path": "requirements-dev.txt",
+      "sha256": "151cca93edd38b3e4aea1b744b4e6a39999d64667934de06bc1085bbb9c6d7c6"
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "29d740abc800654132fe8a4daf0c109da5bec563d4cf3a19f2d1da589b574507"
+    },
+    {
+      "path": "salon/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "salon/apps.py",
+      "sha256": "dcdb9f912054e5640393e8f4f2d76777a1dc9bd8eb411c0d40bb4b64eb933a1a"
+    },
+    {
+      "path": "salon/checks.py",
+      "sha256": "1066b2af7f48778d5e537af108e2e3fa50ee7945a6bedf68fb6099465146371c"
+    },
+    {
+      "path": "salon/context.py",
+      "sha256": "ce4f795fcb36fd05412de80a7d68ada8a43a07366558b54e56e6f05715747ae0"
+    },
+    {
+      "path": "salon/events.py",
+      "sha256": "52afe1d1226f1832b3fa922e5d136d26ba7ace8ee77f5567a562526efe0bb714"
+    },
+    {
+      "path": "salon/features.py",
+      "sha256": "bbac06e5dbfe807c4f82777cee50bfbc7e298921e77252b673b53283e662c7d5"
+    },
+    {
+      "path": "salon/forms.py",
+      "sha256": "73ba8ee5131107a5ec8177787cdfe89cbeb28958385cf54fb39fcdb67c55163f"
+    },
+    {
+      "path": "salon/management/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "salon/management/commands/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "salon/management/commands/check_database.py",
+      "sha256": "29997cd2a5e36f0a70c883551189c3bbdd01641b34daaabfd13be7fd91810e74"
+    },
+    {
+      "path": "salon/management/commands/seed_demo.py",
+      "sha256": "6d1b8b528fd8d99378f9e874079266b56cfcd4c9f44e0df89fb90be0a44162cf"
+    },
+    {
+      "path": "salon/management_views.py",
+      "sha256": "b6faa143cbba34dafacb76b40b446e77349def564c0636351bd55cb03201585b"
+    },
+    {
+      "path": "salon/migrations/0001_initial.py",
+      "sha256": "6cdb53a2c6c8de82dd0d5c7c9e83b0df8c0fb30277a94aa5e8aaf29c1ddc56c2"
+    },
+    {
+      "path": "salon/migrations/0002_vietnamese_column_names.py",
+      "sha256": "3b41f3fdfe875fcbfb35854df167734fc7fa61e9dcc1f055046b63ca46b7e744"
+    },
+    {
+      "path": "salon/migrations/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "salon/models.py",
+      "sha256": "fd8597433124359d34e2083b02812de5c3ba53968be023818516bf2b7cc4da4e"
+    },
+    {
+      "path": "salon/profile_views.py",
+      "sha256": "884ab9a939c6d634da371bba9344753d7affc1568c5446537721f779d89acef0"
+    },
+    {
+      "path": "salon/services.py",
+      "sha256": "889097bab49c4da0b1afc816e7ee607642925257d765abc9ed46d3e16ed96fa7"
+    },
+    {
+      "path": "salon/templatetags/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "salon/templatetags/salon_tags.py",
+      "sha256": "8212038f970cbd75da004644b33a3d2ae89f0265241f7e116ee36749f9e8bb89"
+    },
+    {
+      "path": "salon/tests/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "salon/tests/test_column_migration.py",
+      "sha256": "a37c2583ee01e3405f5f578ef0cac995997c6970c64578a23de7e822ed7ce3b3"
+    },
+    {
+      "path": "salon/tests/test_features.py",
+      "sha256": "dbbbb13297babc06c0c82d79dd656ff6ab56e39707a62d9188f355ed4faffb26"
+    },
+    {
+      "path": "salon/tests/test_interface_assets.py",
+      "sha256": "36bd3afd06b01d9d55ac808621f60c656383534bd549f0f431f7992a705724cd"
+    },
+    {
+      "path": "salon/tests/test_management.py",
+      "sha256": "5110d68a6ecb6eed2172745bacb32783a21905e930179ae489de2dbed1b4377b"
+    },
+    {
+      "path": "salon/tests/test_navigation.py",
+      "sha256": "4ca5ca3ab466d7fa8bfe9894addcbdc0532c12f5b23d5874da879d10d3c8879c"
+    },
+    {
+      "path": "salon/tests/test_source_updater.py",
+      "sha256": "e00db6cb86bee6edfa356e1892fb0471056105044bc9d3108a37207ab62cbbcb"
+    },
+    {
+      "path": "salon/tests/test_workflows.py",
+      "sha256": "bffa27578a4038de8c6c8e405a2bc325ed0622df2b613fbbf0cfc86ac1c9c6d1"
+    },
+    {
+      "path": "salon/urls.py",
+      "sha256": "86802d3f63f630e633a351765fc0b7c28c9e5c14db35fc2827a01e5a51eeb69c"
+    },
+    {
+      "path": "salon/views.py",
+      "sha256": "c4281ce1a228104422a0f7884499e07843c9692c68822bd9bb60217c54f66326"
+    },
+    {
+      "path": "scripts/browser_smoke.py",
+      "sha256": "dbc762323dc5fde9d2f9d3bd4820d9760cf7bd9e08999327ea7badcb942e07fa"
+    },
+    {
+      "path": "scripts/build_update_manifest.py",
+      "sha256": "d345d4b5a7b7b40102d618c2700dee84029305aa4e193d498bb7050183aa5412"
+    },
+    {
+      "path": "scripts/cap_nhat_du_an.py",
+      "sha256": "df707340b530f12ab1b02d3138147fcdab6346b83a74e72f823ce5e4b2fcc6e9"
+    },
+    {
+      "path": "scripts/check.sh",
+      "sha256": "25b4180c8485c1d9b2f8d65df40684b4fc92ab8892561af456ca4e647a94e71a"
+    },
+    {
+      "path": "scripts/customer_ui_smoke.py",
+      "sha256": "46560b93c0a784977142642b07b31d588d64783ef535c2c4ea5ebd359691dab8"
+    },
+    {
+      "path": "scripts/dev.py",
+      "sha256": "5bf4e99e79f82409625cf2a81637e607c8979e10e3ba5cf97c89703c9e1cece1"
+    },
+    {
+      "path": "scripts/export_data_dictionary.py",
+      "sha256": "018730c26f24b4e4a340237e38d79ca62d64d46319506b9c54ea714bc074c3e0"
+    },
+    {
+      "path": "scripts/export_report.py",
+      "sha256": "82ce60bcafb5573c3515bff48270ac4ab00dca627a3d96d9c65888c2b34fb544"
+    },
+    {
+      "path": "scripts/interface_smoke.py",
+      "sha256": "a349e99905148f3e2df84fe1cbc719d5c4cc97ce6c70529111669eea43b0921c"
+    },
+    {
+      "path": "scripts/management_smoke.py",
+      "sha256": "741c34c1d1692aa84796bb4abd79091dd2b70b22459c8ab633bf5f6fcbf7b3da"
+    },
+    {
+      "path": "scripts/setup.sh",
+      "sha256": "d0f25b3208e2a61f588c08ab470bb52ec64b3999eb47d15821115cbfaccb348c"
+    },
+    {
+      "path": "scripts/start.sh",
+      "sha256": "da87f719eaed3ac83a919d9bb92f41138e2351e1fac10c87142ef61262d1a8de"
+    },
+    {
+      "path": "static/css/app.css",
+      "sha256": "8fa5e4fc37c1163a389ba4b0ed895fe1b71643735897b58dfb86a95d58f86df0"
+    },
+    {
+      "path": "static/css/customer.css",
+      "sha256": "51ce2967befdac3581a1cdaa4d501dfe5e2bf19ff0a85fe292cc375e4b87330e"
+    },
+    {
+      "path": "static/css/management.css",
+      "sha256": "3e7ba992b3c07eef2d9943fd401944bef13041bb51f8556352a6e4db0b18f110"
+    },
+    {
+      "path": "static/css/motion.css",
+      "sha256": "bf9fea30ee1cb0ae71cbce1f498df47de838515e81c6793b98fa41006e0617c7"
+    },
+    {
+      "path": "static/css/typography.css",
+      "sha256": "633d16f0138c99939c7a1684a5daefb7ce05e4b3ff505b9d789189d62492a543"
+    },
+    {
+      "path": "static/fonts/LICENSE",
+      "sha256": "0bd4db1cda123af9d91794b0f98324b7d7d81aef0fcaf78c433160153f2c6f25"
+    },
+    {
+      "path": "static/fonts/be-vietnam-pro-latin-400-normal.woff2",
+      "sha256": "03d1b589cff172e1a670b3573e731d3380bc326f80cf83b0d3504e3188e2e074"
+    },
+    {
+      "path": "static/fonts/be-vietnam-pro-latin-500-normal.woff2",
+      "sha256": "b621f77d35f777023aa11ca524462d511b4b28a813adbc0e9d15a10fc61dfe4e"
+    },
+    {
+      "path": "static/fonts/be-vietnam-pro-latin-600-normal.woff2",
+      "sha256": "9503dec2a7c532c8331e9600bcafea287a4fd208573b8668d85ab8d8de1863c7"
+    },
+    {
+      "path": "static/fonts/be-vietnam-pro-latin-700-normal.woff2",
+      "sha256": "a193dd87699bd2e18ddf72dc271493ea82a23dad9f5c334d9f2a257b1e05fc30"
+    },
+    {
+      "path": "static/fonts/be-vietnam-pro-latin-800-normal.woff2",
+      "sha256": "7c5d0871188c09339a6eb46948420ed9b11f3d06ea3ff1c5d1cf41b06a3504e7"
+    },
+    {
+      "path": "static/fonts/be-vietnam-pro-latin-ext-400-normal.woff2",
+      "sha256": "f7a2811e471c2973a1179ce39da3ad6bb8082381aa8d1535ccfcbc3d6d78a052"
+    },
+    {
+      "path": "static/fonts/be-vietnam-pro-latin-ext-500-normal.woff2",
+      "sha256": "947d592eb7676914507ff68fc11fcf2cfdecd6ebaf0fa2af6047f66a63ea7d0f"
+    },
+    {
+      "path": "static/fonts/be-vietnam-pro-latin-ext-600-normal.woff2",
+      "sha256": "20cc75daeaaaa0fa8af2b616b2de2b2900f0ce14ae8e9faa47d272cedd93827f"
+    },
+    {
+      "path": "static/fonts/be-vietnam-pro-latin-ext-700-normal.woff2",
+      "sha256": "33d57e5bd840b03921568e08d2be1082d453e55f1ba55f421e41a1aa54e12601"
+    },
+    {
+      "path": "static/fonts/be-vietnam-pro-latin-ext-800-normal.woff2",
+      "sha256": "85a2008e6d5f2381a076d36d38771957b118683d0fff3029844737aff6b96a10"
+    },
+    {
+      "path": "static/fonts/be-vietnam-pro-vietnamese-400-normal.woff2",
+      "sha256": "dc085e2fba3414e5c5bf1e6172f921a9f81c5859946a4ed3d63c1e470d96a9e2"
+    },
+    {
+      "path": "static/fonts/be-vietnam-pro-vietnamese-500-normal.woff2",
+      "sha256": "86341610cbe907eecf461c9159c168d5efb52bb1a33963813a08f520555d8e66"
+    },
+    {
+      "path": "static/fonts/be-vietnam-pro-vietnamese-600-normal.woff2",
+      "sha256": "97658c6f9a384f29a3005c3d96e2a0d1c810192cf68979071c290f5a377a9f99"
+    },
+    {
+      "path": "static/fonts/be-vietnam-pro-vietnamese-700-normal.woff2",
+      "sha256": "4f58af2d1c3e28a9ba14c51c82db2751d78344b75bdcb34de24a1031ebe59da6"
+    },
+    {
+      "path": "static/fonts/be-vietnam-pro-vietnamese-800-normal.woff2",
+      "sha256": "26b241d1d5f489c8a65c1a3c4cdcdb48dd114a9ed7e0c0180182191f087cbe96"
+    },
+    {
+      "path": "static/images/barber.svg",
+      "sha256": "3bc04306499ba6853ec6916e5e73d3f738ee32d32ba232fe3f1d01f46e465adf"
+    },
+    {
+      "path": "static/images/photos/barber-detail.webp",
+      "sha256": "810395b9e42bc30f01542c52be0698aeb4b354b4243a308ab7923b12000fa463"
+    },
+    {
+      "path": "static/images/photos/barber-hero.webp",
+      "sha256": "ff7072e74e635241e10132b35b2e1f6ad020893a951132b841aa62f8efe5833c"
+    },
+    {
+      "path": "static/images/photos/beard-care.webp",
+      "sha256": "49fabbf2db469772d4fe9d50a794e065b7da2eac244e22a9dfa0d9e2c1b85407"
+    },
+    {
+      "path": "static/images/photos/hair-styling.webp",
+      "sha256": "463fe1512ce621f6cdbd8456b3cf1034e24c03e35f7d956db9b3c752a5d507e6"
+    },
+    {
+      "path": "static/images/photos/modern-fade.webp",
+      "sha256": "56682e1c2fcc553973cdaa54d707917c905ae65cd32af01e5f99b97cda434a59"
+    },
+    {
+      "path": "static/images/photos/precision-cut.webp",
+      "sha256": "53e318de3122237ec6a497d1e99faa452941f48fb1161aa40a0b2d6e6291b96e"
+    },
+    {
+      "path": "static/js/app.js",
+      "sha256": "9ea5719dbd1495c36e028aaf80df7fe2d07cfdb0c2eccf016a4858602ebcff55"
+    },
+    {
+      "path": "static/js/customer.js",
+      "sha256": "8f519a1072ffb9057da3833420b6f82d56209c60e3c2a18936d656dfc6374e29"
+    },
+    {
+      "path": "static/js/motion.js",
+      "sha256": "bd360327be6e94877fe87382abdf83751b635720e6808caaca9d559b25a773f8"
+    },
+    {
+      "path": "templates/403.html",
+      "sha256": "57733853f2129407bbbda6584c1ce5a681e59df5e09ca39a0d0d6951daa2d5d3"
+    },
+    {
+      "path": "templates/404.html",
+      "sha256": "09f620c5c4e3ab52a4d659651480e28452b93f28cf3a73303be2e2f0e26b9a0f"
+    },
+    {
+      "path": "templates/auth/login.html",
+      "sha256": "b558a1eda44f4ee5cc56608820222b83d065cad54fa791410568a2a33c242342"
+    },
+    {
+      "path": "templates/auth/register.html",
+      "sha256": "463a248e9c908e4055592b6583e9ffbf303793214218baf9fa56c3c0bac67624"
+    },
+    {
+      "path": "templates/base.html",
+      "sha256": "bef9dcb5099ae9774f354514fde8cd1b003279b86342872bcfc45db8abf78aff"
+    },
+    {
+      "path": "templates/features/appointments.html",
+      "sha256": "3e5f64b9922bbf13ae6c493259e9dcee691bed8549797fcce680f5311b46c51a"
+    },
+    {
+      "path": "templates/features/cancel.html",
+      "sha256": "e7275f9115aa8cd0a457927959a5a9931dc0bf602c4c75e5d3e243ecb4bf0f59"
+    },
+    {
+      "path": "templates/features/page.html",
+      "sha256": "7a94561fb99fb7cf121a70ec3421b2a2e5137740cbc627558778ec5988eef8d7"
+    },
+    {
+      "path": "templates/features/reports.html",
+      "sha256": "62e9e2ae713b39bb283c667a82efb62e2c8cb674b5fb7b08f2777326f9a6b7fa"
+    },
+    {
+      "path": "templates/features/reschedule.html",
+      "sha256": "d876abac16128baa3c5b4af01bef021c3d3608f509202476dd5bf46a8b6a9c11"
+    },
+    {
+      "path": "templates/features/resource_detail.html",
+      "sha256": "965f27db14e58614f8fd48a85947898255a6faa7c92019cda2dfab8e09cea859"
+    },
+    {
+      "path": "templates/features/resource_import.html",
+      "sha256": "b9dfaf6e29c52890d5242873af70b52e4fee92f3d193f1f2f0a9ebe4d74f29f9"
+    },
+    {
+      "path": "templates/features/resource_list.html",
+      "sha256": "40c3c366318c156c7fd4e8a302abd5ac12505abb45277f2cb54d88c7b310cdaf"
+    },
+    {
+      "path": "templates/features/search.html",
+      "sha256": "3e6846d7e7dd6ff215613c1c7f633f5c65ea67795451718136efacf967f5e2e5"
+    },
+    {
+      "path": "templates/partials/form_fields.html",
+      "sha256": "f27f2e55e488318d1ba74dcef8bac338a7f3c35e08bca697fe40237aecdf0da3"
+    },
+    {
+      "path": "templates/partials/icon_arrow.html",
+      "sha256": "a4e8d17ebc571cb0c1ba239e3e3807a7d53b86c349594d669864f9c05bafb8e6"
+    },
+    {
+      "path": "templates/partials/messages.html",
+      "sha256": "f18e809685fd0e81c85c864f57df0cba34c182a56390ee5c18753082e80f33ea"
+    },
+    {
+      "path": "templates/partials/pagination.html",
+      "sha256": "ba45e06ed2385c65910b49911d19923b3d559ca3a58b1bc0072f1aae4531523c"
+    },
+    {
+      "path": "templates/public/appointment_detail.html",
+      "sha256": "ccddf9f109d8889bf8e2e22b09ca4087d8c577f7ae4470990a1f2377d83da5b0"
+    },
+    {
+      "path": "templates/public/booking.html",
+      "sha256": "ae43822aaa84e9bcca7749fd9b5991798e731cc97b2c6108902e19c3984ad0ec"
+    },
+    {
+      "path": "templates/public/home.html",
+      "sha256": "47baecf3bd88c261bb984eb2530e54546d441095d2f9a839036f2cc50845c1c4"
+    },
+    {
+      "path": "templates/public/invoice.html",
+      "sha256": "8825d1a95dbfd8c1cfa5855f64c2224a0513b8b0a8c60d85cd75ca3f4bd65106"
+    },
+    {
+      "path": "templates/public/my_appointments.html",
+      "sha256": "87ce0027749c5fc5dbc03851b5c8db7f7551dc15dd25f6aaa29ac20a2fd7604a"
+    },
+    {
+      "path": "templates/public/profile.html",
+      "sha256": "af4be8b768217b6bc969db15040d97745f1a50f2a2765a5a3c69b82a46429a22"
+    },
+    {
+      "path": "templates/staff/base.html",
+      "sha256": "a6f3b698cb48cc1a9cf418397702732f254411cd81e0613eec99ae236b996ffc"
+    },
+    {
+      "path": "templates/staff/branches.html",
+      "sha256": "e51c24e5706dfe397815bf99de5aa0162e07c621ea68794554502042af6b457b"
+    },
+    {
+      "path": "templates/staff/catalog.html",
+      "sha256": "a930fdaa8c0284fd6d70bffbe3ab37e5cdda089751c11ff3690f4c83b0bde985"
+    },
+    {
+      "path": "templates/staff/customers.html",
+      "sha256": "376921f4e2cba3fb67caa0e136d2135466aeb3026b95e4fa523f143b1d6f9e1a"
+    },
+    {
+      "path": "templates/staff/dashboard.html",
+      "sha256": "c83fb2506d5e4f62fabb5de079bc0347272eee16ea45680bed17f2e857abcb24"
+    },
+    {
+      "path": "templates/staff/reports.html",
+      "sha256": "ac0c67cca44cc3dbc67ea2e2b79616fb8975c2a6cda0a6a2824ab512c711f28f"
+    },
+    {
+      "path": "templates/staff/resource_delete.html",
+      "sha256": "d79abe94c4745277ddca84b6c825de4ffae23fd5a4dba77b989cec84ac6e4aca"
+    },
+    {
+      "path": "templates/staff/resource_form.html",
+      "sha256": "5fa2cc414cbbaf318f0940e50ccbfbf43eb512e8c73ec168a0b22e8eb45c6ac4"
+    },
+    {
+      "path": "templates/staff/resource_list.html",
+      "sha256": "9f7af0cc4cfe2f7de7a5cf14e23660d5cb86f3114e71e170580308d7b7b1e385"
+    },
+    {
+      "path": "templates/staff/schedule.html",
+      "sha256": "dad3f56b62fe3bedabeaefcbe4557323ea0c8c972f45c6d1fe9fa6a4408958f8"
+    },
+    {
+      "path": "templates/staff/settings.html",
+      "sha256": "29cab6f9d2bf938737faec3a23d3097486945964b827a9404bf7632867e63e18"
+    }
+  ]
+}
