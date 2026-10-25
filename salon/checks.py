@@ -33,6 +33,10 @@ REQUIRED_TEMPLATES = (
     'features/resource_detail.html', 'features/resource_import.html', 'features/reports.html',
     'features/search.html', 'features/appointments.html', 'features/cancel.html',
     'features/reschedule.html',
+    'auth/password_reset.html', 'auth/password_reset_done.html', 'auth/password_reset_confirm.html',
+    'auth/password_reset_complete.html', 'auth/password_reset_email.txt', 'auth/password_reset_subject.txt',
+    'operations/notifications.html', 'operations/points.html', 'operations/audit.html',
+    'operations/week.html', 'operations/performance.html',
 )
 
 

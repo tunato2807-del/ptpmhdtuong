@@ -5,14 +5,14 @@
   <meta name="theme-color" content="#f8f7f4">
   <meta name="description" content="GENTLEMAN — Cắt tóc nam, chăm sóc phong cách. Khám phá dịch vụ, chọn stylist và đặt lịch tại chi nhánh gần bạn.">
   <title>{% block title %}GENTLEMAN · Phong cách của bạn{% endblock %}</title>
-  <link rel="stylesheet" href="{% static 'css/app.css' %}?v=20261025-4">
-  <link rel="stylesheet" href="{% static 'css/customer.css' %}?v=20261025-4">
-  <link rel="stylesheet" href="{% static 'css/management.css' %}?v=20261025-4">
-  <link rel="stylesheet" href="{% static 'css/typography.css' %}?v=20261025-4">
-  <script src="{% static 'js/app.js' %}?v=20261025-4" defer></script>
-  <script src="{% static 'js/customer.js' %}?v=20261025-4" defer></script>
-  <link rel="stylesheet" href="{% static 'css/motion.css' %}?v=20261025-4">
-  <script src="{% static 'js/motion.js' %}?v=20261025-4" defer></script>
+  <link rel="stylesheet" href="{% static 'css/app.css' %}?v=20261025-5">
+  <link rel="stylesheet" href="{% static 'css/customer.css' %}?v=20261025-5">
+  <link rel="stylesheet" href="{% static 'css/management.css' %}?v=20261025-5">
+  <link rel="stylesheet" href="{% static 'css/typography.css' %}?v=20261025-5">
+  <script src="{% static 'js/app.js' %}?v=20261025-5" defer></script>
+  <script src="{% static 'js/customer.js' %}?v=20261025-5" defer></script>
+  <link rel="stylesheet" href="{% static 'css/motion.css' %}?v=20261025-5">
+  <script src="{% static 'js/motion.js' %}?v=20261025-5" defer></script>
   {% block head %}{% endblock %}
 </head>
 <body class="{% block body_class %}customer-app{% endblock %}">
@@ -22,7 +22,7 @@
   <a class="brand" href="{% url 'home' %}" aria-label="GENTLEMAN — Trang chủ"><span class="brand-emblem" aria-hidden="true">g.</span><span>gentleman<small>BARBER HOUSE</small></span></a>
   <nav id="customer-nav" aria-label="Điều hướng chính"><a href="{% url 'feature_search' %}">Tìm kiếm</a>
     <a href="{% url 'home' %}#dich-vu">Dịch vụ</a><a href="{% url 'home' %}#phong-cach">Góc phong cách</a><a href="{% url 'home' %}#chi-nhanh">Chi nhánh</a>
-    {% if user.is_authenticated %}<a href="{% url 'my_appointments' %}">Lịch của tôi</a><a href="{% url 'profile' %}">Tài khoản</a>{% if user.is_operator %}<a href="{% url 'dashboard' %}">Quản lý <svg width="20" height="20" class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a>{% endif %}{% else %}<a href="{% url 'login' %}">Đăng nhập</a>{% endif %}
+    {% if user.is_authenticated %}<a href="{% url 'my_appointments' %}">Lịch của tôi</a><a href="{% url 'profile' %}">Tài khoản</a><a href="{% url 'notifications' %}">Thông báo</a>{% if user.is_operator %}<a href="{% url 'dashboard' %}">Quản lý <svg width="20" height="20" class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a>{% endif %}{% else %}<a href="{% url 'login' %}">Đăng nhập</a>{% endif %}
 
   </nav>
   <div class="header-actions">

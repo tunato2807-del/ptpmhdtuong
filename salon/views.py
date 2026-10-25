@@ -137,16 +137,19 @@ def appointment_detail(request, pk):
     a = get_object_or_404(appointments_for(request.user), pk=pk)
     chairs = Chair.objects.filter(branch=a.branch, active=True)
     return render(request, 'public/appointment_detail.html', {'appointment': a, 'chairs': chairs, 'review_form': ReviewForm(),
-        'can_change_booking': a.status == 'booked' and (request.user.is_operator or a.start_at-timezone.now() >= timedelta(hours=2))})
+        'max_redeem_points': min(a.customer.points, a.total // 5000), 'can_change_booking': a.status == 'booked' and (request.user.is_operator or a.start_at-timezone.now() >= timedelta(hours=2))})
 
 @login_required
 @require_POST
 def appointment_action(request, pk):
     get_object_or_404(appointments_for(request.user), pk=pk)
     try:
+        point_value = request.POST.get('redeem_points', '0').strip() or '0'
+        if not point_value.isascii() or not point_value.isdecimal() or len(point_value) > 9:
+            raise ValidationError('Số điểm sử dụng không hợp lệ.')
         a = transition(pk=pk, actor=request.user, action=request.POST.get('action'),
                        chair_id=request.POST.get('chair') if request.POST.get('chair', '').isascii() and request.POST.get('chair', '').isdecimal() and len(request.POST.get('chair', '')) <= 18 else None,
-                       method=request.POST.get('method', 'cash'), confirmation=request.POST.get('confirmation', ''))
+                       method=request.POST.get('method', 'cash'), confirmation=request.POST.get('confirmation', ''), redeem_points=int(point_value))
     except (ValidationError, IntegrityError) as e:
         messages.error(request, ' '.join(e.messages) if isinstance(e, ValidationError) else 'Dữ liệu vừa thay đổi. Vui lòng thử lại.')
     else:

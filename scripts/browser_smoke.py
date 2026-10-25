@@ -7,6 +7,7 @@ import os
 import sys
 import uuid
 from datetime import datetime, timedelta
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from urllib.parse import urlsplit
 from zoneinfo import ZoneInfo
@@ -17,7 +18,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 import django
 django.setup()
 from django.conf import settings
-from salon.models import User, Appointment, Invoice, Review, AuditLog, Notification
+from salon.models import User, Appointment, Invoice, Review, AuditLog, Notification, PointEntry
 from playwright.sync_api import sync_playwright, expect
 
 BASE_URL = os.getenv('APP_BASE_URL', 'http://127.0.0.1:8000').rstrip('/')
@@ -36,6 +37,7 @@ def cleanup():
     user = User.objects.filter(username=username).first()
     if not user: return
     appointments = Appointment.objects.filter(customer=user)
+    PointEntry.objects.filter(customer=user).delete()
     Invoice.objects.filter(appointment__in=appointments).delete()
     Review.objects.filter(appointment__in=appointments).delete()
     AuditLog.objects.filter(appointment__in=appointments).delete()
@@ -94,9 +96,30 @@ try:
         page.locator('#id_confirm').check()
         page.get_by_role('button',name='Xác nhận hủy',exact=True).click()
         expect(page.locator('.badge.large')).to_contain_text('Đã hủy')
-        choose_booking(page,today)
+        # A real "book today" flow has no slots after closing time. Keep UI booking
+        # in the future, then prepare ONLY our own fixture for same-day check-in.
+        choose_booking(page,today+timedelta(days=1))
         page.locator('#submit-booking').click(); page.wait_for_url('**/lich-hen/*/')
         appointment_url=page.url
+        appointment_pk=int(urlsplit(appointment_url).path.strip('/').split('/')[-1])
+        def prepare_checkin():
+            from django.db import connections
+            from salon.services import local_at
+            from datetime import time
+            try:
+                own=Appointment.objects.get(pk=appointment_pk,customer__username=username)
+                duration=own.end_at-own.start_at
+                cursor=local_at(today,own.branch.opens_at)
+                closing=local_at(today,own.branch.closes_at)
+                while cursor+duration<=closing:
+                    if not Appointment.objects.filter(employee=own.employee,status__in=['booked','checked_in','in_service'],start_at__lt=cursor+duration,end_at__gt=cursor).exclude(pk=own.pk).exists():
+                        Appointment.objects.filter(pk=own.pk,customer__username=username).update(start_at=cursor,end_at=cursor+duration)
+                        return
+                    cursor+=timedelta(minutes=15)
+                raise AssertionError('No free fixture interval for check-in.')
+            finally:connections.close_all()
+        with ThreadPoolExecutor(max_workers=1) as fixture_pool:
+            fixture_pool.submit(prepare_checkin).result()
         sign_out(page); sign_in(page,'letan')
         page.goto(appointment_url)
         page.locator('#chair').select_option(index=2)

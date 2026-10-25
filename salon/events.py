@@ -14,7 +14,7 @@ class AuditObserver:
 
 class NotificationObserver:
     def update(self, event):
-        Notification.objects.create(recipient=event.appointment.customer,
+        Notification.objects.create(recipient=event.appointment.customer, appointment=event.appointment,
             message=f'{event.appointment.code}: {event.message}')
 
 class AppointmentPublisher:

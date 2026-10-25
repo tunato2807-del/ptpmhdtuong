@@ -70,3 +70,8 @@ Bản ghi gắn với lịch sử được bảo vệ. Ca làm có lịch hẹn 
 Dùng chức năng Backup/Restore của pgAdmin. Hoặc khi PostgreSQL client nằm trong PATH: `pg_dump -h 127.0.0.1 -U postgres -d gentleman -Fc -f gentleman.dump`; công cụ hỏi mật khẩu riêng. Không đưa backup/mật khẩu vào Git. Chỉ thử restore vào database riêng trước khi dùng với dữ liệu thật. Việc xóa mã nguồn không xóa dữ liệu của máy chủ PostgreSQL.
 
 Đây là bản phát triển/trình diễn. Runserver không phải dịch vụ production. Triển khai công khai cần máy chủ ứng dụng phù hợp, HTTPS, secret riêng, cấu hình host, backup và giám sát; chưa được tuyên bố đã thực hiện.
+
+
+## Email, điểm và sao lưu
+
+Bản mới cần migrate 0003/0004. Hướng dẫn SMTP/local email, lịch sử/sử dụng điểm, lịch tuần và lệnh backup/restore có đối chiếu tại [Hoàn thiện chức năng](11-HOAN-THIEN-CHUC-NANG.md). Không tự cài SMTP hoặc lịch sao lưu trên máy người dùng.

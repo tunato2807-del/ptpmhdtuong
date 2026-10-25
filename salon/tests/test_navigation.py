@@ -49,6 +49,9 @@ class NavigationTests(Fixtures, TestCase):
                 absolute = urlsplit(urljoin('http://testserver' + url, href))
                 if absolute.netloc != 'testserver' or absolute.scheme not in ('http', 'https'): continue
                 next_url = absolute.path + ('?' + absolute.query if absolute.query else '')
+                # Calendar navigation is an unbounded graph of dates: sample adjacent weeks.
+                if absolute.path == '/quan-ly/lich-tuan/' and sum(urlsplit(item).path == absolute.path for item in seen) >= 3:
+                    continue
                 if next_url not in seen: queue.append(next_url)
         return seen
 

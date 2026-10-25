@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 from django.utils import timezone
 from salon.models import (User, Branch, Service, Employee, Chair, Shift, Appointment,
-                          AppointmentItem, Invoice, Review, Notification)
+                          AppointmentItem, Invoice, Review, Notification, PointEntry)
 from salon.services import local_at
 
 class Command(BaseCommand):
@@ -74,6 +74,7 @@ class Command(BaseCommand):
                     inv = Invoice.objects.create(appointment=a,total=service.price,method=method,cashier=users[0])
                     Invoice.objects.filter(pk=inv.pk).update(paid_at=a.end_at)
                     customer.points += service.price//10000; customer.save(update_fields=['points'])
+                    PointEntry.objects.create(customer=customer, invoice=inv, kind='earned', amount=service.price//10000, balance=customer.points)
                 return a
             for offset in range(14,0,-1):
                 day = today-timedelta(days=offset)

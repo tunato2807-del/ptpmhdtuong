@@ -4,6 +4,8 @@ Dự án tiếng Việt dùng Django 5.2 LTS, PostgreSQL và giao diện riêng 
 
 Xem [bản cập nhật animation và ảnh tự chuyển](docs/09-ANIMATION-VA-ANH-TU-CHUYEN.md) để copy 5 file bổ sung.
 
+Xem [các chức năng đã hoàn thiện và hướng dẫn cập nhật](docs/11-HOAN-THIEN-CHUC-NANG.md): quên mật khẩu, thông báo, nhật ký, lịch tuần, hiệu quả hoạt động, điểm và backup/restore. **Bản này cần chạy migrate 0003/0004.**
+
 ## Sửa bản copy thiếu file
 
 Nếu gặp `TemplateDoesNotExist: features/page.html`, xem [hướng dẫn sửa và đồng bộ từng file có sao lưu](docs/10-SUA-LOI-TEMPLATE-VA-DONG-BO-FILE.md). Script `scripts/cap_nhat_du_an.py` tải đúng những file nguồn thiếu/khác từ một commit cố định, kiểm tra SHA256 trước khi thay; giữ `.env`, `.venv` và database. Có thể tiếp tục copy từng file thủ công theo các link trong hướng dẫn.
@@ -90,6 +92,12 @@ Tài khoản mẫu chỉ dùng để trình diễn. `seed_demo` chỉ chạy khi
 | `/quan-ly/thiet-lap/` | Quản trị riêng: dịch vụ, chi nhánh, stylist, ghế, ca làm, tài khoản |
 | `/quan-ly/bao-cao/` | Lọc doanh thu, phân trang và xuất Excel/PDF/CSV |
 | `/tim-kiem/` | Tìm dịch vụ, chi nhánh, stylist |
+| `/quen-mat-khau/` | Khôi phục mật khẩu bằng email local/SMTP |
+| `/thong-bao/` | Thông báo đã đọc/chưa đọc của mình |
+| `/diem-tich-luy/` | Quy tắc và lịch sử điểm |
+| `/quan-ly/nhat-ky/` | Nhật ký thao tác dành cho quản trị |
+| `/quan-ly/lich-tuan/` | Lịch bảy ngày theo chi nhánh/stylist |
+| `/quan-ly/hieu-qua/` | Tỷ lệ hủy, so kỳ trước, dịch vụ và stylist |
 
 Quản trị viên quản lý nguồn lực bằng nút Thêm, Sửa, Xóa trên giao diện riêng. Quyền dựa vào vai trò `manager`, không cần cờ Django staff/superuser. Lễ tân xem và vận hành trong chi nhánh phụ trách, không được chỉnh thiết lập. Khách chỉ sửa hồ sơ của mình; không tự sửa vai trò hoặc điểm.
 
@@ -107,7 +115,7 @@ Nếu thay thư mục bằng ZIP mới, nhớ sao chép `.env` của bạn vào 
 python scripts/dev.py check
 ```
 
-94 kiểm thử hiện tại dùng PostgreSQL thực và database test riêng. Tài khoản PostgreSQL chạy tests cần quyền CREATEDB và tạo `btree_gist`. Lệnh check thu thập static trước tests để manifest nhận đủ ảnh/font/CSS mới.
+114 kiểm thử hiện tại dùng PostgreSQL thực và database test riêng. Tài khoản PostgreSQL chạy tests cần quyền CREATEDB và tạo `btree_gist`. Lệnh check thu thập static trước tests để manifest nhận đủ ảnh/font/CSS mới.
 
 Browser checks tùy chọn, cần server local DEBUG=1 có dữ liệu mẫu. `scripts/interface_smoke.py` kiểm tra bố cục, CSS/font, biểu tượng và đăng xuất ở sáu kích thước màn hình. Các kiểm tra khác:
 
@@ -117,6 +125,7 @@ Browser checks tùy chọn, cần server local DEBUG=1 có dữ liệu mẫu. `s
 .\.venv\Scripts\python.exe scripts/browser_smoke.py
 .\.venv\Scripts\python.exe scripts/customer_ui_smoke.py
 .\.venv\Scripts\python.exe scripts/management_smoke.py
+.\.venv\Scripts\python.exe scripts/operations_smoke.py
 ```
 
 Có thể đặt `BROWSER_EXECUTABLE` nếu đã có Chromium. Browser smoke nghiệp vụ và quản trị tạo dữ liệu riêng rồi dọn đúng bản ghi của nó. Không chạy trên hệ thống production. GitHub Actions dùng PostgreSQL native và ma trận Python 3.12/3.14; trạng thái chạy trên GitHub cần xem tab Actions.
@@ -124,9 +133,9 @@ Có thể đặt `BROWSER_EXECUTABLE` nếu đã có Chromium. Browser smoke ngh
 ## Tài liệu và cấu trúc
 
 - [Phân tích yêu cầu](docs/01-PHAN-TICH.md), [thiết kế](docs/02-THIET-KE.md), [triển khai](docs/03-TRIEN-KHAI.md), [kiểm thử](docs/04-KIEM-THU.md).
-- [80 tên cột tiếng Việt](docs/05-TEN-COT-DU-LIEU.md), [giao diện khách hàng](docs/06-GIAO-DIEN-KHACH-HANG.md), [quản trị và trang cá nhân](docs/07-QUAN-TRI-RIENG.md).
+- [91 tên cột tiếng Việt](docs/05-TEN-COT-DU-LIEU.md), [giao diện khách hàng](docs/06-GIAO-DIEN-KHACH-HANG.md), [quản trị và trang cá nhân](docs/07-QUAN-TRI-RIENG.md).
 - [Báo cáo Word](docs/BAO_CAO_PHAN_TICH_THIET_KE.docx), [nguồn ảnh/font](docs/NGUON-TAI-NGUYEN.md).
 
 `salon/management_views.py` xử lý CRUD, `salon/profile_views.py` xử lý hồ sơ/mật khẩu, `salon/forms.py` kiểm tra dữ liệu, `salon/services.py` xử lý đặt lịch/thanh toán có transaction. `templates/staff/` chứa cổng quản lý riêng; `static/css/management.css` định dạng các màn hình mới. `scripts/dev.py` chạy được trên Windows/Linux/macOS.
 
-Ứng dụng phục vụ học tập, chưa triển khai công khai. Thanh toán thẻ là mô phỏng; chưa tích hợp ngân hàng, SMS/email, tải lớn hoặc phục hồi mật khẩu qua email. Ảnh chụp là ảnh minh họa trải nghiệm; thông tin demo không đại diện cửa hàng thực.
+Ứng dụng phục vụ học tập, chưa triển khai công khai. Thanh toán thẻ là mô phỏng; chưa tích hợp ngân hàng/SMS hoặc kiểm chứng tải lớn. Reset mật khẩu dùng email local để demo hoặc SMTP tự cấu hình; kiểm thử chưa gửi qua nhà cung cấp SMTP thật. Ảnh chụp là ảnh minh họa trải nghiệm; thông tin demo không đại diện cửa hàng thực.

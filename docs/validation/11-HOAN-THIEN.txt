@@ -1,0 +1,33 @@
+Validation date: 2026-10-25
+Environment: Python 3.12, Django 5.2, native PostgreSQL 17, Chromium headless.
+
+114 Django tests: PASS (77.443 seconds; test database teardown completed).
+Includes reset email/token reuse/expiry/CSRF, notification ownership/read state,
+manager audit, branch-scoped weekly calendar and performance exports, point ledger,
+opening balance migration, concurrent redemption from two branches, backup guards,
+and all prior booking/CRUD/import/PDF/navigation tests.
+
+342 interface route/viewport checks: PASS at 320/390/768/1024/1440/1920px.
+No JavaScript/asset errors or horizontal page overflow.
+
+New operations browser flow: PASS.
+Local reset email + token + login; unread/read notifications; redeem points preview;
+actual net checkout and invoice; point history; weekly/audit/performance responsive
+screens; XLSX/PDF downloads. All private fixture users, appointments, ledger rows
+and own reset mail files cleaned up.
+
+Original browser workflow: PASS.
+Registration, booking, cancellation, receptionist check-in, service, simulated
+payment, invoice, review, CSV, mobile/tablet menu. Same-day check-in is prepared
+only on the test user's own appointment so this check also works after closing.
+No existing business records are edited by that fixture preparation.
+
+Native backup and restore: PASS.
+pg_dump custom format and metadata use the same repeatable-read snapshot.
+Restored into a new isolated database, exact row counts matched across 22 tables.
+Second restore to the existing target was refused. Only the temporary verification
+database was dropped; source database unchanged. Private dump retained in .local.
+
+Django check, collectstatic, migration drift: PASS.
+No real SMTP delivery, bank integration, public deployment, production restore or
+installation of Task Scheduler jobs is claimed.

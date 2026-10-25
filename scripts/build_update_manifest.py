@@ -13,7 +13,7 @@ files = []
 for name in paths:
     if name == 'scripts/update_manifest.json':
         continue
-    if name in {'manage.py', 'requirements.txt', 'requirements-dev.txt', 'README.md', '.env.example'} or name.startswith(('config/', 'salon/', 'templates/', 'static/', 'scripts/')):
+    if name in {'manage.py', 'requirements.txt', 'requirements-dev.txt', 'README.md', '.env.example'} or name.startswith(('config/', 'salon/', 'templates/', 'static/', 'scripts/', 'docs/')):
         data = subprocess.check_output(['git', 'show', ref + ':' + name], cwd=ROOT)
         files.append({'path': name, 'sha256': hashlib.sha256(data).hexdigest()})
 (ROOT / 'scripts/update_manifest.json').write_text(json.dumps({'ref': ref, 'files': files}, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')

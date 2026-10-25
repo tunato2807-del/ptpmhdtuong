@@ -19,7 +19,7 @@ class SourceUpdaterTests(SimpleTestCase):
                 updater.validate_manifest(self.manifest({name:b'bad'}))
 
     def test_complete_update_backups_missing_templates_and_keeps_private_files(self):
-        files={'manage.py':b'# current\n','templates/features/page.html':b'<h1>Ready</h1>'}
+        files={'manage.py':b'# current\n','templates/features/page.html':b'<h1>Ready</h1>','docs/report.docx':b'PK binary document'}
         manifest=self.manifest(files)
         def fetch(url):
             if url.endswith('update_manifest.json'): return json.dumps(manifest).encode()
@@ -31,6 +31,7 @@ class SourceUpdaterTests(SimpleTestCase):
                 self.assertEqual(updater.main(),0)
             self.assertEqual((root/'templates/features/page.html').read_bytes(),files['templates/features/page.html'])
             self.assertEqual((root/'.env').read_bytes(),b'private sentinel')
+            self.assertEqual((root/'docs/report.docx').read_bytes(),b'PK binary document')
             backups=list((root/'.local').glob('*/sao-luu/manage.py'))
             self.assertEqual(len(backups),1);self.assertEqual(backups[0].read_bytes(),b'# old\n')
 

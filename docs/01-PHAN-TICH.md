@@ -32,9 +32,17 @@ Stylist là nguồn lực được quản lý, chưa có cổng đăng nhập ri
 | FR07 | Phục vụ và thanh toán | Đúng thứ tự trạng thái, một hóa đơn, một lần cộng điểm |
 | FR08 | Phản hồi | Chỉ chủ lịch đã hoàn thành được đánh giá 1–5 sao, một lần |
 | FR09 | Nhân sự và ca làm | Ca không chồng lấn; không sửa ca làm mất khả năng phục vụ lịch đang giữ |
-| FR10 | Doanh thu | Tổng từ hóa đơn đã thanh toán theo ngày thanh toán, lọc chi nhánh, xuất CSV |
+| FR10 | Doanh thu | Thực thu sau giảm, theo ngày thanh toán; lọc chi nhánh; Excel/PDF/CSV |
 | FR11 | Thông báo và nhật ký | Mỗi thay đổi nghiệp vụ tạo thông báo cho khách và nhật ký người thao tác |
 | FR12 | Lễ tân đặt hộ | Phải chọn khách trong phạm vi cho phép, ghi đúng người tạo trong nhật ký |
+| FR13 | Khôi phục mật khẩu | Token 1 giờ, dùng một lần; không tiết lộ email tồn tại; local email/SMTP cấu hình |
+| FR14 | Thông báo đầy đủ | Lọc/phân trang, đọc một/tất cả chỉ POST, liên kết lịch và quyền sở hữu |
+| FR15 | Tra cứu nhật ký | Chỉ manager, lọc actor/ngày/nội dung/mã lịch, không sửa/xóa nhật ký |
+| FR16 | Lịch tuần | Bảy ngày, ca làm và lịch; lọc chi nhánh/stylist theo quyền |
+| FR17 | Hiệu quả hoạt động | So kỳ trước, tỷ lệ hủy/không đến, dịch vụ và stylist; doanh thu phân bổ khớp thực thu |
+| FR18 | Điểm tích lũy | 1 điểm/10.000đ thực trả; đổi 1.000đ/điểm tối đa 20%; ledger, khóa số dư, không dùng trùng |
+| FR19 | Sao lưu/phục hồi | Dump cùng snapshot, SHA256, phục hồi database mới và đối chiếu số dòng |
+| FR20 | Đổi lịch và nhập/xuất | Giữ mã/giá snapshot khi đổi; Excel xem trước/xác nhận nguyên tử; lọc và phân trang |
 
 ## 4. Phi chức năng
 
@@ -72,7 +80,7 @@ Lễ tân tìm khách bằng tên/điện thoại, mở lịch trong ngày, ch�
 
 ### UC04 — Thanh toán
 
-**Tiền điều kiện:** lịch `in_service`. Lễ tân kiểm tra dịch vụ, chọn tiền mặt hoặc thẻ mô phỏng. Thẻ yêu cầu xác nhận rõ. Server khóa lịch, lấy tổng từ các dòng snapshot, tạo hóa đơn unique, cộng điểm, hoàn thành lịch và phát sự kiện. Bất kỳ bước nào lỗi đều rollback. Không thu thập số thẻ, OTP hoặc thông tin ngân hàng.
+**Tiền điều kiện:** lịch `in_service`. Lễ tân kiểm tra dịch vụ, chọn tiền mặt hoặc thẻ mô phỏng. Thẻ yêu cầu xác nhận rõ. Server khóa lịch, lấy tổng từ các dòng snapshot, tạo hóa đơn unique, trừ điểm theo yêu cầu (tối đa 20%), cộng điểm từ thực thu, ghi ledger và hoàn thành lịch và phát sự kiện. Bất kỳ bước nào lỗi đều rollback. Không thu thập số thẻ, OTP hoặc thông tin ngân hàng.
 
 ### UC05 — Quản lý ca làm
 
@@ -84,7 +92,7 @@ Chọn từ/đến (tối đa 366 ngày) và chi nhánh được phép. Truy v�
 
 ## 6. Phạm vi bản hoàn thành
 
-Bao gồm website khách hàng, cổng điều hành, quản trị danh mục, database migration, dữ liệu mẫu, bộ kiểm thử, hướng dẫn chạy trực tiếp và tài liệu. Không bao gồm mobile native, mạng xã hội, SMS/email bên ngoài, thanh toán ngân hàng thật, sản phẩm kho, hoa hồng/lương, thuế, voucher, hoàn tiền, AI và HA. Các nội dung này là hướng phát triển sau, không được mô tả là đã thực hiện.
+Bao gồm website khách hàng, cổng điều hành, quản trị danh mục, reset mật khẩu, nhật ký/thông báo/lịch tuần, phân tích hiệu quả, điểm tích lũy và công cụ sao lưu/phục hồi, database migration, dữ liệu mẫu, bộ kiểm thử, hướng dẫn chạy trực tiếp và tài liệu. Không bao gồm mobile native, mạng xã hội, SMS, cấu hình/kiểm chứng nhà cung cấp SMTP bên ngoài, thanh toán ngân hàng thật, sản phẩm kho, hoa hồng/lương, thuế, voucher, hoàn tiền, AI và HA. Các nội dung này là hướng phát triển sau, không được mô tả là đã thực hiện.
 
 ## 7. Đối chiếu thiết kế ban đầu
 

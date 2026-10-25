@@ -1,10 +1,10 @@
 # Tên thuộc tính trong các bảng dữ liệu
 
-Các cột của 12 bảng nghiệp vụ dùng tiếng Việt viết liền không dấu, chữ thường, không có dấu gạch dưới. Tên bảng giữ nguyên. Các kiểu dữ liệu vẫn bằng tiếng Anh và giữ nguyên kiểu, độ dài, tính NULL, khóa chính/ngoại và ràng buộc của bản trước.
+Các cột của 13 bảng nghiệp vụ dùng tiếng Việt viết liền không dấu, chữ thường, không có dấu gạch dưới. Tên bảng giữ nguyên. Các kiểu dữ liệu vẫn bằng tiếng Anh. Migration đổi tên cột giữ nguyên kiểu dữ liệu cũ; các trường và bảng bổ sung có kiểu/ràng buộc theo thiết kế hiện tại.
 
 Django ánh xạ tên thuộc tính Python sang tên cột PostgreSQL bằng `db_column`. Ví dụ `User.full_name` truy vấn cột `hoten`, `Appointment.branch_id` truy vấn cột `machinhanh`. Các bảng kỹ thuật do Django quản lý (quyền, nhóm, session, bảng nối phân quyền) dùng quy ước của framework.
 
-Đã có database: chạy `python manage.py migrate --noinput` để áp dụng migration `0002_vietnamese_column_names`. Migration đổi tên cột, không xóa và tạo lại dữ liệu. Tệp `0001_initial.py` được giữ nguyên để có thể nâng cấp và hoàn tác đúng lịch sử.
+Đã có database: chạy `python manage.py migrate --noinput` để áp dụng migration `0002_vietnamese_column_names` và các migration 0003/0004 bổ sung thông báo, giảm điểm, số dư chuyển tiếp. Migration đổi tên cột không xóa và tạo lại dữ liệu. Tệp `0001_initial.py` được giữ nguyên để có thể nâng cấp và hoàn tác đúng lịch sử.
 
 Các giá trị enum như `booked`, `customer`, `cash` và các tham số API vẫn giữ nguyên; đây là giá trị dữ liệu/giao thức, không phải tên cột hoặc kiểu dữ liệu.
 
@@ -115,6 +115,8 @@ Các giá trị enum như `booked`, `customer`, `cash` và các tham số API v�
 | `id` | `mahoadon` | `bigint` | PK; NOT NULL |
 | `appointment_id` | `malichhen` | `bigint` | FK → salon_appointment.malichhen; UNIQUE; NOT NULL |
 | `total` | `tongthanhtoan` | `integer` | NOT NULL |
+| `discount` | `tiengiam` | `integer` | NOT NULL |
+| `points_used` | `diemdadung` | `integer` | NOT NULL |
 | `method` | `phuongthucthanhtoan` | `varchar(10)` | NOT NULL |
 | `paid_at` | `thoigianthanhtoan` | `timestamptz` | NOT NULL |
 | `cashier_id` | `mathungan` | `bigint` | FK → salon_user.manguoidung; NOT NULL |
@@ -135,6 +137,8 @@ Các giá trị enum như `booked`, `customer`, `cash` và các tham số API v�
 |---|---|---|---|
 | `id` | `mathongbao` | `bigint` | PK; NOT NULL |
 | `recipient_id` | `manguoinhan` | `bigint` | FK → salon_user.manguoidung; NOT NULL |
+| `appointment_id` | `malichhen` | `bigint` | FK → salon_appointment.malichhen; NULL |
+| `read_at` | `ngaydoc` | `timestamptz` | NULL |
 | `message` | `noidung` | `varchar(250)` | NOT NULL |
 | `created_at` | `ngaytao` | `timestamptz` | NOT NULL |
 
@@ -146,6 +150,18 @@ Các giá trị enum như `booked`, `customer`, `cash` và các tham số API v�
 | `actor_id` | `manguoithaotac` | `bigint` | FK → salon_user.manguoidung; NULL |
 | `appointment_id` | `malichhen` | `bigint` | FK → salon_appointment.malichhen; NULL |
 | `action` | `hanhdong` | `varchar(100)` | NOT NULL |
+| `created_at` | `ngaytao` | `timestamptz` | NOT NULL |
+
+## 13. Bảng salon_pointentry
+
+| Thuộc tính Python | Tên cột tiếng Việt | Kiểu dữ liệu | Ràng buộc chính |
+|---|---|---|---|
+| `id` | `mabiendong` | `bigint` | PK; NOT NULL |
+| `customer_id` | `makhachhang` | `bigint` | FK → salon_user.manguoidung; NOT NULL |
+| `invoice_id` | `mahoadon` | `bigint` | FK → salon_invoice.mahoadon; NULL |
+| `kind` | `loai` | `varchar(20)` | NOT NULL |
+| `amount` | `sodiem` | `integer` | NOT NULL |
+| `balance` | `sodusaubiendong` | `integer` | NOT NULL |
 | `created_at` | `ngaytao` | `timestamptz` | NOT NULL |
 
 ## Kiểm tra nhanh trong PostgreSQL

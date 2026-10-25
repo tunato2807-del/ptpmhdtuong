@@ -46,6 +46,8 @@ classDiagram
     +thoiluong
   }
   class Invoice {
+    +tiengiam
+    +diemdadung
     +tongthanhtoan
     +phuongthucthanhtoan
     +thoigianthanhtoan
@@ -68,3 +70,13 @@ classDiagram
   Appointment "1" --> "0..1" Review
   User "1" --> "*" Invoice : cashier
   note for User "Tên thuộc tính lưu trữ theo cột SQL; Python ánh xạ qua db_column"
+
+  class PointEntry {
+    +makhachhang
+    +mahoadon
+    +loai
+    +sodiem
+    +sodusaubiendong
+  }
+  User "1" --> "*" PointEntry
+  Invoice "0..1" --> "*" PointEntry

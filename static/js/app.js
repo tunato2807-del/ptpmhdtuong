@@ -95,3 +95,15 @@ if (bookingForm) {
   });
   updateStylists(); loadSlots(true);
 }
+
+const pointInput = document.querySelector('#redeem-points');
+const paymentPreview = document.querySelector('#payment-preview');
+if (pointInput && paymentPreview) {
+  const preview = () => {
+    const gross = Number(paymentPreview.dataset.gross);
+    const points = Number(pointInput.value);
+    const valid = Number.isInteger(points) && points >= 0 && points <= Number(pointInput.max);
+    paymentPreview.textContent = valid ? 'Cần thu: ' + new Intl.NumberFormat('vi-VN').format(gross-points*1000) + ' ₫ · Giảm ' + points + ' điểm' : 'Số điểm vượt giới hạn. Hãy kiểm tra lại.';
+  };
+  pointInput.addEventListener('input', preview); preview();
+}

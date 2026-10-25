@@ -47,9 +47,9 @@ PostgreSQL lưu Unicode bằng `varchar/text`, thời gian bằng `timestamptz`.
 | Shift | macalam bigint, manhanvien bigint, thoigianbatdau timestamptz, thoigianketthuc timestamptz | Kết thúc sau bắt đầu; exclusion nhân viên + khoảng thời gian; trong giờ mở cửa |
 | Appointment | malichhen bigint, makhachhang bigint, machinhanh bigint, manhanvien bigint, maghe bigint nullable, thoigianbatdau timestamptz, thoigianketthuc timestamptz, trangthai varchar(20), ghichu varchar(500), ngaytao timestamptz | Kết thúc sau bắt đầu; exclusion stylist/ghế trên lịch đang giữ; phân ghế khi check-in |
 | AppointmentItem | machitiet bigint, malichhen bigint, madichvu bigint, tendichvu varchar(100), giatien integer, thoiluong integer | Unique (malichhen, madichvu); snapshot tên/giá/thời lượng |
-| Invoice | mahoadon bigint, malichhen bigint unique, tongthanhtoan integer, phuongthucthanhtoan varchar(10), thoigianthanhtoan timestamptz, mathungan bigint | 0 hoặc 1 hóa đơn/lịch; bản ghi là giao dịch đã nhận tiền |
+| Invoice | mahoadon bigint, malichhen bigint unique, tongthanhtoan integer, tiengiam integer, diemdadung integer, phuongthucthanhtoan varchar(10), thoigianthanhtoan timestamptz, mathungan bigint | 0 hoặc 1 hóa đơn/lịch; bản ghi là giao dịch đã nhận tiền |
 | Review | madanhgia bigint, malichhen bigint unique, sosao smallint, binhluan varchar(500), ngaytao timestamptz | 1–5 sao ở validator và DB; chỉ chủ lịch đã hoàn thành |
-| Notification | mathongbao bigint, manguoinhan bigint, noidung varchar(250), ngaytao timestamptz | Thông báo nội bộ, không gửi email/SMS |
+| Notification | mathongbao bigint, manguoinhan bigint, malichhen bigint nullable, ngaydoc timestamptz nullable, noidung varchar(250), ngaytao timestamptz | Thông báo nội bộ, không gửi email/SMS |
 | AuditLog | manhatky bigint, manguoithaotac bigint nullable, malichhen bigint nullable, hanhdong varchar(100), ngaytao timestamptz | Nhật ký actor thực tế; FK SET NULL khi đối tượng bị xóa hợp lệ |
 
 Các FK liên quan lịch sử tài chính dùng `PROTECT` để không xóa mất khách, chi nhánh, stylist, dịch vụ và hóa đơn. Dòng dịch vụ dùng CASCADE từ lịch hẹn, nhưng lịch có hóa đơn bị PROTECT. Notification có thể CASCADE khi xóa tài khoản. Trong giao diện vận hành, dữ liệu cũ được ngừng hoạt động thay vì xóa.
@@ -119,11 +119,11 @@ Các thuộc tính lưu trữ trong sơ đồ lớp được trình bày theo t�
 |---|---|
 | Trang chủ | Hero ảnh chụp local, chọn chi nhánh nhanh, dịch vụ có bộ lọc, bộ sưu tập cuộn ngang, stylist, CTA đặt lịch |
 | Đặt lịch | 3 phần: chi nhánh, dịch vụ, stylist/thời gian; khung giờ tải JSON; tóm tắt giá; chống response cũ ghi đè khi đổi lựa chọn nhanh |
-| Lịch cá nhân | Lịch đang hoạt động, lịch sử 30 bản gần nhất, điểm và 5 thông báo gần nhất |
+| Lịch cá nhân | Lịch có tìm kiếm/phân trang; liên kết thông báo đọc/chưa đọc và lịch sử điểm |
 | Chi tiết | Mã, thời gian, chi nhánh, stylist, ghế, snapshot dịch vụ, thao tác theo role/state |
 | Tổng quan | Chọn ngày/chi nhánh; doanh thu, số lịch, hoàn thành, stylist; chart 7 ngày và bảng lọc/phân trang |
 | Ca làm | Danh sách stylist, ca và lịch khách trong ngày; dẫn vào chi tiết để vận hành |
-| Báo cáo | Khoảng ngày, chi nhánh, tổng/đếm/trung bình, bảng hóa đơn, CSV |
+| Báo cáo | Khoảng ngày, chi nhánh, tổng/đếm/trung bình, bảng hóa đơn, Excel/PDF/CSV |
 | Thiết lập riêng | Thêm/sửa/xóa tài khoản, dịch vụ, chi nhánh, stylist, ghế và ca làm; bảo vệ lịch sử |
 | Trang cá nhân | Sửa thông tin liên hệ, đổi mật khẩu có xác nhận mật khẩu hiện tại |
 
@@ -147,8 +147,21 @@ Giao diện khách hàng dùng nền kem `#f8f7f4`, chữ than `#222321`, cam đ
 | GET /quan-ly/* | Dashboard, khách, danh mục, ca, chi nhánh, báo cáo | Operator, có lọc scope |
 | GET /health/ | SELECT 1; HTTP 200/503 | Không chứa bí mật |
 
-Lỗi nhập liệu render lại form có thông báo; quyền sai 403 hoặc đối tượng ngoài scope 404; API tham số sai 400. Các thay đổi trạng thái chỉ POST và kiểm tra CSRF. Export CSV áp dụng cùng scope với báo cáo HTML.
+Lỗi nhập liệu render lại form có thông báo; quyền sai 403 hoặc đối tượng ngoài scope 404; API tham số sai 400. Các thay đổi trạng thái chỉ POST và kiểm tra CSRF. Export Excel/PDF/CSV áp dụng cùng scope với báo cáo HTML.
 
 ## 9. Quản trị riêng và hồ sơ
 
 Màn hình `/quan-ly/thiet-lap/` thay giao diện quản trị mặc định. `manager_required` kiểm tra vai trò ở mỗi request; profile chỉ cập nhật người đang đăng nhập. CRUD thay đổi trong transaction, khóa chi nhánh theo thứ tự và ghi audit. GET không xóa; POST yêu cầu CSRF và xác nhận. Chi tiết tại [Quản trị riêng](07-QUAN-TRI-RIENG.md).
+
+
+## 10. Hoàn thiện vận hành
+
+`operations.py` cung cấp trang thông báo, nhật ký, lịch tuần và hiệu quả; PasswordResetView/ConfirmView dùng token Django với timeout 1 giờ, local email trong DEBUG hoặc SMTP cấu hình. Notification thêm `malichhen` nullable và `ngaydoc`; chỉ người nhận được đánh dấu đọc qua POST.
+
+Invoice thêm `tiengiam`, `diemdadung`; `subtotal = total + discount`. Database ràng buộc discount = points_used × 1.000 và discount ≤ subtotal/5. `PointEntry` là bảng thứ 13, ghi customer/invoice/kind/amount/balance/created_at; unique invoice+kind và một opening mỗi khách, số điểm redeemed âm và earned/opening không âm. Migration ghi số dư chuyển tiếp, không cộng lại tiền/điểm cũ. Thanh toán khóa Branch → Appointment → User; cập nhật hóa đơn/số dư/ledger cùng transaction.
+
+Doanh thu theo ngày paid_at, số lịch/tỷ lệ hủy theo ngày start_at. So sánh kỳ trước có cùng độ dài. Doanh thu dịch vụ phân bổ thực thu theo tỷ trọng các dòng snapshot, phần dư làm tròn thuộc dòng cuối. Mọi query operator giữ scope chi nhánh.
+
+Backup dùng pg_dump custom từ exported snapshot repeatable-read cùng số dòng metadata; restore kiểm SHA256, chỉ tạo database mới, single transaction và so số dòng. Không phục hồi qua HTTP hoặc tự đổi cấu hình database đang dùng.
+
+Chi tiết đường dẫn, cấu hình và quy tắc: [Hoàn thiện chức năng](11-HOAN-THIEN-CHUC-NANG.md).

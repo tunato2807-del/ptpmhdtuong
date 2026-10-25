@@ -11,7 +11,7 @@ Python 3.12.14, Django 5.2.18, psycopg 3.3.6, PostgreSQL 17.11 native (Debian 17
 | `python scripts/dev.py setup --no-demo` | Đạt | Cài dependencies, kiểm tra PostgreSQL native, không có migration mới, collectstatic thành công; không nạp lại dữ liệu |
 | `manage.py check` | Đạt | 0 vấn đề |
 | `makemigrations --check --dry-run` | Đạt | No changes detected |
-| `manage.py test salon.tests --noinput` | Đạt | 53 test đã thực thi, 0 failed, 0 errors, 0 skipped |
+| `manage.py test salon.tests --noinput` | Đạt | 114 test đã thực thi, 0 failed, 0 errors, 0 skipped |
 | Migration tên cột tiếng Việt | Đạt | 80 cột/12 bảng; kiểu dữ liệu và toàn bộ bản ghi giữ nguyên; kiểm tra cả nâng cấp và hoàn tác |
 | `collectstatic --noinput` | Đạt | Static và manifest tạo thành công; chạy lại giữ nguyên tài nguyên không đổi |
 | `scripts/start.sh` | Đạt | Dùng PostgreSQL native đang chạy, kiểm tra migration và bật Django; không quản lý database qua container |
@@ -19,11 +19,11 @@ Python 3.12.14, Django 5.2.18, psycopg 3.3.6, PostgreSQL 17.11 native (Debian 17
 | Responsive | Đạt | Giao diện khách hàng 320/360/390/768/1024/1440 px; không tràn ngang; menu mobile/Escape hoạt động |
 | Customer UI smoke | Đạt | Bộ lọc, bộ sưu tập, preselect dịch vụ/stylist/chi nhánh, đăng nhập giữ lựa chọn, reduced motion, không JavaScript, ảnh/font local |
 | Quản trị và hồ sơ | Đạt | Tạo/sửa/xóa sáu nhóm, phân quyền manager, xác nhận xóa, sửa hồ sơ, xác thực mật khẩu hiện tại, đăng nhập lại; 320–1440 px |
-| Schema | Đạt | Không có migration mới; 80 tên cột tiếng Việt và kiểu dữ liệu giữ nguyên |
+| Schema | Đạt | 0003/0004 thêm trường và ledger; 91 cột/13 bảng, cột cũ giữ nguyên kiểu |
 | JavaScript | Đạt | Không có pageerror trong luồng browser smoke |
 | `check --deploy --fail-level WARNING` | Đạt với cấu hình production thử nghiệm | DEBUG=0 và secret ngẫu nhiên tạm thời; không phải bằng chứng đã bật HTTPS hoặc public deployment |
 | GitHub Actions | Chưa xác minh kết quả trên GitHub | Đã có workflow test/build; xem tab Actions của repository để theo dõi |
-| Thanh toán thật, SMS/email, tải lớn, restore production | Chưa thực hiện | Ngoài phạm vi bản dựng |
+| Ngân hàng/SMS, SMTP thật, tải lớn, restore production | Chưa thực hiện | Email giả lập và restore database thử đã kiểm tra; tích hợp bên ngoài chưa cấu hình |
 
 Bản quản trị riêng được kiểm tra trên PostgreSQL native, ứng dụng kết nối trực tiếp qua TCP. Chuyển dữ liệu cloud sang database native bằng pg_dump/pg_restore có backup; đối chiếu số dòng và SHA256 nội dung của cả 12 bảng trước/sau trùng nhau. Database nguồn được giữ nguyên. Đây là kiểm chứng chuyển môi trường phát triển, không thay cho diễn tập khôi phục production.
 
@@ -77,3 +77,10 @@ Không xem PID hoặc port mở là tiêu chí đủ; browser smoke kiểm tra h
 ## 6. Kết luận nghiệm thu bản phát triển
 
 Quy trình phát triển và trình diễn cốt lõi chạy trực tiếp với Python và PostgreSQL native, có hướng dẫn VS Code/Windows và script đa nền tảng. Mã nguồn và tài liệu được lưu trong checkout và đã đẩy lên nhánh main của repository GitHub tunato2807-del/ptpmhdtuong theo yêu cầu người dùng. Ứng dụng chưa được triển khai thành dịch vụ công khai. Cấu hình môi trường cloud được lưu nháp để người dùng xem và publish; việc publish và phục hồi ở task mới là bước riêng, chưa được tuyên bố đã kiểm chứng.
+
+
+## 8. Kiểm tra phần hoàn thiện
+
+114 tests bao gồm reset mật khẩu (email giả lập, token hết hạn/dùng lại, CSRF, gộp yêu cầu), thông báo và lịch sử điểm đúng chủ sở hữu, nhật ký chỉ manager, lịch tuần/báo cáo đúng scope, phân bổ doanh thu sau giảm, ràng buộc database và hai chi nhánh thanh toán đồng thời không dùng trùng điểm. Migration opening giữ nguyên số dư cũ, không cộng lại hóa đơn.
+
+Kiểm tra trình duyệt ở sáu chiều rộng trên bản mới bao phủ thêm thông báo, điểm, lịch tuần, hiệu quả, nhật ký và trang quên mật khẩu. Công cụ backup/restore đã chạy trên PostgreSQL native: 22 bảng phục hồi vào database thử mới có số dòng khớp snapshot, thử phục hồi lần hai bị từ chối; database thử được dọn sau kiểm tra, database nguồn giữ nguyên. Email SMTP thật và Windows Task Scheduler cần cấu hình trên máy triển khai, không được mô tả là đã xác minh trong phiên cloud.

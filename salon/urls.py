@@ -32,3 +32,6 @@ urlpatterns = [
 from .features import urlpatterns as feature_urls
 feature_names = {item.name for item in feature_urls}
 urlpatterns = feature_urls + [item for item in urlpatterns if item.name not in feature_names]
+
+from .operations import urlpatterns as operation_urls
+urlpatterns += operation_urls

@@ -410,7 +410,7 @@ def invoice_pdf(request,pk):
     appointment=get_object_or_404(appointments_for(request.user),pk=pk)
     invoice=get_object_or_404(Invoice,appointment=appointment)
     rows=[[item.name,item.duration,item.price] for item in appointment.items.all()]
-    rows.append(['Tổng thanh toán (VNĐ)','',invoice.total])
+    rows.extend([['Giá dịch vụ (VNĐ)', '', invoice.subtotal], [f'Giảm {invoice.points_used} điểm', '', -invoice.discount], ['Tổng thanh toán (VNĐ)','',invoice.total]])
     return pdf(f'{invoice.code} · {appointment.customer.full_name} · {appointment.branch.name}',
                ['Dịch vụ','Phút','Thành tiền (VNĐ)'],rows,invoice.code)
 

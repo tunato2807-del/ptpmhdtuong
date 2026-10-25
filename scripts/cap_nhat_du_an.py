@@ -17,7 +17,7 @@ from urllib.error import URLError
 from urllib.request import Request, urlopen
 
 RAW = 'https://raw.githubusercontent.com/tunato2807-del/ptpmhdtuong/'
-PREFIXES = ('config/', 'salon/', 'templates/', 'static/', 'scripts/')
+PREFIXES = ('config/', 'salon/', 'templates/', 'static/', 'scripts/', 'docs/')
 ROOT_FILES = {'manage.py', 'requirements.txt', 'requirements-dev.txt', 'README.md', '.env.example'}
 
 

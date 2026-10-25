@@ -12,6 +12,9 @@ erDiagram
     APPOINTMENT ||--o| INVOICE : "thanh toán"
     APPOINTMENT ||--o| REVIEW : "đánh giá"
     USER ||--o{ INVOICE : "thu ngân"
+    USER ||--o{ POINT_ENTRY : "sổ điểm"
+    INVOICE o|--o{ POINT_ENTRY : "biến động"
+    APPOINTMENT o|--o{ NOTIFICATION : "liên kết"
     USER ||--o{ NOTIFICATION : "nhận"
     USER o|--o{ AUDIT_LOG : "thao tác"
     APPOINTMENT o|--o{ AUDIT_LOG : "lưu vết"
@@ -75,6 +78,8 @@ erDiagram
       bigint mahoadon PK
       bigint malichhen FK,UK
       bigint mathungan FK
+      integer tiengiam
+      integer diemdadung
       integer tongthanhtoan
       varchar phuongthucthanhtoan
       timestamptz thoigianthanhtoan
@@ -88,6 +93,8 @@ erDiagram
     NOTIFICATION {
       bigint mathongbao PK
       bigint manguoinhan FK
+      bigint malichhen FK
+      timestamptz ngaydoc
       varchar noidung
     }
     AUDIT_LOG {
@@ -95,4 +102,13 @@ erDiagram
       bigint manguoithaotac FK
       bigint malichhen FK
       varchar hanhdong
+    }
+    POINT_ENTRY {
+      bigint mabiendong PK
+      bigint makhachhang FK
+      bigint mahoadon FK
+      varchar loai
+      integer sodiem
+      integer sodusaubiendong
+      timestamptz ngaytao
     }

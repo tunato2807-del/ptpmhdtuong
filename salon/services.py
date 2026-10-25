@@ -9,7 +9,7 @@ from django.db import transaction
 from django.db.models import F, Q
 from django.utils import timezone
 from .models import (Branch, Employee, Service, Shift, Appointment, AppointmentItem,
-                     Chair, Invoice, User, ACTIVE_STATUSES)
+                     Chair, Invoice, User, PointEntry, ACTIVE_STATUSES)
 from .events import publisher, AppointmentEvent
 
 def local_at(day, clock):
@@ -117,7 +117,7 @@ class PaymentFactory:
         return strategies[method]()
 
 @transaction.atomic
-def transition(*, pk, actor, action, chair_id=None, method='cash', confirmation=''):
+def transition(*, pk, actor, action, chair_id=None, method='cash', confirmation='', redeem_points=0):
     original = Appointment.objects.get(pk=pk)
     is_owner = actor.pk == original.customer_id
     if not is_owner or action != 'cancel':
@@ -160,8 +160,25 @@ def transition(*, pk, actor, action, chair_id=None, method='cash', confirmation=
             raise ValidationError('Chỉ thanh toán lịch đang phục vụ, mỗi lịch một lần.')
         payment = PaymentFactory.create(method)
         payment.validate(confirmation)
-        Invoice.objects.create(appointment=a, total=a.total, method=payment.method, cashier=actor)
-        User.objects.filter(pk=a.customer_id).update(points=F('points') + a.total // 10000)
+        customer = User.objects.select_for_update().get(pk=a.customer_id)
+        if isinstance(redeem_points, bool) or not isinstance(redeem_points, int) or redeem_points < 0:
+            raise ValidationError('Số điểm sử dụng phải là số nguyên không âm.')
+        if redeem_points > customer.points or redeem_points * 1000 > a.total // 5:
+            raise ValidationError('Điểm không đủ hoặc giảm quá 20% giá dịch vụ. 1 điểm = 1.000đ.')
+        discount = redeem_points * 1000
+        invoice = Invoice.objects.create(appointment=a, total=a.total-discount, discount=discount,
+            points_used=redeem_points, method=payment.method, cashier=actor)
+        balance = customer.points
+        if not customer.point_entries.exists() and balance:
+            PointEntry.objects.create(customer=customer, kind='opening', amount=balance, balance=balance)
+        if redeem_points:
+            balance -= redeem_points
+            PointEntry.objects.create(customer=customer, invoice=invoice, kind='redeemed', amount=-redeem_points, balance=balance)
+        earned = invoice.total // 10000
+        balance += earned
+        PointEntry.objects.create(customer=customer, invoice=invoice, kind='earned', amount=earned, balance=balance)
+        customer.points = balance
+        customer.save(update_fields=['points'])
         a.status = Appointment.Status.COMPLETED
         message = 'Đã thanh toán và hoàn thành dịch vụ'
     elif action == 'no_show':

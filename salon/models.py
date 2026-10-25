@@ -180,14 +180,19 @@ class Invoice(models.Model):
         MOCK = 'mock', 'Thẻ mô phỏng'
     appointment = models.OneToOneField(Appointment, on_delete=models.PROTECT, related_name='invoice', db_column='malichhen')
     total = models.PositiveIntegerField('Tổng thanh toán', db_column='tongthanhtoan')
+    discount = models.PositiveIntegerField('Giảm từ điểm (VNĐ)', default=0, db_column='tiengiam')
+    points_used = models.PositiveIntegerField('Điểm đã dùng', default=0, db_column='diemdadung')
     method = models.CharField('Phương thức', max_length=10, choices=Method.choices, db_column='phuongthucthanhtoan')
     paid_at = models.DateTimeField('Thanh toán lúc', auto_now_add=True, db_column='thoigianthanhtoan')
     cashier = models.ForeignKey(User, on_delete=models.PROTECT, db_column='mathungan')
     class Meta:
+        constraints = [models.CheckConstraint(condition=Q(discount=F('points_used') * 1000), name='invoice_points_discount'), models.CheckConstraint(condition=Q(discount__lte=(F('total') + F('discount')) / 5), name='invoice_discount_limit')]
         verbose_name = 'Hóa đơn đã thanh toán'
         verbose_name_plural = 'Hóa đơn đã thanh toán'
     @property
     def code(self): return f'HD{self.pk:05d}'
+    @property
+    def subtotal(self): return self.total + self.discount
 
 class Review(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_column='madanhgia')
@@ -201,6 +206,8 @@ class Review(models.Model):
 class Notification(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', db_column='mathongbao')
     recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications', db_column='manguoinhan')
+    appointment = models.ForeignKey(Appointment, null=True, blank=True, on_delete=models.SET_NULL, db_column='malichhen')
+    read_at = models.DateTimeField(null=True, blank=True, db_column='ngaydoc')
     message = models.CharField(max_length=250, db_column='noidung')
     created_at = models.DateTimeField(auto_now_add=True, db_column='ngaytao')
 
@@ -210,3 +217,24 @@ class AuditLog(models.Model):
     appointment = models.ForeignKey(Appointment, null=True, on_delete=models.SET_NULL, db_column='malichhen')
     action = models.CharField(max_length=100, db_column='hanhdong')
     created_at = models.DateTimeField(auto_now_add=True, db_column='ngaytao')
+
+
+class PointEntry(models.Model):
+    class Kind(models.TextChoices):
+        OPENING = 'opening', 'Số dư chuyển tiếp'
+        EARNED = 'earned', 'Tích điểm thanh toán'
+        REDEEMED = 'redeemed', 'Sử dụng điểm'
+    id = models.BigAutoField(primary_key=True, db_column='mabiendong')
+    customer = models.ForeignKey(User, on_delete=models.PROTECT, related_name='point_entries', db_column='makhachhang')
+    invoice = models.ForeignKey(Invoice, null=True, blank=True, on_delete=models.PROTECT, db_column='mahoadon')
+    kind = models.CharField(max_length=20, choices=Kind.choices, db_column='loai')
+    amount = models.IntegerField(db_column='sodiem')
+    balance = models.PositiveIntegerField(db_column='sodusaubiendong')
+    created_at = models.DateTimeField(auto_now_add=True, db_column='ngaytao')
+    class Meta:
+        ordering = ['-created_at', '-pk']
+        constraints = [
+            models.UniqueConstraint(fields=['invoice', 'kind'], condition=Q(invoice__isnull=False), name='points_invoice_kind_unique'),
+            models.UniqueConstraint(fields=['customer'], condition=Q(kind='opening'), name='points_opening_unique'),
+            models.CheckConstraint(condition=Q(kind='redeemed', amount__lt=0) | Q(kind__in=['opening','earned'], amount__gte=0), name='points_amount_sign'),
+        ]

@@ -21,7 +21,7 @@ class VietnameseColumnMigrationTests(TransactionTestCase):
 
     def tearDown(self):
         try:
-            self.migrate(self.new_target)
+            self.migrate(MigrationExecutor(connection).loader.graph.leaf_nodes())
         finally:
             super().tearDown()
 
@@ -92,3 +92,23 @@ class VietnameseColumnMigrationTests(TransactionTestCase):
         final_apps = self.migrate(self.new_target)
         self.assertEqual(self.snapshot(final_apps), before)
         self.assertEqual(final_apps.get_model('salon', 'User').objects.get(pk=user_id).groups.count(), 1)
+
+
+class OpeningPointsMigrationTests(TransactionTestCase):
+    def test_opening_balances_preserve_old_points_and_rebuild_without_double_credit(self):
+        executor=MigrationExecutor(connection)
+        target=[('salon','0002_vietnamese_column_names')]
+        try:
+            executor.migrate(target)
+            User=executor.loader.project_state(target).apps.get_model('salon','User')
+            user=User.objects.create(username='opening-ledger',password='!',points=37)
+            latest=MigrationExecutor(connection).loader.graph.leaf_nodes()
+            executor=MigrationExecutor(connection);executor.migrate(latest)
+            apps=executor.loader.project_state(latest).apps
+            self.assertEqual(apps.get_model('salon','User').objects.get(pk=user.pk).points,37)
+            self.assertEqual(apps.get_model('salon','PointEntry').objects.get(customer_id=user.pk).balance,37)
+            executor=MigrationExecutor(connection);executor.migrate(target)
+            executor=MigrationExecutor(connection);executor.migrate(latest)
+            self.assertEqual(executor.loader.project_state(latest).apps.get_model('salon','PointEntry').objects.filter(customer_id=user.pk).count(),1)
+        finally:
+            executor=MigrationExecutor(connection);executor.migrate(executor.loader.graph.leaf_nodes())

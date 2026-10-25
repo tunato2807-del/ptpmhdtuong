@@ -25,7 +25,7 @@ if not settings.DEBUG or urlsplit(BASE).hostname not in ('127.0.0.1', 'localhost
     raise SystemExit('Run only on a local DEBUG demo using this checkout/database.')
 WIDTHS = (320, 390, 768, 1024, 1440, 1920)
 SESSIONS = {}
-ROUTES = {'anonymous': ['/', '/dang-nhap/', '/dang-ky/', '/tim-kiem/']}
+ROUTES = {'anonymous': ['/', '/dang-nhap/', '/dang-ky/', '/tim-kiem/', '/quen-mat-khau/']}
 for role in ('customer', 'receptionist', 'manager'):
     user = User.objects.filter(role=role, is_active=True).first()
     if not user:
@@ -33,12 +33,12 @@ for role in ('customer', 'receptionist', 'manager'):
     client = Client()
     client.force_login(user)
     SESSIONS[role] = client.session.session_key
-    ROUTES[role] = ['/', '/tai-khoan/', '/dat-lich/', '/lich-cua-toi/']
+    ROUTES[role] = ['/', '/tai-khoan/', '/dat-lich/', '/lich-cua-toi/', '/thong-bao/', '/diem-tich-luy/']
     if user.is_operator:
         ROUTES[role] += ['/quan-ly/', '/quan-ly/khach-hang/', '/quan-ly/dich-vu/',
-                         '/quan-ly/chi-nhanh/', '/quan-ly/ca-lam/', '/quan-ly/bao-cao/']
+                         '/quan-ly/chi-nhanh/', '/quan-ly/ca-lam/', '/quan-ly/bao-cao/', '/quan-ly/lich-tuan/', '/quan-ly/hieu-qua/']
     if user.is_manager:
-        ROUTES[role] += ['/quan-ly/thiet-lap/']
+        ROUTES[role] += ['/quan-ly/thiet-lap/', '/quan-ly/nhat-ky/']
         for key in ('dich-vu', 'chi-nhanh', 'stylist', 'ghe', 'ca-lam', 'tai-khoan'):
             ROUTES[role] += [f'/quan-ly/thiet-lap/{key}/', f'/quan-ly/thiet-lap/{key}/them/']
         service = Service.objects.first()
