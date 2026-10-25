@@ -1,13 +1,17 @@
+Database: gentleman · User: gentleman · Host: 127.0.0.1 · Port: 5433
+Kết nối PostgreSQL thành công.
 System check identified no issues (0 silenced).
 No changes detected
+
+0 static files copied to '/workspace/ptpmhdtuong/staticfiles', 28 unmodified, 19 post-processed.
 Creating test database for alias 'default'...
-...................................
+Got an error creating the test database: database "test_gentleman" already exists
+Destroying old test database for alias 'default'...
+.....................................................
 ----------------------------------------------------------------------
-Ran 35 tests in 29.824s
+Ran 53 tests in 38.195s
 
 OK
 Destroying test database for alias 'default'...
-Found 35 test(s).
+Found 53 test(s).
 System check identified no issues (0 silenced).
-
-0 static files copied to '/workspace/ptpmhdtuong/staticfiles', 130 unmodified, 362 post-processed.

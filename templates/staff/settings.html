@@ -1,0 +1,8 @@
+{% extends 'staff/base.html' %}
+{% block title %}Thiết lập & nhân sự · GENTLEMAN{% endblock %}
+{% block breadcrumb %}Thiết lập & nhân sự{% endblock %}
+{% block staff_content %}
+<div class="page-heading"><div><div class="eyebrow">KHÔNG GIAN QUẢN TRỊ CỦA BẠN</div><h1>Thiết lập & nhân sự<span class="greeting-dot">.</span></h1><p>Chủ động quản lý các nguồn lực của chuỗi ngay tại đây.</p></div><a class="btn btn-outline" href="{% url 'profile' %}">Hồ sơ của tôi {% include 'partials/icon_arrow.html' %}</a></div>
+<div class="settings-grid">{% for item in resources %}<a class="panel settings-card" href="{% url 'resource_list' item.resource.key %}"><div class="settings-card-top"><span class="settings-count">{{ item.count }}</span><span aria-hidden="true">{% include 'partials/icon_arrow.html' %}</span></div><h2>{{ item.resource.title }}</h2><p>{{ item.resource.description }}</p><span class="text-link">Mở quản lý →</span></a>{% endfor %}</div>
+<div class="info-note">Dữ liệu đã phát sinh lịch hẹn hoặc hóa đơn được giữ để tra cứu. Các mục không còn sử dụng có thể tạm ngừng; bản ghi chưa có liên kết có thể xóa.</div>
+{% endblock %}

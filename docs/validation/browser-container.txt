@@ -1,1 +1,0 @@
-PASS: registration, booking, cancellation, reception check-in, service, mock payment, invoice, review, CSV, mobile/tablet, menu; no JavaScript errors.

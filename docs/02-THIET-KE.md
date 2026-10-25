@@ -21,7 +21,7 @@ flowchart LR
 - `views.py`: xác thực, quyền trên đối tượng, truy vấn hiển thị, HTTP, CSV.
 - `services.py`: lệnh đặt lịch/chuyển trạng thái có transaction, khóa và tái kiểm tra.
 - `events.py`: Publisher thông báo các Observer trong cùng transaction; không cần Redis/Celery.
-- `admin.py`: giao diện quản trị nguồn lực; lịch và hóa đơn chỉ đọc để tránh bỏ qua nghiệp vụ.
+- `management_views.py`: cổng CRUD riêng, phân quyền manager, khóa khi thay đổi nguồn lực; `profile_views.py`: hồ sơ và đổi mật khẩu. Lịch và hóa đơn giữ luồng nghiệp vụ riêng.
 
 ## 2. Mô hình use case
 
@@ -33,7 +33,7 @@ Nguồn: thiết kế từ yêu cầu và mã triển khai. Đây là sơ đồ 
 
 ![Sơ đồ 2.2: mô hình thực thể và quan hệ](diagrams/02-er.svg)
 
-PostgreSQL lưu Unicode bằng `varchar/text`, thời gian bằng `timestamptz`. Tất cả bảng nghiệp vụ có khóa chính `bigint`, đặt tên theo đối tượng: `manguoidung`, `machinhanh`, `malichhen`… Các trường bắt buộc không nhận NULL trừ khi ghi rõ. Tên bảng thực tế có tiền tố `salon_`. Các cột trong 12 bảng nghiệp vụ dùng tiếng Việt viết liền không dấu qua `db_column`, ví dụ `hoten`, `sodienthoai`, `thoigianbatdau`. Django còn quản lý các bảng auth, group, permission, session và admin log theo quy ước framework. Xem `05-TEN-COT-DU-LIEU.md` để đối chiếu đầy đủ 80 cột với tên thuộc tính Python; kiểu dữ liệu không thay đổi.
+PostgreSQL lưu Unicode bằng `varchar/text`, thời gian bằng `timestamptz`. Tất cả bảng nghiệp vụ có khóa chính `bigint`, đặt tên theo đối tượng: `manguoidung`, `machinhanh`, `malichhen`… Các trường bắt buộc không nhận NULL trừ khi ghi rõ. Tên bảng thực tế có tiền tố `salon_`. Các cột trong 12 bảng nghiệp vụ dùng tiếng Việt viết liền không dấu qua `db_column`, ví dụ `hoten`, `sodienthoai`, `thoigianbatdau`. Django còn quản lý các bảng auth, group, permission và session theo quy ước framework. Xem `05-TEN-COT-DU-LIEU.md` để đối chiếu đầy đủ 80 cột với tên thuộc tính Python; kiểu dữ liệu không thay đổi.
 
 ### 3.1 Từ điển dữ liệu
 
@@ -42,7 +42,7 @@ PostgreSQL lưu Unicode bằng `varchar/text`, thời gian bằng `timestamptz`.
 | User | manguoidung bigint, tendangnhap varchar(150), matkhau varchar(128), hoten varchar(100), sodienthoai varchar(10), thudientu varchar(254), vaitro varchar(20), machinhanh bigint nullable, diemtichluy integer, hoatdong boolean, lanhanvien boolean, laquantri boolean, ngaythamgia timestamptz, landangnhapcuoi timestamptz nullable, ten varchar(150), ho varchar(150) | tendangnhap unique; sodienthoai 10 số; vaitro customer/receptionist/manager; matkhau lưu hash; điểm không âm |
 | Branch | machinhanh bigint, tenchinhanh varchar(100), diachi varchar(250), sodienthoai varchar(10), giomocua time, giodongcua time, hoatdong boolean | Tên unique; đóng sau mở; không hỗ trợ mở qua nửa đêm |
 | Service | madichvu bigint, tendichvu varchar(100), mota text, loaidichvu varchar(10), giatien integer, thoiluong integer, hoatdong boolean | Giá >=1.000 VNĐ; thời lượng 15–240 phút; loại hair/care/combo; tên unique |
-| Employee | manhanvien bigint, hoten varchar(100), machinhanh bigint, chuyenmon varchar(150), gioithieu varchar(250), hoatdong boolean | Stylist thuộc một chi nhánh; không đổi chi nhánh lịch sử qua Admin |
+| Employee | manhanvien bigint, hoten varchar(100), machinhanh bigint, chuyenmon varchar(150), gioithieu varchar(250), hoatdong boolean | Stylist thuộc một chi nhánh; không đổi chi nhánh lịch sử qua cổng quản trị riêng |
 | Chair | maghe bigint, machinhanh bigint, tenghe varchar(30), hoatdong boolean | Unique (machinhanh, tenghe) |
 | Shift | macalam bigint, manhanvien bigint, thoigianbatdau timestamptz, thoigianketthuc timestamptz | Kết thúc sau bắt đầu; exclusion nhân viên + khoảng thời gian; trong giờ mở cửa |
 | Appointment | malichhen bigint, makhachhang bigint, machinhanh bigint, manhanvien bigint, maghe bigint nullable, thoigianbatdau timestamptz, thoigianketthuc timestamptz, trangthai varchar(20), ghichu varchar(500), ngaytao timestamptz | Kết thúc sau bắt đầu; exclusion stylist/ghế trên lịch đang giữ; phân ghế khi check-in |
@@ -77,7 +77,7 @@ Ghế áp dụng tương tự với `maghe IS NOT NULL`; ca làm dùng employee 
 
 Mọi lệnh tạo/chuyển trạng thái khóa Branch trước. Lệnh đặt tiếp tục khóa Customer, kiểm tra lại lịch khách sau khi lấy khóa. Việc tuần tự hóa theo chi nhánh đơn giản hóa điều phối ghế/stylist; nhược điểm là giới hạn throughput tại chi nhánh rất bận. GiST là lớp chống trùng cuối cùng khi ứng dụng bỏ sót kiểm tra. Thanh toán khóa lịch và có FK unique hóa đơn, vì vậy yêu cầu lặp không tạo thêm tiền hoặc điểm.
 
-Các chỉnh sửa danh mục qua Admin dành cho quản trị viên. Ràng buộc snapshot giữ nguyên lịch cũ. Việc cập nhật ca làm đồng thời với một lệnh đặt cần khóa cùng chi nhánh trong bước lưu Admin; form vẫn kiểm tra lại các lịch đã có. Không hỗ trợ sửa lịch trực tiếp bằng SQL như một luồng vận hành.
+Các chỉnh sửa danh mục qua cổng quản trị riêng dành cho quản trị viên. Ràng buộc snapshot giữ nguyên lịch cũ. Việc cập nhật ca làm đồng thời với một lệnh đặt cần khóa cùng chi nhánh trong bước lưu có transaction của cổng quản trị riêng; form vẫn kiểm tra lại các lịch đã có. Không hỗ trợ sửa lịch trực tiếp bằng SQL như một luồng vận hành.
 
 ## 4. Mô hình trạng thái và hoạt động
 
@@ -124,7 +124,8 @@ Các thuộc tính lưu trữ trong sơ đồ lớp được trình bày theo t�
 | Tổng quan | Chọn ngày/chi nhánh; doanh thu, số lịch, hoàn thành, stylist; chart 7 ngày và bảng lọc/phân trang |
 | Ca làm | Danh sách stylist, ca và lịch khách trong ngày; dẫn vào chi tiết để vận hành |
 | Báo cáo | Khoảng ngày, chi nhánh, tổng/đếm/trung bình, bảng hóa đơn, CSV |
-| Admin | Danh mục, tài khoản, ca làm; view-only lịch, hóa đơn, đánh giá, audit |
+| Thiết lập riêng | Thêm/sửa/xóa tài khoản, dịch vụ, chi nhánh, stylist, ghế và ca làm; bảo vệ lịch sử |
+| Trang cá nhân | Sửa thông tin liên hệ, đổi mật khẩu có xác nhận mật khẩu hiện tại |
 
 Giao diện khách hàng dùng nền kem `#f8f7f4`, chữ than `#222321`, cam đất `#bd4c2f`, font Be Vietnam Pro và ảnh chụp WebP local. Không gian vận hành giữ xanh đậm `#24332b` và cam đất `#bd6946`. Không phụ thuộc font hoặc ảnh từ CDN. Chuyển động hỗ trợ reduced motion; menu mobile và bộ lọc có trạng thái truy cập. Chi tiết bản thiết kế mới tại [Giao diện khách hàng](06-GIAO-DIEN-KHACH-HANG.md). Dùng label/fieldset phù hợp, focus bàn phím, aria-live cho khung giờ, xác nhận thao tác quan trọng và chế độ in phiếu. Bảng rộng cuộn trong vùng riêng, không làm tràn cả trang trên mobile.
 
@@ -147,3 +148,7 @@ Giao diện khách hàng dùng nền kem `#f8f7f4`, chữ than `#222321`, cam đ
 | GET /health/ | SELECT 1; HTTP 200/503 | Không chứa bí mật |
 
 Lỗi nhập liệu render lại form có thông báo; quyền sai 403 hoặc đối tượng ngoài scope 404; API tham số sai 400. Các thay đổi trạng thái chỉ POST và kiểm tra CSRF. Export CSV áp dụng cùng scope với báo cáo HTML.
+
+## 9. Quản trị riêng và hồ sơ
+
+Màn hình `/quan-ly/thiet-lap/` thay giao diện quản trị mặc định. `manager_required` kiểm tra vai trò ở mỗi request; profile chỉ cập nhật người đang đăng nhập. CRUD thay đổi trong transaction, khóa chi nhánh theo thứ tự và ghi audit. GET không xóa; POST yêu cầu CSRF và xác nhận. Chi tiết tại [Quản trị riêng](07-QUAN-TRI-RIENG.md).

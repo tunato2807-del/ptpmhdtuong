@@ -53,7 +53,7 @@ class Command(BaseCommand):
             ('letan','Nguyễn Thảo Linh','receptionist',branches[0]),
             ('khachhang','Nguyễn Minh Anh','customer',None),
         ]:
-            user, created = User.objects.get_or_create(username=username, defaults={'full_name':fullname,'role':role,'branch':branch,'phone':'0901234567','email':f'{username}@example.com','is_staff':role=='manager','is_superuser':role=='manager'})
+            user, created = User.objects.get_or_create(username=username, defaults={'full_name':fullname,'role':role,'branch':branch,'phone':'0901234567','email':f'{username}@example.com'})
             if created:
                 user.set_password('Gentleman@2026'); user.save()
             users.append(user)

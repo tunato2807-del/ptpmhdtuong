@@ -53,6 +53,8 @@ class User(AbstractUser):
     @property
     def is_operator(self): return self.role in [self.Role.MANAGER, self.Role.RECEPTIONIST]
     @property
+    def is_manager(self): return self.role == self.Role.MANAGER
+    @property
     def initials(self): return ''.join(w[0] for w in str(self).split()[-2:]).upper()
 
 class Service(models.Model):

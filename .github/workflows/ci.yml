@@ -3,25 +3,31 @@ on: [push, pull_request]
 jobs:
   test-and-build:
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:17-alpine
-        env:
-          POSTGRES_DB: gentleman
-          POSTGRES_USER: gentleman
-          POSTGRES_PASSWORD: local-demo-only
-        ports: ['5432:5432']
-        options: >-
-          --health-cmd "pg_isready -U gentleman -d gentleman"
-          --health-interval 5s --health-timeout 3s --health-retries 10
+    strategy:
+      matrix:
+        python-version: ['3.12', '3.14']
+    env:
+      POSTGRES_DB: gentleman
+      POSTGRES_USER: postgres
+      POSTGRES_HOST: 127.0.0.1
+      POSTGRES_PORT: '5432'
+      DJANGO_DEBUG: '1'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: ${{ matrix.python-version }}
           cache: pip
-      - run: |
+      - name: Start native PostgreSQL
+        run: |
+          sudo systemctl start postgresql
+          sudo -u postgres psql -c 'CREATE DATABASE gentleman;'
+          sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'ci-local-only';"
+      - name: Install dependencies
+        run: |
           python -m venv .venv
           .venv/bin/python -m pip install -r requirements.txt
-      - run: bash scripts/check.sh
-      - run: docker build -t gentleman:ci .
+      - name: Check and test
+        env:
+          POSTGRES_PASSWORD: ci-local-only
+        run: python scripts/dev.py check

@@ -1,0 +1,8 @@
+{% extends 'staff/base.html' %}
+{% block title %}Xóa {{ resource.singular }} · GENTLEMAN{% endblock %}
+{% block breadcrumb %}Xác nhận xóa{% endblock %}
+{% block staff_content %}
+<a class="subtle-link" href="{% url 'resource_list' resource.key %}">← {{ resource.title }}</a>
+<div class="page-heading resource-heading"><div><div class="eyebrow">KIỂM TRA TRƯỚC KHI THỰC HIỆN</div><h1>Xóa {{ resource.singular }}?</h1><p>Thao tác chỉ được thực hiện sau khi bạn xác nhận.</p></div></div>
+<section class="panel padded delete-panel"><span class="delete-symbol" aria-hidden="true">×</span><h2>{{ object }}</h2><p>Bản ghi sẽ được xóa khỏi danh sách. Nếu đã có dữ liệu liên quan, hệ thống sẽ giữ bản ghi và thông báo cho bạn.</p><form method="post" class="stack-form">{% csrf_token %}{% include 'partials/form_fields.html' %}<div class="form-actions"><button class="btn btn-danger" type="submit">Xác nhận xóa</button><a class="btn btn-outline" href="{% url 'resource_edit' resource.key object.pk %}">Quay lại chỉnh sửa</a></div></form></section>
+{% endblock %}

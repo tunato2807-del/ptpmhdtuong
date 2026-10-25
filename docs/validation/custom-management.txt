@@ -1,0 +1,39 @@
+Custom management / personal profile / local PostgreSQL validation — 2026-10-25 (Asia/Bangkok)
+
+Environment: Python 3.12.14; Django 5.2.18; PostgreSQL 17.11 native, signed Debian 17.11-0+deb13u1 packages. Application DB port 5433. Old container stopped; application and native database remain functional.
+
+Setup --no-demo: installed requirements, check_database passed, no migrations to apply, static collection completed. Native start script idempotent. Project start wrapper started Django and health returned status ok/database postgresql.
+
+Native data transfer: pg_dump/pg_restore. All 12 business table row counts and logical SHA256 hashes identical before/after. Original data/private backup retained outside Git.
+
+Database: gentleman · User: gentleman · Host: 127.0.0.1 · Port: 5433
+Kết nối PostgreSQL thành công.
+System check identified no issues (0 silenced).
+No changes detected
+
+0 static files copied to '/workspace/ptpmhdtuong/staticfiles', 28 unmodified, 19 post-processed.
+Creating test database for alias 'default'...
+Got an error creating the test database: database "test_gentleman" already exists
+Destroying old test database for alias 'default'...
+.....................................................
+----------------------------------------------------------------------
+Ran 53 tests in 38.195s
+
+OK
+Destroying test database for alias 'default'...
+Found 53 test(s).
+System check identified no issues (0 silenced).
+
+
+PASS: registration, booking, cancellation, reception check-in, service, mock payment, invoice, review, CSV, mobile/tablet, menu; no JavaScript errors.
+
+
+PASS: filters, gallery, mobile menu/Escape, service login redirect, stylist and branch preselection, booking slots, 320–1440px layouts, photos, local fonts, reduced motion, no-JavaScript navigation; no JavaScript errors or external requests.
+
+
+PASS: custom manager without Django staff flags; create all 6 resources, edit price, delete all 6, edit own profile, reject wrong password, change password and sign in again, manager/profile layouts 320–1440px, no Django Admin links or JavaScript errors. Own test data cleaned.
+
+
+Cleanup verified: no test_gentleman database remains; no ui-* smoke accounts remain. Demo counts: 3 branches, 6 employees, 6 services, 102 appointments.
+
+No schema migration added. No Django Admin route or runtime application. No Docker/Compose/build-wheel files in source. Gunicorn removed from requirements. Windows VS Code startup documented; Windows execution not observed in this cloud session. CI Python 3.12/3.14 matrix configured; GitHub Actions outcomes and public deployment not inspected.

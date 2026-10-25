@@ -2,33 +2,32 @@
 
 ## 1. Môi trường thực thi
 
-Python 3.12.14, Django 5.2.18, psycopg 3.3.6, PostgreSQL 17 (image postgres:17-alpine), Gunicorn 26.2.0. Kiểm thử nghiệp vụ dùng PostgreSQL thực, không thay bằng SQLite hoặc mock database. Browser smoke dùng Playwright 1.62.0 và Chromium headless cài riêng.
+Python 3.12.14, Django 5.2.18, psycopg 3.3.6, PostgreSQL 17.11 native (Debian 17.11-0+deb13u1). Kiểm thử nghiệp vụ dùng PostgreSQL thực, không thay bằng SQLite hoặc mock database. Browser smoke dùng Playwright 1.62.0 và Chromium headless cài riêng.
 
 ## 2. Kết quả thực tế
 
 | Kiểm tra | Kết quả | Bằng chứng / phạm vi |
 |---|---|---|
-| `bash scripts/setup.sh` chạy lại | Đạt | Không có migration mới; vẫn 3 chi nhánh, 6 stylist, 6 dịch vụ, 102 lịch mẫu; không nhân đôi dữ liệu |
+| `python scripts/dev.py setup --no-demo` | Đạt | Cài dependencies, kiểm tra PostgreSQL native, không có migration mới, collectstatic thành công; không nạp lại dữ liệu |
 | `manage.py check` | Đạt | 0 vấn đề |
 | `makemigrations --check --dry-run` | Đạt | No changes detected |
-| `manage.py test salon.tests --noinput` | Đạt | 35 test đã thực thi, 0 failed, 0 errors, 0 skipped |
+| `manage.py test salon.tests --noinput` | Đạt | 53 test đã thực thi, 0 failed, 0 errors, 0 skipped |
 | Migration tên cột tiếng Việt | Đạt | 80 cột/12 bảng; kiểu dữ liệu và toàn bộ bản ghi giữ nguyên; kiểm tra cả nâng cấp và hoàn tác |
 | `collectstatic --noinput` | Đạt | Static và manifest tạo thành công; chạy lại giữ nguyên tài nguyên không đổi |
-| `scripts/start.sh` | Đạt | Bật DB, kiểm tra migration, khởi động Django; health và trang chủ phản hồi thành công |
-| Docker image | Đạt | Build bằng wheelhouse trên cloud; artifact tải qua HTTPS, pip không tắt TLS |
-| Gunicorn + WhiteNoise + PostgreSQL | Đạt | Container web chạy 2 workers, /health/ trả database postgresql, trang và static phục vụ được |
+| `scripts/start.sh` | Đạt | Dùng PostgreSQL native đang chạy, kiểm tra migration và bật Django; không quản lý database qua container |
 | Browser smoke local | Đạt | Đi hết đăng ký/đặt/hủy/check-in/phục vụ/thanh toán mô phỏng/hóa đơn/đánh giá/CSV |
-| Browser smoke qua web container | Đạt | Cùng luồng nghiệp vụ qua Gunicorn/WhiteNoise |
 | Responsive | Đạt | Giao diện khách hàng 320/360/390/768/1024/1440 px; không tràn ngang; menu mobile/Escape hoạt động |
 | Customer UI smoke | Đạt | Bộ lọc, bộ sưu tập, preselect dịch vụ/stylist/chi nhánh, đăng nhập giữ lựa chọn, reduced motion, không JavaScript, ảnh/font local |
+| Quản trị và hồ sơ | Đạt | Tạo/sửa/xóa sáu nhóm, phân quyền manager, xác nhận xóa, sửa hồ sơ, xác thực mật khẩu hiện tại, đăng nhập lại; 320–1440 px |
+| Schema | Đạt | Không có migration mới; 80 tên cột tiếng Việt và kiểu dữ liệu giữ nguyên |
 | JavaScript | Đạt | Không có pageerror trong luồng browser smoke |
 | `check --deploy --fail-level WARNING` | Đạt với cấu hình production thử nghiệm | DEBUG=0 và secret ngẫu nhiên tạm thời; không phải bằng chứng đã bật HTTPS hoặc public deployment |
 | GitHub Actions | Chưa xác minh kết quả trên GitHub | Đã có workflow test/build; xem tab Actions của repository để theo dõi |
-| Thanh toán thật, SMS/email, tải lớn, restore backup | Chưa thực hiện | Ngoài phạm vi bản dựng |
+| Thanh toán thật, SMS/email, tải lớn, restore production | Chưa thực hiện | Ngoài phạm vi bản dựng |
 
-Các kiểm thử ban đầu phát hiện lỗi tên alias aggregate khi tính trung bình và thiếu savepoint khi bắt đánh giá trùng. Mã đã sửa và bộ test chạy lại thành công. Sau khi đổi tên 80 cột sang tiếng Việt không dấu, 35 kiểm thử và browser smoke đã chạy lại thành công; dữ liệu và kiểu dữ liệu PostgreSQL được đối chiếu trước/sau migration. Build Docker online ban đầu gặp DNS trong container; giải pháp dùng wheel tải trên host và cài offline đã build thành công. Đây là chẩn đoán và xử lý lỗi môi trường, không phải thay đổi phiên bản để né test.
+Bản quản trị riêng được kiểm tra trên PostgreSQL native, ứng dụng kết nối trực tiếp qua TCP. Chuyển dữ liệu cloud sang database native bằng pg_dump/pg_restore có backup; đối chiếu số dòng và SHA256 nội dung của cả 12 bảng trước/sau trùng nhau. Database nguồn được giữ nguyên. Đây là kiểm chứng chuyển môi trường phát triển, không thay cho diễn tập khôi phục production.
 
-Sau thiết kế lại giao diện, script check thu thập static trước khi chạy Django tests để manifest luôn chứa CSS, ảnh và font mới. Workflow GitHub tạo virtualenv trước khi gọi script này. Bộ UI smoke mới kiểm tra độc lập tương tác khách hàng; kết quả chi tiết ở `docs/validation/customer-redesign.txt`.
+Bộ test mới phát hiện trường hợp ca làm có giờ kết thúc trước giờ bắt đầu khiến TSTZRANGE lỗi ngay trong bước kiểm tra form. Mã đã sửa: trả lỗi theo trường trước khi gửi khoảng không hợp lệ xuống PostgreSQL. Test đồng thời đóng hẳn connection của từng worker trước khi kết thúc để runner dọn được database test. Toàn bộ tests và bước dọn database chạy lại thành công. Script check thu thập static trước tests để manifest có đủ tài nguyên mới. Kết quả tại `docs/validation/custom-management.txt`.
 
 ## 3. Các nhóm kiểm thử nghiệp vụ
 
@@ -43,7 +42,9 @@ Sau thiết kế lại giao diện, script check thu thập static trước khi 
 | Lễ tân | Đặt hộ đúng khách, actor đúng; khách ngoài phạm vi bị từ chối | FR01, FR12 |
 | Đón khách | Check-in đúng ngày; từ chối ghế khác chi nhánh hoặc ghế bận | FR06 |
 | Checkout | Không nhảy trạng thái; một hóa đơn/một lần điểm; mock phải xác nhận | FR07 |
-| Ca làm | Không sửa ca làm mất phạm vi phục vụ lịch đã đặt | FR09 |
+| Ca làm | Không sửa/xóa ca làm mất phạm vi phục vụ lịch đã đặt; từ chối ca đảo giờ/trùng giờ | FR09 |
+| CRUD riêng | Sáu nhóm tài nguyên, chặn khách/lễ tân, không cần staff/superuser, FK PROTECT và CSRF | FR09, FR12 |
+| Cá nhân | Chỉ sửa thông tin liên hệ của mình, không sửa vai trò/điểm; đổi mật khẩu cần mật khẩu hiện tại và giữ phiên | FR01 |
 | HTTP/Auth | Trang yêu cầu login; khách không vào quản lý; chủ khác nhận 404; CSRF; POST-only; chống open redirect | FR01 |
 | Báo cáo | Render thống kê, CSV chống công thức, hóa đơn chỉ đúng người xem | FR10 |
 | Đánh giá | Chỉ sau completed; số sao hợp lệ; không đánh giá hai lần | FR08 |
@@ -75,4 +76,4 @@ Không xem PID hoặc port mở là tiêu chí đủ; browser smoke kiểm tra h
 
 ## 6. Kết luận nghiệm thu bản phát triển
 
-Quy trình phát triển và trình diễn cốt lõi chạy được trên môi trường hiện tại, có Docker và hướng dẫn tái lập. Mã nguồn và tài liệu được lưu trong checkout và đã đẩy lên nhánh main của repository GitHub tunato2807-del/ptpmhdtuong theo yêu cầu người dùng. Ứng dụng chưa được triển khai thành dịch vụ công khai. Cấu hình môi trường cloud được lưu nháp để người dùng xem và publish; việc publish và phục hồi ở task mới là bước riêng, chưa được tuyên bố đã kiểm chứng.
+Quy trình phát triển và trình diễn cốt lõi chạy trực tiếp với Python và PostgreSQL native, có hướng dẫn VS Code/Windows và script đa nền tảng. Mã nguồn và tài liệu được lưu trong checkout và đã đẩy lên nhánh main của repository GitHub tunato2807-del/ptpmhdtuong theo yêu cầu người dùng. Ứng dụng chưa được triển khai thành dịch vụ công khai. Cấu hình môi trường cloud được lưu nháp để người dùng xem và publish; việc publish và phục hồi ở task mới là bước riêng, chưa được tuyên bố đã kiểm chứng.

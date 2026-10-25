@@ -28,7 +28,7 @@ if not SECRET_KEY:
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1,[::1],testserver').split(',')
 CSRF_TRUSTED_ORIGINS = [x for x in os.getenv('DJANGO_CSRF_TRUSTED_ORIGINS', '').split(',') if x]
 INSTALLED_APPS = [
-    'django.contrib.admin', 'django.contrib.auth', 'django.contrib.contenttypes',
+    'django.contrib.auth', 'django.contrib.contenttypes',
     'django.contrib.sessions', 'django.contrib.messages', 'django.contrib.staticfiles',
     'django.contrib.postgres', 'salon',
 ]
@@ -49,8 +49,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {'default': {
     'ENGINE': 'django.db.backends.postgresql',
     'NAME': os.getenv('POSTGRES_DB', 'gentleman'),
-    'USER': os.getenv('POSTGRES_USER', 'gentleman'),
-    'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'local-demo-only'),
+    'USER': os.getenv('POSTGRES_USER', 'postgres'),
+    'PASSWORD': os.getenv('POSTGRES_PASSWORD', ''),
     'HOST': os.getenv('POSTGRES_HOST', '127.0.0.1'),
     'PORT': os.getenv('POSTGRES_PORT', '5432'),
     'CONN_MAX_AGE': 60,

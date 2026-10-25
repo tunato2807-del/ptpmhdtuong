@@ -81,7 +81,9 @@ def book(*, customer, branch_id, employee_id, service_ids, start, note='', actor
                                   start_at__lt=end, end_at__gt=start).exists():
         raise ValidationError('Bạn đã có lịch hẹn trùng thời gian này.')
     # Serialize per-customer too, preventing concurrent bookings across branches.
-    User.objects.select_for_update().get(pk=customer.pk)
+    current_customer = User.objects.select_for_update().get(pk=customer.pk)
+    if current_customer.role != User.Role.CUSTOMER or not current_customer.is_active:
+        raise ValidationError('Chọn tài khoản khách hàng đang hoạt động.')
     if Appointment.objects.filter(customer=customer, status__in=ACTIVE_STATUSES,
                                   start_at__lt=end, end_at__gt=start).exists():
         raise ValidationError('Bạn đã có lịch hẹn trùng thời gian này.')

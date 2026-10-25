@@ -1,12 +1,13 @@
 from django.urls import path
 from django.contrib.auth.views import LogoutView
-from . import views
+from . import views, management_views, profile_views
 
 urlpatterns = [
     path('', views.home, name='home'),
     path('dang-nhap/', views.SignInView.as_view(), name='login'),
     path('dang-ky/', views.register, name='register'),
     path('dang-xuat/', LogoutView.as_view(), name='logout'),
+    path('tai-khoan/', profile_views.profile, name='profile'),
     path('dat-lich/', views.booking, name='booking'),
     path('lich-cua-toi/', views.my_appointments, name='my_appointments'),
     path('lich-hen/<int:pk>/', views.appointment_detail, name='appointment_detail'),
@@ -20,5 +21,10 @@ urlpatterns = [
     path('quan-ly/chi-nhanh/', views.branch_list, name='branches'),
     path('quan-ly/ca-lam/', views.schedule, name='schedule'),
     path('quan-ly/bao-cao/', views.reports, name='reports'),
+    path('quan-ly/thiet-lap/', management_views.settings_home, name='settings'),
+    path('quan-ly/thiet-lap/<slug:resource>/', management_views.resource_list, name='resource_list'),
+    path('quan-ly/thiet-lap/<slug:resource>/them/', management_views.resource_edit, name='resource_create'),
+    path('quan-ly/thiet-lap/<slug:resource>/<int:pk>/sua/', management_views.resource_edit, name='resource_edit'),
+    path('quan-ly/thiet-lap/<slug:resource>/<int:pk>/xoa/', management_views.resource_delete, name='resource_delete'),
     path('health/', views.health, name='health'),
 ]

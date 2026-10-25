@@ -15,7 +15,7 @@ Tên thương hiệu GENTLEMAN, địa chỉ, tên nhân viên, giá và lịch 
 | Khách vãng lai | Tìm chi nhánh, dịch vụ, stylist; tạo tài khoản | Thông tin công khai |
 | Khách hàng | Đặt/hủy, xem lịch, hóa đơn, đánh giá | Lịch hẹn của chính mình |
 | Lễ tân | Đón khách, phân ghế, điều phối, thanh toán | Chi nhánh được phân công |
-| Quản trị viên | Quản lý toàn chuỗi, danh mục, ca làm và doanh thu | Toàn hệ thống; Django Admin cần quyền staff/superuser tương ứng |
+| Quản trị viên | Quản lý toàn chuỗi, danh mục, ca làm và doanh thu | Toàn hệ thống; cổng quản trị riêng kiểm tra vai trò manager |
 
 Stylist là nguồn lực được quản lý, chưa có cổng đăng nhập riêng. Cổng thanh toán mô phỏng là thành phần nội bộ, không phải ngân hàng bên ngoài.
 
@@ -42,10 +42,10 @@ Stylist là nguồn lực được quản lý, chưa có cổng đăng nhập ri
 |---|---|---|
 | Nhất quán | PostgreSQL transaction, row lock, GiST exclusion, unique/check constraints | Có kiểm thử hai yêu cầu đồng thời; chưa có benchmark tải lớn |
 | Bảo mật | Password hashing Django, session, CSRF, autoescape, object-level permissions | Chưa đánh giá xâm nhập độc lập; cần rate limiting khi công khai |
-| Khả dụng | Health endpoint kiểm tra DB, Docker healthcheck | Chưa có high availability hoặc SLA |
+| Khả dụng | Health endpoint và lệnh check_database kiểm tra PostgreSQL | Chưa có high availability hoặc SLA |
 | Dễ sử dụng | Tiếng Việt, bộ lọc, trạng thái rõ ràng, responsive, label bàn phím | Đã kiểm tra desktop/mobile; chưa nghiệm thu với người dùng doanh nghiệp |
 | Bảo trì | Models / services / forms / views / events; migration và test | Một Django application, phù hợp quy mô đồ án |
-| Khả năng tái lập | Requirements ghim phiên bản, setup script, Compose | Docker image dùng nhánh major; production nên khóa digest đã duyệt |
+| Khả năng tái lập | Requirements ghim phiên bản, setup/start đa nền tảng | Cần cài và cấu hình PostgreSQL trên máy đích |
 
 ## 5. Use case chính
 
@@ -76,7 +76,7 @@ Lễ tân tìm khách bằng tên/điện thoại, mở lịch trong ngày, ch�
 
 ### UC05 — Quản lý ca làm
 
-Quản trị mở Admin, chọn stylist, bắt đầu và kết thúc. Ca phải trong một ngày và giờ mở cửa; PostgreSQL từ chối ca chồng lấn. Khi sửa ca, không được bỏ phạm vi chứa lịch đang đặt. Không cho xóa ca qua Admin; có thể điều chỉnh khi không ảnh hưởng lịch đang hoạt động.
+Quản trị mở Thiết lập & nhân sự → Ca làm, chọn stylist, bắt đầu và kết thúc. Ca phải trong một ngày và giờ mở cửa; PostgreSQL từ chối ca chồng lấn. Khi sửa ca, không được bỏ phạm vi chứa lịch đang đặt. Chỉ xóa ca khi không còn lịch hẹn đang cần phục vụ trong ca; mọi thao tác ghi dữ liệu qua cổng quản trị riêng.
 
 ### UC06 — Báo cáo
 
@@ -84,7 +84,7 @@ Chọn từ/đến (tối đa 366 ngày) và chi nhánh được phép. Truy v�
 
 ## 6. Phạm vi bản hoàn thành
 
-Bao gồm website khách hàng, cổng điều hành, quản trị danh mục, database migration, dữ liệu mẫu, bộ kiểm thử, Docker và tài liệu. Không bao gồm mobile native, mạng xã hội, SMS/email bên ngoài, thanh toán ngân hàng thật, sản phẩm kho, hoa hồng/lương, thuế, voucher, hoàn tiền, AI và HA. Các nội dung này là hướng phát triển sau, không được mô tả là đã thực hiện.
+Bao gồm website khách hàng, cổng điều hành, quản trị danh mục, database migration, dữ liệu mẫu, bộ kiểm thử, hướng dẫn chạy trực tiếp và tài liệu. Không bao gồm mobile native, mạng xã hội, SMS/email bên ngoài, thanh toán ngân hàng thật, sản phẩm kho, hoa hồng/lương, thuế, voucher, hoàn tiền, AI và HA. Các nội dung này là hướng phát triển sau, không được mô tả là đã thực hiện.
 
 ## 7. Đối chiếu thiết kế ban đầu
 

@@ -3,14 +3,14 @@ from datetime import timedelta, time
 from threading import Barrier
 from unittest.mock import patch
 from django.core.exceptions import ValidationError, PermissionDenied
-from django.db import IntegrityError, transaction, close_old_connections
+from django.db import IntegrityError, transaction, close_old_connections, connections
 from django.test import TestCase, TransactionTestCase, Client
 from django.urls import reverse
 from django.utils import timezone
 from salon.models import (User, Branch, Service, Employee, Shift, Chair, Appointment,
                           Invoice, Review, Notification, AuditLog)
 from salon.services import book, transition, available_slots, local_at
-from salon.admin import ShiftForm
+from salon.forms import ShiftForm
 
 class Fixtures:
     def make_data(self):
@@ -287,7 +287,7 @@ class ConcurrentBookingTests(Fixtures, TransactionTestCase):
                      service_ids=[self.service.pk],start=local_at(self.day,time(10)))
                 return 'booked'
             except (ValidationError,IntegrityError): return 'conflict'
-            finally: close_old_connections()
+            finally: connections.close_all()
         with ThreadPoolExecutor(max_workers=2) as executor:
             results=list(executor.map(attempt,[self.customer.pk,self.other_customer.pk]))
         self.assertCountEqual(results,['booked','conflict'])
