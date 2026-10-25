@@ -4,7 +4,7 @@ from django.core.checks import Error, Tags, register
 
 REQUIRED_ASSETS = (
     'css/app.css', 'css/customer.css', 'css/management.css', 'css/typography.css',
-    'js/app.js', 'js/customer.js',
+    'js/app.js', 'js/customer.js', 'css/motion.css', 'js/motion.js',
     *(f'fonts/be-vietnam-pro-{subset}-{weight}-normal.woff2'
       for subset in ('latin', 'latin-ext', 'vietnamese')
       for weight in (400, 500, 600, 700, 800)),

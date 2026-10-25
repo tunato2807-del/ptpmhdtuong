@@ -1,0 +1,74 @@
+/* Motion is limited to opacity/transform; layout and typography stay stable. */
+[data-slideshow] .hero-slide {
+  opacity: 0;
+  animation: none;
+  transition: opacity 850ms ease;
+  pointer-events: none;
+}
+[data-slideshow] .hero-slide.is-active {
+  opacity: 1;
+  animation: portrait-drift 7s ease-out both;
+  animation-play-state: paused;
+}
+[data-slideshow].is-playing .hero-slide.is-active { animation-play-state: running; }
+.slideshow-controls {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px;
+  border: 1px solid #ffffff55;
+  border-radius: 28px;
+  background: #182019d9;
+  color: #fff;
+}
+.slideshow-controls[hidden] { display: none; }
+.slideshow-controls button {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  min-height: 44px;
+  min-width: 44px;
+  border-radius: 22px;
+  padding: 8px 10px;
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+.slideshow-controls button:hover { background: #ffffff24; }
+.slideshow-controls button:focus-visible { outline: 2px solid white; outline-offset: 1px; }
+.slideshow-controls button:disabled { opacity: .6; cursor: default; }
+.slideshow-count { font-size: 10px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+[data-slideshow] .hero-photo-label { top: 93px; }
+@keyframes portrait-drift {
+  from { transform: scale(1); }
+  to { transform: scale(1.045); }
+}
+@keyframes content-arrive {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .gh-hero-copy, .page-heading, .profile-heading, .auth-panel {
+    animation: content-arrive .5s ease-out both;
+  }
+  .settings-card, .team-member, .gh-branch, .service-photo img {
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .btn:active { transform: translateY(0) scale(.98); }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .gh-branch:hover { transform: translateY(-4px); box-shadow: 0 12px 30px #26352d10; }
+  .team-member:hover { transform: translateX(3px); }
+}
+@media (max-width: 640px) {
+  .slideshow-controls { top: 18px; right: 14px; gap: 0; padding: 3px; }
+  .slideshow-controls button { font-size: 10px; padding-inline: 8px; }
+  [data-slideshow] .hero-photo-label { top: 80px; right: 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-slideshow] .hero-slide { animation: none !important; transition: none; }
+}

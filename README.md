@@ -2,6 +2,8 @@
 
 Dự án tiếng Việt dùng Django 5.2 LTS, PostgreSQL và giao diện riêng bằng HTML/CSS/JavaScript. Có trang khách hàng, trang cá nhân và cổng quản lý với chức năng thêm/sửa/xóa. Toàn bộ danh mục được quản lý tại `/quan-ly/thiet-lap/`; không dùng Django Admin. Chạy trực tiếp trên VS Code, không cần Docker hoặc Node.js.
 
+Xem [bản cập nhật animation và ảnh tự chuyển](docs/09-ANIMATION-VA-ANH-TU-CHUYEN.md) để copy 5 file bổ sung.
+
 ## Copy từng file để cập nhật bản đang có
 
 Mở [hướng dẫn cập nhật từng file](docs/08-CAP-NHAT-TUNG-FILE.md). Hướng dẫn có đường dẫn trực tiếp tới toàn bộ CSS, template và Python cần copy, theo đúng thứ tự. Bản này có nút Đăng xuất rõ ràng trên đầu trang khách hàng/quản lý, kiểm tra file giao diện bị thiếu, và chỉnh phông chữ ở một số vị trí cụ thể.

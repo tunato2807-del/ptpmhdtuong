@@ -20,6 +20,8 @@ Giữ `.env`, `.venv`, database PostgreSQL và mật khẩu trên máy. Không c
 | [static/css/app.css](../static/css/app.css) | Kiểu nền tảng và nút Đăng xuất |
 | [static/css/customer.css](../static/css/customer.css) | Toàn bộ bố cục trang khách hàng |
 | [static/css/management.css](../static/css/management.css) | Lưới thiết lập, hồ sơ hai cột, biểu mẫu và bố cục màn hình nhỏ |
+| [static/css/motion.css](../static/css/motion.css) | Hiệu ứng chuyển động và trình chiếu |
+| [static/js/motion.js](../static/js/motion.js) | Điều khiển ảnh tự chuyển |
 | [static/css/typography.css](../static/css/typography.css) | **Thay toàn bộ bản cũ**, chỉ sửa phông ở một số tiêu đề/chữ trang trí |
 | [static/js/app.js](../static/js/app.js) | Menu quản lý và đặt lịch |
 | [static/js/customer.js](../static/js/customer.js) | Menu khách, hiệu ứng và bộ lọc |
