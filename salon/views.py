@@ -43,7 +43,10 @@ def appointments_for(user):
 
 def chosen_day(request, key='date'):
     try:
-        return date.fromisoformat(request.GET.get(key, timezone.localdate().isoformat()))
+        value = date.fromisoformat(request.GET.get(key) or timezone.localdate().isoformat())
+        if not 1900 <= value.year <= 2100:
+            raise ValueError
+        return value
     except ValueError:
         messages.warning(request, 'Ngày không hợp lệ, đang hiển thị hôm nay.')
         return timezone.localdate()
@@ -51,7 +54,10 @@ def chosen_day(request, key='date'):
 def staff_scope(request):
     branches = branches_for(request.user)
     selected = request.GET.get('branch', '')
-    branch = branches.filter(pk=int(selected)).first() if selected.isdigit() else None
+    valid = selected.isascii() and selected.isdecimal() and 0 < len(selected) <= 18
+    branch = branches.filter(pk=int(selected)).first() if valid else None
+    if selected and branch is None:
+        messages.warning(request, 'Chi nhánh không hợp lệ; đang hiển thị trong phạm vi được phép.')
     return branches, branch
 
 class SignInView(LoginView):
@@ -75,7 +81,7 @@ def register(request):
 def home(request):
     return render(request, 'public/home.html', {
         'services': Service.objects.filter(active=True), 'branches': Branch.objects.filter(active=True),
-        'stylists': Employee.objects.filter(active=True).select_related('branch')[:6],
+        'stylists': Employee.objects.filter(active=True, branch__active=True).select_related('branch')[:6],
         'review_stats': Review.objects.aggregate(average=Avg('rating'), count=Count('id')),
     })
 
@@ -85,7 +91,7 @@ def booking(request):
     if request.GET.get('branch', '').isdigit(): initial['branch'] = request.GET['branch']
     if request.GET.get('service', '').isdigit(): initial['services'] = [request.GET['service']]
     if request.GET.get('employee', '').isdigit(): initial['employee'] = request.GET['employee']
-    form = BookingForm(request.POST or None, initial=initial, user=request.user)
+    form = BookingForm(request.POST if request.method == 'POST' else None, initial=initial, user=request.user)
     if request.method == 'POST' and form.is_valid():
         d = form.cleaned_data
         try:
@@ -130,7 +136,8 @@ def my_appointments(request):
 def appointment_detail(request, pk):
     a = get_object_or_404(appointments_for(request.user), pk=pk)
     chairs = Chair.objects.filter(branch=a.branch, active=True)
-    return render(request, 'public/appointment_detail.html', {'appointment': a, 'chairs': chairs, 'review_form': ReviewForm()})
+    return render(request, 'public/appointment_detail.html', {'appointment': a, 'chairs': chairs, 'review_form': ReviewForm(),
+        'can_change_booking': a.status == 'booked' and (request.user.is_operator or a.start_at-timezone.now() >= timedelta(hours=2))})
 
 @login_required
 @require_POST
@@ -138,7 +145,7 @@ def appointment_action(request, pk):
     get_object_or_404(appointments_for(request.user), pk=pk)
     try:
         a = transition(pk=pk, actor=request.user, action=request.POST.get('action'),
-                       chair_id=request.POST.get('chair') if request.POST.get('chair', '').isdigit() else None,
+                       chair_id=request.POST.get('chair') if request.POST.get('chair', '').isascii() and request.POST.get('chair', '').isdecimal() and len(request.POST.get('chair', '')) <= 18 else None,
                        method=request.POST.get('method', 'cash'), confirmation=request.POST.get('confirmation', ''))
     except (ValidationError, IntegrityError) as e:
         messages.error(request, ' '.join(e.messages) if isinstance(e, ValidationError) else 'Dữ liệu vừa thay đổi. Vui lòng thử lại.')

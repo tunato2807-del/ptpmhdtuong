@@ -8,7 +8,7 @@
 </label>
 <button class="btn btn-primary" name="action" value="preview">Kiểm tra và xem trước</button>
 </form>
-{% if rows %}<div class="table-scroll">
+{% if rows %}<p class="info-note">Xem trước {{ rows|length }} dòng. Dữ liệu chỉ được lưu sau khi bấm Xác nhận nhập dữ liệu; file có lỗi sẽ không lưu bất kỳ dòng nào.</p><div class="table-scroll">
 <table>
 <thead>
 <tr>

@@ -108,7 +108,7 @@ def resource_detail(request, resource, pk):
         if isinstance(value, datetime): value = timezone.localtime(value).strftime('%d/%m/%Y %H:%M')
         if isinstance(value, bool): value = 'Có' if value else 'Không'
         if field.choices: value = getattr(obj, 'get_'+name+'_display')()
-        rows.append((field.verbose_name, value if value is not None else '—'))
+        rows.append(('Mã bản ghi' if name == 'id' else field.verbose_name, value if value is not None else '—'))
     return page(request, str(obj), 'features/resource_detail.html', {'resource':spec,'object':obj,'rows':rows,'nav_section':'settings'}, staff=True)
 
 
@@ -327,39 +327,68 @@ def resource_import(request, resource):
                 {'resource':spec,'rows':result,'errors':errors,'token':token,'columns':headers(spec),'nav_section':'settings'},staff=True)
 
 
-def report_queryset(request):
-    today=timezone.localdate()
-    try:
-        end=date.fromisoformat(request.GET.get('end',str(today)))
-        start=date.fromisoformat(request.GET.get('start',str(end-timedelta(days=29))))
-    except ValueError: raise ValueError('Ngày báo cáo không hợp lệ.')
-    if start>end or (end-start).days>366: raise ValueError('Khoảng báo cáo từ 0 đến 366 ngày.')
-    qs=Invoice.objects.filter(appointment__in=appointments_for(request.user),paid_at__date__gte=start,paid_at__date__lte=end).select_related('appointment__customer','appointment__branch','cashier').order_by('-paid_at','-pk')
-    branch=request.GET.get('branch','')
-    if branch:
-        if not branch.isdecimal() or len(branch)>18 or not branches_for(request.user).filter(pk=int(branch)).exists():
-            raise ValueError('Chi nhánh không hợp lệ hoặc ngoài phạm vi quản lý.')
-        qs=qs.filter(appointment__branch_id=int(branch))
-    query=request.GET.get('q','').strip()[:100]
+class ReportFilterForm(forms.Form):
+    start = forms.DateField(label='Từ ngày', required=False, widget=forms.DateInput(attrs={'type': 'date', 'min': '1900-01-01', 'max': '2100-12-31'}))
+    end = forms.DateField(label='Đến ngày', required=False, widget=forms.DateInput(attrs={'type': 'date', 'min': '1900-01-01', 'max': '2100-12-31'}))
+    branch = forms.ModelChoiceField(label='Chi nhánh', required=False, queryset=Branch.objects.none(), empty_label='Mọi chi nhánh được phép')
+    q = forms.CharField(label='Khách, điện thoại hoặc mã hóa đơn', required=False, max_length=100)
+
+    def __init__(self, *args, user, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['branch'].queryset = branches_for(user)
+
+    def clean(self):
+        data = super().clean()
+        end = data.get('end') or timezone.localdate()
+        if not 1900 <= end.year <= 2100:
+            self.add_error('end', 'Chọn ngày trong khoảng 1900–2100.')
+            return data
+        start = data.get('start') or max(date(1900, 1, 1), end-timedelta(days=29))
+        if not 1900 <= start.year <= 2100:
+            self.add_error('start', 'Chọn ngày trong khoảng 1900–2100.')
+        elif start > end or (end-start).days > 366:
+            self.add_error('start', 'Khoảng báo cáo từ 0 đến 366 ngày; ngày bắt đầu không sau ngày kết thúc.')
+        data.update(start=start, end=end)
+        return data
+
+
+def report_queryset(request, form=None):
+    form = form if form is not None else ReportFilterForm(request.GET, user=request.user)
+    if not form.is_valid():
+        raise ValueError(' '.join(str(error) for errors in form.errors.values() for error in errors))
+    data = form.cleaned_data
+    start, end = data['start'], data['end']
+    qs = Invoice.objects.filter(appointment__in=appointments_for(request.user), paid_at__date__gte=start,
+        paid_at__date__lte=end).select_related('appointment__customer', 'appointment__branch', 'cashier').order_by('-paid_at', '-pk')
+    if data.get('branch'):
+        qs = qs.filter(appointment__branch=data['branch'])
+    query = data.get('q', '')
     if query:
-        condition=Q(appointment__customer__full_name__icontains=query)|Q(appointment__customer__phone__icontains=query)
-        code=query.upper().removeprefix('HD')
-        if code.isdecimal() and len(code)<19: condition|=Q(pk=int(code))
-        qs=qs.filter(condition)
-    return qs,start,end
+        condition = Q(appointment__customer__full_name__icontains=query) | Q(appointment__customer__phone__icontains=query)
+        code = query.upper().removeprefix('HD')
+        if code.isdecimal() and len(code) < 19:
+            condition |= Q(pk=int(code))
+        qs = qs.filter(condition)
+    return qs, start, end
 
 
 @operator_required
 @require_GET
 def reports(request):
-    try: qs,start,end=report_queryset(request)
-    except ValueError as error: return HttpResponseBadRequest(str(error))
-    if request.GET.get('export')=='csv': return report_export(request,'csv')
-    summary=qs.aggregate(amount=Sum('total'),count=Count('pk'),average=Avg('total'))
-    summary['total']=summary.pop('amount')
-    per_branch=qs.values('appointment__branch__name').annotate(total=Sum('total'),count=Count('pk')).order_by('-total')
-    return page(request,'Báo cáo doanh thu','features/reports.html',{'page_obj':paginate(request,qs),'summary':summary,
-        'start':start,'end':end,'branches':branches_for(request.user),'per_branch':per_branch,'nav_section':'reports'},staff=True)
+    form = ReportFilterForm(request.GET, user=request.user)
+    valid = form.is_valid()
+    if valid:
+        qs, start, end = report_queryset(request, form)
+        if request.GET.get('export') == 'csv':
+            return report_export(request, 'csv')
+    else:
+        qs, start, end = Invoice.objects.none(), None, None
+    summary = qs.aggregate(amount=Sum('total'), count=Count('pk'), average=Avg('total'))
+    summary['total'] = summary.pop('amount') or 0
+    per_branch = qs.values('appointment__branch__name').annotate(total=Sum('total'), count=Count('pk')).order_by('-total')
+    return page(request, 'Báo cáo doanh thu', 'features/reports.html', {
+        'page_obj': paginate(request, qs), 'summary': summary, 'filter_form': form, 'filters_valid': valid,
+        'start': start, 'end': end, 'per_branch': per_branch, 'nav_section': 'reports'}, staff=True)
 
 
 @operator_required
@@ -417,7 +446,10 @@ def my_appointments(request):
         qs=qs.filter(condition).distinct()
     status=request.GET.get('status','')
     if status in Appointment.Status.values: qs=qs.filter(status=status)
-    return page(request,'Lịch hẹn của tôi','features/appointments.html',{'page_obj':paginate(request,qs.order_by('-start_at','-pk')),'statuses':Appointment.Status.choices,'notifications':request.user.notifications.order_by('-created_at','-pk')[:5]})
+    result = paginate(request, qs.order_by('-start_at', '-pk'))
+    for appointment in result:
+        appointment.can_manage_booking = appointment.status == 'booked' and appointment.start_at-timezone.now() >= timedelta(hours=2)
+    return page(request,'Lịch hẹn của tôi','features/appointments.html',{'page_obj':result,'statuses':Appointment.Status.choices,'notifications':request.user.notifications.order_by('-created_at','-pk')[:5]})
 
 
 class CancelForm(forms.Form):
@@ -520,9 +552,15 @@ def register(request):
     if not url_has_allowed_host_and_scheme(target,{request.get_host()},require_https=request.is_secure()):
         target=reverse('booking')
     if request.method=='POST' and form.is_valid():
-        user=form.save(); login(request,user)
-        messages.success(request,'Đăng ký thành công. Bạn đã được đăng nhập.')
-        return redirect(target)
+        try:
+            with transaction.atomic():
+                user = form.save()
+        except IntegrityError:
+            form.add_error('username', 'Tên đăng nhập vừa được sử dụng. Vui lòng chọn tên khác.')
+        else:
+            login(request, user)
+            messages.success(request, 'Đăng ký thành công. Bạn đã được đăng nhập.')
+            return redirect(target)
     from django.shortcuts import render
     return render(request,'auth/register.html',{'form':form,'next':target})
 

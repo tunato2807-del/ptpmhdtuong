@@ -1,25 +1,23 @@
 {% load salon_tags %}
 <section class="panel padded">
-<form method="get" class="form-actions" style="flex-wrap:wrap">
-<label>Từ<input type="date" name="start" value="{{ start|date:'Y-m-d' }}">
-</label>
-<label>Đến<input type="date" name="end" value="{{ end|date:'Y-m-d' }}">
-</label>
-<select name="branch" aria-label="Chi nhánh">
-<option value="">Mọi chi nhánh của bạn</option>{% for b in branches %}<option value="{{ b.pk }}" {% if request.GET.branch == b.pk|stringformat:'s' %}selected{% endif %}>{{ b.name }}</option>{% endfor %}</select>
-<input name="q" value="{{ request.GET.q }}" placeholder="Khách, điện thoại, mã HD…" aria-label="Tìm hóa đơn">
-<button class="btn btn-primary">Áp dụng</button>
+<form method="get" class="report-filters">
+  {% include 'partials/form_fields.html' with form=filter_form %}
+  <div class="form-actions"><button class="btn btn-primary">Áp dụng</button>
+  <a class="btn btn-outline" href="{% url 'reports' %}">Đặt lại bộ lọc</a></div>
 </form>
+{% if not filters_valid %}<p role="alert">Vui lòng sửa bộ lọc phía trên. Chưa tính hoặc xuất doanh thu khi bộ lọc không hợp lệ.</p>{% else %}
+<p>Kỳ báo cáo: {{ start|date:'d/m/Y' }} – {{ end|date:'d/m/Y' }}.</p>{% endif %}
+
 <p>Giá trị trung bình: {{ summary.average|money }}</p>
 <div class="summary-total">
 <span>{{ summary.count }} hóa đơn · Tổng thực thu</span>
 <strong>{{ summary.total|money }}</strong>
 </div>
-<div class="form-actions">
+{% if filters_valid %}<div class="form-actions">
 <a class="btn btn-outline" href="{% url 'feature_report_export' 'xlsx' %}?{{ request.GET.urlencode }}">Xuất Excel</a>
 <a class="btn btn-outline" href="{% url 'feature_report_export' 'pdf' %}?{{ request.GET.urlencode }}">Xuất PDF</a>
 <a class="btn btn-outline" href="{% url 'feature_report_export' 'csv' %}?{{ request.GET.urlencode }}">Xuất CSV</a>
-</div>
+</div>{% endif %}
 </section>
 <section class="panel padded">
 <h2>Doanh thu theo chi nhánh</h2>{% for row in per_branch %}<div class="summary-line">

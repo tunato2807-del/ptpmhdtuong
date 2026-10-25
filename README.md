@@ -4,6 +4,10 @@ Dự án tiếng Việt dùng Django 5.2 LTS, PostgreSQL và giao diện riêng 
 
 Xem [bản cập nhật animation và ảnh tự chuyển](docs/09-ANIMATION-VA-ANH-TU-CHUYEN.md) để copy 5 file bổ sung.
 
+## Sửa bản copy thiếu file
+
+Nếu gặp `TemplateDoesNotExist: features/page.html`, xem [hướng dẫn sửa và đồng bộ từng file có sao lưu](docs/10-SUA-LOI-TEMPLATE-VA-DONG-BO-FILE.md). Script `scripts/cap_nhat_du_an.py` tải đúng những file nguồn thiếu/khác từ một commit cố định, kiểm tra SHA256 trước khi thay; giữ `.env`, `.venv` và database. Có thể tiếp tục copy từng file thủ công theo các link trong hướng dẫn.
+
 ## Copy từng file để cập nhật bản đang có
 
 Mở [hướng dẫn cập nhật từng file](docs/08-CAP-NHAT-TUNG-FILE.md). Hướng dẫn có đường dẫn trực tiếp tới toàn bộ CSS, template và Python cần copy, theo đúng thứ tự. Bản này có nút Đăng xuất rõ ràng trên đầu trang khách hàng/quản lý, kiểm tra file giao diện bị thiếu, và chỉnh phông chữ ở một số vị trí cụ thể.
@@ -103,7 +107,7 @@ Nếu thay thư mục bằng ZIP mới, nhớ sao chép `.env` của bạn vào 
 python scripts/dev.py check
 ```
 
-81 kiểm thử hiện tại dùng PostgreSQL thực và database test riêng. Tài khoản PostgreSQL chạy tests cần quyền CREATEDB và tạo `btree_gist`. Lệnh check thu thập static trước tests để manifest nhận đủ ảnh/font/CSS mới.
+94 kiểm thử hiện tại dùng PostgreSQL thực và database test riêng. Tài khoản PostgreSQL chạy tests cần quyền CREATEDB và tạo `btree_gist`. Lệnh check thu thập static trước tests để manifest nhận đủ ảnh/font/CSS mới.
 
 Browser checks tùy chọn, cần server local DEBUG=1 có dữ liệu mẫu. `scripts/interface_smoke.py` kiểm tra bố cục, CSS/font, biểu tượng và đăng xuất ở sáu kích thước màn hình. Các kiểm tra khác:
 
