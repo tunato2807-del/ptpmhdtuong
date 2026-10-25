@@ -1,0 +1,10 @@
+{% load salon_tags %}
+<section class="panel padded">{% for label,value in rows %}<div class="summary-line">
+<span>{{ label }}</span>
+<strong>{{ value }}</strong>
+</div>{% endfor %}<div class="form-actions">
+<a class="btn btn-primary" href="{% url 'resource_edit' resource.key object.pk %}">Sửa</a>
+<a class="btn btn-outline" href="{% url 'resource_delete' resource.key object.pk %}">Xóa</a>
+<a class="btn btn-outline" href="{% url 'resource_list' resource.key %}">Danh sách</a>
+</div>
+</section>

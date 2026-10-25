@@ -1,0 +1,26 @@
+{% load salon_tags %}
+<section class="panel padded">
+<p>Nhập tối đa 500 dòng/file .xlsx (2 MB). Với tài khoản, chỉ nhập khách hàng có role=customer. Mã trống để thêm mới; mã có sẵn để cập nhật. Toàn bộ file được hoàn tác nếu có lỗi. Tài khoản mới cần được quản trị đặt mật khẩu trước khi đăng nhập.</p>
+<p>
+<a class="text-link" href="{% url 'feature_export' resource.key 'xlsx' %}?template=1">Tải mẫu Excel</a> · <a href="{% url 'resource_list' resource.key %}">Quay lại danh sách</a>
+</p>
+{% for error in errors %}<div class="alert error">{{ error }}</div>{% endfor %}<form method="post" enctype="multipart/form-data" class="stack-form">{% csrf_token %}<label>Chọn file Excel<input type="file" name="file" accept=".xlsx" required>
+</label>
+<button class="btn btn-primary" name="action" value="preview">Kiểm tra và xem trước</button>
+</form>
+{% if rows %}<div class="table-scroll">
+<table>
+<thead>
+<tr>
+<th>Dòng</th>
+<th>Thao tác</th>{% for label in columns %}<th>{{ label }}</th>{% endfor %}</tr>
+</thead>
+<tbody>{% for row in rows %}<tr>
+<td>{{ row.line }}</td>
+<td>{{ row.action }}</td>{% for value in row.values %}<td>{{ value }}</td>{% endfor %}</tr>{% endfor %}</tbody>
+</table>
+</div>{% endif %}
+{% if token %}<form method="post" class="stack-form">{% csrf_token %}<input type="hidden" name="token" value="{{ token }}">
+<p>File hợp lệ. Xác nhận trong 15 phút để lưu.</p>
+<button class="btn btn-primary" name="action" value="confirm">Xác nhận nhập dữ liệu</button>
+</form>{% endif %}</section>

@@ -28,3 +28,7 @@ urlpatterns = [
     path('quan-ly/thiet-lap/<slug:resource>/<int:pk>/xoa/', management_views.resource_delete, name='resource_delete'),
     path('health/', views.health, name='health'),
 ]
+
+from .features import urlpatterns as feature_urls
+feature_names = {item.name for item in feature_urls}
+urlpatterns = feature_urls + [item for item in urlpatterns if item.name not in feature_names]

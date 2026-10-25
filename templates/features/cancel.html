@@ -1,0 +1,8 @@
+{% load salon_tags %}
+<section class="panel padded">
+<p>{{ appointment.branch.name }} · {{ appointment.start_at|date:'H:i d/m/Y' }}</p>
+<p>Khách hủy trước giờ hẹn ít nhất 2 giờ; lịch sử vẫn được lưu.</p>
+<form method="post" class="stack-form">{% csrf_token %}{{ form.as_p }}<button class="btn btn-primary">Xác nhận hủy</button>
+<a href="{% url 'appointment_detail' appointment.pk %}">Quay lại</a>
+</form>
+</section>

@@ -1,0 +1,10 @@
+{% load salon_tags %}
+<section class="panel padded">
+<p>{{ appointment.branch.name }} · Giữ nguyên dịch vụ, giá và mã lịch. Khách đổi trước giờ hẹn ít nhất 2 giờ.</p>
+<form method="post" class="stack-form">{% csrf_token %}{{ form.as_p }}<div class="form-actions">
+<button class="btn btn-outline" name="action" value="slots">Xem giờ trống</button>
+<button class="btn btn-primary" name="action" value="save">Lưu lịch mới</button>
+<a href="{% url 'appointment_detail' appointment.pk %}">Quay lại</a>
+</div>
+</form>
+</section>

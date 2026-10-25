@@ -1,0 +1,53 @@
+{% load salon_tags %}
+<section class="panel padded">
+<form method="get" class="form-actions" style="flex-wrap:wrap">
+<label>Từ<input type="date" name="start" value="{{ start|date:'Y-m-d' }}">
+</label>
+<label>Đến<input type="date" name="end" value="{{ end|date:'Y-m-d' }}">
+</label>
+<select name="branch" aria-label="Chi nhánh">
+<option value="">Mọi chi nhánh của bạn</option>{% for b in branches %}<option value="{{ b.pk }}" {% if request.GET.branch == b.pk|stringformat:'s' %}selected{% endif %}>{{ b.name }}</option>{% endfor %}</select>
+<input name="q" value="{{ request.GET.q }}" placeholder="Khách, điện thoại, mã HD…" aria-label="Tìm hóa đơn">
+<button class="btn btn-primary">Áp dụng</button>
+</form>
+<p>Giá trị trung bình: {{ summary.average|money }}</p>
+<div class="summary-total">
+<span>{{ summary.count }} hóa đơn · Tổng thực thu</span>
+<strong>{{ summary.total|money }}</strong>
+</div>
+<div class="form-actions">
+<a class="btn btn-outline" href="{% url 'feature_report_export' 'xlsx' %}?{{ request.GET.urlencode }}">Xuất Excel</a>
+<a class="btn btn-outline" href="{% url 'feature_report_export' 'pdf' %}?{{ request.GET.urlencode }}">Xuất PDF</a>
+<a class="btn btn-outline" href="{% url 'feature_report_export' 'csv' %}?{{ request.GET.urlencode }}">Xuất CSV</a>
+</div>
+</section>
+<section class="panel padded">
+<h2>Doanh thu theo chi nhánh</h2>{% for row in per_branch %}<div class="summary-line">
+<span>{{ row.appointment__branch__name }} · {{ row.count }} hóa đơn</span>
+<strong>{{ row.total|money }}</strong>
+</div>{% empty %}<p>Chưa có dữ liệu.</p>{% endfor %}</section>
+<section class="panel">
+<div class="table-scroll">
+<table>
+<thead>
+<tr>
+<th>Hóa đơn</th>
+<th>Khách</th>
+<th>Chi nhánh</th>
+<th>Thanh toán</th>
+<th>Tổng tiền</th>
+</tr>
+</thead>
+<tbody>{% for inv in page_obj %}<tr>
+<td>
+<a href="{% url 'invoice' inv.appointment_id %}">{{ inv.code }}</a>
+</td>
+<td>{{ inv.appointment.customer.full_name }}</td>
+<td>{{ inv.appointment.branch.name }}</td>
+<td>{{ inv.paid_at|date:'H:i d/m/Y' }}</td>
+<td>{{ inv.total|money }}</td>
+</tr>{% empty %}<tr>
+<td colspan="5">Chưa có giao dịch.</td>
+</tr>{% endfor %}</tbody>
+</table>
+</div>{% include 'partials/pagination.html' %}</section>

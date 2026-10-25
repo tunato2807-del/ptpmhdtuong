@@ -1,0 +1,38 @@
+/* Font corrections only for the named headings and decorative text.
+   Body text, tables, menus and form controls keep their original typography. */
+.customer-app .gh-hero h1 > span,
+.customer-app .gh-section-heading h2 span,
+.customer-app .team-content h2 span,
+.customer-app .gh-cta h2 span,
+.customer-app .auth-story h1 em,
+.resource-hint h2,
+.sidebar-note p,
+.invoice-thanks {
+  font-family: "Be Vietnam Pro", "Segoe UI", Arial, sans-serif;
+  font-style: normal;
+  line-height: 1.55;
+  letter-spacing: -.02em;
+}
+.customer-app .gh-hero h1 > span,
+.customer-app .gh-section-heading h2 span,
+.customer-app .team-content h2 span,
+.customer-app .gh-cta h2 span,
+.customer-app .auth-story h1 em {
+  font-size: 1em;
+  font-weight: 500;
+}
+.page-heading h1,
+.profile-heading h1,
+.resource-hint h2 {
+  font-family: "Be Vietnam Pro", "Segoe UI", Arial, sans-serif;
+  font-weight: 600;
+  letter-spacing: -.025em;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+/* Add this class to an individual phrase if it needs the same correction. */
+.font-vietnamese {
+  font-family: "Be Vietnam Pro", "Segoe UI", Arial, sans-serif;
+  font-style: normal;
+  line-height: 1.65;
+}

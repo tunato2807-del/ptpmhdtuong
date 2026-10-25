@@ -2,6 +2,12 @@
 
 Dự án tiếng Việt dùng Django 5.2 LTS, PostgreSQL và giao diện riêng bằng HTML/CSS/JavaScript. Có trang khách hàng, trang cá nhân và cổng quản lý với chức năng thêm/sửa/xóa. Toàn bộ danh mục được quản lý tại `/quan-ly/thiet-lap/`; không dùng Django Admin. Chạy trực tiếp trên VS Code, không cần Docker hoặc Node.js.
 
+## Copy từng file để cập nhật bản đang có
+
+Mở [hướng dẫn cập nhật từng file](docs/08-CAP-NHAT-TUNG-FILE.md). Hướng dẫn có đường dẫn trực tiếp tới toàn bộ CSS, template và Python cần copy, theo đúng thứ tự. Bản này có nút Đăng xuất rõ ràng trên đầu trang khách hàng/quản lý, kiểm tra file giao diện bị thiếu, và chỉnh phông chữ ở một số vị trí cụ thể.
+
+Tìm kiếm, phân trang, xem chi tiết CRUD, nhập Excel có xem trước/xác nhận, xuất Excel/PDF/CSV, đổi và hủy lịch nằm trong `salon/features.py`; HTML được tách đầy đủ trong `templates/features/`. Không cần dùng lại script nâng cấp một file đã gửi trước đó.
+
 ## Chạy trên Windows bằng VS Code
 
 Cần Python 3.12–3.14 (64-bit) và PostgreSQL 17 đã chạy. pgAdmin là công cụ quản lý PostgreSQL, không thay thế máy chủ database. Python 3.14 của bạn dùng được; các lệnh dùng `python`, không yêu cầu launcher `py`.
@@ -76,7 +82,8 @@ Tài khoản mẫu chỉ dùng để trình diễn. `seed_demo` chỉ chạy khi
 | `/lich-cua-toi/` | Lịch hẹn, lịch sử, điểm và thông báo |
 | `/quan-ly/` | Tổng quan vận hành và thao tác theo lịch hẹn |
 | `/quan-ly/thiet-lap/` | Quản trị riêng: dịch vụ, chi nhánh, stylist, ghế, ca làm, tài khoản |
-| `/quan-ly/bao-cao/` | Báo cáo và xuất CSV |
+| `/quan-ly/bao-cao/` | Lọc doanh thu, phân trang và xuất Excel/PDF/CSV |
+| `/tim-kiem/` | Tìm dịch vụ, chi nhánh, stylist |
 
 Quản trị viên quản lý nguồn lực bằng nút Thêm, Sửa, Xóa trên giao diện riêng. Quyền dựa vào vai trò `manager`, không cần cờ Django staff/superuser. Lễ tân xem và vận hành trong chi nhánh phụ trách, không được chỉnh thiết lập. Khách chỉ sửa hồ sơ của mình; không tự sửa vai trò hoặc điểm.
 
@@ -94,9 +101,9 @@ Nếu thay thư mục bằng ZIP mới, nhớ sao chép `.env` của bạn vào 
 python scripts/dev.py check
 ```
 
-53 kiểm thử hiện tại dùng PostgreSQL thực và database test riêng. Tài khoản PostgreSQL chạy tests cần quyền CREATEDB và tạo `btree_gist`. Lệnh check thu thập static trước tests để manifest nhận đủ ảnh/font/CSS mới.
+81 kiểm thử hiện tại dùng PostgreSQL thực và database test riêng. Tài khoản PostgreSQL chạy tests cần quyền CREATEDB và tạo `btree_gist`. Lệnh check thu thập static trước tests để manifest nhận đủ ảnh/font/CSS mới.
 
-Browser checks tùy chọn, cần server local DEBUG=1 có dữ liệu mẫu:
+Browser checks tùy chọn, cần server local DEBUG=1 có dữ liệu mẫu. `scripts/interface_smoke.py` kiểm tra bố cục, CSS/font, biểu tượng và đăng xuất ở sáu kích thước màn hình. Các kiểm tra khác:
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt

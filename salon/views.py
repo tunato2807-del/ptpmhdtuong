@@ -182,7 +182,11 @@ def dashboard(request):
     daily_revenue = invoices.filter(paid_at__date=day).aggregate(total=Sum('total'))['total'] or 0
     query, status = request.GET.get('q', '').strip()[:100], request.GET.get('status', '')
     visible = qs
-    if query: visible = visible.filter(Q(customer__full_name__icontains=query) | Q(customer__phone__icontains=query))
+    if query:
+        condition = Q(customer__full_name__icontains=query) | Q(customer__phone__icontains=query)
+        code = query.upper().removeprefix('LH')
+        if code.isdecimal() and len(code) < 19: condition |= Q(pk=int(code))
+        visible = visible.filter(condition)
     if status in Appointment.Status.values: visible = visible.filter(status=status)
     chart = []
     for i in range(6, -1, -1):

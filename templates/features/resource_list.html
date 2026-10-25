@@ -1,0 +1,42 @@
+{% load salon_tags %}
+<div class="form-actions" style="margin-bottom:20px;flex-wrap:wrap">
+<a class="btn btn-primary" href="{% url 'resource_create' resource.key %}">Thêm mới</a>
+<a class="btn btn-outline" href="{% url 'feature_import' resource.key %}">Nhập Excel</a>
+<a class="btn btn-outline" href="{% url 'feature_export' resource.key 'xlsx' %}?{{ request.GET.urlencode }}">Xuất Excel</a>
+<a class="btn btn-outline" href="{% url 'feature_export' resource.key 'pdf' %}?{{ request.GET.urlencode }}">Xuất PDF</a>
+</div>
+<section class="panel">
+<form method="get" class="table-toolbar" style="flex-wrap:wrap">
+<input name="q" value="{{ request.GET.q }}" placeholder="Tên, số điện thoại hoặc mã…" aria-label="Tìm kiếm">{% if resource.key != 'ca-lam' %}<select name="state" aria-label="Trạng thái">
+<option value="">Mọi trạng thái</option>
+<option value="1" {% if request.GET.state == '1' %}selected{% endif %}>Đang hoạt động</option>
+<option value="0" {% if request.GET.state == '0' %}selected{% endif %}>Tạm ngừng</option>
+</select>{% endif %}<select name="per_page" aria-label="Số dòng">
+<option value="20">20 dòng</option>
+<option value="10" {% if request.GET.per_page == '10' %}selected{% endif %}>10 dòng</option>
+<option value="50" {% if request.GET.per_page == '50' %}selected{% endif %}>50 dòng</option>
+</select>{% if resource.key == 'tai-khoan' %}<select name="role" aria-label="Vai trò">
+<option value="">Mọi vai trò</option>
+<option value="customer" {% if request.GET.role == 'customer' %}selected{% endif %}>Khách hàng</option>
+<option value="receptionist" {% if request.GET.role == 'receptionist' %}selected{% endif %}>Lễ tân</option>
+<option value="manager" {% if request.GET.role == 'manager' %}selected{% endif %}>Quản trị</option>
+</select>{% endif %}<button class="btn btn-outline">Tìm kiếm</button>
+</form>
+<div class="table-scroll">
+<table>
+<thead>
+<tr>{% for label in resource.columns %}<th>{{ label }}</th>{% endfor %}<th>Thao tác</th>
+</tr>
+</thead>
+<tbody>{% for row in rows %}<tr>{% for value in row.values %}<td>{{ value }}</td>{% endfor %}<td>
+<div class="resource-actions">
+<a href="{% url 'feature_detail' resource.key row.object.pk %}">Xem</a>
+<a href="{% url 'resource_edit' resource.key row.object.pk %}">Sửa</a>
+<a class="danger-text" href="{% url 'resource_delete' resource.key row.object.pk %}">Xóa</a>
+</div>
+</td>
+</tr>{% empty %}<tr>
+<td colspan="9">Không có kết quả.</td>
+</tr>{% endfor %}</tbody>
+</table>
+</div>{% include 'partials/pagination.html' %}</section>

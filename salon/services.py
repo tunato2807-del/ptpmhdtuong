@@ -50,6 +50,10 @@ def available_slots(branch, employee, day, duration):
         return []
     now = timezone.now()
     cursor = local_at(day, branch.opens_at)
+    if cursor.second or cursor.microsecond:
+        cursor = cursor.replace(second=0, microsecond=0) + timedelta(minutes=1)
+    if cursor.minute % 15:
+        cursor += timedelta(minutes=15 - cursor.minute % 15)
     result = []
     while cursor + timedelta(minutes=duration) <= local_at(day, branch.closes_at):
         try:

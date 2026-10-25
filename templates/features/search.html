@@ -1,0 +1,14 @@
+{% load salon_tags %}
+<form method="get" class="form-actions" style="margin-bottom:25px;flex-wrap:wrap">
+<input name="q" value="{{ request.GET.q }}" placeholder="Bạn đang tìm gì?" aria-label="Từ khóa">
+<select name="kind" aria-label="Nhóm tìm kiếm">
+<option value="dich-vu" {% if kind == 'dich-vu' %}selected{% endif %}>Dịch vụ</option>
+<option value="chi-nhanh" {% if kind == 'chi-nhanh' %}selected{% endif %}>Chi nhánh</option>
+<option value="stylist" {% if kind == 'stylist' %}selected{% endif %}>Stylist</option>
+</select>
+<button class="btn btn-primary">Tìm kiếm</button>
+</form>{% for name,description,url in rows %}<article class="panel padded" style="margin-bottom:15px">
+<h2>{{ name }}</h2>
+<p>{{ description }}</p>
+<a class="text-link" href="{{ url }}">Đặt lịch →</a>
+</article>{% empty %}<p>Không tìm thấy kết quả phù hợp.</p>{% endfor %}{% include 'partials/pagination.html' %}

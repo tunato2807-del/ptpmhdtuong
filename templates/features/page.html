@@ -1,0 +1,15 @@
+{% extends base %}
+{% block title %}{{ title }} · GENTLEMAN{% endblock %}
+{% block breadcrumb %}{{ title }}{% endblock %}
+{% block content %}
+<section class="public-section">
+  <div class="page-heading"><div><h1>{{ title }}</h1></div></div>
+  {% include feature_body %}
+</section>
+{% endblock %}
+{% block staff_content %}
+<section class="feature-page">
+  <div class="page-heading"><div><h1>{{ title }}</h1></div></div>
+  {% include feature_body %}
+</section>
+{% endblock %}

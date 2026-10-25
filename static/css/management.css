@@ -51,3 +51,31 @@
 @media(max-width:760px){.settings-grid{gap:14px}.settings-card{padding:20px}.settings-card h2{font-size:16px}.settings-card p{font-size:11px;min-height:60px}.settings-card-top{margin-bottom:18px}.settings-count{font-size:29px}.resource-total{width:100%;margin-left:0}.profile-page{padding:32px 20px 50px}.profile-heading{align-items:flex-start;flex-direction:column;gap:20px}.profile-heading h1{font-size:29px}.profile-heading p{font-size:11px}.profile-layout{grid-template-columns:1fr;gap:20px}.profile-identity{position:static;padding:25px}.profile-avatar{width:60px;height:60px;font-size:20px;margin-bottom:18px}.profile-identity dl{display:flex;flex-wrap:wrap;gap:25px;margin-bottom:0}.profile-identity .profile-note{margin-top:14px}.profile-forms h2{font-size:19px}.form-actions .btn{font-size:12px}.delete-panel h2{font-size:21px}}
 @media(max-width:390px){.settings-grid{grid-template-columns:1fr}.settings-card p{min-height:0}.resource-heading h1{font-size:25px}.resource-heading{flex-wrap:wrap}.profile-page{padding-inline:16px}}
 @media(prefers-reduced-motion:reduce){.settings-card{transition:none;transform:none!important}}
+
+/* Keep content inside its grid cell, including long Vietnamese names. */
+.settings-grid > *, .profile-layout > *, .resource-form-layout > * { min-width: 0; }
+.settings-card h2, .settings-card p, .resource-hint, .profile-forms { overflow-wrap: anywhere; }
+.profile-heading > div, .page-heading > div { min-width: 0; }
+.profile-heading, .page-heading, .form-actions, .resource-actions { flex-wrap: wrap; }
+.profile-heading h1 { line-height: 1.4; }
+.staff-header { position: sticky; top: 0; z-index: 25; min-height: 77px; height: auto; padding-block: 12px; }
+.staff-header > div:first-child { min-width: 0; }
+.breadcrumb { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.header-right { flex-shrink: 0; }
+.sidebar-user > div { min-width: 0; overflow-wrap: anywhere; }
+.table-toolbar { flex-wrap: wrap; }
+.table-toolbar input, .table-toolbar select { min-width: 0; max-width: 100%; }
+@media (max-width: 760px) {
+  .staff-header { min-height: 65px; gap: 10px; }
+  .staff-header .header-right { gap: 10px; }
+  .staff-header .environment-tag, .staff-header .header-divider,
+  .staff-header .help-link, .staff-header .header-right > .avatar { display: none; }
+  .staff-header .session-button { font-size: 11px; padding-inline: 10px; }
+  .resource-actions { gap: 12px; white-space: normal; }
+}
+@media (max-width: 640px) {
+  .customer-app .public-header .header-booking { display: none; }
+  .customer-app .public-header .session-button { padding-inline: 10px; font-size: 11px; }
+  .customer-app .public-header nav { flex-wrap: wrap; }
+  .customer-app .public-header .header-actions { margin-left: auto; }
+}

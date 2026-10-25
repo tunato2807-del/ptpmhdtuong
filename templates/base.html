@@ -5,11 +5,12 @@
   <meta name="theme-color" content="#f8f7f4">
   <meta name="description" content="GENTLEMAN — Cắt tóc nam, chăm sóc phong cách. Khám phá dịch vụ, chọn stylist và đặt lịch tại chi nhánh gần bạn.">
   <title>{% block title %}GENTLEMAN · Phong cách của bạn{% endblock %}</title>
-  <link rel="stylesheet" href="{% static 'css/app.css' %}">
-  <link rel="stylesheet" href="{% static 'css/customer.css' %}">
-  <link rel="stylesheet" href="{% static 'css/management.css' %}">
-  <script src="{% static 'js/app.js' %}" defer></script>
-  <script src="{% static 'js/customer.js' %}" defer></script>
+  <link rel="stylesheet" href="{% static 'css/app.css' %}?v=20261025-2">
+  <link rel="stylesheet" href="{% static 'css/customer.css' %}?v=20261025-2">
+  <link rel="stylesheet" href="{% static 'css/management.css' %}?v=20261025-2">
+  <link rel="stylesheet" href="{% static 'css/typography.css' %}?v=20261025-2">
+  <script src="{% static 'js/app.js' %}?v=20261025-2" defer></script>
+  <script src="{% static 'js/customer.js' %}?v=20261025-2" defer></script>
   {% block head %}{% endblock %}
 </head>
 <body class="{% block body_class %}customer-app{% endblock %}">
@@ -17,18 +18,25 @@
 {% block layout %}
 <header class="public-header">
   <a class="brand" href="{% url 'home' %}" aria-label="GENTLEMAN — Trang chủ"><span class="brand-emblem" aria-hidden="true">g.</span><span>gentleman<small>BARBER HOUSE</small></span></a>
-  <nav id="customer-nav" aria-label="Điều hướng chính">
+  <nav id="customer-nav" aria-label="Điều hướng chính"><a href="{% url 'feature_search' %}">Tìm kiếm</a>
     <a href="{% url 'home' %}#dich-vu">Dịch vụ</a><a href="{% url 'home' %}#phong-cach">Góc phong cách</a><a href="{% url 'home' %}#chi-nhanh">Chi nhánh</a>
-    {% if user.is_authenticated %}<a href="{% url 'my_appointments' %}">Lịch của tôi</a><a href="{% url 'profile' %}">Tài khoản</a>{% if user.is_operator %}<a href="{% url 'dashboard' %}">Quản lý <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a>{% endif %}{% else %}<a href="{% url 'login' %}">Đăng nhập</a>{% endif %}
+    {% if user.is_authenticated %}<a href="{% url 'my_appointments' %}">Lịch của tôi</a><a href="{% url 'profile' %}">Tài khoản</a>{% if user.is_operator %}<a href="{% url 'dashboard' %}">Quản lý <svg width="20" height="20" class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a>{% endif %}{% else %}<a href="{% url 'login' %}">Đăng nhập</a>{% endif %}
+
   </nav>
-  <div class="header-actions"><a class="btn btn-primary small" href="{% url 'booking' %}">Đặt lịch <span aria-hidden="true"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></a><button class="customer-menu" type="button" aria-expanded="false" aria-controls="customer-nav" aria-label="Mở điều hướng"><span></span><span></span></button></div>
+  <div class="header-actions">
+    {% if user.is_authenticated %}
+    <form class="session-form" action="{% url 'logout' %}" method="post">
+      {% csrf_token %}<button class="session-button" type="submit">Đăng xuất</button>
+    </form>
+    {% endif %}
+    <a class="btn btn-primary small header-booking" href="{% url 'booking' %}">Đặt lịch <span aria-hidden="true"><svg width="20" height="20" class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></a><button class="customer-menu" type="button" aria-expanded="false" aria-controls="customer-nav" aria-label="Mở điều hướng"><span></span><span></span></button></div>
 </header>
 <main id="main">{% include 'partials/messages.html' %}{% block content %}{% endblock %}</main>
 <footer class="public-footer">
-  <div class="footer-top"><div><a class="brand" href="{% url 'home' %}"><span class="brand-emblem" aria-hidden="true">g.</span><span>gentleman<small>BARBER HOUSE</small></span></a><p>Một kiểu tóc đẹp.<br>Một ngày thật khác.</p></div><div class="footer-links"><span>GHÉ THĂM GENTLEMAN</span><a href="{% url 'home' %}#dich-vu">Dịch vụ & bảng giá</a><a href="{% url 'home' %}#chi-nhanh">Tìm chi nhánh</a><a href="{% url 'home' %}#stylist">Đội ngũ stylist</a></div><div class="footer-links"><span>LỊCH HẸN CỦA BẠN</span><a href="{% url 'booking' %}">Đặt lịch cắt tóc</a><a href="{% url 'my_appointments' %}">Quản lý lịch hẹn</a>{% if user.is_authenticated %}<a href="{% url 'profile' %}">Thông tin cá nhân</a><form action="{% url 'logout' %}" method="post">{% csrf_token %}<button class="text-button">Đăng xuất</button></form>{% else %}<a href="{% url 'register' %}">Trở thành thành viên</a>{% endif %}</div><a class="footer-top-link" href="#main" aria-label="Về đầu trang">↑</a></div>
+  <div class="footer-top"><div><a class="brand" href="{% url 'home' %}"><span class="brand-emblem" aria-hidden="true">g.</span><span>gentleman<small>BARBER HOUSE</small></span></a><p>Một kiểu tóc đẹp.<br>Một ngày thật khác.</p></div><div class="footer-links"><span>GHÉ THĂM GENTLEMAN</span><a href="{% url 'home' %}#dich-vu">Dịch vụ & bảng giá</a><a href="{% url 'home' %}#chi-nhanh">Tìm chi nhánh</a><a href="{% url 'home' %}#stylist">Đội ngũ stylist</a></div><div class="footer-links"><span>LỊCH HẸN CỦA BẠN</span><a href="{% url 'booking' %}">Đặt lịch cắt tóc</a><a href="{% url 'my_appointments' %}">Quản lý lịch hẹn</a>{% if user.is_authenticated %}<a href="{% url 'profile' %}">Thông tin cá nhân</a>{% else %}<a href="{% url 'register' %}">Trở thành thành viên</a>{% endif %}</div><a class="footer-top-link" href="#main" aria-label="Về đầu trang">↑</a></div>
   <div class="footer-bottom"><span>© {% now 'Y' %} GENTLEMAN · Dự án học tập</span><span>Ảnh chụp dùng để minh họa trải nghiệm.</span><span>GOOD HAIR. GOOD DAY.</span></div>
 </footer>
-{% block mobile_booking %}<a class="mobile-booking btn btn-primary" href="{% url 'booking' %}">Dành một lịch hẹn cho bạn <span aria-hidden="true"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></a>{% endblock %}
+{% block mobile_booking %}<a class="mobile-booking btn btn-primary" href="{% url 'booking' %}">Dành một lịch hẹn cho bạn <span aria-hidden="true"><svg width="20" height="20" class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></a>{% endblock %}
 {% endblock %}
 {% block scripts %}{% endblock %}
 </body></html>
