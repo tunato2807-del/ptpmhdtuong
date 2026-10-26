@@ -9,17 +9,17 @@ def money(value):
 def service_photo(name):
     """Editorial photography; never interpolates user input into a file path."""
     name = str(name).casefold()
-    if 'râu' in name or 'signature' in name:
-        photo = 'beard-care'
+    if 'râu' in name:
+        photo = 'grooming.png'
     elif 'uốn' in name:
-        photo = 'hair-styling'
+        photo = 'hair-care.jpg'
     elif 'gội' in name:
-        photo = 'beard-care'
+        photo = 'hair-wash.png'
     elif 'combo' in name:
-        photo = 'hair-styling'
+        photo = 'consultation.jpg'
     else:
-        photo = 'precision-cut'
-    return f'images/photos/{photo}.webp'
+        photo = 'precision-cut.png'
+    return f'images/photos/{photo}'
 
 @register.simple_tag(takes_context=True)
 def querystring(context, **kwargs):

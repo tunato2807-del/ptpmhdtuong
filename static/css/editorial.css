@@ -1,0 +1,73 @@
+/* Visual accents scoped to components; forms and business tables keep their layout. */
+.customer-app { --cream: #faf7f0; --ink: #20382e; --accent: #aa492e; --accent-dark: #893820; --line: #e3ddd0; background-color: var(--cream); }
+.customer-app .public-header { background: #faf7f0f5; border-color: var(--line); }
+.customer-app .btn-dark { background: #20382e; }
+.customer-app .btn-dark:hover { background: #315243; }
+.customer-app .btn-primary { box-shadow: 0 5px 16px #aa492e18; }
+.customer-app .gh-hero { position: relative; padding-top: 45px; padding-bottom: 10px; gap: 4vw; }
+.customer-app .gh-hero-copy { position: relative; }
+.customer-app .gh-hero-copy::before { content: ''; position: absolute; width: 180px; height: 180px; right: 5%; top: 5%; border-radius: 50%; background: radial-gradient(circle, #d9ba8a26, transparent 70%); pointer-events: none; z-index: -1; }
+.customer-app .gh-hero h1 { color: #20382e; }
+.customer-app .gh-hero h1 > span { color: #aa492e; }
+.customer-app .gh-hero-visual { border-radius: 160px 20px 20px 20px; border: 6px solid #fff; box-shadow: 0 16px 48px #20382e14; }
+.customer-app .gh-hero-photo { object-position: center; }
+.customer-app .hero-photo-caption { bottom: 30px; left: 26px; right: 80px; }
+.customer-app .hero-photo-caption > span { color: #ffdfb7; font-size: 12px; }
+.customer-app .hero-photo-caption > strong { font-size: clamp(20px, 2vw, 28px); }
+.customer-app .hero-round-link { right: 18px; bottom: 34px; width: 48px; height: 48px; }
+.customer-app .quick-book { border-top: 3px solid #b88b57; box-shadow: 0 10px 30px #20382e08; }
+.customer-app .quick-icon { background: #f3e5d5; color: #935a32; }
+.customer-app .gh-promises { padding-block: 28px; }
+.customer-app .gh-section-heading .eyebrow { margin-bottom: 12px; }
+.customer-app .gh-section-heading h2 span,
+.customer-app .team-content h2 span { color: #8a5937; }
+.customer-app .gh-service, .customer-app .gh-branch { border-radius: 18px; }
+.customer-app .service-photo { height: 265px; }
+.customer-app .service-photo img { object-position: center 30%; }
+.customer-app .service-photo > span:first-of-type { background: #faf7f0f2; color: #20382e; }
+.customer-app .service-price { border-top-style: dashed; }
+.customer-app .service-price strong { color: #9b422a; }
+.customer-app .gh-style { background: #e8eee5; border-block: 1px solid #d9e0d3; }
+.customer-app .style-card { border-radius: 90px 14px 14px 14px; border: 5px solid #fff; }
+.customer-app .style-card > div > span { font-size: 12px; letter-spacing: .06em; }
+.customer-app .style-card h3 { font-size: clamp(20px, 2vw, 27px); }
+.customer-app .style-card::after { background: linear-gradient(transparent 32%, #0d2013d9); }
+.customer-app .team-editorial { border: 6px solid #fff; box-shadow: 0 12px 32px #20382e0d; }
+.customer-app .how-grid { gap: 24px; }
+.customer-app .how-grid article { padding: 26px; background: #fffdf8; border: 1px solid var(--line); border-radius: 14px; }
+.customer-app .how-grid article > span { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid #d9c5aa; border-radius: 50%; font-size: 22px; color: #98633a; letter-spacing: 0; background: #f8efe1; }
+.customer-app .gh-cta { border-radius: 24px; border: 6px solid #fff; }
+.customer-app .public-footer { background: #20382e; color: #faf7f0; }
+.customer-app .public-footer p { color: #e6d6bc; font-size: 22px; line-height: 1.6; }
+.customer-app .public-footer .brand-emblem { border-color: #ffffff40; }
+.customer-app .footer-links > span { color: #dac3a1; font-size: 13px; }
+.customer-app .footer-links a:hover { color: #f0c18c; }
+.customer-app .footer-bottom { border-color: #ffffff26; color: #c3cfc1; }
+.customer-app .footer-top-link { border-color: #ffffff50; }
+.editorial-note { display: flex; align-items: center; gap: 10px; padding-top: 18px; margin-top: 24px; border-top: 1px solid var(--line); color: #68705e; }
+.editorial-note::before { content: ''; width: 8px; height: 8px; background: #a67844; border-radius: 50%; flex-shrink: 0; }
+/* A quieter version in the management workspace. */
+.staff-app .page-heading { border-bottom: 1px solid var(--line); padding-bottom: 24px; }
+.staff-app .settings-card { border-top: 3px solid #b58a60; }
+.customer-app .profile-card { border-top: 3px solid #b58a60; }
+@media (max-width: 1024px) {
+  .customer-app .gh-hero { gap: 24px; }
+  .customer-app .gh-hero-visual { border-top-left-radius: 100px; }
+  .customer-app .service-photo { height: 230px; }
+}
+@media (max-width: 640px) {
+  .customer-app .gh-hero { padding-top: 24px; }
+  .customer-app .gh-hero-visual { border-radius: 80px 16px 16px 16px; min-height: 420px; }
+  .customer-app .hero-photo-caption { left: 20px; right: 65px; }
+  .customer-app .hero-photo-caption > span { font-size: 11px; }
+  .customer-app .hero-round-link { width: 40px; height: 40px; right: 14px; }
+  .customer-app .how-grid { gap: 14px; }
+  .customer-app .how-grid article { padding: 22px; }
+  .customer-app .gh-cta { padding: 32px 22px; }
+  .customer-app .style-card { border-top-left-radius: 65px; }
+  .customer-app .footer-top { gap: 28px; }
+  .customer-app .editorial-note { font-size: 12px; }
+}
+@media print {
+  .customer-app { background: #fff; color: #000; }
+}

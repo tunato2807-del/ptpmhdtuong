@@ -1,30 +1,40 @@
-# Nguồn ảnh và font
+# Nguồn ảnh, phông chữ và biểu tượng
 
-## Ảnh chụp barber
+## Bộ ảnh giao diện salon Việt Nam (26/10/2026)
 
-Nguồn trực tiếp: [codewithsadee/barber](https://github.com/codewithsadee/barber), commit `676333fc328cfcdb4988c1a4ed7d5fe2e2912387`, thư mục `assets/images/`.
+Các ảnh đang dùng là ảnh chụp tham khảo hoạt động salon 30Shine tại Việt Nam, được lưu nguyên file trong dự án, không tạo bằng AI và không thay khuôn mặt. Nguồn/bối cảnh được xác định từ repository và nội dung website tham khảo, không suy đoán quốc tịch của từng người từ khuôn mặt. Chân trang ghi nguồn 30Shine và đồ án độc lập; ảnh không đại diện nhân viên, khách hàng hoặc chi nhánh Gentleman trong dữ liệu mẫu.
 
-README nguồn, mục License, ghi: “This project is **free to use** and does not contains any license.” Đây là tuyên bố của tác giả repository; nguồn không kèm tên nhiếp ảnh gia hoặc giấy phép riêng cho từng ảnh. Không gắn nhãn các ảnh này là MIT/Unsplash hoặc khẳng định đã xác minh quyền thương mại của từng ảnh. Bộ ảnh dùng minh họa trong đồ án; khi triển khai thương hiệu thực tế nên thay bằng ảnh cửa hàng sở hữu hoặc ảnh có giấy phép riêng đã xác minh.
+Máy chủ ảnh `storage.30shine.com` không truy cập được trong lần cập nhật này. Hai repository tham khảo công khai sau chứa các file sử dụng:
 
-| File local | File nguồn |
-|---|---|
-| barber-hero.webp | hero-banner.jpg |
-| barber-detail.webp | pricing-bg.jpg |
-| precision-cut.webp | gallery-1.jpg |
-| beard-care.webp | gallery-2.jpg |
-| modern-fade.webp | gallery-3.jpg |
-| hair-styling.webp | gallery-4.jpg |
+- **Nguồn A:** [AbigalChulchill/30shine_react](https://github.com/AbigalChulchill/30shine_react/tree/33379d3f04279dc38915620615a7bad135dad357/react/src/assets/img), commit `33379d3f04279dc38915620615a7bad135dad357`.
+- **Nguồn B:** [Doanh-Dinh-7/30shine-web-django-reactjs](https://github.com/Doanh-Dinh-7/30shine-web-django-reactjs/tree/503e83e3b78e406f922d78e06e200007b2b73b0c/frontend/src/images), commit `503e83e3b78e406f922d78e06e200007b2b73b0c`.
 
-Ảnh là ảnh chụp, không phải ảnh được tạo bằng AI. Xử lý tài nguyên chỉ giảm kích thước và nén WebP (quality 85), không thay đổi chủ thể. Giao diện dùng object-fit để hiển thị theo khung. Ảnh không đại diện chân dung của stylist, địa điểm thực hay kết quả của một dịch vụ cụ thể trong dữ liệu demo. Thông tin này được ghi ở phần chi nhánh và cuối trang.
+| File tại `static/images/photos/` | Nguồn / đường dẫn tương đối | Kích thước gốc |
+|---|---|---|
+| consultation.jpg | A / langnghetantam/lang-nghe-tan-tam-1.jpg | 765 × 766 |
+| salon-lounge.jpg | A / langnghetantam/lang-nghe-tan-tam-3.jpg | 700 × 700 |
+| salon-interior.jpg | A / khonggianthietbi/30shinecon-cept-khong-gian-rong-lon-1.jpg | 475 × 475 |
+| hair-care.jpg | A / antamtintuong/30shine-so-1-ve-an-toan-4.jpg | 1000 × 1000 |
+| precision-cut.png | B / service-1.png | 369 × 468 |
+| grooming.png | B / service-2.png | 361 × 215 |
+| hair-wash.png | B / service-3.png | 361 × 215 |
 
-Không dùng hình ảnh, logo hoặc nội dung tải từ Fresha/30Shine.
+Các file được sao chép nguyên byte, không xóa logo hoặc sửa nội dung ảnh. CSS `object-fit` điều chỉnh khung hiển thị. Một số ảnh gốc có độ phân giải nhỏ; chưa có bản gốc độ phân giải cao hơn.
 
-## Font
+**Quyền sử dụng:** các repository không cung cấp giấy phép riêng đã xác minh cho từng ảnh. README nguồn B có nhãn MIT cho dự án phần mềm, không đủ để khẳng định ảnh thương hiệu được cấp quyền MIT. Ghi nguồn không thay thế sự cho phép sử dụng; trước khi triển khai thương mại cần có quyền dùng ảnh từ chủ sở hữu hoặc thay bằng ảnh salon tự chụp. Bộ ảnh trước từ `codewithsadee/barber` đã được gỡ khỏi giao diện; các screenshot/tài liệu lịch sử có thể vẫn chứa giao diện cũ.
 
-Be Vietnam Pro, tác giả The Be Vietnam Pro Project Authors. Nguồn đóng gói: npm `@fontsource/be-vietnam-pro@5.3.0`. Giấy phép SIL Open Font License 1.1 được giữ nguyên tại `static/fonts/LICENSE`.
+## Phông chữ
 
-Các subset latin, latin-ext, vietnamese; các trọng lượng 400/500/600/700/800. Font tải từ file WOFF2 trong dự án; không gửi yêu cầu tới Google Fonts.
+Người dùng cung cấp [fonttiengviet.com](https://fonttiengviet.com/) làm hướng tham khảo. Website trả 403 trong phiên truy cập, vì vậy không khẳng định đã xem được danh mục hoặc tải font từ website đó. Bộ phông có giấy phép SIL Open Font License 1.1:
+
+| Phông | Nguồn | Vai trò | Giấy phép trong dự án |
+|---|---|---|---|
+| Be Vietnam Pro | `@fontsource/be-vietnam-pro@5.3.0` | Nội dung khách hàng, biểu mẫu; tiêu đề quản lý được chọn | `static/fonts/LICENSE` |
+| Lora | [Google Fonts / Lora](https://github.com/google/fonts/tree/main/ofl/lora) | Chữ nghiêng nhấn trong tiêu đề, câu chào và lời nhắn cuối trang; italic 500 | `static/fonts/lora-LICENSE.txt` |
+| Barlow Condensed | [Google Fonts / Barlow Condensed](https://github.com/google/fonts/tree/main/ofl/barlowcondensed) | Nhãn trang trí ngắn, số thứ tự; normal 600 | `static/fonts/barlow-condensed-LICENSE.txt` |
+
+Be Vietnam Pro dùng các subset latin, latin-ext, vietnamese hiện có. Lora và Barlow Condensed dùng bản đầy đủ ký tự từ Google Fonts, chuyển sang WOFF2 bằng FontTools; Lora variable được cố định tại weight 500. Bản đầy đủ giữ cả dấu tổ hợp U+0302/U+0306/U+031B thường thiếu trong subset. Không cần FontTools khi chạy ứng dụng. `editorial-fonts.css` khai báo hai họ font mới; `typography.css` giới hạn vị trí áp dụng. Không dùng `* { font-family: ... }`; không đổi phông toàn bộ khu quản trị. Không yêu cầu Google Fonts, Fontsource CDN hoặc website tham khảo khi người dùng mở app.
 
 ## Biểu tượng
 
-Biểu tượng SVG đường nét được viết trực tiếp trong template; không dùng thư viện icon bên ngoài. Minh họa SVG cũ `static/images/barber.svg` được giữ lại để tương thích tài liệu lịch sử, không còn là ảnh hero khách hàng.
+SVG đường nét viết trực tiếp trong template, có kích thước giới hạn. `static/images/barber.svg` là tài nguyên lịch sử không còn được dùng trên giao diện khách hàng.

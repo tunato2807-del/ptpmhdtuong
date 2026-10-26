@@ -1,0 +1,16 @@
+/* Full local OFL fonts retain Vietnamese combining marks as well as NFC glyphs.
+   Sources and licenses: docs/NGUON-TAI-NGUYEN.md. */
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 500;
+  src: url('../fonts/lora-500-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url('../fonts/barlow-condensed-600-normal.woff2') format('woff2');
+}

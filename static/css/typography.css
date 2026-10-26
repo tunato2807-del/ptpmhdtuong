@@ -1,38 +1,61 @@
-/* Font corrections only for the named headings and decorative text.
-   Body text, tables, menus and form controls keep their original typography. */
+/* Three explicit roles, never a global font override.
+   Be Vietnam Pro: legibility. Lora: editorial accents. Barlow: short labels. */
+:root {
+  --font-readable: "Be Vietnam Pro", "Segoe UI", Arial, sans-serif;
+  --font-editorial: "Lora", Georgia, serif;
+  --font-label: "Barlow Condensed", "Segoe UI", Arial, sans-serif;
+}
 .customer-app .gh-hero h1 > span,
 .customer-app .gh-section-heading h2 span,
 .customer-app .team-content h2 span,
 .customer-app .gh-cta h2 span,
 .customer-app .auth-story h1 em,
-.resource-hint h2,
-.sidebar-note p,
-.invoice-thanks {
-  font-family: "Be Vietnam Pro", "Segoe UI", Arial, sans-serif;
-  font-style: normal;
-  line-height: 1.55;
-  letter-spacing: -.02em;
+.customer-app .footer-top > div > p,
+.font-editorial {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-weight: 500;
+  font-synthesis: none;
+  line-height: 1.45;
+  letter-spacing: -.035em;
 }
 .customer-app .gh-hero h1 > span,
 .customer-app .gh-section-heading h2 span,
 .customer-app .team-content h2 span,
 .customer-app .gh-cta h2 span,
-.customer-app .auth-story h1 em {
-  font-size: 1em;
-  font-weight: 500;
-}
-.page-heading h1,
-.profile-heading h1,
-.resource-hint h2 {
-  font-family: "Be Vietnam Pro", "Segoe UI", Arial, sans-serif;
+.customer-app .auth-story h1 em { font-size: 1.08em; }
+.customer-app .eyebrow,
+.customer-app .hero-photo-caption > span,
+.customer-app .style-card > div > span,
+.customer-app .location-label,
+.customer-app .footer-links > span,
+.customer-app .how-grid article > span,
+.customer-app .editorial-note,
+.font-label {
+  font-family: var(--font-label);
+  font-style: normal;
   font-weight: 600;
+  font-synthesis: none;
+  font-size: 14px;
+  line-height: 1.6;
+  letter-spacing: .1em;
+}
+.customer-app .gh-hero-copy .eyebrow { font-size: 14px; }
+.page-heading h1, .profile-heading h1, .resource-hint h2,
+.sidebar-note p, .invoice-thanks, .font-vietnamese {
+  font-family: var(--font-readable);
+  font-style: normal;
+  line-height: 1.5;
   letter-spacing: -.025em;
-  line-height: 1.45;
   overflow-wrap: anywhere;
 }
-/* Add this class to an individual phrase if it needs the same correction. */
-.font-vietnamese {
-  font-family: "Be Vietnam Pro", "Segoe UI", Arial, sans-serif;
-  font-style: normal;
-  line-height: 1.65;
+.page-heading h1, .profile-heading h1, .resource-hint h2 { font-weight: 600; }
+.font-vietnamese { line-height: 1.65; }
+/* Leave extra vertical room for Vietnamese accents, including stacked marks. */
+.customer-app .gh-hero h1,
+.customer-app .gh-section-heading h2,
+.customer-app .team-content h2 { overflow: visible; text-wrap: balance; }
+@media (max-width: 640px) {
+  .customer-app .gh-hero-copy .eyebrow { font-size: 12px; letter-spacing: .07em; }
+  .customer-app .gh-hero h1 { font-size: clamp(36px, 9.5vw, 54px); letter-spacing: -.055em; line-height: 1.28; }
 }

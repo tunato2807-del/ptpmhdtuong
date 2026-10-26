@@ -4,10 +4,15 @@ from django.core.checks import Error, Tags, register
 
 REQUIRED_ASSETS = (
     'css/app.css', 'css/customer.css', 'css/management.css', 'css/typography.css',
+    'css/editorial-fonts.css', 'css/editorial.css',
     'js/app.js', 'js/customer.js', 'css/motion.css', 'js/motion.js',
     *(f'fonts/be-vietnam-pro-{subset}-{weight}-normal.woff2'
       for subset in ('latin', 'latin-ext', 'vietnamese')
       for weight in (400, 500, 600, 700, 800)),
+    'fonts/lora-500-italic.woff2', 'fonts/barlow-condensed-600-normal.woff2',
+    *(f'images/photos/{name}' for name in (
+        'consultation.jpg', 'salon-lounge.jpg', 'salon-interior.jpg', 'hair-care.jpg',
+        'precision-cut.png', 'grooming.png', 'hair-wash.png')),
 )
 
 

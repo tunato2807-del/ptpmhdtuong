@@ -1,0 +1,26 @@
+GENTLEMAN — kiểm tra giao diện và phông — 26/10/2026
+Django check: PASS; collectstatic: PASS; git diff --check: PASS.
+
+editorial-tests
+Creating test database for alias 'default'...
+...........
+----------------------------------------------------------------------
+Ran 11 tests in 6.530s
+
+OK
+Destroying test database for alias 'default'...
+Found 11 test(s).
+System check identified no issues (0 silenced).
+
+
+editorial-interface
+PASS: 342 route/viewport checks, 6 widths, assets, bounded icons, settings/profile columns, visible POST logout for all roles; no browser or asset errors.
+
+
+editorial-motion
+PASS: scoped font roles, Vietnamese font loads, all photos loaded, slideshow autoplay/manual/pause, reduced-motion, no-JS mobile, no external requests or JS errors.
+
+
+editorial-glyphs
+PASS lora-500-italic: Vietnamese NFC letters, all U+1EA0–U+1EF9, NFD combining marks.
+PASS barlow-condensed-600-normal: Vietnamese NFC letters, all U+1EA0–U+1EF9, NFD combining marks.
