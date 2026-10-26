@@ -1,5 +1,5 @@
 {
-  "ref": "cfb7fdd41cbc674d0cef656b00f181ee0afcc0f7",
+  "ref": "9c08dfc2d87544e14f62cc235e57f35c0a8d3313",
   "files": [
     {
       "path": ".env.example",
@@ -7,7 +7,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "aa1fa41be7f43e3bbaa6626d099adc1b95c704bc0ec5ca46fd31d4bdd0d42168"
+      "sha256": "52fa4c3ef1fbfcca113203bbef04a69e488134658edfd948dd5ee4e07ed3c6c1"
     },
     {
       "path": "config/__init__.py",
@@ -70,12 +70,16 @@
       "sha256": "82fd281b3107c1b8740575df25df6ebcbe10494e158af0f2c66877138f87eb1d"
     },
     {
+      "path": "docs/12-FONT-VA-HINH-ANH.md",
+      "sha256": "c1a1cc4f0dc6d57ead642004b7053280db2837f2b4206acbbf8130b7c3d30e36"
+    },
+    {
       "path": "docs/BAO_CAO_PHAN_TICH_THIET_KE.docx",
       "sha256": "c56508b919f6e549a851cb09eef005e19e2ba005fe26457f8a848afcefa97c64"
     },
     {
       "path": "docs/NGUON-TAI-NGUYEN.md",
-      "sha256": "c7dcacd0a70fac994d8ea9a1897a5a3c88ccc6816f69b9a95ffb65b3a26e5601"
+      "sha256": "aac463188e27d16380190ca30c0328a09e2f226e3f96e73f16e10a305302539e"
     },
     {
       "path": "docs/diagrams/01-use-case.mmd",
@@ -186,6 +190,18 @@
       "sha256": "bc017bafc71b5628911213cb669ae84b8f98eab3056a14275ff3bf6b78616f1f"
     },
     {
+      "path": "docs/screenshots/editorial/experience.png",
+      "sha256": "026580f7f233ac518365b432572cc52b4b60661ff77c51803c60d87f6cc5acf1"
+    },
+    {
+      "path": "docs/screenshots/editorial/home-desktop.png",
+      "sha256": "0114ae6268a0d55ef9059139c1d24ba7b2324fcd6f2c300d17efd0c02459245b"
+    },
+    {
+      "path": "docs/screenshots/editorial/home-mobile.png",
+      "sha256": "b8491755a4bae3e3616241b1317a1f932f7fd99410da489cec52c48faf097e26"
+    },
+    {
       "path": "docs/screenshots/home-desktop-top.png",
       "sha256": "2dd521a4277a22a0260fcc78c08d6deb0b1212f831979ee7b4e0333ce6f66e1d"
     },
@@ -250,6 +266,10 @@
       "sha256": "fa836aea4381b742167ca1b10d25785f18bf088a50ebf12135aa4e0821143e0b"
     },
     {
+      "path": "docs/validation/12-FONT-VA-HINH-ANH.txt",
+      "sha256": "c6de0901864900ca3259de327f234346a478e769827a7d8d6a88fc5ff8603c3d"
+    },
+    {
       "path": "docs/validation/browser-local.txt",
       "sha256": "ced74119486a849e6fde2489dad71fa8ae42504280049f7a070f4ca997a47466"
     },
@@ -287,7 +307,7 @@
     },
     {
       "path": "salon/checks.py",
-      "sha256": "3e7ef379434c0fff5216a449255b5b3f4eb102589bbf1c644fce4f7abebb82d1"
+      "sha256": "42445a0581f6c232f865ec9d8f4a2c246007007fb9980fd615f157a80cf5553d"
     },
     {
       "path": "salon/context.py",
@@ -379,7 +399,7 @@
     },
     {
       "path": "salon/templatetags/salon_tags.py",
-      "sha256": "8212038f970cbd75da004644b33a3d2ae89f0265241f7e116ee36749f9e8bb89"
+      "sha256": "706079702a911d8d222b79f4856b67da56e254c3d4c12cd7e7dbc2e7caf44fa9"
     },
     {
       "path": "salon/tests/__init__.py",
@@ -490,6 +510,14 @@
       "sha256": "51ce2967befdac3581a1cdaa4d501dfe5e2bf19ff0a85fe292cc375e4b87330e"
     },
     {
+      "path": "static/css/editorial-fonts.css",
+      "sha256": "c276e3d7e3ff40fc92ca5b9c90abf8589c1eeaea2219397c70183e8ba1294720"
+    },
+    {
+      "path": "static/css/editorial.css",
+      "sha256": "313c7792fcac494224e5e83eb3e48da3bf212be279f5fd5c9fd1be1bb971dd57"
+    },
+    {
       "path": "static/css/management.css",
       "sha256": "5a62e4325d04fa305fdbea4e497eaa21aa5788a82d69f9a0f6e96e309bed8ec7"
     },
@@ -499,11 +527,19 @@
     },
     {
       "path": "static/css/typography.css",
-      "sha256": "633d16f0138c99939c7a1684a5daefb7ce05e4b3ff505b9d789189d62492a543"
+      "sha256": "160e752e71a42803153a1a9c9f44bb3e935849fc4a3d7e7c0f447d047b252775"
     },
     {
       "path": "static/fonts/LICENSE",
       "sha256": "0bd4db1cda123af9d91794b0f98324b7d7d81aef0fcaf78c433160153f2c6f25"
+    },
+    {
+      "path": "static/fonts/barlow-condensed-600-normal.woff2",
+      "sha256": "560d255c50a79fb8485d32c0be511f541a0509b1795f60a85aa56b88e16ca317"
+    },
+    {
+      "path": "static/fonts/barlow-condensed-LICENSE.txt",
+      "sha256": "10b0e6bb43166a50fbe7cde2895bd7f703738a5da843acb5c97c95dc9ea26817"
     },
     {
       "path": "static/fonts/be-vietnam-pro-latin-400-normal.woff2",
@@ -566,32 +602,44 @@
       "sha256": "26b241d1d5f489c8a65c1a3c4cdcdb48dd114a9ed7e0c0180182191f087cbe96"
     },
     {
+      "path": "static/fonts/lora-500-italic.woff2",
+      "sha256": "ee90d583b9ef5baed4368bfa6416f8b15822a0da56346885ad0677db3910ad3d"
+    },
+    {
+      "path": "static/fonts/lora-LICENSE.txt",
+      "sha256": "6d6bc7bbb828514925dabcaf89e4771398d12c60dd1cb2bbb90eea129535d0f4"
+    },
+    {
       "path": "static/images/barber.svg",
       "sha256": "3bc04306499ba6853ec6916e5e73d3f738ee32d32ba232fe3f1d01f46e465adf"
     },
     {
-      "path": "static/images/photos/barber-detail.webp",
-      "sha256": "810395b9e42bc30f01542c52be0698aeb4b354b4243a308ab7923b12000fa463"
+      "path": "static/images/photos/consultation.jpg",
+      "sha256": "766199c47d682419fa029c6fab291643b49ce0ada6b362e28005333d71490979"
     },
     {
-      "path": "static/images/photos/barber-hero.webp",
-      "sha256": "ff7072e74e635241e10132b35b2e1f6ad020893a951132b841aa62f8efe5833c"
+      "path": "static/images/photos/grooming.png",
+      "sha256": "a179a9ce2890f5dc970910a8d806853059a3c0c7dbdcf1032380a201f203564e"
     },
     {
-      "path": "static/images/photos/beard-care.webp",
-      "sha256": "49fabbf2db469772d4fe9d50a794e065b7da2eac244e22a9dfa0d9e2c1b85407"
+      "path": "static/images/photos/hair-care.jpg",
+      "sha256": "6ae0bc032c5441c3443f12148bd44c9e4b80754fd7a7695262d1e1b7008c038a"
     },
     {
-      "path": "static/images/photos/hair-styling.webp",
-      "sha256": "463fe1512ce621f6cdbd8456b3cf1034e24c03e35f7d956db9b3c752a5d507e6"
+      "path": "static/images/photos/hair-wash.png",
+      "sha256": "cb5ba462a4dc2e99ae9642dcb430e7f87178e1b93ba22c5c80d5653ef4b3f0d8"
     },
     {
-      "path": "static/images/photos/modern-fade.webp",
-      "sha256": "56682e1c2fcc553973cdaa54d707917c905ae65cd32af01e5f99b97cda434a59"
+      "path": "static/images/photos/precision-cut.png",
+      "sha256": "9c7fb1ac8f4782b989f0f5fa2d6d6c1bd9f4dc0d33a4699c382f05906019666d"
     },
     {
-      "path": "static/images/photos/precision-cut.webp",
-      "sha256": "53e318de3122237ec6a497d1e99faa452941f48fb1161aa40a0b2d6e6291b96e"
+      "path": "static/images/photos/salon-interior.jpg",
+      "sha256": "0ddb776cc435f937c9f56c28a83e09ad09c18e7de79ef22c6b27d991cdba2bcb"
+    },
+    {
+      "path": "static/images/photos/salon-lounge.jpg",
+      "sha256": "e9e274988c316aa9b4b59e1ccf62a673a6667ad380f7bbfaf2ce43bde9192d2f"
     },
     {
       "path": "static/js/app.js",
@@ -615,7 +663,7 @@
     },
     {
       "path": "templates/auth/login.html",
-      "sha256": "90627f02f882d34b492c497a3b6d941a7ba0fa9e2a75342100e2de9c1e7f7830"
+      "sha256": "323da2f9d1eeaa0b7bc59ec3d1033d8dc4d353c846bf4a5179d67b9c01162b57"
     },
     {
       "path": "templates/auth/password_reset.html",
@@ -647,7 +695,7 @@
     },
     {
       "path": "templates/base.html",
-      "sha256": "eb560012bf0456495cf5e9794833e2d0fe0d5da17fb5442716031cb90217cb05"
+      "sha256": "6c3bce2e271d52aefd324e0f741eace52c2f254268619214e88f2c644cf8cb32"
     },
     {
       "path": "templates/features/appointments.html",
@@ -727,11 +775,11 @@
     },
     {
       "path": "templates/public/booking.html",
-      "sha256": "ae43822aaa84e9bcca7749fd9b5991798e731cc97b2c6108902e19c3984ad0ec"
+      "sha256": "38c0e53651eb78b20aab667833c297ccbdc6ae80d014b48eb5d49af3161a1673"
     },
     {
       "path": "templates/public/home.html",
-      "sha256": "47baecf3bd88c261bb984eb2530e54546d441095d2f9a839036f2cc50845c1c4"
+      "sha256": "de3bd937fc2746eb8cc2fd779da316ee25c1d4ff074e47c6209093dc8428bf1a"
     },
     {
       "path": "templates/public/invoice.html",
