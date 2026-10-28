@@ -51,19 +51,28 @@ def form_page(request,title,form,hint='',context=None,staff=True):
 @operator_required
 @require_GET
 def board(request):
-    scope=scoped_branches(request);day=chosen_day(request)
+    scope=list(scoped_branches(request));day=chosen_day(request)
+    def grouped(qs,field,**metrics):
+        return {r[field]:r for r in qs.values(field).annotate(**metrics).order_by()}
+    appointments=grouped(Appointment.objects.filter(branch__in=scope,start_at__date=day),'branch_id',
+        bookings=Count('pk'),busy=Count('pk',filter=Q(status__in=['checked_in','in_service'])),
+        waiting=Count('pk',filter=Q(status='awaiting_payment')))
+    receipts=grouped(Invoice.objects.filter(appointment__branch__in=scope,paid_at__date=day),
+        'appointment__branch_id',total=Sum('total'))
+    refunds=grouped(Refund.objects.filter(invoice__appointment__branch__in=scope,created_at__date=day),
+        'invoice__appointment__branch_id',total=Sum('amount'))
+    chairs=grouped(Chair.objects.filter(branch__in=scope,active=True),'branch_id',total=Count('pk'))
+    stock=grouped(Stock.objects.filter(branch__in=scope,quantity__lte=F('product__reorder_level'),product__active=True),
+        'branch_id',total=Count('pk'))
+    closed=set(DailyClosing.objects.filter(branch__in=scope,day=day).values_list('branch_id',flat=True))
     rows=[]
     for branch in scope:
-        appts=Appointment.objects.filter(branch=branch,start_at__date=day)
-        invoices=Invoice.objects.filter(appointment__branch=branch,paid_at__date=day)
-        receipts=invoices.aggregate(n=Sum('total'))['n'] or 0
-        refunds=Refund.objects.filter(invoice__appointment__branch=branch,created_at__date=day).aggregate(n=Sum('amount'))['n'] or 0
-        chairs=branch.chairs.filter(active=True).count()
-        busy=appts.filter(status__in=['checked_in','in_service']).count()
-        rows.append({'branch':branch,'chairs':chairs,'busy':busy,'bookings':appts.count(),
-            'waiting':appts.filter(status='awaiting_payment').count(),'receipts':receipts,'refunds':refunds,
-            'net':receipts-refunds,'closed':DailyClosing.objects.filter(branch=branch,day=day).exists(),
-            'stock_low':Stock.objects.filter(branch=branch,quantity__lte=F('product__reorder_level'),product__active=True).count()})
+        income=receipts.get(branch.pk,{}).get('total',0)
+        returned=refunds.get(branch.pk,{}).get('total',0)
+        counts=appointments.get(branch.pk,{})
+        rows.append({'branch':branch,'chairs':chairs.get(branch.pk,{}).get('total',0),'busy':counts.get('busy',0),
+            'bookings':counts.get('bookings',0),'waiting':counts.get('waiting',0),'receipts':income,'refunds':returned,
+            'net':income-returned,'closed':branch.pk in closed,'stock_low':stock.get(branch.pk,{}).get('total',0)})
     if request.GET.get('export') in ('xlsx','pdf'):
         data=[[r['branch'].name,r['bookings'],r['waiting'],r['receipts'],r['refunds'],r['net']] for r in rows]
         return download(request.GET['export'],'Đối soát chi nhánh '+str(day),['Chi nhánh','Lịch hẹn','Chờ thu','Thu hóa đơn','Hoàn tiền','Thu ròng'],data,'doi-soat-chi-nhanh')
@@ -264,7 +273,7 @@ def customer_contact(request,pk):
     qs=User.objects.filter(role='customer')
     if not request.user.is_manager:qs=qs.filter(appointments__branch__in=branches_for(request.user)).distinct()
     customer=get_object_or_404(qs,pk=pk)
-    form=CustomerContactForm(request.POST or None,instance=customer)
+    form=CustomerContactForm(request.POST or None,instance=customer,actor=request.user)
     if request.method=='POST':
         try:
             with transaction.atomic():
@@ -279,12 +288,14 @@ def customer_contact(request,pk):
                     from django.db import connection
                     with connection.cursor() as cursor:cursor.execute('SELECT pg_advisory_xact_lock(hashtext(%s))',['walkin:'+phone])
                 customer=User.objects.select_for_update().get(pk=pk)
-                form=CustomerContactForm(request.POST,instance=customer)
+                old_email=customer.email
+                form=CustomerContactForm(request.POST,instance=customer,actor=current)
                 if form.is_valid():
                     form.save()
-                    pending=EmailOutbox.objects.filter(appointment__customer=customer,sent_at__isnull=True)
-                    if customer.email:pending.update(recipient=customer.email)
-                    else:pending.update(cancelled=True)
+                    if customer.email!=old_email:
+                        pending=EmailOutbox.objects.filter(appointment__customer=customer,sent_at__isnull=True)
+                        if customer.email:pending.update(recipient=customer.email)
+                        else:pending.update(cancelled=True)
                     AuditLog.objects.create(actor=current,branch=current.branch,action=f'Xác minh và cập nhật liên hệ khách #{pk}')
                     messages.success(request,'Đã cập nhật liên hệ. Khách chưa có mật khẩu có thể yêu cầu liên kết kích hoạt qua email đã lưu.')
                     return redirect('customers')
@@ -302,6 +313,8 @@ RESOURCE_FORMS={'chi-nhanh':(Branch,PolicyForm,'Chi nhánh & chính sách'),
 def resource_scope(user,key):
     if key not in RESOURCE_FORMS:raise Http404
     model=RESOURCE_FORMS[key][0];qs=model.objects.all()
+    relations={Employee:('branch','account'),Chair:('branch',),Shift:('employee__branch',),User:('branch',),Voucher:('branch',)}
+    if model in relations:qs=qs.select_related(*relations[model])
     if user.is_manager:return qs
     scope=branches_for(user)
     if model is Branch:return qs.filter(pk__in=scope)
@@ -348,7 +361,9 @@ def resource_edit(request,key,pk=None):
                 list(Branch.objects.select_for_update().order_by('pk'))
                 request.user=get_object_or_404(User,pk=request.user.pk,is_active=True)
                 if not request.user.can_manage_branch:raise PermissionDenied
-                if pk:obj=get_object_or_404(resource_scope(request.user,key).select_for_update(),pk=pk)
+                if key=='san-pham' or (key=='chi-nhanh' and pk is None):
+                    if not request.user.is_manager:raise PermissionDenied
+                if pk:obj=get_object_or_404(resource_scope(request.user,key).select_for_update(of=('self',)),pk=pk)
                 form=scoped_form(request.user,key,cls,request.POST,obj)
                 if form.is_valid():
                     saved=form.save()
@@ -376,7 +391,8 @@ def resource_delete(request,key,pk):
                 list(Branch.objects.select_for_update().order_by('pk'))
                 request.user=get_object_or_404(User,pk=request.user.pk,is_active=True)
                 if not request.user.can_manage_branch:raise PermissionDenied
-                obj=get_object_or_404(resource_scope(request.user,key).select_for_update(),pk=pk)
+                if key=='san-pham' and not request.user.is_manager:raise PermissionDenied
+                obj=get_object_or_404(resource_scope(request.user,key).select_for_update(of=('self',)),pk=pk)
                 from .management_views import guard_delete
                 from types import SimpleNamespace
                 guard_delete(SimpleNamespace(model=model),obj,request.user)

@@ -91,6 +91,7 @@ def checkout(a, actor, method, redeem_points=0, voucher_code='', quoted_total=No
 @transaction.atomic
 def walk_in(*, actor, branch_id, employee_id, service_ids, start, name='', phone='', email='', customer_id=None):
     branch_lock(actor,branch_id)
+    actor=assert_operator(actor,branch_id)
     if customer_id:
         customer = User.objects.get(pk=customer_id,role='customer',is_active=True)
         if not actor.is_manager and not customer.appointments.filter(branch_id=branch_id).exists():
@@ -192,9 +193,14 @@ def refund_invoice(*,actor,invoice_id,reason):
     recoverable=min(customer.points,inv.points_earned)
     debt=inv.points_earned-recoverable+inv.points_debt_paid
     balance=customer.points-recoverable+inv.points_used
-    delta=balance-customer.points
+    # Restored redeemed points repay outstanding recovery before becoming
+    # spendable again. This preserves entitlement in either refund order.
     customer.points_debt+=debt
-    refund=Refund.objects.create(invoice=inv,amount=inv.total,reason=reason,actor=actor,points_debt_added=debt)
+    repaid=min(balance,customer.points_debt)
+    balance-=repaid
+    customer.points_debt-=repaid
+    delta=balance-customer.points
+    refund=Refund.objects.create(invoice=inv,amount=inv.total,reason=reason,actor=actor,points_debt_added=debt,points_debt_repaid=repaid)
     PointEntry.objects.create(customer=customer,invoice=inv,kind='refund',amount=delta,balance=balance)
     customer.points=balance;customer.save(update_fields=['points','points_debt'])
     a=original.appointment;record_change(a,actor,'refund',reason,snapshot(a));emit(a,actor,'Đã ghi nhận hoàn toàn bộ số tiền của hóa đơn')

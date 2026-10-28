@@ -116,6 +116,7 @@ def transition(*, pk, actor, action, chair_id=None, method='cash', confirmation=
     a = Appointment.objects.select_for_update().get(pk=pk)
     if stylist_action:
         if not User.objects.filter(pk=actor.pk,is_active=True,role='stylist',branch_id=a.branch_id).exists():raise PermissionDenied
+        if not Employee.objects.filter(pk=a.employee_id,account_id=actor.pk,active=True,branch_id=a.branch_id).exists():raise PermissionDenied
     elif not is_owner or action!='cancel':assert_operator(actor,a.branch_id)
     now = timezone.now()
     from .business import snapshot, record_change

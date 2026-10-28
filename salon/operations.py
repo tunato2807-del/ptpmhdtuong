@@ -15,6 +15,7 @@ from .features import page, paginate, ReportFilterForm, report_queryset, downloa
 from .management_views import manager_required
 from .models import Notification, AuditLog, Appointment, Employee, Shift, Invoice
 from .views import operator_required, appointments_for, branches_for
+from .authentication import LockedPasswordResetConfirmView
 
 
 class ResetView(PasswordResetView):
@@ -25,9 +26,9 @@ class ResetView(PasswordResetView):
 
     def form_valid(self, form):
         # Generic response for existing/unknown addresses and repeated submissions.
-        import hashlib
-        key = 'password-reset:' + hashlib.sha256(form.cleaned_data['email'].casefold().encode()).hexdigest()
-        if not cache.add(key, True, 60):
+        from .hardening import consume
+        allowed,_=consume('reset-mailbox',form.cleaned_data['email'].casefold(),1,60)
+        if not allowed:
             return redirect(self.success_url)
         return super().form_valid(form)
 
@@ -200,7 +201,7 @@ def performance(request, fmt=None):
 urlpatterns = [
     path('quen-mat-khau/', ResetView.as_view(), name='password_reset'),
     path('quen-mat-khau/da-gui/', PasswordResetDoneView.as_view(template_name='auth/password_reset_done.html'), name='password_reset_done'),
-    path('dat-lai-mat-khau/<uidb64>/<token>/', PasswordResetConfirmView.as_view(template_name='auth/password_reset_confirm.html',success_url=reverse_lazy('password_reset_complete')), name='password_reset_confirm'),
+    path('dat-lai-mat-khau/<uidb64>/<token>/', LockedPasswordResetConfirmView.as_view(template_name='auth/password_reset_confirm.html',success_url=reverse_lazy('password_reset_complete')), name='password_reset_confirm'),
     path('dat-lai-mat-khau/hoan-tat/', PasswordResetCompleteView.as_view(template_name='auth/password_reset_complete.html'), name='password_reset_complete'),
     path('thong-bao/',notifications,name='notifications'),
     path('thong-bao/doc-tat-ca/',read_notification,name='notifications_read_all'),

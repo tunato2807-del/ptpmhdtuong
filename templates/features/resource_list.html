@@ -23,7 +23,7 @@
 </select>{% endif %}<button class="btn btn-outline">Tìm kiếm</button>
 </form>
 <div class="result-caption"><span>{{ page_obj.paginator.count }} kết quả · {{ page_obj.paginator.per_page }} dòng/trang</span><a class="text-link" href="{% url 'resource_list' resource.key %}">Xóa bộ lọc</a></div>
-<div class="table-scroll">
+<div class="table-scroll" tabindex="0" role="region" aria-label="Bảng dữ liệu có thể cuộn ngang">
 <table>
 <thead>
 <tr>{% for label in resource.columns %}<th>{{ label }}</th>{% endfor %}<th>Thao tác</th>

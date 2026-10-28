@@ -6,6 +6,32 @@ from django.test import TransactionTestCase
 from django.utils import timezone
 
 
+class PointRecoveryMigrationTests(TransactionTestCase):
+    def test_legacy_points_and_debt_are_offset_once_with_an_append_only_entry(self):
+        executor=MigrationExecutor(connection)
+        old=[('salon','0008_refund_entitlement')]
+        latest=executor.loader.graph.leaf_nodes()
+        try:
+            executor.migrate(old)
+            apps=executor.loader.project_state(old).apps
+            User=apps.get_model('salon','User');Entry=apps.get_model('salon','PointEntry')
+            user=User.objects.create(username='legacy-recovery',password='!',points=10,points_debt=10)
+            original=Entry.objects.create(customer_id=user.pk,kind='opening',amount=10,balance=10)
+            executor=MigrationExecutor(connection);executor.migrate(latest)
+            apps=executor.loader.project_state(latest).apps
+            User=apps.get_model('salon','User');Entry=apps.get_model('salon','PointEntry')
+            user=User.objects.get(pk=user.pk)
+            self.assertEqual((user.points,user.points_debt),(0,0))
+            self.assertEqual(Entry.objects.get(pk=original.pk).amount,10)
+            correction=Entry.objects.get(customer_id=user.pk,kind='debt_recovery')
+            self.assertEqual((correction.amount,correction.balance),(-10,0))
+            executor=MigrationExecutor(connection);executor.migrate(old)
+            executor=MigrationExecutor(connection);executor.migrate(latest)
+            self.assertEqual(executor.loader.project_state(latest).apps.get_model('salon','PointEntry').objects.filter(customer_id=user.pk).count(),2)
+        finally:
+            executor=MigrationExecutor(connection);executor.migrate(executor.loader.graph.leaf_nodes())
+
+
 class VietnameseColumnMigrationTests(TransactionTestCase):
     old_target = [('salon', '0001_initial')]
     new_target = [('salon', '0002_vietnamese_column_names')]

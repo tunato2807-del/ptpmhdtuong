@@ -12,8 +12,9 @@
 <div class="summary-total"><span>Tiền dịch vụ trước giảm</span><strong>{{ a.total|money }}</strong></div>
 {% if a.invoice %}<a class="btn btn-outline full" href="{% url 'invoice' a.pk %}">Xem hóa đơn {{ a.invoice.code }} →</a>{% if a.invoice.refund %}<p class="alert">Đã hoàn {{ a.invoice.refund.amount|money }} · {{ a.invoice.refund.reason }}</p>{% elif user.can_manage_branch %}<a class="btn btn-outline full" href="{% url 'business_refund' a.invoice.pk %}">Ghi nhận hoàn tiền</a>{% endif %}{% endif %}
 <div class="business-timeline"><h3>Thời gian thực tế</h3><p>Khách đến: {{ a.checked_in_at|date:'d/m H:i'|default:'Chưa ghi nhận' }}<br>Bắt đầu: {{ a.service_started_at|date:'d/m H:i'|default:'Chưa ghi nhận' }}<br>Phục vụ xong: {{ a.service_finished_at|date:'d/m H:i'|default:'Chưa ghi nhận' }}</p>
-<h3>Lịch sử xử lý</h3>{% for change in a.changes.all %}<details><summary>{{ change.created_at|date:'d/m H:i' }} · {{ change.reason }}</summary>{% if user.is_operator %}<p>{{ change.actor.full_name }} · {{ change.action }}</p><pre>Trước: {{ change.before }}
-Sau: {{ change.after }}</pre>{% endif %}</details>{% empty %}<p>Chưa có thay đổi sau khi đặt.</p>{% endfor %}</div>
+<h3>Lịch sử xử lý</h3>{% for change in change_page %}<details><summary>{{ change.created_at|date:'d/m H:i' }} · {{ change.reason }}</summary>{% if user.is_operator %}<p>{{ change.actor.full_name }} · {{ change.action }}</p><pre>Trước: {{ change.before }}
+Sau: {{ change.after }}</pre>{% endif %}</details>{% empty %}<p>Chưa có thay đổi sau khi đặt.</p>{% endfor %}
+{% if change_page.has_other_pages %}<nav class="pagination" aria-label="Phân trang lịch sử xử lý">{% if change_page.has_previous %}<a href="?history_page={{ change_page.previous_page_number }}">← Trước</a>{% endif %}<span>Trang {{ change_page.number }} / {{ change_page.paginator.num_pages }}</span>{% if change_page.has_next %}<a href="?history_page={{ change_page.next_page_number }}">Sau →</a>{% endif %}</nav>{% endif %}</div>
 </section>
 <aside class="panel padded action-panel"><div class="eyebrow">BƯỚC TIẾP THEO</div><h2>{% if a.status == 'completed' %}Cảm ơn bạn đã ghé!{% elif a.status == 'awaiting_payment' %}Đã phục vụ xong.{% else %}Chăm chút từng cuộc hẹn.{% endif %}</h2>
 {% if user.is_operator %}

@@ -33,10 +33,12 @@ INSTALLED_APPS = [
     'django.contrib.postgres', 'salon',
 ]
 MIDDLEWARE = [
+    'salon.hardening.ResponsePolicyMiddleware',
     'django.middleware.security.SecurityMiddleware', 'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware', 'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware', 'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware', 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'salon.hardening.AuthThrottleMiddleware',
 ]
 ROOT_URLCONF = 'config.urls'
 TEMPLATES = [{'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -99,3 +101,11 @@ EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', '1') == '1'
 EMAIL_TIMEOUT = 10
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'Gentleman <noreply@example.com>')
 PASSWORD_RESET_TIMEOUT = 3600
+
+LOGGING = {
+    'version':1,'disable_existing_loggers':False,
+    'formatters':{'safe':{'()':'salon.hardening.SafeLogFormatter'}},
+    'handlers':{'safe_console':{'class':'logging.StreamHandler','formatter':'safe'}},
+    'loggers':{name:{'handlers':['safe_console'],'level':level,'propagate':False}
+        for name,level in [('django','WARNING'),('django.server','WARNING'),('django.request','WARNING'),('gentleman.http','INFO')]},
+}

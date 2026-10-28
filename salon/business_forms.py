@@ -161,6 +161,15 @@ class CustomerContactForm(forms.ModelForm):
     verified=forms.BooleanField(label='Đã xác minh khách hàng và được khách đồng ý cập nhật thông tin liên hệ.')
     class Meta:
         model=User;fields=['full_name','phone','email']
+    def __init__(self,*args,actor,**kwargs):
+        super().__init__(*args,**kwargs)
+        # An email address is also a password recovery credential. Branch staff
+        # may enroll only their own blank-mailbox, unactivated walk-in profile.
+        local_guest=(not self.instance.has_usable_password() and not self.instance.email
+            and not self.instance.appointments.exclude(branch_id=actor.branch_id).exists())
+        if not actor.is_manager and not local_guest:
+            self.fields['email'].disabled=True
+            self.fields['email'].help_text='Email đăng nhập do chủ tài khoản hoặc quản trị chuỗi cập nhật. Chi nhánh không thể đổi email khôi phục mật khẩu.'
     def clean_phone(self):
         value=self.cleaned_data['phone']
         if value and User.objects.filter(role='customer',phone=value).exclude(pk=self.instance.pk).exists():

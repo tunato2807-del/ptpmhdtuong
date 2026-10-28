@@ -311,6 +311,7 @@ class BusinessTests(Fixtures,TestCase):
         with self.assertRaises(ValidationError):validate_slot(self.branch,employee,a.start_at,30)
 
     def test_staff_contact_requires_verification_and_keeps_role_and_points(self):
+        self.customer.set_unusable_password();self.customer.save(update_fields=['password'])
         self.reserve();self.client.force_login(self.boss)
         url=reverse('business_customer_contact',args=[self.customer.pk])
         payload={'full_name':self.customer.full_name,'phone':self.customer.phone,'email':'verified@example.com'}

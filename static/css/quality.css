@@ -1,0 +1,36 @@
+/* Contrast corrections for measured components; font roles stay unchanged. */
+:root { --muted: #596653; --accent: #9b4b2f; }
+.staff-content p, .staff-content th, .staff-content .eyebrow,
+.staff-content .stat-label, .staff-content .stat-value small,
+.staff-content .stat-foot, .staff-content .stat-foot a,
+.staff-content .legend, .staff-content .chart-label,
+.staff-content .team-row small, .staff-content .team-count,
+.staff-content .summary-line span, .staff-footer,
+.staff-content .info-note, .breadcrumb, .breadcrumb > span, .environment-tag { color: #596653; }
+.customer-app .how-grid article > span { color: #71502f; }
+.staff-content .empty h3 { color: #44513e; }
+.staff-content .booking-banner h3 { color: #fff; }
+.sidebar nav a.active { background: #984b32; color: #fff; }
+.staff-app .btn-primary { background: #9b4b2f; color: #fff; }
+.staff-content .text-link { color: #914428; }
+.avatar.rust, .tone-1, .tone-2, .tone-3, .tone-4, .tone-5, .tone-6 { color: #4a513f; }
+.customer-app .quick-book label,
+.customer-app .gh-section-heading p,
+.customer-app .gallery-bottom > span,
+.customer-app .location-label,
+.customer-app .team-member small,
+.customer-app .team-member span,
+.customer-app .member-initials,
+.customer-app .help-text,
+.customer-app .help-text li,
+.customer-app .info-note,
+.customer-app .summary-line span { color: #635b4e; }
+.customer-app .demo-credentials { color: #4f6046; }
+.customer-app .step-number { color: #715333; }
+.profile-identity p, .profile-identity dt,
+.profile-role, .profile-avatar { color: #47593d; }
+.table-scroll:focus-visible, .business-table:focus-visible {
+  outline: 3px solid #9b4b2f; outline-offset: 3px;
+}
+.slideshow-controls { min-width: 250px; }
+@media (max-width: 640px) { .slideshow-controls { min-width: 230px; } }

@@ -10,6 +10,14 @@ from scripts import cap_nhat_du_an as updater
 
 
 class SourceUpdaterTests(SimpleTestCase):
+    def test_portable_workflows_are_allowed_but_credentials_remain_blocked(self):
+        files={name:b'workflow' for name in ('AGENTS.md','ruff.toml','requirements-quality.txt',
+            '.agents/skills/security-and-hardening/SKILL.md','.agents/references/security-checklist.md',
+            '.agents/LICENSE.agent-skills','.agents/agent-skills-source.json','.github/copilot-instructions.md','.github/workflows/ci.yml')}
+        updater.validate_manifest(self.manifest(files))
+        for name in ('.agents/.env','.github/secrets.json','.git/config','.aws/credentials'):
+            with self.subTest(name=name),self.assertRaises(ValueError):updater.validate_manifest(self.manifest({name:b'private'}))
+
     def manifest(self, files):
         return {'ref':'a'*40,'files':[{'path':name,'sha256':hashlib.sha256(data).hexdigest()} for name,data in files.items()]}
 

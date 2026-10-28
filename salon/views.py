@@ -138,9 +138,11 @@ def my_appointments(request):
 
 @login_required
 def appointment_detail(request, pk):
-    a = get_object_or_404(appointments_for(request.user), pk=pk)
+    a = get_object_or_404(appointments_for(request.user).select_related('invoice__refund','review'), pk=pk)
+    from django.core.paginator import Paginator
+    changes=Paginator(a.changes.select_related('actor').order_by('-created_at','-pk'),20).get_page(request.GET.get('history_page'))
     chairs = Chair.objects.filter(branch=a.branch, active=True)
-    return render(request, 'public/appointment_detail.html', {'appointment': a, 'chairs': chairs, 'review_form': ReviewForm(),
+    return render(request, 'public/appointment_detail.html', {'appointment': a, 'change_page':changes, 'chairs': chairs, 'review_form': ReviewForm(),
         'max_redeem_points': min(a.customer.points, a.total // 5000), 'can_change_booking': a.status == 'booked' and (request.user.is_operator or (a.customer_id == request.user.pk and a.start_at-timezone.now() >= timedelta(hours=a.branch.cancel_hours)))})
 
 @login_required
@@ -250,10 +252,14 @@ def schedule(request):
     day = chosen_day(request)
     staff = Employee.objects.filter(branch__in=branches, active=True).select_related('branch')
     if branch: staff = staff.filter(branch=branch)
-    data = []
-    for e in staff:
-        data.append({'employee': e, 'shifts': e.shifts.filter(start_at__date=day),
-                     'appointments': appointments_for(request.user).filter(employee=e, start_at__date=day).exclude(status__in=['cancelled','no_show'])})
+    staff=list(staff)
+    shifts_by_employee={e.pk:[] for e in staff}
+    appointments_by_employee={e.pk:[] for e in staff}
+    for shift in Shift.objects.filter(employee__in=staff,start_at__date=day).order_by('start_at'):
+        shifts_by_employee[shift.employee_id].append(shift)
+    for appointment in appointments_for(request.user).filter(employee__in=staff,start_at__date=day).exclude(status__in=['cancelled','no_show']).order_by('start_at'):
+        appointments_by_employee[appointment.employee_id].append(appointment)
+    data=[{'employee':e,'shifts':shifts_by_employee[e.pk],'appointments':appointments_by_employee[e.pk]} for e in staff]
     return render(request, 'staff/schedule.html', {'rows': data, 'branches': branches, 'selected_branch': branch, 'day': day})
 
 @operator_required

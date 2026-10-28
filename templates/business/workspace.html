@@ -34,7 +34,7 @@
 {% elif mode == 'emails' %}
 <p class="info-note">Trạng thái xác nhận/nhắc lịch 24 giờ và 2 giờ. Thư chỉ được gửi khi tác vụ định kỳ chạy; cấu hình Gmail/SMTP trong .env hoặc xem email demo trong .local/emails.</p>
 {% endif %}
-<div class="panel business-table"><table><thead><tr>
+<div class="panel business-table" tabindex="0" role="region" aria-label="Bảng nghiệp vụ có thể cuộn ngang"><table><thead><tr>
 {% if mode == 'board' or mode == 'interruptions' %}<th>Lịch hẹn / chi nhánh</th><th>Khách hàng / stylist</th><th>Trạng thái</th><th>Thao tác</th>
 {% elif mode == 'resources' %}<th>Bản ghi</th><th>Chi nhánh / trạng thái</th><th>Thao tác</th>
 {% elif mode == 'stock' %}<th>Chi nhánh</th><th>Sản phẩm</th><th>Tồn / cảnh báo</th>

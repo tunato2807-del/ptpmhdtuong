@@ -12,6 +12,13 @@
     const toggle = root.querySelector('[data-slide-toggle]');
     const count = root.querySelector('.slideshow-count');
     if (slides.length < 2 || !controls || !toggle || !count) return;
+    // Give the first photograph and text fonts the initial network budget.
+    // Hidden slides load after the page, and show() waits for real image data.
+    const loadRemaining = () => slides.forEach(slide => {
+      if (slide.dataset.src) { slide.src = slide.dataset.src; delete slide.dataset.src; }
+    });
+    if (document.readyState === 'complete') loadRemaining();
+    else window.addEventListener('load', loadRemaining, {once: true});
     let index = 0;
     let timer = null;
     let paused = false;

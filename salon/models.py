@@ -251,6 +251,7 @@ class PointEntry(models.Model):
         EARNED = 'earned', 'Tích điểm thanh toán'
         REDEEMED = 'redeemed', 'Sử dụng điểm'
         REFUND = 'refund', 'Điều chỉnh hoàn tiền'
+        DEBT_RECOVERY = 'debt_recovery', 'Đối trừ điểm cần thu hồi'
     id = models.BigAutoField(primary_key=True, db_column='mabiendong')
     customer = models.ForeignKey(User, on_delete=models.PROTECT, related_name='point_entries', db_column='makhachhang')
     invoice = models.ForeignKey(Invoice, null=True, blank=True, on_delete=models.PROTECT, db_column='mahoadon')
@@ -263,7 +264,7 @@ class PointEntry(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['invoice', 'kind'], condition=Q(invoice__isnull=False), name='points_invoice_kind_unique'),
             models.UniqueConstraint(fields=['customer'], condition=Q(kind='opening'), name='points_opening_unique'),
-            models.CheckConstraint(condition=Q(kind='redeemed', amount__lt=0) | Q(kind__in=['opening','earned'], amount__gte=0) | Q(kind='refund'), name='points_amount_sign'),
+            models.CheckConstraint(condition=Q(kind__in=['redeemed','debt_recovery'], amount__lt=0) | Q(kind__in=['opening','earned'], amount__gte=0) | Q(kind='refund'), name='points_amount_sign'),
         ]
 
 
@@ -393,9 +394,17 @@ class Refund(models.Model):
     invoice = models.OneToOneField(Invoice, on_delete=models.PROTECT, related_name='refund', db_column='mahoadon')
     amount = models.PositiveIntegerField(db_column='sotienhoan')
     points_debt_added = models.PositiveIntegerField(default=0, db_column='diemthieuthuhoi')
+    points_debt_repaid = models.PositiveIntegerField(default=0, db_column='diemhoandadoitru')
     reason = models.CharField(max_length=250, db_column='lydo')
     actor = models.ForeignKey(User, on_delete=models.PROTECT, db_column='manguoithuchien')
     created_at = models.DateTimeField(auto_now_add=True, db_column='ngaytao')
+
+
+class AuthRateBucket(models.Model):
+    """Shared short-lived counters. Keys are keyed hashes, never raw contacts/IPs."""
+    key=models.CharField(primary_key=True,max_length=64,db_column='makhoa')
+    expires_at=models.DateTimeField(db_index=True,db_column='thoigianhethan')
+    count=models.PositiveIntegerField(default=0,db_column='solan')
 
 
 class DailyClosing(models.Model):

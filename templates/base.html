@@ -16,12 +16,14 @@
   <link rel="stylesheet" href="{% static 'css/motion.css' %}?v=20261028-1">
   <script src="{% static 'js/motion.js' %}?v=20261028-1" defer></script>
   <link rel="stylesheet" href="{% static 'css/business.css' %}?v=20261028-1">
+  <link rel="stylesheet" href="{% static 'css/quality.css' %}?v=20261028-2">
+  <noscript><link rel="stylesheet" href="{% static 'css/no-js.css' %}"></noscript>
   {% block head %}{% endblock %}
 </head>
 <body class="{% block body_class %}customer-app{% endblock %}">
 <a href="#main" class="skip-link">Chuyển đến nội dung</a>
 {% block layout %}
-<header class="public-header">
+<header class="public-header nav-ready">
   <a class="brand" href="{% url 'home' %}" aria-label="GENTLEMAN — Trang chủ"><span class="brand-emblem" aria-hidden="true">g.</span><span>gentleman<small>BARBER HOUSE</small></span></a>
   <nav id="customer-nav" aria-label="Điều hướng chính"><a href="{% url 'feature_search' %}">Tìm kiếm</a>
     <a href="{% url 'home' %}#dich-vu">Dịch vụ</a><a href="{% url 'home' %}#phong-cach">Góc phong cách</a><a href="{% url 'home' %}#chi-nhanh">Chi nhánh</a>

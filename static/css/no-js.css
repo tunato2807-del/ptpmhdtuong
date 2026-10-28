@@ -1,0 +1,5 @@
+/* Keep all navigation reachable when JavaScript is disabled. */
+@media (max-width: 980px) {
+  .customer-app .public-header.nav-ready nav { display: flex; }
+  .customer-app .customer-menu { display: none; }
+}
