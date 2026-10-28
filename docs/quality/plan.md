@@ -7,7 +7,7 @@
 - [x] Audit accessibility, loading/error states, security headers and browser data exposure; fix and verify.
 - [x] Add shared authentication throttling and safe request observability appropriate for PostgreSQL, plus dependency/static/CI gates.
 - [x] Full PostgreSQL verification, browser audit ledger and documentation.
-- [ ] Verify immutable update manifest and publish source.
+- [x] Verify immutable update manifest and prepare source for publication; see Git history for published revision.
 
 ## Review hypotheses (not provided to reviewers)
 

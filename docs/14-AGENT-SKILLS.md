@@ -63,6 +63,8 @@ Response có CSP (script chỉ từ cùng nguồn), chống nhúng iframe, giớ
 
 Người dùng đã chọn tiếp tục với hai lượt rà soát hiện có, không bổ sung một lượt chạy bằng mô hình/CLI ngoài. Hai người rà soát thuộc cùng họ mô hình; đây không phải đánh giá bởi hai nhà cung cấp mô hình khác nhau. Việc cài đủ thư viện không có nghĩa mọi quy trình đều đã chạy đầy đủ hoặc hệ thống đã đạt chứng nhận bảo mật.
 
+Danh sách từng file thay đổi để mở và copy: [GitHub Compare](https://github.com/tunato2807-del/ptpmhdtuong/compare/38719a0526e65c675f4c5a74bafaea33f9f20026...main).
+
 ## 4. Cập nhật trên máy Windows hiện có
 
 Dừng server đang chạy trong VS Code. Cập nhật các file từ GitHub bằng công cụ cập nhật mã đang có (hoặc copy từng file), giữ `.env`, `.venv`, `.local` và database. Bản updater mới mang theo các file ẩn `.agents`, `.github`, AGENTS và cấu hình kiểm tra; bản updater cũ nên được thay bằng bản mới trước.

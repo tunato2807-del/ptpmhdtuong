@@ -67,3 +67,7 @@ Data preservation verification:
 PASS: all original fields/rows in 27 business tables (706 rows) equal restored pre-upgrade snapshot, excluding last_login only. Restore validated all 34 table counts and checksum.
 Removed only the owned temporary comparison database; source database untouched.
 The 27 salon_ physical tables include the 25 application models and two auth membership joins.
+
+Updater end-to-end simulation:
+PASS: upgrade 38719a0526e6 -> e2011b42ddd6, 310 immutable files; local Git archive supplies all fetches; no network or database calls; repeat run idempotent; .env/.venv/.local fixture bytes preserved; new hidden Agent/Copilot/CI files complete.
+Final documentation-only closure is included in the release source manifest; all file hashes are reverified before publication.
