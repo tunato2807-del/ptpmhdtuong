@@ -2,6 +2,8 @@
 
 Dự án tiếng Việt dùng Django 5.2 LTS, PostgreSQL và giao diện riêng bằng HTML/CSS/JavaScript. Có trang khách hàng, trang cá nhân và cổng quản lý với chức năng thêm/sửa/xóa. Toàn bộ danh mục được quản lý tại `/quan-ly/thiet-lap/`; không dùng Django Admin. Chạy trực tiếp trên VS Code, không cần Docker hoặc Node.js.
 
+Giao diện mới: [**Mẫu 3 — The Blue Edition**](docs/15-GIAO-DIEN-BLUE-EDITION.md), có ảnh chụp thực tế và lệnh cập nhật trong terminal VS Code. Trang chủ dạng tạp chí xanh dương, phiếu đặt lịch trực tiếp, thẻ thành viên và bảng điều phối theo chi nhánh.
+
 Xem [áp dụng 25 Agent Skills và hướng dẫn cập nhật](docs/14-AGENT-SKILLS.md): sửa quyền khôi phục tài khoản, hoàn điểm, truy vấn nhiều chi nhánh, giao diện dễ đọc, giới hạn đăng nhập và bộ kiểm tra tự động. **Bản mới cần migrate đến 0010.**
 
 Xem [nghiệp vụ quản lý nhiều chi nhánh](docs/13-NGHIEP-VU-NHIEU-CHI-NHANH.md): tiếp nhận tại quầy, sức chứa, nghỉ đột xuất, cổng stylist, dịch vụ phát sinh, chờ thu, voucher, kho/chuyển kho, hoa hồng, hoàn tiền, chốt sổ và email nhắc lịch.
@@ -126,7 +128,7 @@ Nếu thay thư mục bằng ZIP mới, nhớ sao chép `.env` của bạn vào 
 python scripts/dev.py check
 ```
 
-160 kiểm thử hiện tại dùng PostgreSQL thực và database test riêng. Tài khoản PostgreSQL chạy tests cần quyền CREATEDB và tạo `btree_gist`. Lệnh check thu thập static trước tests để manifest nhận đủ ảnh/font/CSS mới.
+182 kiểm thử hiện tại dùng PostgreSQL thực và database test riêng. Tài khoản PostgreSQL chạy tests cần quyền CREATEDB và tạo `btree_gist`. Lệnh check thu thập static trước tests để manifest nhận đủ ảnh/font/CSS mới.
 
 Browser checks tùy chọn, cần server local DEBUG=1 có dữ liệu mẫu. `scripts/interface_smoke.py` kiểm tra bố cục, CSS/font, biểu tượng và đăng xuất ở sáu kích thước màn hình. Các kiểm tra khác:
 

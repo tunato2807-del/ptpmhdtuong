@@ -7,7 +7,7 @@ Optional BROWSER_EXECUTABLE=/path/to/chromium, APP_BASE_URL=http://127.0.0.1:800
 import os
 import sys
 import uuid
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -20,6 +20,7 @@ import django
 
 django.setup()
 from django.conf import settings
+from django.contrib.sessions.models import Session
 from salon.models import (
     User,
     Appointment,
@@ -33,6 +34,10 @@ from salon.models import (
     VoucherUse,
     AppointmentChange,
     EmailOutbox,
+    Branch,
+    Employee,
+    Chair,
+    Shift,
 )
 from playwright.sync_api import sync_playwright, expect
 
@@ -45,10 +50,37 @@ username = "smoke-" + uuid.uuid4().hex[:12]
 password = "Browser@Test2026"
 output = ROOT / "test-results"
 output.mkdir(exist_ok=True)
-screenshots = ROOT / "docs/screenshots"
-screenshots.mkdir(exist_ok=True)
+screenshots = output / "journey"
+screenshots.mkdir(exist_ok=True, parents=True)
 today = datetime.now(ZoneInfo("Asia/Ho_Chi_Minh")).date()
 errors = []
+session_keys = set()
+# Isolated round-the-clock branch: the check-in acceptance flow must not depend
+# on the demo branch opening at 09:00 when the test runs overnight.
+from salon.services import local_at
+
+fixture_branch = Branch.objects.create(
+    name=username + " Chi nhánh",
+    address="Chi nhánh kiểm thử",
+    phone="0901234567",
+    opens_at=time(0),
+    closes_at=time(23, 59),
+)
+fixture_employee = Employee.objects.create(name="Stylist kiểm thử", branch=fixture_branch)
+fixture_chair = Chair.objects.create(name="Ghế kiểm thử", branch=fixture_branch)
+for offset in (0, 1, 2):
+    fixture_day = today + timedelta(days=offset)
+    Shift.objects.create(
+        employee=fixture_employee,
+        start_at=local_at(fixture_day, time(0)),
+        end_at=local_at(fixture_day, time(23, 59)),
+    )
+fixture_reception = User.objects.create_user(
+    username=username + "-reception", password=password, role="receptionist", branch=fixture_branch
+)
+fixture_manager = User.objects.create_user(
+    username=username + "-manager", password=password, role="manager"
+)
 
 
 def cleanup():
@@ -75,7 +107,14 @@ def sign_in(page, name, pw="Gentleman@2026"):
     page.locator("#id_username").fill(name)
     page.locator("#id_password").fill(pw)
     page.get_by_role("button", name="Đăng nhập").click()
-    page.wait_for_url("**/quan-ly/" if name in ["admin", "letan"] else "**/lich-cua-toi/")
+    page.wait_for_url(
+        "**/quan-ly/"
+        if name in [fixture_manager.username, fixture_reception.username]
+        else "**/lich-cua-toi/"
+    )
+    session_keys.update(
+        c["value"] for c in page.context.cookies() if c["name"] == settings.SESSION_COOKIE_NAME
+    )
 
 
 def sign_out(page):
@@ -86,9 +125,9 @@ def sign_out(page):
 
 def choose_booking(page, day):
     page.goto(BASE_URL + "/dat-lich/")
-    page.locator("#id_branch").select_option(index=1)
+    page.locator("#id_branch").select_option(str(fixture_branch.pk))
     page.locator("input[name=services]").first.check()
-    page.locator("#id_employee").select_option(index=1)
+    page.locator("#id_employee").select_option(str(fixture_employee.pk))
     page.locator("#id_date").fill(day.isoformat())
     page.locator("#id_note").fill("Kiểm thử trình duyệt · dữ liệu tự xóa")
     first_slot = page.locator(".slot-button").first
@@ -109,7 +148,7 @@ try:
         page.on("pageerror", lambda error: errors.append(str(error)))
         page.on("dialog", lambda dialog: dialog.accept())
         page.goto(BASE_URL + "/")
-        expect(page.get_by_role("heading", level=1)).to_contain_text("Phong cách riêng")
+        expect(page.get_by_role("heading", level=1)).to_contain_text("Một đường cắt.")
         page.screenshot(path=str(screenshots / "home-desktop.png"), full_page=True)
         page.goto(BASE_URL + "/dang-ky/")
         for key, value in {
@@ -123,6 +162,9 @@ try:
             page.locator("#id_" + key).fill(value)
         page.get_by_role("button", name="Tạo tài khoản").click()
         page.wait_for_url("**/dat-lich/")
+        session_keys.update(
+            c["value"] for c in context.cookies() if c["name"] == settings.SESSION_COOKIE_NAME
+        )
         choose_booking(page, today + timedelta(days=2))
         page.evaluate("window.scrollTo(0,0); document.activeElement.blur()")
         page.screenshot(path=str(screenshots / "booking-desktop.png"), full_page=True)
@@ -179,9 +221,9 @@ try:
         with ThreadPoolExecutor(max_workers=1) as fixture_pool:
             fixture_pool.submit(prepare_checkin).result()
         sign_out(page)
-        sign_in(page, "letan")
+        sign_in(page, fixture_reception.username, password)
         page.goto(appointment_url)
-        page.locator("#chair").select_option(index=2)
+        page.locator("#chair").select_option(str(fixture_chair.pk))
         page.get_by_role("button", name="Check-in khách hàng").click()
         expect(page.locator(".badge.large")).to_contain_text("Đã check-in")
         page.get_by_role("button", name="Bắt đầu phục vụ").click()
@@ -204,7 +246,7 @@ try:
         page.get_by_role("button", name="Gửi đánh giá").click()
         expect(page.locator(".review-display")).to_contain_text("5/5")
         sign_out(page)
-        sign_in(page, "admin")
+        sign_in(page, fixture_manager.username, password)
         for route in [
             "/quan-ly/",
             "/quan-ly/ca-lam/",
@@ -232,13 +274,25 @@ try:
                 page.goto(BASE_URL + "/quan-ly/")
                 page.screenshot(path=str(screenshots / "dashboard-mobile.png"), full_page=True)
                 page.get_by_role("button", name="Mở menu").click()
-                expect(page.locator("#sidebar")).to_have_class("sidebar open")
+                expect(page.locator("#sidebar")).to_have_class(
+                    __import__("re").compile(r"\bopen\b")
+                )
                 page.keyboard.press("Escape")
-                expect(page.locator("#sidebar")).to_have_class("sidebar")
+                expect(page.locator("#sidebar")).not_to_have_class(
+                    __import__("re").compile(r"\bopen\b")
+                )
         assert not errors, errors
         browser.close()
     print(
         "PASS: registration, booking, cancellation, reception check-in, service, mock payment, invoice, review, CSV, mobile/tablet, menu; no JavaScript errors."
     )
 finally:
+    Session.objects.filter(session_key__in=session_keys).delete()
     cleanup()
+    AuditLog.objects.filter(actor__in=[fixture_reception, fixture_manager]).delete()
+    fixture_reception.delete()
+    fixture_manager.delete()
+    Shift.objects.filter(employee=fixture_employee).delete()
+    fixture_employee.delete()
+    fixture_chair.delete()
+    fixture_branch.delete()

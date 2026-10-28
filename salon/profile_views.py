@@ -6,8 +6,9 @@ from django.db import transaction
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_http_methods
+from django.utils import timezone
 from .forms import ProfileForm
-from .models import User, AuditLog
+from .models import User, AuditLog, Appointment, ACTIVE_STATUSES
 
 
 @login_required
@@ -45,5 +46,17 @@ def profile(request):
     return render(
         request,
         "public/profile.html",
-        {"profile_form": profile_form, "password_form": password_form},
+        {
+            "profile_form": profile_form,
+            "password_form": password_form,
+            "next_appointment": Appointment.objects.filter(
+                customer=request.user,
+                status__in=ACTIVE_STATUSES,
+                start_at__gte=timezone.now(),
+            )
+            .select_related("branch", "employee")
+            .prefetch_related("items")
+            .order_by("start_at", "pk")
+            .first(),
+        },
     )

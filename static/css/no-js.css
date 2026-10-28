@@ -2,4 +2,9 @@
 @media (max-width: 980px) {
   .customer-app .public-header.nav-ready nav { display: flex; }
   .customer-app .customer-menu { display: none; }
+  .blue-edition.customer-app .public-header { flex-wrap: wrap; }
+  .blue-edition.customer-app .public-header nav { position: static; order: 3; width: 100%; max-height: none; }
+  .blue-edition .sidebar.be-live-rail { position: static; transform: none; width: 100%; height: auto; }
+  .blue-edition .be-live-rail nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .blue-edition .menu-toggle { display: none; }
 }

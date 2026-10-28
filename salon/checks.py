@@ -4,6 +4,8 @@ from django.contrib.staticfiles import finders
 from django.core.checks import Error, Tags, register
 
 REQUIRED_ASSETS = (
+    "css/blue-edition.css",
+    "js/blue-edition.js",
     "css/app.css",
     "css/customer.css",
     "css/management.css",
@@ -54,6 +56,8 @@ def required_interface_assets(app_configs, **kwargs):
 REQUIRED_TEMPLATES = (
     "business/activation.html",
     "business/workspace.html",
+    "business/blue_board.html",
+    "partials/blue_icon.html",
     "business/form.html",
     "business/stylist.html",
     "base.html",

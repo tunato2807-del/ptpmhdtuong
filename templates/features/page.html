@@ -3,13 +3,13 @@
 {% block breadcrumb %}{{ title }}{% endblock %}
 {% block content %}
 <section class="public-section">
-  <div class="page-heading"><div><h1>{{ title }}</h1></div></div>
+  {% if mode == 'board' %}<div class="be-desk-title"><div><p class="be-eyebrow">{{ day|date:'l · d/m/Y' }}</p><h1>Mỗi chi nhánh.<br><span>Cùng một nhịp chỉn chu.</span></h1></div></div>{% else %}<div class="page-heading"><div><h1>{{ title }}</h1></div></div>{% endif %}
   {% include feature_body %}
 </section>
 {% endblock %}
 {% block staff_content %}
 <section class="feature-page">
-  <div class="page-heading"><div><h1>{{ title }}</h1></div></div>
+  {% if mode == 'board' %}<div class="be-desk-title"><div><p class="be-eyebrow">{{ day|date:'l · d/m/Y' }}</p><h1>Mỗi chi nhánh.<br><span>Cùng một nhịp chỉn chu.</span></h1></div></div>{% else %}<div class="page-heading"><div><h1>{{ title }}</h1></div></div>{% endif %}
   {% include feature_body %}
 </section>
 {% endblock %}

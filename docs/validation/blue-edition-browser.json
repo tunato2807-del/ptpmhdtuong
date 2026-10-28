@@ -1,0 +1,243 @@
+{
+  "tool": "Playwright/Chromium CDP + axe-core",
+  "pages": [
+    {
+      "role": "anonymous",
+      "path": "/",
+      "width": 1440,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 24
+    },
+    {
+      "role": "anonymous",
+      "path": "/dang-nhap/",
+      "width": 1440,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 23
+    },
+    {
+      "role": "anonymous",
+      "path": "/dang-ky/",
+      "width": 1440,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 23
+    },
+    {
+      "role": "anonymous",
+      "path": "/quen-mat-khau/",
+      "width": 1440,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 21
+    },
+    {
+      "role": "customer",
+      "path": "/tai-khoan/",
+      "width": 1440,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 23
+    },
+    {
+      "role": "customer",
+      "path": "/dat-lich/",
+      "width": 1440,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 23
+    },
+    {
+      "role": "customer",
+      "path": "/lich-cua-toi/",
+      "width": 1440,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 22
+    },
+    {
+      "role": "manager",
+      "path": "/quan-ly/",
+      "width": 1440,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 27
+    },
+    {
+      "role": "manager",
+      "path": "/quan-ly/van-hanh/",
+      "width": 1440,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 22
+    },
+    {
+      "role": "manager",
+      "path": "/quan-ly/tai-nguyen/stylist/",
+      "width": 1440,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 24
+    },
+    {
+      "role": "manager",
+      "path": "/quan-ly/thiet-lap/",
+      "width": 1440,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 18
+    },
+    {
+      "role": "anonymous",
+      "path": "/",
+      "width": 390,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 24
+    },
+    {
+      "role": "anonymous",
+      "path": "/dang-nhap/",
+      "width": 390,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 22
+    },
+    {
+      "role": "anonymous",
+      "path": "/dang-ky/",
+      "width": 390,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 23
+    },
+    {
+      "role": "anonymous",
+      "path": "/quen-mat-khau/",
+      "width": 390,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 21
+    },
+    {
+      "role": "customer",
+      "path": "/tai-khoan/",
+      "width": 390,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 23
+    },
+    {
+      "role": "customer",
+      "path": "/dat-lich/",
+      "width": 390,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 23
+    },
+    {
+      "role": "customer",
+      "path": "/lich-cua-toi/",
+      "width": 390,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 22
+    },
+    {
+      "role": "manager",
+      "path": "/quan-ly/",
+      "width": 390,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 27
+    },
+    {
+      "role": "manager",
+      "path": "/quan-ly/van-hanh/",
+      "width": 390,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 22
+    },
+    {
+      "role": "manager",
+      "path": "/quan-ly/tai-nguyen/stylist/",
+      "width": 390,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 24
+    },
+    {
+      "role": "manager",
+      "path": "/quan-ly/thiet-lap/",
+      "width": 390,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 18
+    }
+  ],
+  "lab_home": [
+    {
+      "lcp": 2896,
+      "cls": 0.0016094572771478053,
+      "load": 5042.5
+    },
+    {
+      "lcp": 2940,
+      "cls": 0.0016094572771478053,
+      "load": 5035
+    },
+    {
+      "lcp": 3032,
+      "cls": 0.0016094572771478053,
+      "load": 5082.199999988079
+    }
+  ],
+  "browser": "154.0.8037.57"
+}

@@ -12,7 +12,12 @@ if (menuButton) {
     menuButton.setAttribute('aria-label', open ? 'Đóng menu' : 'Mở menu');
   });
   document.addEventListener('keydown', event => {
-    if (event.key === 'Escape') {document.querySelector('#sidebar').classList.remove('open'); menuButton.setAttribute('aria-expanded', 'false');}
+    if (event.key === 'Escape' && document.querySelector('#sidebar').classList.contains('open')) {
+      document.querySelector('#sidebar').classList.remove('open');
+      menuButton.setAttribute('aria-expanded', 'false');
+      menuButton.setAttribute('aria-label', 'Mở menu');
+      menuButton.focus();
+    }
   });
 }
 const bookingForm = document.querySelector('#booking-form');
@@ -34,6 +39,15 @@ if (bookingForm) {
   const currency = number => new Intl.NumberFormat('vi-VN').format(number) + ' ₫';
   let controller, requestVersion = 0;
   const selectedServices = () => Array.from(bookingForm.querySelectorAll('input[name="services"]:checked')).map(input => input.value);
+  function updateTicket() {
+    const values = {
+      'summary-time': time.value || '—',
+      'summary-date': /^\d{4}-\d{2}-\d{2}$/.test(date.value) ? date.value.split('-').reverse().join(' / ') : 'Chưa chọn ngày',
+      'summary-branch': branch.value ? branch.selectedOptions[0].textContent : 'Chưa chọn',
+      'summary-stylist': stylist.value ? stylist.selectedOptions[0].textContent : 'Chưa chọn',
+    };
+    Object.entries(values).forEach(([id, value]) => { const node = document.getElementById(id); if (node) node.textContent = value; });
+  }
   function updateStylists() {
     const policy=branchPolicies.find(item=>String(item.id)===branch.value);
     const hint=document.querySelector('#branch-policy');
@@ -44,6 +58,7 @@ if (bookingForm) {
     if (Array.from(stylist.options).some(option => option.value === previous)) stylist.value = previous;
   }
   function updateSummary() {
+    updateTicket();
     const ids = selectedServices();
     const selected = services.filter(item => ids.includes(String(item.id)));
     const target = document.querySelector('#selected-services');
@@ -81,7 +96,7 @@ if (bookingForm) {
       data.slots.forEach(value => {
         const button = document.createElement('button'); button.type = 'button'; button.className = 'slot-button';
         button.textContent = value; button.setAttribute('aria-pressed', 'false');
-        const choose = () => {slots.querySelectorAll('button').forEach(item => {item.classList.remove('selected'); item.setAttribute('aria-pressed', 'false');}); button.classList.add('selected'); button.setAttribute('aria-pressed', 'true'); time.value = value; submit.disabled = false;};
+        const choose = () => {slots.querySelectorAll('button').forEach(item => {item.classList.remove('selected'); item.setAttribute('aria-pressed', 'false');}); button.classList.add('selected'); button.setAttribute('aria-pressed', 'true'); time.value = value; submit.disabled = false; updateTicket();};
         button.addEventListener('click', choose); slots.append(button);
         if (value === oldTime) choose();
       });

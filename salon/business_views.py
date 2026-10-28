@@ -106,6 +106,7 @@ def board(request):
         bookings=Count("pk"),
         busy=Count("pk", filter=Q(status__in=["checked_in", "in_service"])),
         waiting=Count("pk", filter=Q(status="awaiting_payment")),
+        completed=Count("pk", filter=Q(status="completed")),
     )
     receipts = grouped(
         Invoice.objects.filter(appointment__branch__in=scope, paid_at__date=day),
@@ -142,6 +143,7 @@ def board(request):
                 "busy": counts.get("busy", 0),
                 "bookings": counts.get("bookings", 0),
                 "waiting": counts.get("waiting", 0),
+                "completed": counts.get("completed", 0),
                 "receipts": income,
                 "refunds": returned,
                 "net": income - returned,
@@ -164,7 +166,7 @@ def board(request):
     appts = (
         appointments_for(request.user)
         .filter(branch__in=scope, start_at__date=day)
-        .order_by("start_at")
+        .order_by("start_at", "pk")
     )
     query = request.GET.get("q", "").strip()[:100]
     if query:
@@ -174,6 +176,17 @@ def board(request):
     state = request.GET.get("state", "")
     if state in Appointment.Status.values:
         appts = appts.filter(status=state)
+    page_obj = paginate(request, appts)
+    # Group only the authorized, filtered page. No per-branch queries or hidden extra rows.
+    lanes = {row["branch"].pk: row for row in rows}
+    for row in rows:
+        row["appointments"] = []
+    for appointment in page_obj:
+        lanes[appointment.branch_id]["appointments"].append(appointment)
+    totals = {
+        key: sum(row[key] for row in rows)
+        for key in ("bookings", "completed", "waiting", "net", "stock_low", "receipts", "refunds")
+    }
     return workspace(
         request,
         "Điều hành nhiều chi nhánh",
@@ -181,11 +194,12 @@ def board(request):
             "mode": "board",
             "branches": branches_for(request.user),
             "branch_rows": rows,
+            "board_totals": totals,
             "day": day,
             "q": query,
             "state": state,
             "states": Appointment.Status.choices,
-            "page_obj": paginate(request, appts),
+            "page_obj": page_obj,
         },
     )
 

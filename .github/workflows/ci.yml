@@ -57,6 +57,7 @@ jobs:
           .venv/bin/python manage.py runserver 127.0.0.1:8000 --noreload > /tmp/gentleman-ci.log 2>&1 &
           for attempt in $(seq 1 30); do curl -fsS http://127.0.0.1:8000/health/ && break; sleep 1; done
           .venv/bin/python scripts/quality_browser.py
+          .venv/bin/python scripts/customer_ui_smoke.py
       - uses: actions/upload-artifact@v4
         if: always() && matrix.python-version == '3.12'
         with:
