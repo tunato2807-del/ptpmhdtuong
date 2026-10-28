@@ -2,7 +2,9 @@ flowchart LR
     guest["Khách vãng lai"]
     customer["Khách hàng"]
     reception["Lễ tân"]
-    manager["Quản trị viên"]
+    manager["Quản trị toàn chuỗi"]
+    boss["Quản lý chi nhánh"]
+    stylist["Stylist"]
     subgraph system["HỆ THỐNG GENTLEMAN"]
       browse(["Xem chi nhánh, dịch vụ, stylist"])
       account(["Đăng ký / đăng nhập"])
@@ -18,6 +20,9 @@ flowchart LR
       weekly(["Lịch tuần theo chi nhánh / stylist"])
       audit(["Tra cứu nhật ký thao tác"])
       catalog(["Quản trị danh mục, nhân sự, ca làm"])
+      branchops(["Tiếp nhận / nghỉ / điều phối trong chi nhánh"])
+      finance(["Voucher / kho / hoa hồng / hoàn tiền / chốt sổ"])
+      ownwork(["Lịch / ca / phục vụ của stylist"])
     end
     guest --> browse & account & recovery
     customer --> booking & history & review & notification
@@ -25,3 +30,8 @@ flowchart LR
     reception --> checkin & payment & reports & booking & weekly
     manager --> catalog & reports & checkin & payment & weekly & audit
     style system fill:#f5f5ee,stroke:#87977a
+
+    boss --> branchops & finance & reports & weekly
+    reception --> branchops
+    stylist --> ownwork
+    manager --> branchops & finance

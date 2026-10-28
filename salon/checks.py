@@ -4,7 +4,7 @@ from django.core.checks import Error, Tags, register
 
 REQUIRED_ASSETS = (
     'css/app.css', 'css/customer.css', 'css/management.css', 'css/typography.css',
-    'css/editorial-fonts.css', 'css/editorial.css',
+    'css/editorial-fonts.css', 'css/editorial.css', 'css/business.css',
     'js/app.js', 'js/customer.js', 'css/motion.css', 'js/motion.js',
     *(f'fonts/be-vietnam-pro-{subset}-{weight}-normal.woff2'
       for subset in ('latin', 'latin-ext', 'vietnamese')
@@ -27,6 +27,7 @@ def required_interface_assets(app_configs, **kwargs):
 
 # Explicit inventory: missing files must still be detected after a partial copy.
 REQUIRED_TEMPLATES = (
+    'business/activation.html', 'business/workspace.html', 'business/form.html', 'business/stylist.html',
     'base.html', '403.html', '404.html', 'auth/login.html', 'auth/register.html',
     'partials/form_fields.html', 'partials/icon_arrow.html', 'partials/messages.html',
     'partials/pagination.html', 'public/home.html', 'public/booking.html',

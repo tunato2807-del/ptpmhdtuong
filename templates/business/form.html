@@ -1,0 +1,6 @@
+<div class="business-actions"><a class="btn btn-outline" href="{% if user.is_stylist %}{% url 'stylist_portal' %}{% else %}{% url 'business_board' %}{% endif %}">← Về không gian làm việc</a>{% if appointment %}<a class="btn btn-outline" href="{% url 'appointment_detail' appointment.pk %}">Xem {{ appointment.code }}</a>{% endif %}</div>
+<div class="panel padded business-form">
+  <p class="info-note">{{ hint }}</p>
+  {% if invoice %}<p>Hóa đơn {{ invoice.code }} · Khách {{ invoice.appointment.customer.full_name }} · Chi nhánh {{ invoice.appointment.branch.name }} · Số tiền thực thu: {{ invoice.total }}đ</p>{% endif %}
+  <form method="post" class="stack-form">{% csrf_token %}{% include 'partials/form_fields.html' %}<button class="btn btn-primary" type="submit">Xác nhận và lưu</button></form>
+</div>

@@ -372,6 +372,20 @@ def report_queryset(request, form=None):
     return qs, start, end
 
 
+def refunds_for_report(request,start,end,form):
+    from .models import Refund
+    qs=Refund.objects.filter(invoice__appointment__in=appointments_for(request.user),created_at__date__range=(start,end)).select_related('invoice__appointment__branch','invoice__appointment__customer')
+    branch=form.cleaned_data.get('branch')
+    if branch:qs=qs.filter(invoice__appointment__branch=branch)
+    query=form.cleaned_data.get('q','')
+    if query:
+        cond=Q(invoice__appointment__customer__full_name__icontains=query)|Q(invoice__appointment__customer__phone__icontains=query)
+        code=query.upper().removeprefix('HD')
+        if code.isascii() and code.isdecimal() and len(code)<19:cond|=Q(invoice_id=int(code))
+        qs=qs.filter(cond)
+    return qs
+
+
 @operator_required
 @require_GET
 def reports(request):
@@ -385,8 +399,11 @@ def reports(request):
         qs, start, end = Invoice.objects.none(), None, None
     summary = qs.aggregate(amount=Sum('total'), count=Count('pk'), average=Avg('total'))
     summary['total'] = summary.pop('amount') or 0
+    refunds=refunds_for_report(request,start,end,form) if valid else []
+    refund_total=sum(r.amount for r in refunds)
+    summary.update(refunds=refund_total,net=summary['total']-refund_total)
     per_branch = qs.values('appointment__branch__name').annotate(total=Sum('total'), count=Count('pk')).order_by('-total')
-    return page(request, 'Báo cáo doanh thu', 'features/reports.html', {
+    return page(request, 'Thu hóa đơn & hoàn tiền', 'features/reports.html', {
         'page_obj': paginate(request, qs), 'summary': summary, 'filter_form': form, 'filters_valid': valid,
         'start': start, 'end': end, 'per_branch': per_branch, 'nav_section': 'reports'}, staff=True)
 
@@ -400,7 +417,12 @@ def report_export(request,fmt):
     if len(objects)>MAX_EXPORT: return HttpResponseBadRequest('Tối đa 5.000 dòng. Hãy thu hẹp bộ lọc.')
     rows=[[inv.code,inv.appointment.code,inv.appointment.branch.name,inv.appointment.customer.full_name,
            timezone.localtime(inv.paid_at).replace(tzinfo=None),inv.get_method_display(),inv.total] for inv in objects]
-    return download(fmt,f'Doanh thu {start:%d/%m/%Y} – {end:%d/%m/%Y}',
+    form=ReportFilterForm(request.GET,user=request.user);form.is_valid()
+    for ref in refunds_for_report(request,start,end,form):
+        a=ref.invoice.appointment
+        rows.append(['HOAN-'+str(ref.pk),a.code,a.branch.name,a.customer.full_name,timezone.localtime(ref.created_at).replace(tzinfo=None),'Hoàn tiền '+ref.invoice.code,-ref.amount])
+    if len(rows)>MAX_EXPORT:return HttpResponseBadRequest('Tối đa 5.000 dòng, gồm hóa đơn và hoàn tiền.')
+    return download(fmt,f'Thu/hoàn {start:%d/%m/%Y} – {end:%d/%m/%Y}',
                     ['mahoadon','malichhen','chinhanh','khachhang','ngaythanhtoan','phuongthuc','tongtien'],rows,'doanh-thu')
 
 
@@ -410,7 +432,8 @@ def invoice_pdf(request,pk):
     appointment=get_object_or_404(appointments_for(request.user),pk=pk)
     invoice=get_object_or_404(Invoice,appointment=appointment)
     rows=[[item.name,item.duration,item.price] for item in appointment.items.all()]
-    rows.extend([['Giá dịch vụ (VNĐ)', '', invoice.subtotal], [f'Giảm {invoice.points_used} điểm', '', -invoice.discount], ['Tổng thanh toán (VNĐ)','',invoice.total]])
+    rows.extend([['Giá dịch vụ (VNĐ)', '', invoice.subtotal], [f'Giảm {invoice.points_used} điểm', '', -invoice.discount], [f'Voucher {invoice.voucher_code}', '', -invoice.voucher_discount], ['Tổng thanh toán (VNĐ)','',invoice.total]])
+    if hasattr(invoice, 'refund'): rows.append(['Đã hoàn tiền (VNĐ)', '', -invoice.refund.amount])
     return pdf(f'{invoice.code} · {appointment.customer.full_name} · {appointment.branch.name}',
                ['Dịch vụ','Phút','Thành tiền (VNĐ)'],rows,invoice.code)
 
@@ -448,7 +471,7 @@ def my_appointments(request):
     if status in Appointment.Status.values: qs=qs.filter(status=status)
     result = paginate(request, qs.order_by('-start_at', '-pk'))
     for appointment in result:
-        appointment.can_manage_booking = appointment.status == 'booked' and appointment.start_at-timezone.now() >= timedelta(hours=2)
+        appointment.can_manage_booking = appointment.status == 'booked' and appointment.start_at-timezone.now() >= timedelta(hours=appointment.branch.cancel_hours)
     return page(request,'Lịch hẹn của tôi','features/appointments.html',{'page_obj':result,'statuses':Appointment.Status.choices,'notifications':request.user.notifications.order_by('-created_at','-pk')[:5]})
 
 
@@ -482,19 +505,15 @@ class ChangeForm(forms.Form):
 
 
 def change_slots(appointment,employee,day):
-    branch=appointment.branch; now=timezone.now(); today=timezone.localdate()
-    if not branch.active or not employee.active or employee.branch_id!=branch.pk or not today<=day<=today+timedelta(days=30): return []
-    duration=sum(item.duration for item in appointment.items.all())
-    shifts=list(Shift.objects.filter(employee=employee,start_at__date=day))
-    busy=list(Appointment.objects.filter(Q(employee=employee)|Q(customer_id=appointment.customer_id),status__in=ACTIVE_STATUSES,start_at__date=day).exclude(pk=appointment.pk))
-    cursor=local_at(day,branch.opens_at)
-    if cursor.second or cursor.microsecond: cursor=cursor.replace(second=0,microsecond=0)+timedelta(minutes=1)
+    from .services import available_slots
+    branch=appointment.branch;duration=sum(item.duration for item in appointment.items.all())
+    candidates=available_slots(branch,employee,day,duration,exclude_id=appointment.pk)
+    opening=local_at(day,branch.opens_at);closing=local_at(day,branch.closes_at)
+    occupied=list(Appointment.objects.filter(customer=appointment.customer,status__in=ACTIVE_STATUSES,start_at__lt=closing,end_at__gt=opening).exclude(pk=appointment.pk).values_list('start_at','end_at'))
     result=[]
-    while cursor+timedelta(minutes=duration)<=local_at(day,branch.closes_at):
-        end=cursor+timedelta(minutes=duration)
-        if cursor>=now and cursor.minute%15==0 and any(s.start_at<=cursor and s.end_at>=end for s in shifts) and not any(a.start_at<end and a.end_at>cursor for a in busy):
-            result.append(cursor.strftime('%H:%M'))
-        cursor+=timedelta(minutes=1)
+    for value in candidates:
+        start=local_at(day,time.fromisoformat(value));end=start+timedelta(minutes=duration)
+        if not any(a<end and b>start for a,b in occupied):result.append(value)
     return result
 
 
@@ -505,7 +524,7 @@ def reschedule(request,pk):
     initial={'employee':appointment.employee_id,'date':timezone.localdate(appointment.start_at),'time':timezone.localtime(appointment.start_at).strftime('%H:%M'),'note':appointment.note}
     form=ChangeForm(request.POST if request.method=='POST' else None,initial=initial)
     form.fields['employee'].queryset=Employee.objects.filter(branch_id=appointment.branch_id,active=True)
-    form.fields['date'].widget.attrs.update(min=str(timezone.localdate()),max=str(timezone.localdate()+timedelta(days=30)))
+    form.fields['date'].widget.attrs.update(min=str(timezone.localdate()),max=str(timezone.localdate()+timedelta(days=appointment.branch.booking_days)))
     employee=appointment.employee; day=initial['date']
     valid=request.method=='POST' and form.is_valid()
     if valid: employee=form.cleaned_data['employee']; day=form.cleaned_data['date']
@@ -522,12 +541,14 @@ def reschedule(request,pk):
                     if not actor.is_active: raise ValidationError('Tài khoản không còn hoạt động.')
                     if actor.pk!=current.customer_id: assert_operator(actor,current.branch_id)
                     if current.status!='booked': raise ValidationError('Chỉ chỉnh sửa lịch chưa check-in.')
-                    if not actor.is_operator and current.start_at-timezone.now()<timedelta(hours=2):
-                        raise ValidationError('Chỉ đổi lịch trước giờ hẹn ít nhất 2 giờ.')
+                    if not actor.is_operator and current.start_at-timezone.now()<timedelta(hours=appointment.branch.cancel_hours):
+                        raise ValidationError(f'Chỉ đổi lịch trước giờ hẹn ít nhất {appointment.branch.cancel_hours} giờ.')
                     customer=User.objects.select_for_update().get(pk=current.customer_id)
                     if not customer.is_active or customer.role!='customer': raise ValidationError('Khách hàng không còn hoạt động.')
                     start=local_at(day,form.cleaned_data['time'])
                     duration=sum(item.duration for item in current.items.all())
+                    from .business import snapshot, record_change
+                    before=snapshot(current)
                     # Release only this allocation inside the transaction; any failure rolls it back.
                     current.status='cancelled'; current.save(update_fields=['status'])
                     branch=Branch.objects.get(pk=current.branch_id)
@@ -537,6 +558,7 @@ def reschedule(request,pk):
                         raise ValidationError('Khách hàng đã có lịch trùng thời gian này.')
                     current.employee=employee; current.start_at=start; current.end_at=end; current.note=form.cleaned_data['note']; current.status='booked'
                     current.save(update_fields=['employee','start_at','end_at','note','status'])
+                    record_change(current,actor,'reschedule','Đổi lịch / stylist theo yêu cầu',before)
                     emit(current,actor,'Đã thay đổi lịch hẹn')
                 messages.success(request,'Đã cập nhật lịch hẹn, giữ nguyên mã và giá dịch vụ.'); return redirect('appointment_detail',pk=pk)
             except (ValidationError,IntegrityError) as error:

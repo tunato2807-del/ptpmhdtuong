@@ -23,6 +23,7 @@ class Fixtures:
             for d in [timezone.localdate(),self.day]:
                 Shift.objects.create(employee=e,start_at=local_at(d,time(9)),end_at=local_at(d,time(21)))
         self.chair = Chair.objects.create(branch=self.branch,name='Ghế 01')
+        Chair.objects.create(branch=self.other_branch,name='Ghế B01')
         self.service = Service.objects.create(name='Cắt',price=100000,duration=30)
         self.second_service = Service.objects.create(name='Gội',price=80000,duration=30)
         self.customer = User.objects.create_user(username='customer',password='Test@Password26',full_name='Khách A',phone='0901234567')
@@ -132,11 +133,13 @@ class CheckoutTests(Fixtures, TestCase):
         a.save()
         return a
     def start(self, a):
-        transition(pk=a.pk,actor=self.receptionist,action='checkin',chair_id=self.chair.pk)
-        transition(pk=a.pk,actor=self.receptionist,action='start')
+        with patch('salon.services.timezone.now',return_value=a.start_at):
+            transition(pk=a.pk,actor=self.receptionist,action='checkin',chair_id=self.chair.pk)
+            transition(pk=a.pk,actor=self.receptionist,action='start')
 
     def test_checkin_service_cash_payment_points_exactly_once(self):
         a=self.today_appointment(); self.start(a)
+        transition(pk=a.pk,actor=self.receptionist,action='finish')
         transition(pk=a.pk,actor=self.receptionist,action='pay')
         a.refresh_from_db(); self.customer.refresh_from_db()
         self.assertEqual(a.status,'completed')
@@ -148,6 +151,7 @@ class CheckoutTests(Fixtures, TestCase):
 
     def test_mock_payment_requires_explicit_confirmation(self):
         a=self.today_appointment(); self.start(a)
+        transition(pk=a.pk,actor=self.receptionist,action='finish')
         with self.assertRaises(ValidationError): transition(pk=a.pk,actor=self.receptionist,action='pay',method='mock')
         self.assertFalse(Invoice.objects.exists())
         transition(pk=a.pk,actor=self.receptionist,action='pay',method='mock',confirmation='confirmed')

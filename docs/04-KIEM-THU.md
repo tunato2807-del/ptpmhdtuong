@@ -11,7 +11,7 @@ Python 3.12.14, Django 5.2.18, psycopg 3.3.6, PostgreSQL 17.11 native (Debian 17
 | `python scripts/dev.py setup --no-demo` | Đạt | Cài dependencies, kiểm tra PostgreSQL native, không có migration mới, collectstatic thành công; không nạp lại dữ liệu |
 | `manage.py check` | Đạt | 0 vấn đề |
 | `makemigrations --check --dry-run` | Đạt | No changes detected |
-| `manage.py test salon.tests --noinput` | Đạt | 114 test đã thực thi, 0 failed, 0 errors, 0 skipped |
+| `manage.py test salon.tests --noinput` | Đạt | 160 test đã thực thi, 0 failed, 0 errors, 0 skipped |
 | Migration tên cột tiếng Việt | Đạt | 80 cột/12 bảng; kiểu dữ liệu và toàn bộ bản ghi giữ nguyên; kiểm tra cả nâng cấp và hoàn tác |
 | `collectstatic --noinput` | Đạt | Static và manifest tạo thành công; chạy lại giữ nguyên tài nguyên không đổi |
 | `scripts/start.sh` | Đạt | Dùng PostgreSQL native đang chạy, kiểm tra migration và bật Django; không quản lý database qua container |
@@ -19,7 +19,7 @@ Python 3.12.14, Django 5.2.18, psycopg 3.3.6, PostgreSQL 17.11 native (Debian 17
 | Responsive | Đạt | Giao diện khách hàng 320/360/390/768/1024/1440 px; không tràn ngang; menu mobile/Escape hoạt động |
 | Customer UI smoke | Đạt | Bộ lọc, bộ sưu tập, preselect dịch vụ/stylist/chi nhánh, đăng nhập giữ lựa chọn, reduced motion, không JavaScript, ảnh/font local |
 | Quản trị và hồ sơ | Đạt | Tạo/sửa/xóa sáu nhóm, phân quyền manager, xác nhận xóa, sửa hồ sơ, xác thực mật khẩu hiện tại, đăng nhập lại; 320–1440 px |
-| Schema | Đạt | 0003/0004 thêm trường và ledger; 91 cột/13 bảng, cột cũ giữ nguyên kiểu |
+| Schema | Đạt | 0003–0007 thêm trường và bảng nghiệp vụ; 192 cột/25 bảng, cột cũ giữ nguyên kiểu |
 | JavaScript | Đạt | Không có pageerror trong luồng browser smoke |
 | `check --deploy --fail-level WARNING` | Đạt với cấu hình production thử nghiệm | DEBUG=0 và secret ngẫu nhiên tạm thời; không phải bằng chứng đã bật HTTPS hoặc public deployment |
 | GitHub Actions | Chưa xác minh kết quả trên GitHub | Đã có workflow test/build; xem tab Actions của repository để theo dõi |
@@ -34,11 +34,11 @@ Bộ test mới phát hiện trường hợp ca làm có giờ kết thúc trư�
 | Nhóm | Trường hợp tiêu biểu | Yêu cầu liên quan |
 |---|---|---|
 | Đặt lịch | Nhiều dịch vụ, tổng thời lượng, snapshot không đổi sau sửa giá | FR03, FR04 |
-| Khả dụng | Ca làm, giờ mở/đóng, thời gian quá khứ, 30 ngày, bước 15 phút | FR02, FR03 |
+| Khả dụng | Ca làm, giờ mở/đóng, thời gian quá khứ, số ngày nhận trước theo chi nhánh, bước 15 phút | FR02, FR03 |
 | Xung đột | Stylist trùng, hai lịch sát giờ, khách trùng ở chi nhánh khác, bypass service bị DB chặn | FR04 |
 | Migration cột | So sánh dữ liệu và kiểu PostgreSQL trước/sau, hoàn tác rồi nâng cấp lại, giữ FK và nhóm quyền đăng nhập | Toàn vẹn schema |
 | Đồng thời | Hai thread với hai connection cùng đặt một stylist/giờ, chỉ một lịch được ghi | FR04 |
-| Hủy/no-show | Hủy giải phóng chỗ; hạn 2 giờ; no-show chỉ sau giờ kết thúc | FR05 |
+| Hủy/no-show | Hủy giải phóng chỗ; hạn 2 giờ; no-show sau thời gian chờ muộn theo chi nhánh | FR05 |
 | Lễ tân | Đặt hộ đúng khách, actor đúng; khách ngoài phạm vi bị từ chối | FR01, FR12 |
 | Đón khách | Check-in đúng ngày; từ chối ghế khác chi nhánh hoặc ghế bận | FR06 |
 | Checkout | Không nhảy trạng thái; một hóa đơn/một lần điểm; mock phải xác nhận | FR07 |
@@ -81,6 +81,16 @@ Quy trình phát triển và trình diễn cốt lõi chạy trực tiếp với
 
 ## 8. Kiểm tra phần hoàn thiện
 
-114 tests bao gồm reset mật khẩu (email giả lập, token hết hạn/dùng lại, CSRF, gộp yêu cầu), thông báo và lịch sử điểm đúng chủ sở hữu, nhật ký chỉ manager, lịch tuần/báo cáo đúng scope, phân bổ doanh thu sau giảm, ràng buộc database và hai chi nhánh thanh toán đồng thời không dùng trùng điểm. Migration opening giữ nguyên số dư cũ, không cộng lại hóa đơn.
+160 tests bao gồm reset mật khẩu (email giả lập, token hết hạn/dùng lại, CSRF, gộp yêu cầu), thông báo và lịch sử điểm đúng chủ sở hữu, nhật ký chỉ manager, lịch tuần/báo cáo đúng scope, phân bổ doanh thu sau giảm, ràng buộc database và hai chi nhánh thanh toán đồng thời không dùng trùng điểm. Migration opening giữ nguyên số dư cũ, không cộng lại hóa đơn.
 
 Kiểm tra trình duyệt ở sáu chiều rộng trên bản mới bao phủ thêm thông báo, điểm, lịch tuần, hiệu quả, nhật ký và trang quên mật khẩu. Công cụ backup/restore đã chạy trên PostgreSQL native: 22 bảng phục hồi vào database thử mới có số dòng khớp snapshot, thử phục hồi lần hai bị từ chối; database thử được dọn sau kiểm tra, database nguồn giữ nguyên. Email SMTP thật và Windows Task Scheduler cần cấu hình trên máy triển khai, không được mô tả là đã xác minh trong phiên cloud.
+
+## 9. Nghiệm thu nghiệp vụ nhiều chi nhánh (28/10/2026)
+
+160 tests đã thực thi gồm phân quyền quản lý chi nhánh/stylist, sức chứa ghế theo sweep-line, ca/nghỉ/chốt sổ, tiếp nhận và kích hoạt hồ sơ khách tại quầy, dịch vụ phát sinh và rollback, phục vụ xong/chờ thu, quote voucher/điểm, hoàn tiền và điểm cần thu hồi, hoa hồng snapshot, chốt sổ, kho và outbox. Kiểm thử đồng thời bao gồm một ghế cho hai stylist, lượt voucher cuối giữa hai chi nhánh, hai yêu cầu xuất cùng tồn, đặt trùng và dùng trùng điểm.
+
+Trình duyệt kiểm tra thêm 48 trang/kích thước cho khu vận hành ở 320/390/768/1024/1440/1920px, không tràn trang, lỗi JavaScript hoặc thiếu tài nguyên. Kịch bản `scripts/business_smoke.py` dùng dữ liệu riêng và đi hết tiếp nhận → check-in → stylist bắt đầu → thêm dịch vụ → hoàn tất → voucher/thu tiền → PDF → nhập/chuyển kho → nghỉ/đổi stylist → hoàn tiền → chốt sổ. `scripts/interface_smoke.py` tiếp tục kiểm tra 342 lượt trang/kích thước của giao diện hiện có.
+
+Bằng chứng chi tiết và giới hạn tại [validation/13-NGHIEP-VU.txt](validation/13-NGHIEP-VU.txt). Email kiểm thử dùng locmem/file; không gửi Gmail/SMTP thật. Python thực thi cloud là 3.12, có workflow 3.14 nhưng chưa xác minh kết quả Actions mới. Chưa benchmark tải sản xuất hoặc cài Task Scheduler trên máy Windows người dùng.
+
+Sao lưu/phục hồi bản mở rộng: 34 bảng được phục hồi và đối chiếu số dòng. Đã phục hồi bản trước migration vào database thử rồi so sánh toàn bộ bản ghi/cột cũ của 13 bảng nghiệp vụ với database mới: trùng nhau, ngoại trừ last_login cập nhật do kiểm tra đăng nhập. Hai database thử đã được dọn.

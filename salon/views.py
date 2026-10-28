@@ -31,15 +31,17 @@ def operator_required(view):
 
 def branches_for(user):
     qs = Branch.objects.all()
-    return qs.filter(pk=user.branch_id) if user.role == User.Role.RECEPTIONIST else qs
+    return qs.filter(pk=user.branch_id) if user.is_branch_staff else qs
 
 def appointments_for(user):
     qs = Appointment.objects.select_related('customer', 'employee', 'branch', 'chair').prefetch_related('items')
     if user.role == User.Role.CUSTOMER:
         return qs.filter(customer=user)
-    if user.role == User.Role.RECEPTIONIST:
+    if user.is_stylist:
+        return qs.filter(employee__account=user, employee__active=True, branch_id=user.branch_id)
+    if user.is_branch_staff:
         return qs.filter(branch_id=user.branch_id)
-    return qs
+    return qs if user.is_manager else qs.none()
 
 def chosen_day(request, key='date'):
     try:
@@ -65,7 +67,7 @@ class SignInView(LoginView):
     template_name = 'auth/login.html'
     redirect_authenticated_user = True
     def get_success_url(self):
-        return self.get_redirect_url() or reverse('dashboard' if self.request.user.is_operator else 'my_appointments')
+        return self.get_redirect_url() or reverse('stylist_portal' if self.request.user.is_stylist else 'dashboard' if self.request.user.is_operator else 'my_appointments')
 
 def register(request):
     if request.user.is_authenticated:
@@ -87,6 +89,7 @@ def home(request):
 
 @login_required
 def booking(request):
+    if request.user.is_stylist:return redirect('stylist_portal')
     initial = {'date': timezone.localdate() + timedelta(days=1)}
     if request.GET.get('branch', '').isdigit(): initial['branch'] = request.GET['branch']
     if request.GET.get('service', '').isdigit(): initial['services'] = [request.GET['service']]
@@ -105,6 +108,7 @@ def booking(request):
     return render(request, 'public/booking.html', {'form': form,
         'service_list': Service.objects.filter(active=True),
         'employee_data': list(Employee.objects.filter(active=True, branch__active=True).values('id', 'name', 'branch_id', 'specialty')),
+        'branch_data': list(form.fields['branch'].queryset.values('id','booking_days','cancel_hours','late_minutes')),
         'service_data': list(Service.objects.filter(active=True).values('id', 'name', 'price', 'duration'))})
 
 @require_GET
@@ -117,7 +121,7 @@ def slots(request):
         services = list(Service.objects.filter(pk__in=ids, active=True))
         if not ids or len(services) != len(ids): raise ValueError
         total_duration = sum(s.duration for s in services)
-        if not timezone.localdate() <= day <= timezone.localdate() + timedelta(days=30): raise ValueError
+        if not timezone.localdate() <= day <= timezone.localdate() + timedelta(days=branch.booking_days): raise ValueError
     except (KeyError, ValueError, Branch.DoesNotExist, Employee.DoesNotExist, OverflowError):
         return JsonResponse({'error': 'Chọn chi nhánh, dịch vụ, stylist và ngày hợp lệ.'}, status=400)
     return JsonResponse({'slots': available_slots(branch, employee, day, total_duration),
@@ -137,7 +141,7 @@ def appointment_detail(request, pk):
     a = get_object_or_404(appointments_for(request.user), pk=pk)
     chairs = Chair.objects.filter(branch=a.branch, active=True)
     return render(request, 'public/appointment_detail.html', {'appointment': a, 'chairs': chairs, 'review_form': ReviewForm(),
-        'max_redeem_points': min(a.customer.points, a.total // 5000), 'can_change_booking': a.status == 'booked' and (request.user.is_operator or a.start_at-timezone.now() >= timedelta(hours=2))})
+        'max_redeem_points': min(a.customer.points, a.total // 5000), 'can_change_booking': a.status == 'booked' and (request.user.is_operator or (a.customer_id == request.user.pk and a.start_at-timezone.now() >= timedelta(hours=a.branch.cancel_hours)))})
 
 @login_required
 @require_POST
@@ -147,7 +151,11 @@ def appointment_action(request, pk):
         point_value = request.POST.get('redeem_points', '0').strip() or '0'
         if not point_value.isascii() or not point_value.isdecimal() or len(point_value) > 9:
             raise ValidationError('Số điểm sử dụng không hợp lệ.')
-        a = transition(pk=pk, actor=request.user, action=request.POST.get('action'),
+        quoted=request.POST.get('quoted_total','')
+        if quoted and (not quoted.isascii() or not quoted.isdecimal() or len(quoted)>12):
+            raise ValidationError('Số tiền xác nhận không hợp lệ.')
+        a = transition(pk=pk, quoted_total=int(quoted) if quoted else None, actor=request.user, action=request.POST.get('action'),
+                       voucher_code=request.POST.get('voucher_code', '')[:40], reason=request.POST.get('reason', '')[:250],
                        chair_id=request.POST.get('chair') if request.POST.get('chair', '').isascii() and request.POST.get('chair', '').isdecimal() and len(request.POST.get('chair', '')) <= 18 else None,
                        method=request.POST.get('method', 'cash'), confirmation=request.POST.get('confirmation', ''), redeem_points=int(point_value))
     except (ValidationError, IntegrityError) as e:
@@ -219,12 +227,12 @@ def dashboard(request):
 @operator_required
 def customers(request):
     qs = User.objects.filter(role='customer')
-    if request.user.role == User.Role.RECEPTIONIST:
+    if request.user.is_branch_staff:
         qs = qs.filter(appointments__branch_id=request.user.branch_id).distinct()
     query = request.GET.get('q', '').strip()[:100]
     if query: qs = qs.filter(Q(full_name__icontains=query) | Q(phone__icontains=query))
     # Branch-scoped counts: reception cannot infer history at other branches.
-    condition = Q(appointments__branch_id=request.user.branch_id) if request.user.role == User.Role.RECEPTIONIST else Q()
+    condition = Q(appointments__branch_id=request.user.branch_id) if request.user.is_branch_staff else Q()
     qs = qs.annotate(visits=Count('appointments', filter=condition & Q(appointments__status='completed'))).order_by('full_name')
     return render(request, 'staff/customers.html', {'customers': Paginator(qs, 20).get_page(request.GET.get('page')), 'q': query})
 

@@ -1,0 +1,51 @@
+GENTLEMAN — nghiệm thu vận hành nhiều chi nhánh — 28/10/2026
+Python 3.12 / PostgreSQL native; app local DEBUG. Email locmem/file, không gửi SMTP thật.
+manage.py check: PASS; makemigrations --check --dry-run: PASS; collectstatic: PASS; compileall/diff whitespace: PASS.
+25 business tables / 192 SQL columns. Source DB: 14 users / 102 appointments / 3 branches after all synthetic fixtures removed.
+
+branch-tests-final
+Creating test database for alias 'default'...
+................................................................................................................................................................
+----------------------------------------------------------------------
+Ran 160 tests in 94.061s
+
+OK
+Destroying test database for alias 'default'...
+Found 160 test(s).
+System check identified no issues (0 silenced).
+Đã gửi 1; gửi lỗi 0; bỏ thư cũ 0.
+Đã gửi 0; gửi lỗi 0; bỏ thư cũ 0.
+
+branch-browser
+PASS: walk-in, branch scope, stylist start/finish, service change, voucher quote/payment, commission snapshot, invoice PDF, stock receipt/transfer, absence resolution, refund/closing, 48 responsive operational views, exports; no JS/asset errors.
+
+branch-interface
+PASS: 342 route/viewport checks, 6 widths, assets, bounded icons, settings/profile columns, visible POST logout for all roles; no browser or asset errors.
+
+branch-operations-browser
+PASS: reset token + login (local email when enabled), notification ownership/read UI, checkout point preview/payment/net invoice, history, weekly/audit/performance responsive screens, XLSX/PDF downloads; no JS errors.
+
+branch-original-browser
+PASS: registration, booking, cancellation, reception check-in, service, mock payment, invoice, review, CSV, mobile/tablet, menu; no JavaScript errors.
+
+branch-backup
+Đã phục hồi và kiểm tra 22 bảng trong gentleman_before_1bb417b5. Database gốc không thay đổi.
+PASS: all rows/old fields in 13 legacy business tables unchanged, excluding last_login updated by login checks.
+Đã sao lưu: /workspace/ptpmhdtuong/.local/backups/after-multi-branch-1bb417b5.dump · 34 bảng. Giữ cả file .dump.json đi kèm.
+Đã phục hồi và kiểm tra 34 bảng trong gentleman_after_1bb417b5. Database gốc không thay đổi.
+PASS: extended 34-table schema backup/restore; both temporary verification databases removed; source database preserved.
+
+Giới hạn: chưa chạy Python 3.14 trên cloud này, chưa xác minh Actions mới; chưa kiểm chứng SMTP thật/Task Scheduler trên Windows hoặc tải sản xuất. Backup/restore chỉ kiểm tra các database thử do tác vụ tạo rồi dọn.
+
+Focused follow-up after contact/outbox checks:
+Creating test database for alias 'default'...
+..............................................
+----------------------------------------------------------------------
+Ran 46 tests in 6.458s
+
+OK
+Destroying test database for alias 'default'...
+Found 46 test(s).
+System check identified no issues (0 silenced).
+Đã gửi 1; gửi lỗi 0; bỏ thư cũ 0.
+Đã gửi 0; gửi lỗi 0; bỏ thư cũ 0.

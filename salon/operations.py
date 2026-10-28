@@ -155,6 +155,8 @@ def performance_data(request):
     previous_start = previous_end-(end-start)
     previous = Invoice.objects.filter(appointment__in=appointments_for(request.user), paid_at__date__range=(previous_start,previous_end))
     if branch: previous = previous.filter(appointment__branch=branch)
+    from .features import refunds_for_report
+    refund_total=sum(r.amount for r in refunds_for_report(request,start,end,form))
     revenue = invoices.aggregate(value=Sum('total'))['value'] or 0
     prior = previous.aggregate(value=Sum('total'))['value'] or 0
     services, stylists = {}, {}
@@ -171,7 +173,7 @@ def performance_data(request):
             row['count']+=1; row['total']+=share
     return {'form':form,'start':start,'end':end,'total_bookings':total,'cancelled':cancelled,'no_show':no_show,
         'cancel_rate':round(cancelled*100/total,1) if total else 0,'no_show_rate':round(no_show*100/total,1) if total else 0,
-        'revenue':revenue,'previous_revenue':prior,'difference':revenue-prior,
+        'refunds':refund_total,'net':revenue-refund_total,'revenue':revenue,'previous_revenue':prior,'difference':revenue-prior,
         'change':round((revenue-prior)*100/prior,1) if prior else None,
         'services':sorted(services.values(),key=lambda r:(-r['count'],r['name'])),
         'stylists':sorted(stylists.values(),key=lambda r:(-r['total'],r['name'])),'nav_section':'performance'}
@@ -188,7 +190,7 @@ def performance(request, fmt=None):
     if fmt:
         rows = [['Chỉ số','Lịch hẹn',context['total_bookings'],''],['Chỉ số','Lịch hủy',context['cancelled'],''],
                 ['Chỉ số','Không đến',context['no_show'],''],['Chỉ số','Doanh thu kỳ trước','',context['previous_revenue']],
-                ['Chỉ số','Doanh thu kỳ này','',context['revenue']]]
+                ['Chỉ số','Thu hóa đơn kỳ này','',context['revenue']],['Chỉ số','Hoàn tiền kỳ này','',context['refunds']],['Chỉ số','Thu ròng kỳ này','',context['net']]]
         for group in ('services','stylists'):
             rows += [['Dịch vụ' if group=='services' else 'Stylist',row['name'],row['count'],row['total']] for row in context[group]]
         return download(fmt,'Hiệu quả hoạt động',['Nhóm','Nội dung','Số lượt','Thực thu (VNĐ)'],rows,'hieu-qua')

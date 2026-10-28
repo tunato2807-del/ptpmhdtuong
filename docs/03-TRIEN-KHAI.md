@@ -75,3 +75,7 @@ Dùng chức năng Backup/Restore của pgAdmin. Hoặc khi PostgreSQL client n�
 ## Email, điểm và sao lưu
 
 Bản mới cần migrate 0003/0004. Hướng dẫn SMTP/local email, lịch sử/sử dụng điểm, lịch tuần và lệnh backup/restore có đối chiếu tại [Hoàn thiện chức năng](11-HOAN-THIEN-CHUC-NANG.md). Không tự cài SMTP hoặc lịch sao lưu trên máy người dùng.
+
+## Vận hành nhiều chi nhánh
+
+Cập nhật 28/10/2026 cần chạy migrate 0005–0007. Lệnh `dispatch_emails` được chạy định kỳ để gửi xác nhận/nhắc lịch; mặc định chỉ ghi email file khi DEBUG. Hướng dẫn chi tiết cấu hình và Task Scheduler tại [tài liệu 13](13-NGHIEP-VU-NHIEU-CHI-NHANH.md). Không có tác vụ định kỳ được cài tự động trên máy người dùng.

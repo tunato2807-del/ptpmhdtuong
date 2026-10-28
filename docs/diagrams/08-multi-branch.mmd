@@ -1,0 +1,22 @@
+flowchart TB
+    chain["Quản trị toàn chuỗi"] --> master["Chi nhánh · bảng giá chung · sản phẩm"]
+    chain --> compare["So sánh thu/hoàn/ròng · chuyển kho"]
+    subgraph branch["MỖI CHI NHÁNH · dữ liệu và quyền được giới hạn"]
+      boss["Quản lý chi nhánh"] --> config["Chính sách · ghế · ca · nhân sự · lịch nghỉ"]
+      reception["Lễ tân"] --> intake["Tiếp nhận web / tại quầy"]
+      config --> capacity["Khả dụng theo ca, ghế và lịch nghỉ"]
+      capacity --> intake
+      intake --> serve["Stylist phục vụ lịch của mình"]
+      serve --> wait["Phục vụ xong · chờ thu"]
+      wait --> cash["Thu ngân · hóa đơn / điểm / voucher"]
+      cash --> closing["Hoàn tiền / hoa hồng / chốt sổ"]
+      boss --> closing
+      boss --> stock["Nhập / xuất / kiểm kê kho"]
+      cash --> events["Lịch sử và email outbox"]
+    end
+    master --> config
+    master --> stock
+    compare --> stock
+    closing --> compare
+    events --> worker["Worker gửi xác nhận và nhắc 24h / 2h"]
+    worker --> customer["Khách hàng · lịch / hóa đơn / điểm"]

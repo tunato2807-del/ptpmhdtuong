@@ -18,7 +18,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 import django
 django.setup()
 from django.conf import settings
-from salon.models import User, Appointment, Invoice, Review, AuditLog, Notification, PointEntry
+from salon.models import User, Appointment, Invoice, Review, AuditLog, Notification, PointEntry, Commission, Refund, VoucherUse, AppointmentChange, EmailOutbox
 from playwright.sync_api import sync_playwright, expect
 
 BASE_URL = os.getenv('APP_BASE_URL', 'http://127.0.0.1:8000').rstrip('/')
@@ -38,6 +38,11 @@ def cleanup():
     if not user: return
     appointments = Appointment.objects.filter(customer=user)
     PointEntry.objects.filter(customer=user).delete()
+    VoucherUse.objects.filter(invoice__appointment__in=appointments).delete()
+    Refund.objects.filter(invoice__appointment__in=appointments).delete()
+    Commission.objects.filter(invoice__appointment__in=appointments).delete()
+    AppointmentChange.objects.filter(appointment__in=appointments).delete()
+    EmailOutbox.objects.filter(appointment__in=appointments).delete()
     Invoice.objects.filter(appointment__in=appointments).delete()
     Review.objects.filter(appointment__in=appointments).delete()
     AuditLog.objects.filter(appointment__in=appointments).delete()
@@ -109,7 +114,10 @@ try:
             try:
                 own=Appointment.objects.get(pk=appointment_pk,customer__username=username)
                 duration=own.end_at-own.start_at
-                cursor=local_at(today,own.branch.opens_at)
+                from django.utils import timezone
+                now=timezone.localtime()
+                rounded=now.replace(second=0,microsecond=0)+timedelta(minutes=15-now.minute%15)
+                cursor=max(local_at(today,own.branch.opens_at),rounded)
                 closing=local_at(today,own.branch.closes_at)
                 while cursor+duration<=closing:
                     if not Appointment.objects.filter(employee=own.employee,status__in=['booked','checked_in','in_service'],start_at__lt=cursor+duration,end_at__gt=cursor).exclude(pk=own.pk).exists():
@@ -127,10 +135,12 @@ try:
         expect(page.locator('.badge.large')).to_contain_text('Đã check-in')
         page.get_by_role('button',name='Bắt đầu phục vụ').click()
         expect(page.locator('.badge.large')).to_contain_text('Đang phục vụ')
+        page.get_by_role('button',name='Hoàn tất phục vụ ✓',exact=True).click()
+        expect(page.locator('.badge.large')).to_contain_text('Chờ thanh toán')
         page.locator('#method').select_option('mock')
         page.locator('input[name=confirmation]').check()
-        page.get_by_role('button',name='Thanh toán').click()
-        expect(page.locator('.badge.large')).to_contain_text('Hoàn thành')
+        page.get_by_role('button',name='Xác nhận thu tiền ✓',exact=True).click()
+        expect(page.locator('.badge.large')).to_contain_text('Đã thanh toán')
         page.get_by_role('link',name='Xem hóa đơn').click()
         expect(page.locator('h1')).to_contain_text('Hóa đơn dịch vụ')
         expect(page.locator('.invoice-paper')).to_contain_text('giao dịch mô phỏng')

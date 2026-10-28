@@ -32,14 +32,14 @@ class BookingForm(forms.Form):
         super().__init__(*args, **kwargs)
         if user and user.is_operator:
             customers = User.objects.filter(role=User.Role.CUSTOMER, is_active=True)
-            if user.role == User.Role.RECEPTIONIST:
+            if user.is_branch_staff:
                 customers = customers.filter(appointments__branch_id=user.branch_id).distinct()
                 self.fields['branch'].queryset = Branch.objects.filter(pk=user.branch_id, active=True)
                 self.fields['employee'].queryset = Employee.objects.filter(branch_id=user.branch_id, active=True)
             self.fields['customer'] = forms.ModelChoiceField(label='Đặt cho khách hàng', queryset=customers.order_by('full_name'), empty_label='Chọn khách hàng')
             self.fields['customer'].label_from_instance = lambda obj: f'{obj.full_name} · {obj.phone}'
         today = timezone.localdate()
-        self.fields['date'].widget.attrs.update({'min': today.isoformat(), 'max': (today+timedelta(days=30)).isoformat()})
+        self.fields['date'].widget.attrs.update({'min': today.isoformat(), 'max': (today+timedelta(days=90)).isoformat()})
     def clean(self):
         data = super().clean()
         if data.get('employee') and data.get('branch') and data['employee'].branch_id != data['branch'].pk:
@@ -128,6 +128,11 @@ class ChairForm(forms.ModelForm):
 
     def clean(self):
         data = super().clean()
+        if self.instance.pk and self.instance.active and not data.get('active'):
+            from .scheduling import peak_existing_capacity
+            remaining=Chair.objects.filter(branch=self.instance.branch,active=True).exclude(pk=self.instance.pk).count()
+            if peak_existing_capacity(self.instance.branch)>remaining:
+                raise forms.ValidationError('Ngừng ghế sẽ làm chi nhánh thiếu sức chứa cho lịch đã nhận. Điều phối các lịch trước.')
         if self.instance.pk and not data.get('active') and Appointment.objects.filter(chair=self.instance, status__in=ACTIVE_STATUSES).exists():
             raise forms.ValidationError('Ghế còn được phân cho lịch hẹn đang hoạt động.')
         return data
@@ -190,9 +195,9 @@ class AccountForm(forms.ModelForm):
 
     def clean(self):
         data = super().clean()
-        if data.get('role') == User.Role.RECEPTIONIST:
+        if data.get('role') in (User.Role.RECEPTIONIST,User.Role.BRANCH_MANAGER,User.Role.STYLIST):
             if not data.get('branch') or not data['branch'].active:
-                self.add_error('branch', 'Lễ tân cần một chi nhánh đang hoạt động.')
+                self.add_error('branch', 'Lễ tân cần một chi nhánh đang hoạt động.' if data.get('role') == User.Role.RECEPTIONIST else 'Nhân sự cần một chi nhánh đang hoạt động.')
         else:
             data['branch'] = None
         if self.instance.pk:
@@ -201,6 +206,10 @@ class AccountForm(forms.ModelForm):
                 raise forms.ValidationError('Hệ thống phải còn ít nhất một quản trị viên đang hoạt động.')
             if self.original_role == User.Role.CUSTOMER and data.get('role') != User.Role.CUSTOMER and self.instance.appointments.exists():
                 self.add_error('role', 'Khách đã có lịch hẹn cần giữ vai trò khách hàng để bảo toàn lịch sử.')
+        if self.instance.pk and hasattr(self.instance, 'stylist_profile'):
+            stylist=self.instance.stylist_profile
+            if data.get('role')!='stylist' or not data.get('branch') or data['branch'].pk!=stylist.branch_id:
+                self.add_error('role','Tài khoản đã gắn stylist phải giữ vai trò và chi nhánh tương ứng.')
         password = data.get('new_password')
         if password:
             from django.contrib.auth.password_validation import validate_password

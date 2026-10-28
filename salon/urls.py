@@ -35,3 +35,8 @@ urlpatterns = feature_urls + [item for item in urlpatterns if item.name not in f
 
 from .operations import urlpatterns as operation_urls
 urlpatterns += operation_urls
+
+from .business_views import urlpatterns as business_urls
+urlpatterns += business_urls
+from .activation import urlpatterns as activation_urls
+urlpatterns += activation_urls

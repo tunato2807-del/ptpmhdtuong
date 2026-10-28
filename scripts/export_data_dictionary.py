@@ -13,13 +13,13 @@ from django.db import connection
 
 lines = [
     '# Tên thuộc tính trong các bảng dữ liệu', '',
-    'Các cột của 13 bảng nghiệp vụ dùng tiếng Việt viết liền không dấu, chữ thường, không có dấu gạch dưới. '
+    'Các cột của 25 bảng nghiệp vụ dùng tiếng Việt viết liền không dấu, chữ thường, không có dấu gạch dưới. '
     'Tên bảng giữ nguyên. Các kiểu dữ liệu vẫn bằng tiếng Anh. Migration đổi tên cột giữ nguyên kiểu dữ liệu cũ; các trường và bảng bổ sung có kiểu/ràng buộc theo thiết kế hiện tại.', '',
     'Django ánh xạ tên thuộc tính Python sang tên cột PostgreSQL bằng `db_column`. '
     'Ví dụ `User.full_name` truy vấn cột `hoten`, `Appointment.branch_id` truy vấn cột `machinhanh`. '
     'Các bảng kỹ thuật do Django quản lý (quyền, nhóm, session, bảng nối phân quyền) dùng quy ước của framework.', '',
     'Đã có database: chạy `python manage.py migrate --noinput` để áp dụng migration '
-    '`0002_vietnamese_column_names` và các migration 0003/0004 bổ sung thông báo, giảm điểm, số dư chuyển tiếp. Migration đổi tên cột không xóa và tạo lại dữ liệu. '
+    '`0002_vietnamese_column_names` và các migration 0003–0007 bổ sung vận hành, kho, đối soát và lịch sử. Migration đổi tên cột không xóa và tạo lại dữ liệu. '
     'Tệp `0001_initial.py` được giữ nguyên để có thể nâng cấp và hoàn tác đúng lịch sử.', '',
     'Các giá trị enum như `booked`, `customer`, `cash` và các tham số API vẫn giữ nguyên; '
     'đây là giá trị dữ liệu/giao thức, không phải tên cột hoặc kiểu dữ liệu.', '',
@@ -46,4 +46,4 @@ lines += ['## Kiểm tra nhanh trong PostgreSQL', '', '```sql',
           'Các ràng buộc khoảng thời gian, check constraint và unique theo nhiều cột vẫn được mô tả trong '
           '`02-THIET-KE.md` và định nghĩa trong `salon/models.py`.', '']
 (ROOT / 'docs/05-TEN-COT-DU-LIEU.md').write_text('\n'.join(lines))
-print(f'Exported {count} SQL columns from 13 business tables.')
+print(f'Exported {count} SQL columns from {len(list(apps.get_app_config("salon").get_models()))} business tables.')

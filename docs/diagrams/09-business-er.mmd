@@ -1,0 +1,68 @@
+erDiagram
+    BRANCH ||--o{ EMPLOYEE : "nhân sự"
+    BRANCH ||--o{ BRANCH_CLOSURE : "lịch nghỉ"
+    EMPLOYEE ||--o{ EMPLOYEE_ABSENCE : "nghỉ"
+    USER |o--o| EMPLOYEE : "tài khoản stylist"
+    APPOINTMENT ||--o{ APPOINTMENT_CHANGE : "lịch sử trước/sau"
+    APPOINTMENT ||--o{ EMAIL_OUTBOX : "xác nhận và nhắc"
+    APPOINTMENT ||--o| INVOICE : "thu tiền"
+    INVOICE ||--o| REFUND : "hoàn toàn bộ"
+    INVOICE ||--o| COMMISSION : "chụp tỷ lệ"
+    EMPLOYEE ||--o{ COMMISSION : "hưởng"
+    INVOICE ||--o| VOUCHER_USE : "dùng voucher"
+    VOUCHER ||--o{ VOUCHER_USE : "lượt"
+    BRANCH |o--o{ VOUCHER : "phạm vi"
+    PRODUCT ||--o{ STOCK : "tồn từng chi nhánh"
+    BRANCH ||--o{ STOCK : "sở hữu"
+    STOCK ||--o{ STOCK_MOVEMENT : "biến động"
+    BRANCH ||--o{ DAILY_CLOSING : "chốt ngày"
+    USER ||--o{ VOUCHER_USE : "mỗi khách một lượt"
+    USER ||--o{ APPOINTMENT_CHANGE : "thao tác"
+    USER {
+      bigint manguoidung PK
+      integer diemtichluy
+      integer diemcanthuhoi
+    }
+    BRANCH {
+      bigint machinhanh PK
+      integer songaydatruoc
+      integer giohuytruoc
+      integer phutdenmuon
+    }
+    EMPLOYEE {
+      bigint manhanvien PK
+      bigint mataikhoan FK
+      integer phantramhoahong
+    }
+    APPOINTMENT {
+      bigint malichhen PK
+      timestamptz giokhachden
+      timestamptz giophucvu
+      timestamptz gioxongdichvu
+      varchar nguondat
+    }
+    INVOICE {
+      bigint mahoadon PK
+      integer tongthanhtoan
+      integer giamvoucher
+      integer diemdatich
+      integer diemdathuhoi
+    }
+    STOCK {
+      bigint matonkho PK
+      bigint machinhanh FK
+      bigint masanpham FK
+      integer soluongton
+    }
+    STOCK_MOVEMENT {
+      bigint mabiendongkho PK
+      integer soluong
+      integer tonsau
+      varchar maphieu
+    }
+    DAILY_CLOSING {
+      bigint machotso PK
+      date ngay
+      integer tienmathethong
+      integer tienmatthucte
+    }

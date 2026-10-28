@@ -2,7 +2,7 @@
 
 ## 1. Kiến trúc
 
-Ứng dụng dùng kiến trúc Django đơn khối có phân lớp. Trình duyệt nhận HTML render phía server, CSS/JS local; chỉ khung giờ dùng fetch JSON. Quyết định này giữ việc cài đặt và triển khai đơn giản, không cần đồng bộ hai hệ xác thực frontend/backend.
+Ứng dụng dùng kiến trúc Django đơn khối có phân lớp. Trình duyệt nhận HTML render phía server, CSS/JS local; khung giờ và báo giá thanh toán dùng fetch JSON. Quyết định này giữ việc cài đặt và triển khai đơn giản, không cần đồng bộ hai hệ xác thực frontend/backend.
 
 ```mermaid
 flowchart LR
@@ -33,7 +33,7 @@ Nguồn: thiết kế từ yêu cầu và mã triển khai. Đây là sơ đồ 
 
 ![Sơ đồ 2.2: mô hình thực thể và quan hệ](diagrams/02-er.svg)
 
-PostgreSQL lưu Unicode bằng `varchar/text`, thời gian bằng `timestamptz`. Tất cả bảng nghiệp vụ có khóa chính `bigint`, đặt tên theo đối tượng: `manguoidung`, `machinhanh`, `malichhen`… Các trường bắt buộc không nhận NULL trừ khi ghi rõ. Tên bảng thực tế có tiền tố `salon_`. Các cột trong 12 bảng nghiệp vụ dùng tiếng Việt viết liền không dấu qua `db_column`, ví dụ `hoten`, `sodienthoai`, `thoigianbatdau`. Django còn quản lý các bảng auth, group, permission và session theo quy ước framework. Xem `05-TEN-COT-DU-LIEU.md` để đối chiếu đầy đủ 80 cột với tên thuộc tính Python; kiểu dữ liệu không thay đổi.
+PostgreSQL lưu Unicode bằng `varchar/text`, thời gian bằng `timestamptz`. Tất cả bảng nghiệp vụ có khóa chính `bigint`, đặt tên theo đối tượng: `manguoidung`, `machinhanh`, `malichhen`… Các trường bắt buộc không nhận NULL trừ khi ghi rõ. Tên bảng thực tế có tiền tố `salon_`. Các cột trong 25 bảng nghiệp vụ dùng tiếng Việt viết liền không dấu qua `db_column`, ví dụ `hoten`, `sodienthoai`, `thoigianbatdau`. Django còn quản lý các bảng auth, group, permission và session theo quy ước framework. Xem `05-TEN-COT-DU-LIEU.md` để đối chiếu đầy đủ các cột với tên thuộc tính Python; kiểu dữ liệu không thay đổi.
 
 ### 3.1 Từ điển dữ liệu
 
@@ -87,11 +87,13 @@ Các chỉnh sửa danh mục qua cổng quản trị riêng dành cho quản tr
 |---|---|---|---|
 | booked | checkin | checked_in | Đúng ngày, ghế thuộc chi nhánh, không bận |
 | checked_in | start | in_service | Stylist không đang phục vụ khách khác |
-| in_service | pay | completed | Phương thức hợp lệ; thẻ mô phỏng phải xác nhận |
-| booked | cancel | cancelled | Chủ lịch còn >=2 giờ hoặc operator đúng phạm vi |
-| booked | no_show | no_show | Operator đúng phạm vi, đã qua end_at |
+| in_service | finish | awaiting_payment | Ghi giờ phục vụ xong và giải phóng ghế/stylist |
+| awaiting_payment | pay | completed | Phương thức/điểm/voucher/báo giá hợp lệ; ngày chưa chốt |
+| checked_in | release_checkin | booked | Operator có lý do, trả lịch về điều phối và giải phóng ghế |
+| booked | cancel | cancelled | Chủ lịch còn đủ giờ theo chính sách chi nhánh hoặc operator đúng phạm vi |
+| booked | no_show | no_show | Operator đúng phạm vi, qua start_at + thời gian chờ muộn |
 
-`completed/cancelled/no_show` là trạng thái kết thúc. Không hỗ trợ quay ngược trạng thái hoặc hoàn tiền; nếu phát triển tính năng đó cần thêm use case và bản ghi điều chỉnh riêng.
+`completed/cancelled/no_show` là trạng thái kết thúc. Hoàn tiền toàn bộ ghi chứng từ `Refund` riêng; không đảo trạng thái completed hoặc sửa hóa đơn gốc. Quy tắc điểm/hoa hồng/sổ khóa tại tài liệu 13.
 
 ## 5. Tương tác đặt lịch
 
@@ -165,3 +167,17 @@ Doanh thu theo ngày paid_at, số lịch/tỷ lệ hủy theo ngày start_at. S
 Backup dùng pg_dump custom từ exported snapshot repeatable-read cùng số dòng metadata; restore kiểm SHA256, chỉ tạo database mới, single transaction và so số dòng. Không phục hồi qua HTTP hoặc tự đổi cấu hình database đang dùng.
 
 Chi tiết đường dẫn, cấu hình và quy tắc: [Hoàn thiện chức năng](11-HOAN-THIEN-CHUC-NANG.md).
+
+## 17. Thiết kế vận hành nhiều chi nhánh
+
+`business.py` là lớp giao dịch cho tiếp nhận, dịch vụ phát sinh, nghỉ, thu/hoàn tiền, chốt sổ và kho; `business_views.py`/`business_forms.py` lọc dữ liệu theo quyền. `scheduling.py` dùng sweep-line cho sức chứa và đọc theo lô để tính giờ trống. `activation.py` dùng token email để kích hoạt hồ sơ chưa có mật khẩu, chỉ dành cho customer.
+
+Bổ sung EmployeeAbsence, BranchClosure, AppointmentChange, EmailOutbox, Voucher/VoucherUse, Product/Stock/StockMovement, Commission, Refund và DailyClosing. Invoice lưu giảm voucher, điểm thực cộng và điểm bù nợ; User lưu điểm cần thu hồi riêng. Từ điển dữ liệu được sinh từ toàn bộ 25 model.
+
+Chuỗi khóa: Branch trước Appointment/Invoice/Customer/Voucher; chuyển kho khóa hai Branch theo ID tăng dần. Mỗi hóa đơn một lần dùng voucher, một commission và tối đa một refund; chốt sổ unique branch/day. Sự kiện ghi outbox trong cùng transaction, gửi SMTP bằng worker độc lập có khóa `skip_locked` và retry. Không có exactly-once giữa SMTP và PostgreSQL.
+
+![Luồng vận hành nhiều chi nhánh](diagrams/08-multi-branch.svg)
+
+![Các quan hệ dữ liệu mở rộng](diagrams/09-business-er.svg)
+
+Các use case, phạm vi quyền, công thức thu ròng/hoa hồng và chính sách cụ thể tại [tài liệu 13](13-NGHIEP-VU-NHIEU-CHI-NHANH.md). ER cũ mô tả các bảng lõi; ER mở rộng ở đây bổ sung các quan hệ mới. Các trường SQL đầy đủ ở từ điển dữ liệu.

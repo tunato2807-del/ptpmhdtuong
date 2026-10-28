@@ -14,7 +14,7 @@ from django.utils import timezone
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
-from salon.models import User,Branch,Employee,Shift,Chair,Appointment,AppointmentItem,Invoice,PointEntry,Notification,AuditLog,Review,Service
+from salon.models import User,Branch,Employee,Shift,Chair,Appointment,AppointmentItem,Invoice,PointEntry,Notification,AuditLog,Review,Service,Commission,VoucherUse,Refund,AppointmentChange,EmailOutbox
 from salon.services import book,local_at
 from playwright.sync_api import sync_playwright,expect
 marker='completion-'+uuid.uuid4().hex[:8];password='Completion@Test2026';new_password='Reset@Complete2026'
@@ -22,10 +22,11 @@ manager=User.objects.create_user(username=marker,password=password,role='manager
 customer=User.objects.create_user(username=marker+'-c',password=password,full_name='Khách kiểm thử',email=marker+'@example.invalid',phone='0901234567',points=50)
 branch=Branch.objects.create(name=marker,address='TP.HCM',phone='0901234567',opens_at=time(9),closes_at=time(21))
 employee=Employee.objects.create(name=marker,branch=branch,specialty='Fade')
+Chair.objects.create(branch=branch,name='Ghế kiểm thử')
 day=timezone.localdate()+timedelta(days=1)
 Shift.objects.create(employee=employee,start_at=local_at(day,time(9)),end_at=local_at(day,time(21)))
 a=book(customer=customer,branch_id=branch.pk,employee_id=employee.pk,service_ids=[Service.objects.first().pk],start=local_at(day,time(10)))
-a.status='in_service';a.save(update_fields=['status'])
+a.status='awaiting_payment';a.save(update_fields=['status'])
 uid=urlsafe_base64_encode(force_bytes(customer.pk));token=default_token_generator.make_token(customer)
 mail_dir=Path(settings.EMAIL_FILE_PATH);before=set(mail_dir.glob('*')) if mail_dir.exists() else set()
 pool=ThreadPoolExecutor(max_workers=1)
@@ -60,9 +61,9 @@ try:
   expect(page.locator('main')).to_contain_text('Chưa có thông báo phù hợp')
   logout();login(marker,password)
   page.goto(base+f'/lich-hen/{a.pk}/');page.locator('#redeem-points').fill('10')
-  expect(page.locator('#payment-preview')).to_contain_text('Giảm 10 điểm')
+  expect(page.locator('#payment-preview')).to_contain_text('Cần thu:')
   page.on('dialog',lambda dialog:dialog.accept())
-  page.get_by_role('button',name='Thanh toán & hoàn thành ✓',exact=True).click()
+  page.get_by_role('button',name='Xác nhận thu tiền ✓',exact=True).click()
   page.wait_for_url(base+f'/lich-hen/{a.pk}/')
   invoice=db(lambda:Invoice.objects.get(appointment_id=a.pk))
   assert invoice.discount==10000
@@ -88,10 +89,12 @@ try:
 finally:
  pool.shutdown()
  PointEntry.objects.filter(customer=customer).delete()
+ VoucherUse.objects.filter(invoice__appointment_id=a.pk).delete();Refund.objects.filter(invoice__appointment_id=a.pk).delete();Commission.objects.filter(invoice__appointment_id=a.pk).delete()
+ AppointmentChange.objects.filter(appointment_id=a.pk).delete();EmailOutbox.objects.filter(appointment_id=a.pk).delete()
  Invoice.objects.filter(appointment_id=a.pk).delete();Review.objects.filter(appointment_id=a.pk).delete()
  AuditLog.objects.filter(actor__in=[manager,customer]).delete();AuditLog.objects.filter(appointment_id=a.pk).delete()
  Notification.objects.filter(recipient=customer).delete();Appointment.objects.filter(pk=a.pk).delete()
- Shift.objects.filter(employee=employee).delete();employee.delete();branch.delete();customer.delete();manager.delete()
+ Shift.objects.filter(employee=employee).delete();employee.delete();Chair.objects.filter(branch=branch).delete();branch.delete();customer.delete();manager.delete()
  if mail_dir.exists():
   for path in set(mail_dir.glob('*'))-before:
    if marker in path.read_text():path.unlink()

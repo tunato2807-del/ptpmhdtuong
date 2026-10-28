@@ -2,6 +2,8 @@
 
 Dự án tiếng Việt dùng Django 5.2 LTS, PostgreSQL và giao diện riêng bằng HTML/CSS/JavaScript. Có trang khách hàng, trang cá nhân và cổng quản lý với chức năng thêm/sửa/xóa. Toàn bộ danh mục được quản lý tại `/quan-ly/thiet-lap/`; không dùng Django Admin. Chạy trực tiếp trên VS Code, không cần Docker hoặc Node.js.
 
+Xem [nghiệp vụ quản lý nhiều chi nhánh](docs/13-NGHIEP-VU-NHIEU-CHI-NHANH.md): tiếp nhận tại quầy, sức chứa, nghỉ đột xuất, cổng stylist, dịch vụ phát sinh, chờ thu, voucher, kho/chuyển kho, hoa hồng, hoàn tiền, chốt sổ và email nhắc lịch. **Cần migrate 0005–0007.**
+
 Xem [bản phối phông tiếng Việt và ảnh salon Việt Nam](docs/12-FONT-VA-HINH-ANH.md), gồm ảnh xem trước và danh sách file để copy.
 
 Xem [bản cập nhật animation và ảnh tự chuyển](docs/09-ANIMATION-VA-ANH-TU-CHUYEN.md) để copy 5 file bổ sung.
@@ -99,15 +101,20 @@ Tài khoản mẫu chỉ dùng để trình diễn. `seed_demo` chỉ chạy khi
 | `/diem-tich-luy/` | Quy tắc và lịch sử điểm |
 | `/quan-ly/nhat-ky/` | Nhật ký thao tác dành cho quản trị |
 | `/quan-ly/lich-tuan/` | Lịch bảy ngày theo chi nhánh/stylist |
+| `/quan-ly/van-hanh/` | Điều hành và đối soát các chi nhánh theo quyền |
+| `/quan-ly/tiep-nhan/` | Nhận khách trực tiếp |
+| `/stylist/` | Cổng lịch/ca và cập nhật phục vụ của stylist |
+| `/quan-ly/kho/` | Tồn kho, nhập/xuất/kiểm kê/chuyển kho |
+| `/quan-ly/chot-so/` | Hoàn tất đối soát, khóa sổ ngày |
 | `/quan-ly/hieu-qua/` | Tỷ lệ hủy, so kỳ trước, dịch vụ và stylist |
 
-Quản trị viên quản lý nguồn lực bằng nút Thêm, Sửa, Xóa trên giao diện riêng. Quyền dựa vào vai trò `manager`, không cần cờ Django staff/superuser. Lễ tân xem và vận hành trong chi nhánh phụ trách, không được chỉnh thiết lập. Khách chỉ sửa hồ sơ của mình; không tự sửa vai trò hoặc điểm.
+Quản lý chi nhánh (`branch_manager`) quản lý nhân sự/nguồn lực riêng qua `/quan-ly/van-hanh/`; stylist (`stylist`) dùng `/stylist/`. Quản trị viên toàn chuỗi quản lý nguồn lực bằng nút Thêm, Sửa, Xóa trên giao diện riêng. Quyền dựa vào vai trò `manager`, không cần cờ Django staff/superuser. Lễ tân xem và vận hành trong chi nhánh phụ trách, không được chỉnh thiết lập. Khách chỉ sửa hồ sơ của mình; không tự sửa vai trò hoặc điểm.
 
 Xóa yêu cầu xác nhận và POST/CSRF. Bản ghi có liên kết lịch hẹn/hóa đơn được bảo vệ; có thể ngừng hoạt động khi không còn lịch đang cần phục vụ. Không xóa ca làm đang bao phủ lịch hẹn, không chuyển chi nhánh của stylist/ghế bằng sửa thông tin. Không thể khóa, hạ quyền hoặc xóa tài khoản quản trị đang đăng nhập. Giá/thời lượng trong lịch hẹn là snapshot và giữ nguyên khi sửa danh mục.
 
 ## Cập nhật từ phiên bản trước
 
-Giữ `.env` và database hiện có. Dừng web cũ, cập nhật mã, cài lại `requirements.txt`, chạy migrate và collectstatic rồi bật lại web. Không cần xóa database hoặc chạy lại seed để cập nhật. Bản quản trị riêng không thêm migration mới; `0002_vietnamese_column_names` vẫn đổi tên cột tại chỗ khi nâng cấp từ bản rất cũ. Các bảng kỹ thuật đã có trong database được giữ lại, không xóa dữ liệu lịch sử.
+Giữ `.env` và database hiện có. Dừng web cũ, cập nhật mã, cài lại `requirements.txt`, chạy migrate và collectstatic rồi bật lại web. Không cần xóa database hoặc chạy lại seed để cập nhật. Bản vận hành nhiều chi nhánh thêm migration 0005–0007; `0002_vietnamese_column_names` vẫn đổi tên cột tại chỗ khi nâng cấp từ bản rất cũ. Các bảng kỹ thuật đã có trong database được giữ lại, không xóa dữ liệu lịch sử.
 
 Nếu thay thư mục bằng ZIP mới, nhớ sao chép `.env` của bạn vào thư mục mới. Không đặt `.env` trong `.venv`. Dữ liệu PostgreSQL lưu trên máy chủ, không nằm trong ZIP.
 
@@ -117,7 +124,7 @@ Nếu thay thư mục bằng ZIP mới, nhớ sao chép `.env` của bạn vào 
 python scripts/dev.py check
 ```
 
-114 kiểm thử hiện tại dùng PostgreSQL thực và database test riêng. Tài khoản PostgreSQL chạy tests cần quyền CREATEDB và tạo `btree_gist`. Lệnh check thu thập static trước tests để manifest nhận đủ ảnh/font/CSS mới.
+160 kiểm thử hiện tại dùng PostgreSQL thực và database test riêng. Tài khoản PostgreSQL chạy tests cần quyền CREATEDB và tạo `btree_gist`. Lệnh check thu thập static trước tests để manifest nhận đủ ảnh/font/CSS mới.
 
 Browser checks tùy chọn, cần server local DEBUG=1 có dữ liệu mẫu. `scripts/interface_smoke.py` kiểm tra bố cục, CSS/font, biểu tượng và đăng xuất ở sáu kích thước màn hình. Các kiểm tra khác:
 
@@ -135,9 +142,11 @@ Có thể đặt `BROWSER_EXECUTABLE` nếu đã có Chromium. Browser smoke ngh
 ## Tài liệu và cấu trúc
 
 - [Phân tích yêu cầu](docs/01-PHAN-TICH.md), [thiết kế](docs/02-THIET-KE.md), [triển khai](docs/03-TRIEN-KHAI.md), [kiểm thử](docs/04-KIEM-THU.md).
-- [91 tên cột tiếng Việt](docs/05-TEN-COT-DU-LIEU.md), [giao diện khách hàng](docs/06-GIAO-DIEN-KHACH-HANG.md), [quản trị và trang cá nhân](docs/07-QUAN-TRI-RIENG.md).
+- [Tên cột tiếng Việt của 25 bảng](docs/05-TEN-COT-DU-LIEU.md), [giao diện khách hàng](docs/06-GIAO-DIEN-KHACH-HANG.md), [quản trị và trang cá nhân](docs/07-QUAN-TRI-RIENG.md).
 - [Báo cáo Word](docs/BAO_CAO_PHAN_TICH_THIET_KE.docx), [nguồn ảnh/font](docs/NGUON-TAI-NGUYEN.md).
 
 `salon/management_views.py` xử lý CRUD, `salon/profile_views.py` xử lý hồ sơ/mật khẩu, `salon/forms.py` kiểm tra dữ liệu, `salon/services.py` xử lý đặt lịch/thanh toán có transaction. `templates/staff/` chứa cổng quản lý riêng; `static/css/management.css` định dạng các màn hình mới. `scripts/dev.py` chạy được trên Windows/Linux/macOS.
 
 Ứng dụng phục vụ học tập, chưa triển khai công khai. Thanh toán thẻ là mô phỏng; chưa tích hợp ngân hàng/SMS hoặc kiểm chứng tải lớn. Reset mật khẩu dùng email local để demo hoặc SMTP tự cấu hình; kiểm thử chưa gửi qua nhà cung cấp SMTP thật. Ảnh chụp là ảnh minh họa trải nghiệm; thông tin demo không đại diện cửa hàng thực.
+
+Tác vụ nhắc lịch: `.venv/bin/python manage.py dispatch_emails --dry-run` để xem số thư đến hạn; bỏ `--dry-run` để gửi qua backend đã cấu hình. Xem hướng dẫn Windows Task Scheduler và giới hạn SMTP tại [tài liệu 13](docs/13-NGHIEP-VU-NHIEU-CHI-NHANH.md).

@@ -10,7 +10,7 @@ class AppointmentEvent:
 
 class AuditObserver:
     def update(self, event):
-        AuditLog.objects.create(actor=event.actor, appointment=event.appointment, action=event.message)
+        AuditLog.objects.create(actor=event.actor, appointment=event.appointment, branch=event.appointment.branch, action=event.message)
 
 class NotificationObserver:
     def update(self, event):
@@ -21,6 +21,8 @@ class AppointmentPublisher:
     def __init__(self, observers):
         self.observers = tuple(observers)
     def publish(self, event):
+        from .messaging import schedule_emails
+        schedule_emails(event.appointment, event.message)
         for observer in self.observers:
             observer.update(event)
 

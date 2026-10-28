@@ -10,17 +10,17 @@
 
 <p>Giá trị trung bình: {{ summary.average|money }}</p>
 <div class="summary-total">
-<span>{{ summary.count }} hóa đơn · Tổng thực thu</span>
+<span>{{ summary.count }} hóa đơn · Thu trước hoàn tiền</span>
 <strong>{{ summary.total|money }}</strong>
 </div>
-{% if filters_valid %}<div class="form-actions">
+<div class="summary-line"><span>Hoàn tiền trong kỳ (kể cả hóa đơn kỳ trước)</span><strong>−{{ summary.refunds|money }}</strong></div><div class="summary-total"><span>Thu ròng trong kỳ</span><strong>{{ summary.net|money }}</strong></div>{% if filters_valid %}<div class="form-actions">
 <a class="btn btn-outline" href="{% url 'feature_report_export' 'xlsx' %}?{{ request.GET.urlencode }}">Xuất Excel</a>
 <a class="btn btn-outline" href="{% url 'feature_report_export' 'pdf' %}?{{ request.GET.urlencode }}">Xuất PDF</a>
 <a class="btn btn-outline" href="{% url 'feature_report_export' 'csv' %}?{{ request.GET.urlencode }}">Xuất CSV</a>
 </div>{% endif %}
 </section>
 <section class="panel padded">
-<h2>Doanh thu theo chi nhánh</h2>{% for row in per_branch %}<div class="summary-line">
+<h2>Thu hóa đơn theo chi nhánh (trước hoàn)</h2>{% for row in per_branch %}<div class="summary-line">
 <span>{{ row.appointment__branch__name }} · {{ row.count }} hóa đơn</span>
 <strong>{{ row.total|money }}</strong>
 </div>{% empty %}<p>Chưa có dữ liệu.</p>{% endfor %}</section>

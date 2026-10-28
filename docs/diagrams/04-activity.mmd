@@ -1,19 +1,22 @@
 flowchart TD
-    A(["Khách chọn dịch vụ và giờ"]) --> B{"Còn khả dụng?"}
+    A(["Khách đặt web hoặc lễ tân tiếp nhận"]) --> B{"Ca + stylist + sức chứa + lịch nghỉ còn phù hợp?"}
     B -->|Không| A
-    B -->|Có| C["BOOKED · lưu snapshot, thông báo"]
+    B -->|Có| C["BOOKED · snapshot và outbox"]
     C --> D{"Khách đến?"}
     D -->|"Hủy hợp lệ"| E["CANCELLED · giải phóng chỗ"]
-    D -->|"Quá giờ, không đến"| F["NO_SHOW"]
-    D -->|"Trong ngày, ghế sẵn sàng"| G["CHECKED_IN · phân ghế"]
-    G --> H{"Stylist đã rảnh?"}
-    H -->|Chưa| G
-    H -->|Có| I["IN_SERVICE"]
-    I --> J{"Phương thức?"}
-    J -->|Tiền mặt| K["Ghi nhận đã nhận tiền"]
-    J -->|"Thẻ mô phỏng"| L["Xác nhận nội bộ"]
-    K --> M["Transaction: hóa đơn + điểm + hoàn thành + sự kiện"]
-    L --> M
-    M --> N["COMPLETED"]
-    N --> O["Khách xem hóa đơn, đánh giá một lần"]
-    O --> P(["Kết thúc"])
+    D -->|"Quá thời gian chờ muộn"| F["NO_SHOW"]
+    D -->|"Trong ngày, ghế sẵn sàng"| G["CHECKED_IN · ghi giờ đến, phân ghế"]
+    G -->|"Có lý do cần điều phối"| C
+    G --> H["IN_SERVICE · ghi giờ bắt đầu"]
+    H --> I{"Thêm dịch vụ / gia hạn?"}
+    I -->|Có| J["Khách đồng ý · tái kiểm tra lịch, ca và ghế"]
+    J --> H
+    I -->|"Phục vụ xong"| K["AWAITING_PAYMENT · giải phóng nguồn lực"]
+    K --> L["Thu ngân xem báo giá · điểm hoặc voucher"]
+    L --> M["Transaction: hóa đơn + điểm + hoa hồng + sự kiện"]
+    M --> N["COMPLETED · đã thanh toán"]
+    N --> O["Khách xem hóa đơn / đánh giá"]
+    N --> P["Quản lý ghi hoàn toàn bộ nếu có"]
+    P --> Q["Chứng từ hoàn + thu hồi điểm; giữ hóa đơn gốc"]
+    O --> R["Đối soát thu/hoàn và chốt sổ chi nhánh/ngày"]
+    Q --> R

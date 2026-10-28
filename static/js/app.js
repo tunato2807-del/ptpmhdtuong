@@ -17,6 +17,7 @@ if (menuButton) {
 }
 const bookingForm = document.querySelector('#booking-form');
 if (bookingForm) {
+  const branchPolicies = JSON.parse(document.querySelector('#branches-data').textContent);
   const employees = JSON.parse(document.querySelector('#employees-data').textContent);
   const services = JSON.parse(document.querySelector('#services-data').textContent);
   const branch = bookingForm.querySelector('#id_branch');
@@ -34,6 +35,9 @@ if (bookingForm) {
   let controller, requestVersion = 0;
   const selectedServices = () => Array.from(bookingForm.querySelectorAll('input[name="services"]:checked')).map(input => input.value);
   function updateStylists() {
+    const policy=branchPolicies.find(item=>String(item.id)===branch.value);
+    const hint=document.querySelector('#branch-policy');
+    if (hint) hint.textContent=policy ? `Đổi/hủy trước ít nhất ${policy.cancel_hours} giờ; đặt trước tối đa ${policy.booking_days} ngày; chờ khách muộn ${policy.late_minutes} phút.` : 'Việc đổi/hủy áp dụng chính sách của chi nhánh bạn chọn.';
     const previous = stylist.value;
     stylist.replaceChildren(new Option('Chọn stylist', ''));
     employees.filter(item => String(item.branch_id) === branch.value).forEach(item => stylist.add(new Option(item.name + ' · ' + item.specialty, item.id)));
@@ -99,11 +103,26 @@ if (bookingForm) {
 const pointInput = document.querySelector('#redeem-points');
 const paymentPreview = document.querySelector('#payment-preview');
 if (pointInput && paymentPreview) {
-  const preview = () => {
-    const gross = Number(paymentPreview.dataset.gross);
-    const points = Number(pointInput.value);
-    const valid = Number.isInteger(points) && points >= 0 && points <= Number(pointInput.max);
-    paymentPreview.textContent = valid ? 'Cần thu: ' + new Intl.NumberFormat('vi-VN').format(gross-points*1000) + ' ₫ · Giảm ' + points + ' điểm' : 'Số điểm vượt giới hạn. Hãy kiểm tra lại.';
+  const form = pointInput.closest('form');
+  const voucher = form.querySelector('[name="voucher_code"]');
+  const quoted = form.querySelector('[name="quoted_total"]');
+  const submit = form.querySelector('#collect-payment');
+  let version = 0;
+  const preview = async () => {
+    const current = ++version;
+    submit.disabled = true;
+    try {
+      const params = new URLSearchParams({points:pointInput.value || '0',voucher:voucher.value.trim()});
+      const response = await fetch(form.dataset.quoteUrl + '?' + params);
+      const data = await response.json();
+      if (current !== version) return;
+      if (!response.ok) throw new Error(data.error || 'Chưa kiểm tra được số cần thu.');
+      quoted.value = data.total;
+      paymentPreview.textContent = 'Cần thu: ' + new Intl.NumberFormat('vi-VN').format(data.total) + ' ₫';
+      submit.disabled = false;
+    } catch (error) {
+      if (current === version) paymentPreview.textContent = error.message || 'Kết nối gián đoạn, hãy thử lại.';
+    }
   };
-  pointInput.addEventListener('input', preview); preview();
+  pointInput.addEventListener('input', preview); voucher.addEventListener('input', preview); preview();
 }

@@ -147,7 +147,7 @@ class OperationsTests(Fixtures, TestCase):
 class LoyaltyTests(Fixtures, TestCase):
     def setUp(self):
         self.make_data();self.customer.points=50;self.customer.save(update_fields=['points'])
-        self.booking=self.reserve();self.booking.status='in_service';self.booking.save()
+        self.booking=self.reserve();self.booking.status='awaiting_payment';self.booking.save()
 
     def pay(self,points):
         return transition(pk=self.booking.pk,actor=self.manager,action='pay',redeem_points=points)
@@ -171,7 +171,7 @@ class LoyaltyTests(Fixtures, TestCase):
         self.assertFalse(Invoice.objects.filter(appointment=self.booking).exists())
         self.assertFalse(PointEntry.objects.filter(customer=self.customer).exists())
         self.customer.refresh_from_db();self.assertEqual(self.customer.points,50)
-        self.booking.refresh_from_db();self.assertEqual(self.booking.status,'in_service')
+        self.booking.refresh_from_db();self.assertEqual(self.booking.status,'awaiting_payment')
 
     def test_database_rejects_inconsistent_discount_and_negative_earned_points(self):
         with self.assertRaises(IntegrityError),transaction.atomic():
@@ -199,7 +199,7 @@ class ConcurrentPointsTests(Fixtures, TransactionTestCase):
     def test_two_branches_cannot_spend_the_same_points(self):
         self.make_data();self.customer.points=20;self.customer.save(update_fields=['points'])
         first=self.reserve();second=self.reserve(branch_id=self.other_branch.pk,employee_id=self.other_employee.pk,start=first.start_at+timedelta(hours=1))
-        Appointment.objects.filter(pk__in=[first.pk,second.pk]).update(status='in_service')
+        Appointment.objects.filter(pk__in=[first.pk,second.pk]).update(status='awaiting_payment')
         gate=Barrier(2)
         def pay(pk):
             from django.core.exceptions import ValidationError

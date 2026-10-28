@@ -17,7 +17,7 @@ Tên thương hiệu GENTLEMAN, địa chỉ, tên nhân viên, giá và lịch 
 | Lễ tân | Đón khách, phân ghế, điều phối, thanh toán | Chi nhánh được phân công |
 | Quản trị viên | Quản lý toàn chuỗi, danh mục, ca làm và doanh thu | Toàn hệ thống; cổng quản trị riêng kiểm tra vai trò manager |
 
-Stylist là nguồn lực được quản lý, chưa có cổng đăng nhập riêng. Cổng thanh toán mô phỏng là thành phần nội bộ, không phải ngân hàng bên ngoài.
+Stylist có cổng lịch/ca và cập nhật phục vụ của chính mình. Quản lý chi nhánh có quyền quản trị nguồn lực, tài khoản nhân sự và đối soát trong chi nhánh phụ trách. Cổng thanh toán mô phỏng là thành phần nội bộ, không phải ngân hàng bên ngoài.
 
 ## 3. Yêu cầu chức năng và tiêu chí nghiệm thu
 
@@ -27,7 +27,7 @@ Stylist là nguồn lực được quản lý, chưa có cổng đăng nhập ri
 | FR02 | Danh mục và tra cứu | Chỉ dịch vụ, stylist, chi nhánh đang hoạt động xuất hiện trong lựa chọn đặt |
 | FR03 | Xem giờ trống | Dựa vào ca làm, tổng thời lượng, giờ mở cửa và lịch đã giữ chỗ |
 | FR04 | Đặt nhiều dịch vụ | Lưu bản chụp giá/thời lượng; hai yêu cầu đồng thời cùng stylist chỉ thành công một |
-| FR05 | Hủy lịch | Lịch khách hủy phải chưa check-in và còn ít nhất 2 giờ; chỗ được giải phóng |
+| FR05 | Hủy lịch | Lịch khách hủy phải chưa check-in và còn đủ thời gian đổi/hủy theo chi nhánh; chỗ được giải phóng |
 | FR06 | Check-in, phân ghế | Trong ngày hẹn; ghế đúng chi nhánh và không đang bận |
 | FR07 | Phục vụ và thanh toán | Đúng thứ tự trạng thái, một hóa đơn, một lần cộng điểm |
 | FR08 | Phản hồi | Chỉ chủ lịch đã hoàn thành được đánh giá 1–5 sao, một lần |
@@ -63,7 +63,7 @@ Stylist là nguồn lực được quản lý, chưa có cổng đăng nhập ri
 
 1. Chọn chi nhánh và một hoặc nhiều dịch vụ/combo.
 2. Hệ thống lọc stylist thuộc chi nhánh, tính tổng thời lượng và giá dự kiến.
-3. Chọn ngày trong 30 ngày tới; API trả về giờ còn trống theo bước 15 phút.
+3. Chọn ngày trong số ngày nhận đặt trước của chi nhánh (mặc định 30); API trả về giờ còn trống theo bước 15 phút.
 4. Chọn giờ, nhập ghi chú, xác nhận.
 5. Server khóa chi nhánh và khách, đọc lại dữ liệu, kiểm tra xung đột, lưu lịch và các dòng dịch vụ.
 6. Phát sự kiện, ghi audit và thông báo trong cùng transaction; trả về mã lịch.
@@ -72,7 +72,7 @@ Stylist là nguồn lực được quản lý, chưa có cổng đăng nhập ri
 
 ### UC02 — Hủy lịch
 
-Chủ lịch mở chi tiết, chọn hủy và xác nhận. Server kiểm tra quyền, trạng thái và hạn 2 giờ. Chuyển sang `cancelled`, phát thông báo và trả chỗ cho lịch khác. Lễ tân có quyền hủy lịch chưa check-in thuộc chi nhánh mình, không áp dụng hạn 2 giờ.
+Chủ lịch mở chi tiết, chọn hủy và xác nhận. Server kiểm tra quyền, trạng thái và hạn giờ được cấu hình ở chi nhánh. Chuyển sang `cancelled`, phát thông báo và trả chỗ cho lịch khác. Lễ tân có quyền hủy lịch chưa check-in thuộc chi nhánh mình, không áp dụng hạn giờ được cấu hình ở chi nhánh.
 
 ### UC03 — Đón khách và phục vụ
 
@@ -80,7 +80,7 @@ Lễ tân tìm khách bằng tên/điện thoại, mở lịch trong ngày, ch�
 
 ### UC04 — Thanh toán
 
-**Tiền điều kiện:** lịch `in_service`. Lễ tân kiểm tra dịch vụ, chọn tiền mặt hoặc thẻ mô phỏng. Thẻ yêu cầu xác nhận rõ. Server khóa lịch, lấy tổng từ các dòng snapshot, tạo hóa đơn unique, trừ điểm theo yêu cầu (tối đa 20%), cộng điểm từ thực thu, ghi ledger và hoàn thành lịch và phát sự kiện. Bất kỳ bước nào lỗi đều rollback. Không thu thập số thẻ, OTP hoặc thông tin ngân hàng.
+**Tiền điều kiện:** lịch `in_service`. Lễ tân kiểm tra dịch vụ, chọn tiền mặt hoặc thẻ mô phỏng. Thẻ yêu cầu xác nhận rõ. Sau khi stylist/lễ tân hoàn tất phục vụ chuyển sang `awaiting_payment`, server khóa lịch, lấy tổng từ các dòng snapshot, tạo hóa đơn unique, trừ điểm theo yêu cầu (tối đa 20%), cộng điểm từ thực thu, ghi ledger và hoàn thành lịch và phát sự kiện. Bất kỳ bước nào lỗi đều rollback. Không thu thập số thẻ, OTP hoặc thông tin ngân hàng.
 
 ### UC05 — Quản lý ca làm
 
@@ -92,7 +92,7 @@ Chọn từ/đến (tối đa 366 ngày) và chi nhánh được phép. Truy v�
 
 ## 6. Phạm vi bản hoàn thành
 
-Bao gồm website khách hàng, cổng điều hành, quản trị danh mục, reset mật khẩu, nhật ký/thông báo/lịch tuần, phân tích hiệu quả, điểm tích lũy và công cụ sao lưu/phục hồi, database migration, dữ liệu mẫu, bộ kiểm thử, hướng dẫn chạy trực tiếp và tài liệu. Không bao gồm mobile native, mạng xã hội, SMS, cấu hình/kiểm chứng nhà cung cấp SMTP bên ngoài, thanh toán ngân hàng thật, sản phẩm kho, hoa hồng/lương, thuế, voucher, hoàn tiền, AI và HA. Các nội dung này là hướng phát triển sau, không được mô tả là đã thực hiện.
+Bao gồm website khách hàng, cổng điều hành, quản trị danh mục, reset mật khẩu, nhật ký/thông báo/lịch tuần, phân tích hiệu quả, điểm tích lũy và công cụ sao lưu/phục hồi, database migration, dữ liệu mẫu, bộ kiểm thử, hướng dẫn chạy trực tiếp và tài liệu. Đã bổ sung kho vật tư, chuyển kho, hoa hồng, voucher, hoàn tiền toàn bộ và chốt sổ theo chi nhánh. Không bao gồm mobile native, mạng xã hội, SMS, kiểm chứng SMTP bên ngoài, thanh toán ngân hàng thật, bán lẻ sản phẩm, bảng lương/thuế, hoàn tiền một phần, AI và HA. Các nội dung này là hướng phát triển sau, không được mô tả là đã thực hiện.
 
 ## 7. Đối chiếu thiết kế ban đầu
 
@@ -105,3 +105,7 @@ Bao gồm website khách hàng, cổng điều hành, quản trị danh mục, r
 | Hóa đơn tổng tiền chưa rõ nguồn | Unique invoice, từ các dòng snapshot | Chống thanh toán/cộng điểm hai lần |
 | Thiếu nhật ký/thông báo | `AuditLog`, `Notification`, Observer | Truy vết và phản hồi khách |
 | Mô tả SQL NVARCHAR chung | Migration PostgreSQL với varchar/text, timestamptz, GiST | Triển khai đúng hệ quản trị đã chọn |
+
+## 8. Vận hành nhiều chi nhánh
+
+Yêu cầu mở rộng FR21–FR32 và tiêu chí nghiệm thu tại [Nghiệp vụ nhiều chi nhánh](13-NGHIEP-VU-NHIEU-CHI-NHANH.md): tiếp nhận và kích hoạt hồ sơ tại quầy; sức chứa ghế; nghỉ/điều phối; dịch vụ phát sinh/gia hạn; phục vụ và thu tiền riêng; email outbox; vai trò quản lý chi nhánh/stylist; voucher; kho/chuyển kho; hoa hồng; hoàn tiền/thu hồi điểm; chốt sổ và đối soát theo thời điểm giao dịch.
