@@ -1,5 +1,5 @@
 {
-  "ref": "f8222bea642ce980a40674f4fd4cba35d962dba8",
+  "ref": "d3f6fea0956a05e6deff04b719ecf5341382d1f0",
   "files": [
     {
       "path": ".agents/LICENSE.agent-skills",
@@ -175,7 +175,7 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "sha256": "a558d5e669e2c8075218097105672af7c1105d20f0f48250c60160adf8525859"
+      "sha256": "50366794e6c047db59cd7447b62144d9effd9188fc9e07ff2427a7c5b5b0f7fb"
     },
     {
       "path": ".gitignore",
@@ -187,7 +187,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "aa771821d1c91db989d3d0ff2ca8ed9764a02c60ec671eff2486bff87558528f"
+      "sha256": "44eae9637daba6c91d8f5bff182d6abdd53f3aae12d904d4dccc2eb3f4331331"
     },
     {
       "path": "config/__init__.py",
@@ -260,6 +260,10 @@
     {
       "path": "docs/14-AGENT-SKILLS.md",
       "sha256": "1e43450d99a6376180933219bb6a76ceaaced48a772da84d16b53ec2c1048498"
+    },
+    {
+      "path": "docs/15-GIAO-DIEN-BLUE-EDITION.md",
+      "sha256": "2aee4aad0edbc6aaea23d9f90de3267360919605ce3704085e60b6993e6f7390"
     },
     {
       "path": "docs/BAO_CAO_PHAN_TICH_THIET_KE.docx",
@@ -388,6 +392,38 @@
     {
       "path": "docs/quality/spec.md",
       "sha256": "e93ea4895d2c2c84944bc0822e5a08e91f77f99b3331eff03aebc92e0e855c7a"
+    },
+    {
+      "path": "docs/screenshots/blue/account-1440.png",
+      "sha256": "c568057f8d5f51b19b330b030d80579c075ca8ba04f25899ebaf9c0d4215e78d"
+    },
+    {
+      "path": "docs/screenshots/blue/account-390.png",
+      "sha256": "f5a391851334fb6ce4bd3395238cdc20d1df5efa569a71abd715a089dae6333e"
+    },
+    {
+      "path": "docs/screenshots/blue/board-1440.png",
+      "sha256": "2285f58c8b6bdbcea7f534455e1d19a7f943174b3bc4eddd018028098ab355e3"
+    },
+    {
+      "path": "docs/screenshots/blue/board-390.png",
+      "sha256": "5513583771818bee38b6bef0104a34ee7f749aabc0938d357b816e2923a9739a"
+    },
+    {
+      "path": "docs/screenshots/blue/booking-1440.png",
+      "sha256": "2a8711935dda71ba53da471be6f3335732dd163689830e7cedfec309f5c7a9fe"
+    },
+    {
+      "path": "docs/screenshots/blue/booking-390.png",
+      "sha256": "6022528cb87c884a5deccddd40fb2e3d5b94661470d2ddb4004f8513d1142ec0"
+    },
+    {
+      "path": "docs/screenshots/blue/home-1440.png",
+      "sha256": "77175168a1a1c198cffd5360d77e5318a0e2973de47b4c24efcf8585229d2a0b"
+    },
+    {
+      "path": "docs/screenshots/blue/home-390.png",
+      "sha256": "68e69110988a1bb8df51fccaeccec07c97d62b623688de61bb12127cb0a968ec"
     },
     {
       "path": "docs/screenshots/booking-desktop.png",
@@ -530,6 +566,10 @@
       "sha256": "6961a745822b47ac4561da1ee06dfef4de36fa16b30557f0135e539c31c19342"
     },
     {
+      "path": "docs/validation/blue-edition-browser.json",
+      "sha256": "a1fdd5d90c970e44c9a130fc073db2dfeef9af6d07e79d55a6bc13fb5786b1f1"
+    },
+    {
       "path": "docs/validation/browser-local.txt",
       "sha256": "ced74119486a849e6fde2489dad71fa8ae42504280049f7a070f4ca997a47466"
     },
@@ -591,11 +631,11 @@
     },
     {
       "path": "salon/business_views.py",
-      "sha256": "a3d32761d97f41d169b5231943ddc83ab95a095af4eb26ca4921cbb6cb57dbb5"
+      "sha256": "d5a3b801dba907b9a6d2f491fc8f8511bb4a06b5cdaafcefe0f88b56f3c04e23"
     },
     {
       "path": "salon/checks.py",
-      "sha256": "5964898b635c4f21c92ae2b8e970c850674e9b054a28c3ac6cd05b2e20ba3f1e"
+      "sha256": "7110e3774527772b36a9813725b9c87b7f126f1f5aabe1b127801e2409c0d1e7"
     },
     {
       "path": "salon/context.py",
@@ -715,7 +755,7 @@
     },
     {
       "path": "salon/profile_views.py",
-      "sha256": "a1b636d7ecb85ec3fd06b965c5f6a7376e0787142ca6961522bc44d59596580b"
+      "sha256": "ee7fab47d3511777a2454f1c9e941da14c9c2aefb7e4980b7b834d356c28be4b"
     },
     {
       "path": "salon/scheduling.py",
@@ -740,6 +780,10 @@
     {
       "path": "salon/tests/test_backup.py",
       "sha256": "3da4868cb1728dacdb40b256c7bccb2227e2374f465b6fafac7ee74e78ab1048"
+    },
+    {
+      "path": "salon/tests/test_blue_edition.py",
+      "sha256": "ce06adb000ab46adc56cecb4f510983c5d9c4ab65eef8b40a768f98ea0f2b459"
     },
     {
       "path": "salon/tests/test_business.py",
@@ -807,7 +851,7 @@
     },
     {
       "path": "scripts/browser_smoke.py",
-      "sha256": "5f0e90748f044e9d525aac4b5ace8a5e1dca347d1864461f10bb0ba2fe45b41e"
+      "sha256": "7b4a747163a90976761120cbb7303c1950a61e1df3b5091a173a82cf6401a163"
     },
     {
       "path": "scripts/build_update_manifest.py",
@@ -827,7 +871,7 @@
     },
     {
       "path": "scripts/customer_ui_smoke.py",
-      "sha256": "1c5c49e6d3f2c2de5cdbf566b9bfd800baa2b5fbc1b5113e43023483a1de65ff"
+      "sha256": "07a774dc770258d46e2a44f67248783e7efd7c2545aed7c40cbfd8202249a377"
     },
     {
       "path": "scripts/dev.py",
@@ -874,6 +918,10 @@
       "sha256": "8fa5e4fc37c1163a389ba4b0ed895fe1b71643735897b58dfb86a95d58f86df0"
     },
     {
+      "path": "static/css/blue-edition.css",
+      "sha256": "a2c428b7fa99b3c79d6f1fa2ba4d0f394bb81e27b783ef1e3b5f04a8042d628b"
+    },
+    {
       "path": "static/css/business.css",
       "sha256": "092dd3b09b862932a54aa270059c46c3ab6c16ccb32462b8e0b974e32cbd825a"
     },
@@ -899,7 +947,7 @@
     },
     {
       "path": "static/css/no-js.css",
-      "sha256": "104b34fcbde47997a8bfd5bf45c4823b8006637feb53f62f78c47b47bd75782a"
+      "sha256": "7c75b14a0607a44985685764b5d62bee67fe41159ec3f661f53af40570003ff6"
     },
     {
       "path": "static/css/quality.css",
@@ -1023,7 +1071,11 @@
     },
     {
       "path": "static/js/app.js",
-      "sha256": "8b7794f7f57bab057c9fee9f92f33d0efb34f877c75d74ce0391d8f51e0b1862"
+      "sha256": "075c99accdbe436ac4f716583c7e31a71a43ce6edcbfa07aae1c619a28dd834d"
+    },
+    {
+      "path": "static/js/blue-edition.js",
+      "sha256": "835a980577d52245e91a3db71f02677b0f844369a0dc9d6736568d0e206cb0d5"
     },
     {
       "path": "static/js/customer.js",
@@ -1083,11 +1135,15 @@
     },
     {
       "path": "templates/base.html",
-      "sha256": "4720e6e1bc125b2c85454f3c0cbddbfbade8c6042ffc96dbe3d19f49869acc7c"
+      "sha256": "55960a46451c69cb70f34cffe00d9370974f14ea7a8f3e77b6bda92ce78b4fa8"
     },
     {
       "path": "templates/business/activation.html",
       "sha256": "08aa30d4135c18f0cab35ff62da138e38d4af6a66916fb9d205ea1d8f79da45d"
+    },
+    {
+      "path": "templates/business/blue_board.html",
+      "sha256": "629a61b7b8c36c33ca416c2b4881a5b0e97c42874ab2c13976164130efbbe12c"
     },
     {
       "path": "templates/business/form.html",
@@ -1099,7 +1155,7 @@
     },
     {
       "path": "templates/business/workspace.html",
-      "sha256": "855507c415dd1b43606051a6eaff839bfbad7242fea206534a0686912e2ec4a6"
+      "sha256": "8bdf931bbf9e05e015965c7c17304bdb34a5891a3e6ca8c57c42d84d2f0926b2"
     },
     {
       "path": "templates/features/appointments.html",
@@ -1111,7 +1167,7 @@
     },
     {
       "path": "templates/features/page.html",
-      "sha256": "7a94561fb99fb7cf121a70ec3421b2a2e5137740cbc627558778ec5988eef8d7"
+      "sha256": "4c2309b23c0f3cc5cd867140533f6edd77821bf0dab6c9a86fbe7822ecc267b2"
     },
     {
       "path": "templates/features/reports.html",
@@ -1158,6 +1214,10 @@
       "sha256": "efc235806fce62c799ba0b9c1e365c49623b0a7a39be1b55e3887863aac223c4"
     },
     {
+      "path": "templates/partials/blue_icon.html",
+      "sha256": "b7025a8b6dd66092019d637dbc25ac21dc7dc5f705880104671746e4b8a7743e"
+    },
+    {
       "path": "templates/partials/form_fields.html",
       "sha256": "f27f2e55e488318d1ba74dcef8bac338a7f3c35e08bca697fe40237aecdf0da3"
     },
@@ -1179,11 +1239,11 @@
     },
     {
       "path": "templates/public/booking.html",
-      "sha256": "08d56e2c85ce02cdf6edbe5e2237d884090e12f2ae26ac1e4b24bb9431283895"
+      "sha256": "97dbd8a786a3fe50da5208c64ed6a6b4ff867b7da696eab1ea1aa16b478d3701"
     },
     {
       "path": "templates/public/home.html",
-      "sha256": "86031dd2105fd250404700eba7158eccabd1182589fdd5d36860ca810e4e1330"
+      "sha256": "fa4c9a27d024aa835429ed28e998c0884b7725c5e7a61471581cdb059407d649"
     },
     {
       "path": "templates/public/invoice.html",
@@ -1195,11 +1255,11 @@
     },
     {
       "path": "templates/public/profile.html",
-      "sha256": "65eea5ea3ccf50c1e36f90b1ae8c098dc3ae8275938210f06d76840e898ade68"
+      "sha256": "fb1c1b925d1805e17ba4b5a1e0d5bd281f65255e758e4a1a235670e046087bbc"
     },
     {
       "path": "templates/staff/base.html",
-      "sha256": "d397e9beb64b5aeed398be5d81882835847c4819c113c5d5a1bf79cbb44fbcb3"
+      "sha256": "4f51e7cbf26e4dbd250776d71fe2ca701ecb1d3c7dfcc7ba2ff6a2bfaa32843e"
     },
     {
       "path": "templates/staff/branches.html",
