@@ -1,5 +1,5 @@
 {
-  "ref": "9c08dfc2d87544e14f62cc235e57f35c0a8d3313",
+  "ref": "c5d3fd08e44ac35162eacc4d497995407d9f506d",
   "files": [
     {
       "path": ".env.example",
@@ -7,7 +7,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "52fa4c3ef1fbfcca113203bbef04a69e488134658edfd948dd5ee4e07ed3c6c1"
+      "sha256": "5e1c4e9fae3b83e561d850a78e38106ee2d9e08825e37ac73146d709c9435140"
     },
     {
       "path": "config/__init__.py",
@@ -27,23 +27,23 @@
     },
     {
       "path": "docs/01-PHAN-TICH.md",
-      "sha256": "496ac510484537891a0d07d51f2e9062d5cfaa3b90d68dc6df751d23544d8dcf"
+      "sha256": "306708654a5f8df0d9d6cbba30359a00b737a06e4342236bcb1b5793d62a7a66"
     },
     {
       "path": "docs/02-THIET-KE.md",
-      "sha256": "bad2333f673adf9e619e387c595dfd9e7f124d40faeb517ab9c7632b2742aed1"
+      "sha256": "a7889a2623e1d9824bbbd0cd6b2f22f08957e88625351933ac1797b6c6799512"
     },
     {
       "path": "docs/03-TRIEN-KHAI.md",
-      "sha256": "8e6e0a2a7e6be85e0129c7e394daf727f466fda2f8896ea1788974681d3c9d5b"
+      "sha256": "a17f660a40f5a25172cd74d029a1ff8011afe12ef9a8280f9b2d73d3ad5e2d68"
     },
     {
       "path": "docs/04-KIEM-THU.md",
-      "sha256": "8d497dc8155e6b574023ca298fb23b2ee40ca86d0bbd164d8467d2f8ce8ac60f"
+      "sha256": "44f4ad0f917ae457cb92d4c01fa94884d6a269c86f1bcb433ee48a37d83380e2"
     },
     {
       "path": "docs/05-TEN-COT-DU-LIEU.md",
-      "sha256": "a7b45de952f416f172e96df98afaf2660bcf95e1d8292b7388d39b4d831200d4"
+      "sha256": "14113f6969eae2df2ea671cf90aa4b75fce1657a990a834613d2a72298f9ec71"
     },
     {
       "path": "docs/06-GIAO-DIEN-KHACH-HANG.md",
@@ -74,8 +74,12 @@
       "sha256": "c1a1cc4f0dc6d57ead642004b7053280db2837f2b4206acbbf8130b7c3d30e36"
     },
     {
+      "path": "docs/13-NGHIEP-VU-NHIEU-CHI-NHANH.md",
+      "sha256": "b0181c2bce36d57c1103d3eed0fdc34de336b51953ce1200726a8356768cbb39"
+    },
+    {
       "path": "docs/BAO_CAO_PHAN_TICH_THIET_KE.docx",
-      "sha256": "c56508b919f6e549a851cb09eef005e19e2ba005fe26457f8a848afcefa97c64"
+      "sha256": "e792b1d8b202c71726d44a9aa31f07fc5e8eb15ba3a5bc4047ebce41fa6fbaeb"
     },
     {
       "path": "docs/NGUON-TAI-NGUYEN.md",
@@ -83,15 +87,15 @@
     },
     {
       "path": "docs/diagrams/01-use-case.mmd",
-      "sha256": "881c7922b843f4ba9f57ba9ae007078a49fc176e38b3343f21a68f92a40553d9"
+      "sha256": "b41ea5ad3abd9dc7bd55cd7967d51c65e21de66accc5e4decb4f25ed4620dc88"
     },
     {
       "path": "docs/diagrams/01-use-case.png",
-      "sha256": "bbec94c4e1066282ffc86adb7bd908c8b61878c0ce63d5ac6c0dc7ab53812158"
+      "sha256": "6c9fbcce72efb003b054738494864d686405af1288a66a250dddb0e470f3e10d"
     },
     {
       "path": "docs/diagrams/01-use-case.svg",
-      "sha256": "070c1641fe495c80dbc196ddcf5bb641578916d3b4bcdbe9d6a3c40ce81990ca"
+      "sha256": "0d89e003792e85ee90516d6ccc6c76bb502e8bfbfea695e2b5953a24e24b9882"
     },
     {
       "path": "docs/diagrams/02-er.mmd",
@@ -119,15 +123,15 @@
     },
     {
       "path": "docs/diagrams/04-activity.mmd",
-      "sha256": "77a8729f03e5025e65bb0a4f52c87086479a37dfcdfa538beb99fff15e48385e"
+      "sha256": "114b471ae0c5d41294d5485730676fe9813d938bc08416d11f408f4fb4c337b2"
     },
     {
       "path": "docs/diagrams/04-activity.png",
-      "sha256": "fea98a7619daf241abb903f12996758523ef83314b1e42ada7a2c7300d8b8776"
+      "sha256": "8508c4f3574dd81ab534570c3b98116cc46cc1d69695d9f94c0fdf71d181527e"
     },
     {
       "path": "docs/diagrams/04-activity.svg",
-      "sha256": "d7b307abee095cf1ea4f3353b6bc14537fe9a937366f3547553edc1225709b78"
+      "sha256": "8aea012fe38af3a760d62fa3695dfa125b9ee6d76edf0f8d2183c6e6429df14f"
     },
     {
       "path": "docs/diagrams/05-class.mmd",
@@ -155,15 +159,39 @@
     },
     {
       "path": "docs/diagrams/07-domain-class.mmd",
-      "sha256": "02c29207bc65cca5c4685dc400312c493631fc0a803a47938897b44dd0205bdf"
+      "sha256": "4ebe5c0e12a944bc8e3fdfeaaa8f524eddc111908808224ef97ec84d86fc2de4"
     },
     {
       "path": "docs/diagrams/07-domain-class.png",
-      "sha256": "b3e30f2ab9fe33838cd62e9c84d40bc56b47aed9454dea5b6d3a2246adf92439"
+      "sha256": "b51783c2d7ad7a97474a72a4b740a17bfc60b43323fcc98079232c9fa5466463"
     },
     {
       "path": "docs/diagrams/07-domain-class.svg",
-      "sha256": "7d57f69024417029af77b856d64e2b7cc3ed33671583d17a4b866728ef4f3bd7"
+      "sha256": "5a551e396cf0472714063023914c7bc7f7f7adefefd444b177e000accb344213"
+    },
+    {
+      "path": "docs/diagrams/08-multi-branch.mmd",
+      "sha256": "34a8f62172302e9c07fac720484a2d18378af927c0713547dd715abc4e6e036f"
+    },
+    {
+      "path": "docs/diagrams/08-multi-branch.png",
+      "sha256": "c5d28e1efd6d27a444d3420541a3fe19afa3459a229e7f43cc7e2a69786ae952"
+    },
+    {
+      "path": "docs/diagrams/08-multi-branch.svg",
+      "sha256": "f098fc39c1ce5563da70907718f4bb01a09e9e0699124cd26e8a0e2c19eda8b5"
+    },
+    {
+      "path": "docs/diagrams/09-business-er.mmd",
+      "sha256": "4abe8af6b3c087fc97147366ca3c4cc8f4fc7a1fd879776e0014b62e70b7dcc5"
+    },
+    {
+      "path": "docs/diagrams/09-business-er.png",
+      "sha256": "3967f7c5b21848c9ebc0b95601fc76e6b991870cf3f056a7f52ad8f938672d69"
+    },
+    {
+      "path": "docs/diagrams/09-business-er.svg",
+      "sha256": "9410f677e36b1b8d09ceddea9bc7535eea7c04e559ae9dff2c0045c1f863aa5f"
     },
     {
       "path": "docs/screenshots/booking-desktop.png",
@@ -172,6 +200,18 @@
     {
       "path": "docs/screenshots/booking-mobile.png",
       "sha256": "4dfeddc621be13069dcc2730c0f7758f1b4e39f1a2b56949f0f6718b87eb7a96"
+    },
+    {
+      "path": "docs/screenshots/business/branch-board.png",
+      "sha256": "7bb55db3e89ca0db75cedcbaca41a547f1f8411695744a40ba3a0a130673454a"
+    },
+    {
+      "path": "docs/screenshots/business/chain-board.png",
+      "sha256": "c6141db1f915c7c7c51eb1da4d5a5c3ef4cb04636e72969737eb9484c64b616c"
+    },
+    {
+      "path": "docs/screenshots/business/commissions.png",
+      "sha256": "f19478e906f3b4436ecc3a07fa5d584379e36e2fbd81dabb3ebac05232de65f2"
     },
     {
       "path": "docs/screenshots/completion/performance.png",
@@ -270,6 +310,10 @@
       "sha256": "c6de0901864900ca3259de327f234346a478e769827a7d8d6a88fc5ff8603c3d"
     },
     {
+      "path": "docs/validation/13-NGHIEP-VU.txt",
+      "sha256": "ea01bcbef0c60085e0b15c09dd34dcbc1c70c5a732c029cc116f2fa416832aab"
+    },
+    {
       "path": "docs/validation/browser-local.txt",
       "sha256": "ced74119486a849e6fde2489dad71fa8ae42504280049f7a070f4ca997a47466"
     },
@@ -302,12 +346,28 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
+      "path": "salon/activation.py",
+      "sha256": "d835e2f6b2224183ad279ccd857098b140e3ecab5a08afa482dab6808c59b2d9"
+    },
+    {
       "path": "salon/apps.py",
       "sha256": "dcdb9f912054e5640393e8f4f2d76777a1dc9bd8eb411c0d40bb4b64eb933a1a"
     },
     {
+      "path": "salon/business.py",
+      "sha256": "cba1a8a56309d9c4891892b4b91e0427581e81f4c165bef0a889afa80f5a5c55"
+    },
+    {
+      "path": "salon/business_forms.py",
+      "sha256": "e018c47d03c33cca8513c5cdc8e5fa5491b755c39774c833fd950a095f8ba5b1"
+    },
+    {
+      "path": "salon/business_views.py",
+      "sha256": "4c28408b51a599cbaa1b790a71aa5597d6423a230ea4c8f6fefd0d93b25d2258"
+    },
+    {
       "path": "salon/checks.py",
-      "sha256": "42445a0581f6c232f865ec9d8f4a2c246007007fb9980fd615f157a80cf5553d"
+      "sha256": "a6695f3f640c26e6d04f9cba4435ba8e3b3bf4b4bad65ab41b73f5d58191bb5a"
     },
     {
       "path": "salon/context.py",
@@ -319,15 +379,15 @@
     },
     {
       "path": "salon/events.py",
-      "sha256": "0b7663ed3fb1d7a9ea656ba2c1be5b1f09cb78bcc5b0beeb1b542f91170ad3f9"
+      "sha256": "734867cfe84c76352bed5cc537f43987ef2cb5dc677f3d7057e9d2dd5bdf8e1d"
     },
     {
       "path": "salon/features.py",
-      "sha256": "9e78053a730c6af060f1a4ba663289d13ea651587e883d072231504b047dc40e"
+      "sha256": "cd34f9d36078b5453662308ce68ae3f49defcf0bb1b6275efffa2b60f8a08495"
     },
     {
       "path": "salon/forms.py",
-      "sha256": "73ba8ee5131107a5ec8177787cdfe89cbeb28958385cf54fb39fcdb67c55163f"
+      "sha256": "8cdcb621113130bfba5fc8743d44415cdb51ccf66ccdc7490dcaa4671c9feeb6"
     },
     {
       "path": "salon/management/__init__.py",
@@ -346,6 +406,10 @@
       "sha256": "29997cd2a5e36f0a70c883551189c3bbdd01641b34daaabfd13be7fd91810e74"
     },
     {
+      "path": "salon/management/commands/dispatch_emails.py",
+      "sha256": "4d2da641e8ca8c292ca0b74103ba58da9554cd2ae2f99fd7db5592fb357b2783"
+    },
+    {
       "path": "salon/management/commands/restore_database.py",
       "sha256": "5b19ed6122a6b64d8882434b91600a15e4fd4baebff3cfd100a8775593ac9ad9"
     },
@@ -356,6 +420,10 @@
     {
       "path": "salon/management_views.py",
       "sha256": "b6faa143cbba34dafacb76b40b446e77349def564c0636351bd55cb03201585b"
+    },
+    {
+      "path": "salon/messaging.py",
+      "sha256": "9218d3a31b70eda6f5072ad0f552108246c0cc868a2d23b33fac5d486ed342fd"
     },
     {
       "path": "salon/migrations/0001_initial.py",
@@ -374,24 +442,40 @@
       "sha256": "22988a3acaab43a1b73d7d6696aad238198e3efd59ed7e9f0d89bbe4f0e6350a"
     },
     {
+      "path": "salon/migrations/0005_multi_branch_operations.py",
+      "sha256": "5614a8832a8f634276d7578803389cdd3f11213cca6f88163735df3977b3f89e"
+    },
+    {
+      "path": "salon/migrations/0006_refund_points_recovery.py",
+      "sha256": "8fd7ac8a8a1e8035e772b116b9d53b1826e843a33a5d4a92c2e60272ca6d1d50"
+    },
+    {
+      "path": "salon/migrations/0007_historic_invoice_points.py",
+      "sha256": "bbf3e1a6d6ee712c998729bf3aa255d26c70a653638a818e47f255b1f2d04a3a"
+    },
+    {
       "path": "salon/migrations/__init__.py",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "path": "salon/models.py",
-      "sha256": "d46a4a91deff6edcd0bc3c0c148a98cf39789d1606f06deeabff068ad31f016d"
+      "sha256": "da8ca192447e2ad8cb65cf0ad634937b856a8809f453c7ea9a32f6582f5d73ed"
     },
     {
       "path": "salon/operations.py",
-      "sha256": "d9ee73ce22edcb7f20acf6c98fcf92e12b5cb19a74fba87f04e31f1ed9a3c830"
+      "sha256": "177f8905f18edd45448032d7bfb108bfe09857a82db38dddb14c6f9788960e2e"
     },
     {
       "path": "salon/profile_views.py",
       "sha256": "884ab9a939c6d634da371bba9344753d7affc1568c5446537721f779d89acef0"
     },
     {
+      "path": "salon/scheduling.py",
+      "sha256": "295d2b2856dc33bb34500970a0de3c89946344cadd2afcc7d792b7698021ba1c"
+    },
+    {
       "path": "salon/services.py",
-      "sha256": "eff8e50b6dbec67eae0d367f2a590ed0ea3cc729eebbbde33ad90a818c2557b6"
+      "sha256": "24e8b5398b095d475c4bd4a3048c8ee92df3f2445fbba591773a229f681fe6b2"
     },
     {
       "path": "salon/templatetags/__init__.py",
@@ -408,6 +492,10 @@
     {
       "path": "salon/tests/test_backup.py",
       "sha256": "6e14c8f65c98599705e49f258bc6421564911b068e8a97167e7018917801736e"
+    },
+    {
+      "path": "salon/tests/test_business.py",
+      "sha256": "918cb614bbc56c6a493145a59ac6edb405c649fe2882a1991332af7bc92a43ae"
     },
     {
       "path": "salon/tests/test_column_migration.py",
@@ -431,31 +519,39 @@
     },
     {
       "path": "salon/tests/test_operations.py",
-      "sha256": "0a6689a979d99a219063f2650f5295f0420a5cfc11b86017241f52a60fba6f8a"
+      "sha256": "2cf86a45bccf2b3afb38d05282508b06d6f4dad5555431b65e6092e51daf0a09"
     },
     {
       "path": "salon/tests/test_source_updater.py",
       "sha256": "ac2f28035663915aeeadc851e4936df753200984d035085556cd3283fb8f4484"
     },
     {
+      "path": "salon/tests/test_walkin_activation.py",
+      "sha256": "1f45e78c928a743eb01154d32a68680f9567433c7abc2789eccecab26b613935"
+    },
+    {
       "path": "salon/tests/test_workflows.py",
-      "sha256": "bffa27578a4038de8c6c8e405a2bc325ed0622df2b613fbbf0cfc86ac1c9c6d1"
+      "sha256": "c63c365b142ec3e35ed2ee3939b620050b82aa59c9fa4311d6707d42e4c84521"
     },
     {
       "path": "salon/urls.py",
-      "sha256": "43e4185e99b11d54b60ddbd3e968c6462642099b36420c0c2940d2d2a3b1abca"
+      "sha256": "361bf1cc407611e9d39d42dd15b915c9b69cdfb0b5df20aa8151af261cea2591"
     },
     {
       "path": "salon/views.py",
-      "sha256": "865dfd61edb036903a468982eae06a34f503ee9f3bab0d479a7100f73b866393"
+      "sha256": "73b06014f77746525d0a3bcd2c33738f2defffc4a390dd14634126fc3542a5d8"
     },
     {
       "path": "scripts/browser_smoke.py",
-      "sha256": "3bd1fde4fb167946974eea9317eaf680dcc550b9ffd8a082db6bae02c9ac77fb"
+      "sha256": "4ec0c8b1ffae86f9ffd56412834f8b9913e69ac7ddaa5697674a0d488f292394"
     },
     {
       "path": "scripts/build_update_manifest.py",
       "sha256": "b9c6c1a977fce2546d04ed7d2e4f6af78323437338d94698bb24b9f505087bf5"
+    },
+    {
+      "path": "scripts/business_smoke.py",
+      "sha256": "4250f2510cb8f362c41c4073fda16160dac52290c408350de14e8f3cb7e46ecf"
     },
     {
       "path": "scripts/cap_nhat_du_an.py",
@@ -475,11 +571,11 @@
     },
     {
       "path": "scripts/export_data_dictionary.py",
-      "sha256": "6165eedbb965ba7793df4328653aa2dcc4421fbd4e15824ab13e0516c9cd1754"
+      "sha256": "9600379bc058395dce5ed9bed8c46a7fcb4410e8ab6a1036df6c0f0e26bdf026"
     },
     {
       "path": "scripts/export_report.py",
-      "sha256": "aba2da5faaff3c26a503e19436ee8000c3539013b84eda752576eb6bceb376ec"
+      "sha256": "eb1405c68d67d2baad5f2c2c3a6218fee946411e13d764de04102929fa91a1cd"
     },
     {
       "path": "scripts/interface_smoke.py",
@@ -491,7 +587,7 @@
     },
     {
       "path": "scripts/operations_smoke.py",
-      "sha256": "03ccaab05fed72179c53d799d7ddb9e0c5e6f1b35bf61c21f4656e3297980e7f"
+      "sha256": "da07b6c3e4e6c540b43ba3f318f41afd380aacbf9005955387e11ef5bcadfea5"
     },
     {
       "path": "scripts/setup.sh",
@@ -504,6 +600,10 @@
     {
       "path": "static/css/app.css",
       "sha256": "8fa5e4fc37c1163a389ba4b0ed895fe1b71643735897b58dfb86a95d58f86df0"
+    },
+    {
+      "path": "static/css/business.css",
+      "sha256": "092dd3b09b862932a54aa270059c46c3ab6c16ccb32462b8e0b974e32cbd825a"
     },
     {
       "path": "static/css/customer.css",
@@ -643,7 +743,7 @@
     },
     {
       "path": "static/js/app.js",
-      "sha256": "f97a624662a9e232b3f3873307c0996081dbc1775084ac2ee2e264b8b436b9eb"
+      "sha256": "8b7794f7f57bab057c9fee9f92f33d0efb34f877c75d74ce0391d8f51e0b1862"
     },
     {
       "path": "static/js/customer.js",
@@ -663,7 +763,7 @@
     },
     {
       "path": "templates/auth/login.html",
-      "sha256": "323da2f9d1eeaa0b7bc59ec3d1033d8dc4d353c846bf4a5179d67b9c01162b57"
+      "sha256": "a2e56cb4c6ab6b9346cf3bff6daf1aaea6408977eab4d7e5fccc5e9d53936c00"
     },
     {
       "path": "templates/auth/password_reset.html",
@@ -695,7 +795,23 @@
     },
     {
       "path": "templates/base.html",
-      "sha256": "6c3bce2e271d52aefd324e0f741eace52c2f254268619214e88f2c644cf8cb32"
+      "sha256": "53aa3f34fc0e2cacc02a9f861317cedcff63f9d1e528f39b39b56d9fd799e64c"
+    },
+    {
+      "path": "templates/business/activation.html",
+      "sha256": "08aa30d4135c18f0cab35ff62da138e38d4af6a66916fb9d205ea1d8f79da45d"
+    },
+    {
+      "path": "templates/business/form.html",
+      "sha256": "3d99076f22f817fd8044d9011efba785633bac3a24998f1d555eb298fba6585f"
+    },
+    {
+      "path": "templates/business/stylist.html",
+      "sha256": "60ae32262b8b41a1792e3bb559b761fa5ac2f2a5150fcea1f4925349f9ec0d79"
+    },
+    {
+      "path": "templates/business/workspace.html",
+      "sha256": "6473824b589977710f0a5595b3fe4abd4d75ac23dddc5f899093527ca643c88f"
     },
     {
       "path": "templates/features/appointments.html",
@@ -703,7 +819,7 @@
     },
     {
       "path": "templates/features/cancel.html",
-      "sha256": "e7275f9115aa8cd0a457927959a5a9931dc0bf602c4c75e5d3e243ecb4bf0f59"
+      "sha256": "d809a2c39be6003652180663016324f72be05e369326e8536ae454ca71cbe601"
     },
     {
       "path": "templates/features/page.html",
@@ -711,11 +827,11 @@
     },
     {
       "path": "templates/features/reports.html",
-      "sha256": "62e9e2ae713b39bb283c667a82efb62e2c8cb674b5fb7b08f2777326f9a6b7fa"
+      "sha256": "dbe1a9824234ed423819e03c2a8ae8b687033ecc92a11b07bcbc4d72c9d1412a"
     },
     {
       "path": "templates/features/reschedule.html",
-      "sha256": "d876abac16128baa3c5b4af01bef021c3d3608f509202476dd5bf46a8b6a9c11"
+      "sha256": "67386d8fa35ffdf7aa6eced98f27b2a85cb06e70fc803005dec4c7bbf1eb4e40"
     },
     {
       "path": "templates/features/resource_detail.html",
@@ -743,11 +859,11 @@
     },
     {
       "path": "templates/operations/performance.html",
-      "sha256": "2a7dd92cfdfd5e63a1e9e3a0982154fe77d8e133adce325f5f154acf4058ce18"
+      "sha256": "c065876f6a6b7176937f6e227fe74549eadf75e04b7c2908976e6aa95a623179"
     },
     {
       "path": "templates/operations/points.html",
-      "sha256": "468890c1c25fcaffa96f831780cee0f50270957050f46f83e508772d2b803da2"
+      "sha256": "f0a7009f345721377011cffcd1bb7658bae458e1614da9455f05fd1870182bdb"
     },
     {
       "path": "templates/operations/week.html",
@@ -771,11 +887,11 @@
     },
     {
       "path": "templates/public/appointment_detail.html",
-      "sha256": "f82434aeaadfcaddaec77b0fc425720282b11887499a70034e3ce868d5c9ae98"
+      "sha256": "22bc029e8ea40d7f596768f00cad5d956a58f9b3c0c5f6d219097e0f9d17201c"
     },
     {
       "path": "templates/public/booking.html",
-      "sha256": "38c0e53651eb78b20aab667833c297ccbdc6ae80d014b48eb5d49af3161a1673"
+      "sha256": "08d56e2c85ce02cdf6edbe5e2237d884090e12f2ae26ac1e4b24bb9431283895"
     },
     {
       "path": "templates/public/home.html",
@@ -783,7 +899,7 @@
     },
     {
       "path": "templates/public/invoice.html",
-      "sha256": "dc00e8b23333f42dcb63309494deb08594a25fc1393ce31dac989c0050c9112a"
+      "sha256": "ef00b140cb8cfd8babb0333c876575285174520c2ca7574d5263f193759dcd7a"
     },
     {
       "path": "templates/public/my_appointments.html",
@@ -795,7 +911,7 @@
     },
     {
       "path": "templates/staff/base.html",
-      "sha256": "99759d534d2b8a937946f9122bffbb8e51a9196bf0e52d7ef030d15c941cc337"
+      "sha256": "d397e9beb64b5aeed398be5d81882835847c4819c113c5d5a1bf79cbb44fbcb3"
     },
     {
       "path": "templates/staff/branches.html",
@@ -807,7 +923,7 @@
     },
     {
       "path": "templates/staff/customers.html",
-      "sha256": "376921f4e2cba3fb67caa0e136d2135466aeb3026b95e4fa523f143b1d6f9e1a"
+      "sha256": "7f0e0aba14b7fa82890cd336d3fd10529dabe5193d002eaa1976aade0fd93fcc"
     },
     {
       "path": "templates/staff/dashboard.html",
