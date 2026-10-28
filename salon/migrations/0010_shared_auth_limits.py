@@ -4,18 +4,22 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('salon', '0009_normalize_point_recovery'),
+        ("salon", "0009_normalize_point_recovery"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='AuthRateBucket',
+            name="AuthRateBucket",
             fields=[
-                ('key', models.CharField(db_column='makhoa', max_length=64, primary_key=True, serialize=False)),
-                ('expires_at', models.DateTimeField(db_column='thoigianhethan', db_index=True)),
-                ('count', models.PositiveIntegerField(db_column='solan', default=0)),
+                (
+                    "key",
+                    models.CharField(
+                        db_column="makhoa", max_length=64, primary_key=True, serialize=False
+                    ),
+                ),
+                ("expires_at", models.DateTimeField(db_column="thoigianhethan", db_index=True)),
+                ("count", models.PositiveIntegerField(db_column="solan", default=0)),
             ],
         ),
     ]

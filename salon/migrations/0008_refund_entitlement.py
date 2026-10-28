@@ -4,28 +4,45 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('salon', '0007_historic_invoice_points'),
+        ("salon", "0007_historic_invoice_points"),
     ]
 
     operations = [
         migrations.RemoveConstraint(
-            model_name='pointentry',
-            name='points_amount_sign',
+            model_name="pointentry",
+            name="points_amount_sign",
         ),
         migrations.AddField(
-            model_name='refund',
-            name='points_debt_repaid',
-            field=models.PositiveIntegerField(db_column='diemhoandadoitru', default=0),
+            model_name="refund",
+            name="points_debt_repaid",
+            field=models.PositiveIntegerField(db_column="diemhoandadoitru", default=0),
         ),
         migrations.AlterField(
-            model_name='pointentry',
-            name='kind',
-            field=models.CharField(choices=[('opening', 'Số dư chuyển tiếp'), ('earned', 'Tích điểm thanh toán'), ('redeemed', 'Sử dụng điểm'), ('refund', 'Điều chỉnh hoàn tiền'), ('debt_recovery', 'Đối trừ điểm cần thu hồi')], db_column='loai', max_length=20),
+            model_name="pointentry",
+            name="kind",
+            field=models.CharField(
+                choices=[
+                    ("opening", "Số dư chuyển tiếp"),
+                    ("earned", "Tích điểm thanh toán"),
+                    ("redeemed", "Sử dụng điểm"),
+                    ("refund", "Điều chỉnh hoàn tiền"),
+                    ("debt_recovery", "Đối trừ điểm cần thu hồi"),
+                ],
+                db_column="loai",
+                max_length=20,
+            ),
         ),
         migrations.AddConstraint(
-            model_name='pointentry',
-            constraint=models.CheckConstraint(condition=models.Q(models.Q(('amount__lt', 0), ('kind__in', ['redeemed', 'debt_recovery'])), models.Q(('amount__gte', 0), ('kind__in', ['opening', 'earned'])), ('kind', 'refund'), _connector='OR'), name='points_amount_sign'),
+            model_name="pointentry",
+            constraint=models.CheckConstraint(
+                condition=models.Q(
+                    models.Q(("amount__lt", 0), ("kind__in", ["redeemed", "debt_recovery"])),
+                    models.Q(("amount__gte", 0), ("kind__in", ["opening", "earned"])),
+                    ("kind", "refund"),
+                    _connector="OR",
+                ),
+                name="points_amount_sign",
+            ),
         ),
     ]

@@ -4,22 +4,23 @@ from django.db import migrations
 
 
 def preserve_history(apps, schema_editor):
-    Invoice=apps.get_model('salon','Invoice')
-    Entry=apps.get_model('salon','PointEntry')
-    Commission=apps.get_model('salon','Commission')
-    for entry in Entry.objects.filter(kind='earned',invoice_id__isnull=False).iterator():
-        Invoice.objects.filter(pk=entry.invoice_id).update(points_earned=max(0,entry.amount))
+    Invoice = apps.get_model("salon", "Invoice")
+    Entry = apps.get_model("salon", "PointEntry")
+    Commission = apps.get_model("salon", "Commission")
+    for entry in Entry.objects.filter(kind="earned", invoice_id__isnull=False).iterator():
+        Invoice.objects.filter(pk=entry.invoice_id).update(points_earned=max(0, entry.amount))
     # No historical commission rate was recorded. Explicitly preserve zero,
     # never apply today's rate retroactively to old receipts.
-    for inv in Invoice.objects.select_related('appointment').iterator():
-        Commission.objects.get_or_create(invoice_id=inv.pk,defaults={
-            'employee_id':inv.appointment.employee_id,'percent':0,'amount':0})
+    for inv in Invoice.objects.select_related("appointment").iterator():
+        Commission.objects.get_or_create(
+            invoice_id=inv.pk,
+            defaults={"employee_id": inv.appointment.employee_id, "percent": 0, "amount": 0},
+        )
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('salon', '0006_refund_points_recovery'),
+        ("salon", "0006_refund_points_recovery"),
     ]
 
-    operations = [migrations.RunPython(preserve_history,migrations.RunPython.noop)]
+    operations = [migrations.RunPython(preserve_history, migrations.RunPython.noop)]

@@ -4,30 +4,31 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('salon', '0005_multi_branch_operations'),
+        ("salon", "0005_multi_branch_operations"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='invoice',
-            name='points_debt_paid',
-            field=models.PositiveIntegerField(db_column='diemdathuhoi', default=0),
+            model_name="invoice",
+            name="points_debt_paid",
+            field=models.PositiveIntegerField(db_column="diemdathuhoi", default=0),
         ),
         migrations.AddField(
-            model_name='invoice',
-            name='points_earned',
-            field=models.PositiveIntegerField(db_column='diemdatich', default=0),
+            model_name="invoice",
+            name="points_earned",
+            field=models.PositiveIntegerField(db_column="diemdatich", default=0),
         ),
         migrations.AddField(
-            model_name='refund',
-            name='points_debt_added',
-            field=models.PositiveIntegerField(db_column='diemthieuthuhoi', default=0),
+            model_name="refund",
+            name="points_debt_added",
+            field=models.PositiveIntegerField(db_column="diemthieuthuhoi", default=0),
         ),
         migrations.AddField(
-            model_name='user',
-            name='points_debt',
-            field=models.PositiveIntegerField(db_column='diemcanthuhoi', default=0, verbose_name='Điểm cần thu hồi'),
+            model_name="user",
+            name="points_debt",
+            field=models.PositiveIntegerField(
+                db_column="diemcanthuhoi", default=0, verbose_name="Điểm cần thu hồi"
+            ),
         ),
     ]

@@ -8,368 +8,682 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('salon', '0004_opening_points'),
+        ("salon", "0004_opening_points"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='AppointmentChange',
+            name="AppointmentChange",
             fields=[
-                ('id', models.BigAutoField(db_column='mabienchuyen', primary_key=True, serialize=False)),
-                ('action', models.CharField(db_column='thaotac', max_length=40)),
-                ('reason', models.CharField(db_column='lydo', max_length=250)),
-                ('before', models.JSONField(db_column='truockhisua', default=dict)),
-                ('after', models.JSONField(db_column='saukhisua', default=dict)),
-                ('created_at', models.DateTimeField(auto_now_add=True, db_column='ngaytao')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        db_column="mabienchuyen", primary_key=True, serialize=False
+                    ),
+                ),
+                ("action", models.CharField(db_column="thaotac", max_length=40)),
+                ("reason", models.CharField(db_column="lydo", max_length=250)),
+                ("before", models.JSONField(db_column="truockhisua", default=dict)),
+                ("after", models.JSONField(db_column="saukhisua", default=dict)),
+                ("created_at", models.DateTimeField(auto_now_add=True, db_column="ngaytao")),
             ],
             options={
-                'ordering': ['-created_at', '-pk'],
+                "ordering": ["-created_at", "-pk"],
             },
         ),
         migrations.CreateModel(
-            name='BranchClosure',
+            name="BranchClosure",
             fields=[
-                ('id', models.BigAutoField(db_column='malichnghi', primary_key=True, serialize=False)),
-                ('start_at', models.DateTimeField(db_column='batdau')),
-                ('end_at', models.DateTimeField(db_column='ketthuc')),
-                ('reason', models.CharField(db_column='lydo', max_length=250)),
-                ('active', models.BooleanField(db_column='hieuluc', default=True)),
+                (
+                    "id",
+                    models.BigAutoField(db_column="malichnghi", primary_key=True, serialize=False),
+                ),
+                ("start_at", models.DateTimeField(db_column="batdau")),
+                ("end_at", models.DateTimeField(db_column="ketthuc")),
+                ("reason", models.CharField(db_column="lydo", max_length=250)),
+                ("active", models.BooleanField(db_column="hieuluc", default=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Commission',
+            name="Commission",
             fields=[
-                ('id', models.BigAutoField(db_column='mahoahong', primary_key=True, serialize=False)),
-                ('percent', models.PositiveSmallIntegerField(db_column='tyle')),
-                ('amount', models.PositiveIntegerField(db_column='sotien')),
-                ('created_at', models.DateTimeField(auto_now_add=True, db_column='ngaytao')),
+                (
+                    "id",
+                    models.BigAutoField(db_column="mahoahong", primary_key=True, serialize=False),
+                ),
+                ("percent", models.PositiveSmallIntegerField(db_column="tyle")),
+                ("amount", models.PositiveIntegerField(db_column="sotien")),
+                ("created_at", models.DateTimeField(auto_now_add=True, db_column="ngaytao")),
             ],
         ),
         migrations.CreateModel(
-            name='DailyClosing',
+            name="DailyClosing",
             fields=[
-                ('id', models.BigAutoField(db_column='machotso', primary_key=True, serialize=False)),
-                ('day', models.DateField(db_column='ngay')),
-                ('expected_cash', models.IntegerField(db_column='tienmathethong')),
-                ('counted_cash', models.PositiveIntegerField(db_column='tienmatthucte')),
-                ('invoices_count', models.PositiveIntegerField(db_column='sohoadon')),
-                ('reason', models.CharField(blank=True, db_column='ghichu', max_length=250)),
-                ('created_at', models.DateTimeField(auto_now_add=True, db_column='ngaytao')),
+                (
+                    "id",
+                    models.BigAutoField(db_column="machotso", primary_key=True, serialize=False),
+                ),
+                ("day", models.DateField(db_column="ngay")),
+                ("expected_cash", models.IntegerField(db_column="tienmathethong")),
+                ("counted_cash", models.PositiveIntegerField(db_column="tienmatthucte")),
+                ("invoices_count", models.PositiveIntegerField(db_column="sohoadon")),
+                ("reason", models.CharField(blank=True, db_column="ghichu", max_length=250)),
+                ("created_at", models.DateTimeField(auto_now_add=True, db_column="ngaytao")),
             ],
         ),
         migrations.CreateModel(
-            name='EmailOutbox',
+            name="EmailOutbox",
             fields=[
-                ('id', models.BigAutoField(db_column='mathugui', primary_key=True, serialize=False)),
-                ('key', models.CharField(db_column='khoagui', max_length=180, unique=True)),
-                ('recipient', models.EmailField(db_column='emailnhan', max_length=254)),
-                ('subject', models.CharField(db_column='tieude', max_length=200)),
-                ('body', models.TextField(db_column='noidung')),
-                ('due_at', models.DateTimeField(db_column='giogui')),
-                ('sent_at', models.DateTimeField(blank=True, db_column='daguiluc', null=True)),
-                ('cancelled', models.BooleanField(db_column='dahuy', default=False)),
-                ('attempts', models.PositiveSmallIntegerField(db_column='solanthu', default=0)),
-                ('last_error', models.CharField(blank=True, db_column='loicuoi', max_length=200)),
+                (
+                    "id",
+                    models.BigAutoField(db_column="mathugui", primary_key=True, serialize=False),
+                ),
+                ("key", models.CharField(db_column="khoagui", max_length=180, unique=True)),
+                ("recipient", models.EmailField(db_column="emailnhan", max_length=254)),
+                ("subject", models.CharField(db_column="tieude", max_length=200)),
+                ("body", models.TextField(db_column="noidung")),
+                ("due_at", models.DateTimeField(db_column="giogui")),
+                ("sent_at", models.DateTimeField(blank=True, db_column="daguiluc", null=True)),
+                ("cancelled", models.BooleanField(db_column="dahuy", default=False)),
+                ("attempts", models.PositiveSmallIntegerField(db_column="solanthu", default=0)),
+                ("last_error", models.CharField(blank=True, db_column="loicuoi", max_length=200)),
             ],
         ),
         migrations.CreateModel(
-            name='EmployeeAbsence',
+            name="EmployeeAbsence",
             fields=[
-                ('id', models.BigAutoField(db_column='manghiphep', primary_key=True, serialize=False)),
-                ('start_at', models.DateTimeField(db_column='batdau')),
-                ('end_at', models.DateTimeField(db_column='ketthuc')),
-                ('reason', models.CharField(db_column='lydo', max_length=250)),
-                ('active', models.BooleanField(db_column='hieuluc', default=True)),
+                (
+                    "id",
+                    models.BigAutoField(db_column="manghiphep", primary_key=True, serialize=False),
+                ),
+                ("start_at", models.DateTimeField(db_column="batdau")),
+                ("end_at", models.DateTimeField(db_column="ketthuc")),
+                ("reason", models.CharField(db_column="lydo", max_length=250)),
+                ("active", models.BooleanField(db_column="hieuluc", default=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Product',
+            name="Product",
             fields=[
-                ('id', models.BigAutoField(db_column='masanpham', primary_key=True, serialize=False)),
-                ('sku', models.CharField(db_column='makho', max_length=40, unique=True, verbose_name='Mã sản phẩm')),
-                ('name', models.CharField(db_column='tensanpham', max_length=150, verbose_name='Tên sản phẩm / vật tư')),
-                ('unit', models.CharField(db_column='donvi', default='chai', max_length=30, verbose_name='Đơn vị')),
-                ('reorder_level', models.PositiveIntegerField(db_column='nguongton', default=5, verbose_name='Ngưỡng cảnh báo tồn')),
-                ('active', models.BooleanField(db_column='hoatdong', default=True, verbose_name='Đang sử dụng')),
+                (
+                    "id",
+                    models.BigAutoField(db_column="masanpham", primary_key=True, serialize=False),
+                ),
+                (
+                    "sku",
+                    models.CharField(
+                        db_column="makho", max_length=40, unique=True, verbose_name="Mã sản phẩm"
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        db_column="tensanpham", max_length=150, verbose_name="Tên sản phẩm / vật tư"
+                    ),
+                ),
+                (
+                    "unit",
+                    models.CharField(
+                        db_column="donvi", default="chai", max_length=30, verbose_name="Đơn vị"
+                    ),
+                ),
+                (
+                    "reorder_level",
+                    models.PositiveIntegerField(
+                        db_column="nguongton", default=5, verbose_name="Ngưỡng cảnh báo tồn"
+                    ),
+                ),
+                (
+                    "active",
+                    models.BooleanField(
+                        db_column="hoatdong", default=True, verbose_name="Đang sử dụng"
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Refund',
+            name="Refund",
             fields=[
-                ('id', models.BigAutoField(db_column='mahoantien', primary_key=True, serialize=False)),
-                ('amount', models.PositiveIntegerField(db_column='sotienhoan')),
-                ('reason', models.CharField(db_column='lydo', max_length=250)),
-                ('created_at', models.DateTimeField(auto_now_add=True, db_column='ngaytao')),
+                (
+                    "id",
+                    models.BigAutoField(db_column="mahoantien", primary_key=True, serialize=False),
+                ),
+                ("amount", models.PositiveIntegerField(db_column="sotienhoan")),
+                ("reason", models.CharField(db_column="lydo", max_length=250)),
+                ("created_at", models.DateTimeField(auto_now_add=True, db_column="ngaytao")),
             ],
         ),
         migrations.CreateModel(
-            name='Stock',
+            name="Stock",
             fields=[
-                ('id', models.BigAutoField(db_column='matonkho', primary_key=True, serialize=False)),
-                ('quantity', models.PositiveIntegerField(db_column='soluongton', default=0)),
+                (
+                    "id",
+                    models.BigAutoField(db_column="matonkho", primary_key=True, serialize=False),
+                ),
+                ("quantity", models.PositiveIntegerField(db_column="soluongton", default=0)),
             ],
         ),
         migrations.CreateModel(
-            name='StockMovement',
+            name="StockMovement",
             fields=[
-                ('id', models.BigAutoField(db_column='mabiendongkho', primary_key=True, serialize=False)),
-                ('amount', models.IntegerField(db_column='soluong')),
-                ('balance', models.PositiveIntegerField(db_column='tonsau')),
-                ('kind', models.CharField(choices=[('receipt', 'Nhập kho'), ('consume', 'Xuất sử dụng'), ('adjust', 'Kiểm kê'), ('transfer', 'Chuyển kho')], db_column='loai', max_length=12)),
-                ('reference', models.CharField(blank=True, db_column='maphieu', max_length=40)),
-                ('reason', models.CharField(db_column='lydo', max_length=250)),
-                ('created_at', models.DateTimeField(auto_now_add=True, db_column='ngaytao')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        db_column="mabiendongkho", primary_key=True, serialize=False
+                    ),
+                ),
+                ("amount", models.IntegerField(db_column="soluong")),
+                ("balance", models.PositiveIntegerField(db_column="tonsau")),
+                (
+                    "kind",
+                    models.CharField(
+                        choices=[
+                            ("receipt", "Nhập kho"),
+                            ("consume", "Xuất sử dụng"),
+                            ("adjust", "Kiểm kê"),
+                            ("transfer", "Chuyển kho"),
+                        ],
+                        db_column="loai",
+                        max_length=12,
+                    ),
+                ),
+                ("reference", models.CharField(blank=True, db_column="maphieu", max_length=40)),
+                ("reason", models.CharField(db_column="lydo", max_length=250)),
+                ("created_at", models.DateTimeField(auto_now_add=True, db_column="ngaytao")),
             ],
             options={
-                'ordering': ['-created_at', '-pk'],
+                "ordering": ["-created_at", "-pk"],
             },
         ),
         migrations.CreateModel(
-            name='Voucher',
+            name="Voucher",
             fields=[
-                ('id', models.BigAutoField(db_column='mauudai', primary_key=True, serialize=False)),
-                ('code', models.CharField(db_column='mavoucher', max_length=40, unique=True, verbose_name='Mã voucher')),
-                ('amount', models.PositiveIntegerField(db_column='sotiengiam', verbose_name='Giảm cố định (đ)')),
-                ('min_total', models.PositiveIntegerField(db_column='toithieu', default=0, verbose_name='Hóa đơn tối thiểu')),
-                ('starts_at', models.DateTimeField(db_column='batdau', verbose_name='Bắt đầu')),
-                ('ends_at', models.DateTimeField(db_column='ketthuc', verbose_name='Kết thúc')),
-                ('max_uses', models.PositiveIntegerField(db_column='luottoida', default=100, verbose_name='Lượt sử dụng tối đa')),
-                ('active', models.BooleanField(db_column='hoatdong', default=True, verbose_name='Đang áp dụng')),
+                ("id", models.BigAutoField(db_column="mauudai", primary_key=True, serialize=False)),
+                (
+                    "code",
+                    models.CharField(
+                        db_column="mavoucher", max_length=40, unique=True, verbose_name="Mã voucher"
+                    ),
+                ),
+                (
+                    "amount",
+                    models.PositiveIntegerField(
+                        db_column="sotiengiam", verbose_name="Giảm cố định (đ)"
+                    ),
+                ),
+                (
+                    "min_total",
+                    models.PositiveIntegerField(
+                        db_column="toithieu", default=0, verbose_name="Hóa đơn tối thiểu"
+                    ),
+                ),
+                ("starts_at", models.DateTimeField(db_column="batdau", verbose_name="Bắt đầu")),
+                ("ends_at", models.DateTimeField(db_column="ketthuc", verbose_name="Kết thúc")),
+                (
+                    "max_uses",
+                    models.PositiveIntegerField(
+                        db_column="luottoida", default=100, verbose_name="Lượt sử dụng tối đa"
+                    ),
+                ),
+                (
+                    "active",
+                    models.BooleanField(
+                        db_column="hoatdong", default=True, verbose_name="Đang áp dụng"
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='VoucherUse',
+            name="VoucherUse",
             fields=[
-                ('id', models.BigAutoField(db_column='maluotdung', primary_key=True, serialize=False)),
+                (
+                    "id",
+                    models.BigAutoField(db_column="maluotdung", primary_key=True, serialize=False),
+                ),
             ],
         ),
         migrations.RemoveConstraint(
-            model_name='invoice',
-            name='invoice_discount_limit',
+            model_name="invoice",
+            name="invoice_discount_limit",
         ),
         migrations.RemoveConstraint(
-            model_name='pointentry',
-            name='points_amount_sign',
+            model_name="pointentry",
+            name="points_amount_sign",
         ),
         migrations.AddField(
-            model_name='appointment',
-            name='checked_in_at',
-            field=models.DateTimeField(blank=True, db_column='giokhachden', null=True),
+            model_name="appointment",
+            name="checked_in_at",
+            field=models.DateTimeField(blank=True, db_column="giokhachden", null=True),
         ),
         migrations.AddField(
-            model_name='appointment',
-            name='service_finished_at',
-            field=models.DateTimeField(blank=True, db_column='gioxongdichvu', null=True),
+            model_name="appointment",
+            name="service_finished_at",
+            field=models.DateTimeField(blank=True, db_column="gioxongdichvu", null=True),
         ),
         migrations.AddField(
-            model_name='appointment',
-            name='service_started_at',
-            field=models.DateTimeField(blank=True, db_column='giophucvu', null=True),
+            model_name="appointment",
+            name="service_started_at",
+            field=models.DateTimeField(blank=True, db_column="giophucvu", null=True),
         ),
         migrations.AddField(
-            model_name='appointment',
-            name='source',
-            field=models.CharField(choices=[('web', 'Website'), ('walkin', 'Tại quầy')], db_column='nguondat', default='web', max_length=12),
+            model_name="appointment",
+            name="source",
+            field=models.CharField(
+                choices=[("web", "Website"), ("walkin", "Tại quầy")],
+                db_column="nguondat",
+                default="web",
+                max_length=12,
+            ),
         ),
         migrations.AddField(
-            model_name='auditlog',
-            name='branch',
-            field=models.ForeignKey(blank=True, db_column='machinhanh', null=True, on_delete=django.db.models.deletion.PROTECT, to='salon.branch'),
+            model_name="auditlog",
+            name="branch",
+            field=models.ForeignKey(
+                blank=True,
+                db_column="machinhanh",
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                to="salon.branch",
+            ),
         ),
         migrations.AddField(
-            model_name='branch',
-            name='booking_days',
-            field=models.PositiveSmallIntegerField(db_column='songaydatruoc', default=30, validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(90)], verbose_name='Số ngày cho đặt trước'),
+            model_name="branch",
+            name="booking_days",
+            field=models.PositiveSmallIntegerField(
+                db_column="songaydatruoc",
+                default=30,
+                validators=[
+                    django.core.validators.MinValueValidator(1),
+                    django.core.validators.MaxValueValidator(90),
+                ],
+                verbose_name="Số ngày cho đặt trước",
+            ),
         ),
         migrations.AddField(
-            model_name='branch',
-            name='cancel_hours',
-            field=models.PositiveSmallIntegerField(db_column='giohuytruoc', default=2, validators=[django.core.validators.MaxValueValidator(48)], verbose_name='Hạn đổi/hủy trước giờ hẹn'),
+            model_name="branch",
+            name="cancel_hours",
+            field=models.PositiveSmallIntegerField(
+                db_column="giohuytruoc",
+                default=2,
+                validators=[django.core.validators.MaxValueValidator(48)],
+                verbose_name="Hạn đổi/hủy trước giờ hẹn",
+            ),
         ),
         migrations.AddField(
-            model_name='branch',
-            name='late_minutes',
-            field=models.PositiveSmallIntegerField(db_column='phutdenmuon', default=15, validators=[django.core.validators.MaxValueValidator(120)], verbose_name='Số phút chờ khách muộn'),
+            model_name="branch",
+            name="late_minutes",
+            field=models.PositiveSmallIntegerField(
+                db_column="phutdenmuon",
+                default=15,
+                validators=[django.core.validators.MaxValueValidator(120)],
+                verbose_name="Số phút chờ khách muộn",
+            ),
         ),
         migrations.AddField(
-            model_name='employee',
-            name='account',
-            field=models.OneToOneField(blank=True, db_column='mataikhoan', null=True, on_delete=django.db.models.deletion.PROTECT, related_name='stylist_profile', to=settings.AUTH_USER_MODEL),
+            model_name="employee",
+            name="account",
+            field=models.OneToOneField(
+                blank=True,
+                db_column="mataikhoan",
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="stylist_profile",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AddField(
-            model_name='employee',
-            name='commission_percent',
-            field=models.PositiveSmallIntegerField(db_column='phantramhoahong', default=0, validators=[django.core.validators.MaxValueValidator(100)], verbose_name='Hoa hồng (%)'),
+            model_name="employee",
+            name="commission_percent",
+            field=models.PositiveSmallIntegerField(
+                db_column="phantramhoahong",
+                default=0,
+                validators=[django.core.validators.MaxValueValidator(100)],
+                verbose_name="Hoa hồng (%)",
+            ),
         ),
         migrations.AddField(
-            model_name='invoice',
-            name='voucher_code',
-            field=models.CharField(blank=True, db_column='mavoucher', max_length=40),
+            model_name="invoice",
+            name="voucher_code",
+            field=models.CharField(blank=True, db_column="mavoucher", max_length=40),
         ),
         migrations.AddField(
-            model_name='invoice',
-            name='voucher_discount',
-            field=models.PositiveIntegerField(db_column='giamvoucher', default=0, verbose_name='Giảm voucher'),
+            model_name="invoice",
+            name="voucher_discount",
+            field=models.PositiveIntegerField(
+                db_column="giamvoucher", default=0, verbose_name="Giảm voucher"
+            ),
         ),
         migrations.AlterField(
-            model_name='appointment',
-            name='status',
-            field=models.CharField(choices=[('booked', 'Đã đặt'), ('checked_in', 'Đã check-in'), ('in_service', 'Đang phục vụ'), ('awaiting_payment', 'Chờ thanh toán'), ('completed', 'Đã thanh toán'), ('cancelled', 'Đã hủy'), ('no_show', 'Không đến')], db_column='trangthai', default='booked', max_length=20, verbose_name='Trạng thái'),
+            model_name="appointment",
+            name="status",
+            field=models.CharField(
+                choices=[
+                    ("booked", "Đã đặt"),
+                    ("checked_in", "Đã check-in"),
+                    ("in_service", "Đang phục vụ"),
+                    ("awaiting_payment", "Chờ thanh toán"),
+                    ("completed", "Đã thanh toán"),
+                    ("cancelled", "Đã hủy"),
+                    ("no_show", "Không đến"),
+                ],
+                db_column="trangthai",
+                default="booked",
+                max_length=20,
+                verbose_name="Trạng thái",
+            ),
         ),
         migrations.AlterField(
-            model_name='pointentry',
-            name='kind',
-            field=models.CharField(choices=[('opening', 'Số dư chuyển tiếp'), ('earned', 'Tích điểm thanh toán'), ('redeemed', 'Sử dụng điểm'), ('refund', 'Điều chỉnh hoàn tiền')], db_column='loai', max_length=20),
+            model_name="pointentry",
+            name="kind",
+            field=models.CharField(
+                choices=[
+                    ("opening", "Số dư chuyển tiếp"),
+                    ("earned", "Tích điểm thanh toán"),
+                    ("redeemed", "Sử dụng điểm"),
+                    ("refund", "Điều chỉnh hoàn tiền"),
+                ],
+                db_column="loai",
+                max_length=20,
+            ),
         ),
         migrations.AlterField(
-            model_name='user',
-            name='role',
-            field=models.CharField(choices=[('customer', 'Khách hàng'), ('receptionist', 'Lễ tân'), ('manager', 'Quản trị toàn chuỗi'), ('branch_manager', 'Quản lý chi nhánh'), ('stylist', 'Tài khoản stylist')], db_column='vaitro', default='customer', max_length=20, verbose_name='Vai trò'),
+            model_name="user",
+            name="role",
+            field=models.CharField(
+                choices=[
+                    ("customer", "Khách hàng"),
+                    ("receptionist", "Lễ tân"),
+                    ("manager", "Quản trị toàn chuỗi"),
+                    ("branch_manager", "Quản lý chi nhánh"),
+                    ("stylist", "Tài khoản stylist"),
+                ],
+                db_column="vaitro",
+                default="customer",
+                max_length=20,
+                verbose_name="Vai trò",
+            ),
         ),
         migrations.AddConstraint(
-            model_name='invoice',
-            constraint=models.CheckConstraint(condition=models.Q(('discount__lte', django.db.models.expressions.CombinedExpression(django.db.models.expressions.CombinedExpression(django.db.models.expressions.CombinedExpression(models.F('total'), '+', models.F('discount')), '+', models.F('voucher_discount')), '/', models.Value(5)))), name='invoice_discount_limit'),
+            model_name="invoice",
+            constraint=models.CheckConstraint(
+                condition=models.Q(
+                    (
+                        "discount__lte",
+                        django.db.models.expressions.CombinedExpression(
+                            django.db.models.expressions.CombinedExpression(
+                                django.db.models.expressions.CombinedExpression(
+                                    models.F("total"), "+", models.F("discount")
+                                ),
+                                "+",
+                                models.F("voucher_discount"),
+                            ),
+                            "/",
+                            models.Value(5),
+                        ),
+                    )
+                ),
+                name="invoice_discount_limit",
+            ),
         ),
         migrations.AddConstraint(
-            model_name='pointentry',
-            constraint=models.CheckConstraint(condition=models.Q(models.Q(('amount__lt', 0), ('kind', 'redeemed')), models.Q(('amount__gte', 0), ('kind__in', ['opening', 'earned'])), ('kind', 'refund'), _connector='OR'), name='points_amount_sign'),
+            model_name="pointentry",
+            constraint=models.CheckConstraint(
+                condition=models.Q(
+                    models.Q(("amount__lt", 0), ("kind", "redeemed")),
+                    models.Q(("amount__gte", 0), ("kind__in", ["opening", "earned"])),
+                    ("kind", "refund"),
+                    _connector="OR",
+                ),
+                name="points_amount_sign",
+            ),
         ),
         migrations.AddField(
-            model_name='appointmentchange',
-            name='actor',
-            field=models.ForeignKey(db_column='manguoithuchien', null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL),
+            model_name="appointmentchange",
+            name="actor",
+            field=models.ForeignKey(
+                db_column="manguoithuchien",
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AddField(
-            model_name='appointmentchange',
-            name='appointment',
-            field=models.ForeignKey(db_column='malichhen', on_delete=django.db.models.deletion.PROTECT, related_name='changes', to='salon.appointment'),
+            model_name="appointmentchange",
+            name="appointment",
+            field=models.ForeignKey(
+                db_column="malichhen",
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="changes",
+                to="salon.appointment",
+            ),
         ),
         migrations.AddField(
-            model_name='branchclosure',
-            name='branch',
-            field=models.ForeignKey(db_column='machinhanh', on_delete=django.db.models.deletion.PROTECT, related_name='closures', to='salon.branch'),
+            model_name="branchclosure",
+            name="branch",
+            field=models.ForeignKey(
+                db_column="machinhanh",
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="closures",
+                to="salon.branch",
+            ),
         ),
         migrations.AddField(
-            model_name='commission',
-            name='employee',
-            field=models.ForeignKey(db_column='manhanvien', on_delete=django.db.models.deletion.PROTECT, to='salon.employee'),
+            model_name="commission",
+            name="employee",
+            field=models.ForeignKey(
+                db_column="manhanvien",
+                on_delete=django.db.models.deletion.PROTECT,
+                to="salon.employee",
+            ),
         ),
         migrations.AddField(
-            model_name='commission',
-            name='invoice',
-            field=models.OneToOneField(db_column='mahoadon', on_delete=django.db.models.deletion.PROTECT, to='salon.invoice'),
+            model_name="commission",
+            name="invoice",
+            field=models.OneToOneField(
+                db_column="mahoadon",
+                on_delete=django.db.models.deletion.PROTECT,
+                to="salon.invoice",
+            ),
         ),
         migrations.AddField(
-            model_name='dailyclosing',
-            name='actor',
-            field=models.ForeignKey(db_column='manguoichot', on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL),
+            model_name="dailyclosing",
+            name="actor",
+            field=models.ForeignKey(
+                db_column="manguoichot",
+                on_delete=django.db.models.deletion.PROTECT,
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AddField(
-            model_name='dailyclosing',
-            name='branch',
-            field=models.ForeignKey(db_column='machinhanh', on_delete=django.db.models.deletion.PROTECT, to='salon.branch'),
+            model_name="dailyclosing",
+            name="branch",
+            field=models.ForeignKey(
+                db_column="machinhanh",
+                on_delete=django.db.models.deletion.PROTECT,
+                to="salon.branch",
+            ),
         ),
         migrations.AddField(
-            model_name='emailoutbox',
-            name='appointment',
-            field=models.ForeignKey(db_column='malichhen', on_delete=django.db.models.deletion.PROTECT, to='salon.appointment'),
+            model_name="emailoutbox",
+            name="appointment",
+            field=models.ForeignKey(
+                db_column="malichhen",
+                on_delete=django.db.models.deletion.PROTECT,
+                to="salon.appointment",
+            ),
         ),
         migrations.AddField(
-            model_name='employeeabsence',
-            name='actor',
-            field=models.ForeignKey(db_column='manguoitao', on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL),
+            model_name="employeeabsence",
+            name="actor",
+            field=models.ForeignKey(
+                db_column="manguoitao",
+                on_delete=django.db.models.deletion.PROTECT,
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AddField(
-            model_name='employeeabsence',
-            name='employee',
-            field=models.ForeignKey(db_column='manhanvien', on_delete=django.db.models.deletion.PROTECT, related_name='absences', to='salon.employee'),
+            model_name="employeeabsence",
+            name="employee",
+            field=models.ForeignKey(
+                db_column="manhanvien",
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="absences",
+                to="salon.employee",
+            ),
         ),
         migrations.AddField(
-            model_name='refund',
-            name='actor',
-            field=models.ForeignKey(db_column='manguoithuchien', on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL),
+            model_name="refund",
+            name="actor",
+            field=models.ForeignKey(
+                db_column="manguoithuchien",
+                on_delete=django.db.models.deletion.PROTECT,
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AddField(
-            model_name='refund',
-            name='invoice',
-            field=models.OneToOneField(db_column='mahoadon', on_delete=django.db.models.deletion.PROTECT, related_name='refund', to='salon.invoice'),
+            model_name="refund",
+            name="invoice",
+            field=models.OneToOneField(
+                db_column="mahoadon",
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="refund",
+                to="salon.invoice",
+            ),
         ),
         migrations.AddField(
-            model_name='stock',
-            name='branch',
-            field=models.ForeignKey(db_column='machinhanh', on_delete=django.db.models.deletion.PROTECT, to='salon.branch'),
+            model_name="stock",
+            name="branch",
+            field=models.ForeignKey(
+                db_column="machinhanh",
+                on_delete=django.db.models.deletion.PROTECT,
+                to="salon.branch",
+            ),
         ),
         migrations.AddField(
-            model_name='stock',
-            name='product',
-            field=models.ForeignKey(db_column='masanpham', on_delete=django.db.models.deletion.PROTECT, to='salon.product'),
+            model_name="stock",
+            name="product",
+            field=models.ForeignKey(
+                db_column="masanpham",
+                on_delete=django.db.models.deletion.PROTECT,
+                to="salon.product",
+            ),
         ),
         migrations.AddField(
-            model_name='stockmovement',
-            name='actor',
-            field=models.ForeignKey(db_column='manguoitao', on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL),
+            model_name="stockmovement",
+            name="actor",
+            field=models.ForeignKey(
+                db_column="manguoitao",
+                on_delete=django.db.models.deletion.PROTECT,
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AddField(
-            model_name='stockmovement',
-            name='stock',
-            field=models.ForeignKey(db_column='matonkho', on_delete=django.db.models.deletion.PROTECT, related_name='movements', to='salon.stock'),
+            model_name="stockmovement",
+            name="stock",
+            field=models.ForeignKey(
+                db_column="matonkho",
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="movements",
+                to="salon.stock",
+            ),
         ),
         migrations.AddField(
-            model_name='voucher',
-            name='branch',
-            field=models.ForeignKey(blank=True, db_column='machinhanh', null=True, on_delete=django.db.models.deletion.PROTECT, to='salon.branch'),
+            model_name="voucher",
+            name="branch",
+            field=models.ForeignKey(
+                blank=True,
+                db_column="machinhanh",
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                to="salon.branch",
+            ),
         ),
         migrations.AddField(
-            model_name='voucheruse',
-            name='customer',
-            field=models.ForeignKey(db_column='makhachhang', on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL),
+            model_name="voucheruse",
+            name="customer",
+            field=models.ForeignKey(
+                db_column="makhachhang",
+                on_delete=django.db.models.deletion.PROTECT,
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AddField(
-            model_name='voucheruse',
-            name='invoice',
-            field=models.OneToOneField(db_column='mahoadon', on_delete=django.db.models.deletion.PROTECT, to='salon.invoice'),
+            model_name="voucheruse",
+            name="invoice",
+            field=models.OneToOneField(
+                db_column="mahoadon",
+                on_delete=django.db.models.deletion.PROTECT,
+                to="salon.invoice",
+            ),
         ),
         migrations.AddField(
-            model_name='voucheruse',
-            name='voucher',
-            field=models.ForeignKey(db_column='mauudai', on_delete=django.db.models.deletion.PROTECT, related_name='uses', to='salon.voucher'),
+            model_name="voucheruse",
+            name="voucher",
+            field=models.ForeignKey(
+                db_column="mauudai",
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="uses",
+                to="salon.voucher",
+            ),
         ),
         migrations.AddConstraint(
-            model_name='branchclosure',
-            constraint=models.CheckConstraint(condition=models.Q(('end_at__gt', models.F('start_at'))), name='closure_valid_period'),
+            model_name="branchclosure",
+            constraint=models.CheckConstraint(
+                condition=models.Q(("end_at__gt", models.F("start_at"))),
+                name="closure_valid_period",
+            ),
         ),
         migrations.AddConstraint(
-            model_name='commission',
-            constraint=models.CheckConstraint(condition=models.Q(('percent__lte', 100)), name='commission_rate_valid'),
+            model_name="commission",
+            constraint=models.CheckConstraint(
+                condition=models.Q(("percent__lte", 100)), name="commission_rate_valid"
+            ),
         ),
         migrations.AddConstraint(
-            model_name='dailyclosing',
-            constraint=models.UniqueConstraint(fields=('branch', 'day'), name='closing_once_per_branch_day'),
+            model_name="dailyclosing",
+            constraint=models.UniqueConstraint(
+                fields=("branch", "day"), name="closing_once_per_branch_day"
+            ),
         ),
         migrations.AddIndex(
-            model_name='emailoutbox',
-            index=models.Index(fields=['sent_at', 'cancelled', 'due_at'], name='salon_email_daguilu_f90bfc_idx'),
+            model_name="emailoutbox",
+            index=models.Index(
+                fields=["sent_at", "cancelled", "due_at"], name="salon_email_daguilu_f90bfc_idx"
+            ),
         ),
         migrations.AddConstraint(
-            model_name='employeeabsence',
-            constraint=models.CheckConstraint(condition=models.Q(('end_at__gt', models.F('start_at'))), name='absence_valid_period'),
+            model_name="employeeabsence",
+            constraint=models.CheckConstraint(
+                condition=models.Q(("end_at__gt", models.F("start_at"))),
+                name="absence_valid_period",
+            ),
         ),
         migrations.AddConstraint(
-            model_name='stock',
-            constraint=models.UniqueConstraint(fields=('branch', 'product'), name='stock_per_branch'),
+            model_name="stock",
+            constraint=models.UniqueConstraint(
+                fields=("branch", "product"), name="stock_per_branch"
+            ),
         ),
         migrations.AddConstraint(
-            model_name='stockmovement',
-            constraint=models.CheckConstraint(condition=models.Q(('amount', 0), _negated=True), name='stock_nonzero_movement'),
+            model_name="stockmovement",
+            constraint=models.CheckConstraint(
+                condition=models.Q(("amount", 0), _negated=True), name="stock_nonzero_movement"
+            ),
         ),
         migrations.AddConstraint(
-            model_name='voucher',
-            constraint=models.CheckConstraint(condition=models.Q(('amount__gt', 0), ('ends_at__gt', models.F('starts_at')), ('max_uses__gt', 0)), name='voucher_valid'),
+            model_name="voucher",
+            constraint=models.CheckConstraint(
+                condition=models.Q(
+                    ("amount__gt", 0), ("ends_at__gt", models.F("starts_at")), ("max_uses__gt", 0)
+                ),
+                name="voucher_valid",
+            ),
         ),
         migrations.AddConstraint(
-            model_name='voucheruse',
-            constraint=models.UniqueConstraint(fields=('voucher', 'customer'), name='voucher_once_per_customer'),
+            model_name="voucheruse",
+            constraint=models.UniqueConstraint(
+                fields=("voucher", "customer"), name="voucher_once_per_customer"
+            ),
         ),
     ]

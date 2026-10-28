@@ -9,420 +9,709 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('salon', '0001_initial'),
+        ("salon", "0001_initial"),
     ]
 
     operations = [
         migrations.RenameIndex(
-            model_name='appointment',
-            new_name='salon_appoi_machinh_7fa584_idx',
-            old_name='salon_appoi_branch__751854_idx',
+            model_name="appointment",
+            new_name="salon_appoi_machinh_7fa584_idx",
+            old_name="salon_appoi_branch__751854_idx",
         ),
         migrations.RenameIndex(
-            model_name='appointment',
-            new_name='salon_appoi_makhach_ccaf54_idx',
-            old_name='salon_appoi_custome_9c3696_idx',
+            model_name="appointment",
+            new_name="salon_appoi_makhach_ccaf54_idx",
+            old_name="salon_appoi_custome_9c3696_idx",
+        ),
+        migrations.AlterField(
+            model_name="appointment",
+            name="branch",
+            field=models.ForeignKey(
+                db_column="machinhanh",
+                on_delete=django.db.models.deletion.PROTECT,
+                to="salon.branch",
+                verbose_name="Chi nhánh",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="appointment",
+            name="chair",
+            field=models.ForeignKey(
+                blank=True,
+                db_column="maghe",
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                to="salon.chair",
+                verbose_name="Ghế cắt",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="appointment",
+            name="created_at",
+            field=models.DateTimeField(auto_now_add=True, db_column="ngaytao"),
+        ),
+        migrations.AlterField(
+            model_name="appointment",
+            name="customer",
+            field=models.ForeignKey(
+                db_column="makhachhang",
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="appointments",
+                to=settings.AUTH_USER_MODEL,
+                verbose_name="Khách hàng",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="appointment",
+            name="employee",
+            field=models.ForeignKey(
+                db_column="manhanvien",
+                on_delete=django.db.models.deletion.PROTECT,
+                to="salon.employee",
+                verbose_name="Stylist",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="appointment",
+            name="end_at",
+            field=models.DateTimeField(db_column="thoigianketthuc", verbose_name="Kết thúc"),
+        ),
+        migrations.AlterField(
+            model_name="appointment",
+            name="id",
+            field=models.BigAutoField(
+                auto_created=True,
+                db_column="malichhen",
+                primary_key=True,
+                serialize=False,
+                verbose_name="ID",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="appointment",
+            name="note",
+            field=models.CharField(
+                blank=True, db_column="ghichu", max_length=500, verbose_name="Ghi chú"
+            ),
+        ),
+        migrations.AlterField(
+            model_name="appointment",
+            name="start_at",
+            field=models.DateTimeField(db_column="thoigianbatdau", verbose_name="Bắt đầu"),
+        ),
+        migrations.AlterField(
+            model_name="appointment",
+            name="status",
+            field=models.CharField(
+                choices=[
+                    ("booked", "Đã đặt"),
+                    ("checked_in", "Đã check-in"),
+                    ("in_service", "Đang phục vụ"),
+                    ("completed", "Hoàn thành"),
+                    ("cancelled", "Đã hủy"),
+                    ("no_show", "Không đến"),
+                ],
+                db_column="trangthai",
+                default="booked",
+                max_length=20,
+                verbose_name="Trạng thái",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="appointmentitem",
+            name="appointment",
+            field=models.ForeignKey(
+                db_column="malichhen",
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="items",
+                to="salon.appointment",
+            ),
         ),
         migrations.AlterField(
-            model_name='appointment',
-            name='branch',
-            field=models.ForeignKey(db_column='machinhanh', on_delete=django.db.models.deletion.PROTECT, to='salon.branch', verbose_name='Chi nhánh'),
+            model_name="appointmentitem",
+            name="duration",
+            field=models.PositiveIntegerField(db_column="thoiluong"),
         ),
         migrations.AlterField(
-            model_name='appointment',
-            name='chair',
-            field=models.ForeignKey(blank=True, db_column='maghe', null=True, on_delete=django.db.models.deletion.PROTECT, to='salon.chair', verbose_name='Ghế cắt'),
+            model_name="appointmentitem",
+            name="id",
+            field=models.BigAutoField(
+                auto_created=True,
+                db_column="machitiet",
+                primary_key=True,
+                serialize=False,
+                verbose_name="ID",
+            ),
         ),
         migrations.AlterField(
-            model_name='appointment',
-            name='created_at',
-            field=models.DateTimeField(auto_now_add=True, db_column='ngaytao'),
+            model_name="appointmentitem",
+            name="name",
+            field=models.CharField(db_column="tendichvu", max_length=100),
         ),
         migrations.AlterField(
-            model_name='appointment',
-            name='customer',
-            field=models.ForeignKey(db_column='makhachhang', on_delete=django.db.models.deletion.PROTECT, related_name='appointments', to=settings.AUTH_USER_MODEL, verbose_name='Khách hàng'),
+            model_name="appointmentitem",
+            name="price",
+            field=models.PositiveIntegerField(db_column="giatien"),
         ),
         migrations.AlterField(
-            model_name='appointment',
-            name='employee',
-            field=models.ForeignKey(db_column='manhanvien', on_delete=django.db.models.deletion.PROTECT, to='salon.employee', verbose_name='Stylist'),
+            model_name="appointmentitem",
+            name="service",
+            field=models.ForeignKey(
+                db_column="madichvu",
+                on_delete=django.db.models.deletion.PROTECT,
+                to="salon.service",
+            ),
         ),
         migrations.AlterField(
-            model_name='appointment',
-            name='end_at',
-            field=models.DateTimeField(db_column='thoigianketthuc', verbose_name='Kết thúc'),
+            model_name="auditlog",
+            name="action",
+            field=models.CharField(db_column="hanhdong", max_length=100),
         ),
         migrations.AlterField(
-            model_name='appointment',
-            name='id',
-            field=models.BigAutoField(auto_created=True, db_column='malichhen', primary_key=True, serialize=False, verbose_name='ID'),
+            model_name="auditlog",
+            name="actor",
+            field=models.ForeignKey(
+                db_column="manguoithaotac",
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AlterField(
-            model_name='appointment',
-            name='note',
-            field=models.CharField(blank=True, db_column='ghichu', max_length=500, verbose_name='Ghi chú'),
+            model_name="auditlog",
+            name="appointment",
+            field=models.ForeignKey(
+                db_column="malichhen",
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="salon.appointment",
+            ),
         ),
         migrations.AlterField(
-            model_name='appointment',
-            name='start_at',
-            field=models.DateTimeField(db_column='thoigianbatdau', verbose_name='Bắt đầu'),
+            model_name="auditlog",
+            name="created_at",
+            field=models.DateTimeField(auto_now_add=True, db_column="ngaytao"),
         ),
         migrations.AlterField(
-            model_name='appointment',
-            name='status',
-            field=models.CharField(choices=[('booked', 'Đã đặt'), ('checked_in', 'Đã check-in'), ('in_service', 'Đang phục vụ'), ('completed', 'Hoàn thành'), ('cancelled', 'Đã hủy'), ('no_show', 'Không đến')], db_column='trangthai', default='booked', max_length=20, verbose_name='Trạng thái'),
+            model_name="auditlog",
+            name="id",
+            field=models.BigAutoField(
+                auto_created=True,
+                db_column="manhatky",
+                primary_key=True,
+                serialize=False,
+                verbose_name="ID",
+            ),
         ),
         migrations.AlterField(
-            model_name='appointmentitem',
-            name='appointment',
-            field=models.ForeignKey(db_column='malichhen', on_delete=django.db.models.deletion.CASCADE, related_name='items', to='salon.appointment'),
+            model_name="branch",
+            name="active",
+            field=models.BooleanField(
+                db_column="hoatdong", default=True, verbose_name="Đang hoạt động"
+            ),
         ),
         migrations.AlterField(
-            model_name='appointmentitem',
-            name='duration',
-            field=models.PositiveIntegerField(db_column='thoiluong'),
+            model_name="branch",
+            name="address",
+            field=models.CharField(db_column="diachi", max_length=250, verbose_name="Địa chỉ"),
         ),
         migrations.AlterField(
-            model_name='appointmentitem',
-            name='id',
-            field=models.BigAutoField(auto_created=True, db_column='machitiet', primary_key=True, serialize=False, verbose_name='ID'),
+            model_name="branch",
+            name="closes_at",
+            field=models.TimeField(db_column="giodongcua", verbose_name="Đóng cửa"),
         ),
-        migrations.AlterField(
-            model_name='appointmentitem',
-            name='name',
-            field=models.CharField(db_column='tendichvu', max_length=100),
-        ),
-        migrations.AlterField(
-            model_name='appointmentitem',
-            name='price',
-            field=models.PositiveIntegerField(db_column='giatien'),
-        ),
-        migrations.AlterField(
-            model_name='appointmentitem',
-            name='service',
-            field=models.ForeignKey(db_column='madichvu', on_delete=django.db.models.deletion.PROTECT, to='salon.service'),
-        ),
-        migrations.AlterField(
-            model_name='auditlog',
-            name='action',
-            field=models.CharField(db_column='hanhdong', max_length=100),
-        ),
-        migrations.AlterField(
-            model_name='auditlog',
-            name='actor',
-            field=models.ForeignKey(db_column='manguoithaotac', null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL),
-        ),
-        migrations.AlterField(
-            model_name='auditlog',
-            name='appointment',
-            field=models.ForeignKey(db_column='malichhen', null=True, on_delete=django.db.models.deletion.SET_NULL, to='salon.appointment'),
-        ),
-        migrations.AlterField(
-            model_name='auditlog',
-            name='created_at',
-            field=models.DateTimeField(auto_now_add=True, db_column='ngaytao'),
-        ),
-        migrations.AlterField(
-            model_name='auditlog',
-            name='id',
-            field=models.BigAutoField(auto_created=True, db_column='manhatky', primary_key=True, serialize=False, verbose_name='ID'),
-        ),
-        migrations.AlterField(
-            model_name='branch',
-            name='active',
-            field=models.BooleanField(db_column='hoatdong', default=True, verbose_name='Đang hoạt động'),
-        ),
-        migrations.AlterField(
-            model_name='branch',
-            name='address',
-            field=models.CharField(db_column='diachi', max_length=250, verbose_name='Địa chỉ'),
-        ),
-        migrations.AlterField(
-            model_name='branch',
-            name='closes_at',
-            field=models.TimeField(db_column='giodongcua', verbose_name='Đóng cửa'),
-        ),
-        migrations.AlterField(
-            model_name='branch',
-            name='id',
-            field=models.BigAutoField(auto_created=True, db_column='machinhanh', primary_key=True, serialize=False, verbose_name='ID'),
-        ),
-        migrations.AlterField(
-            model_name='branch',
-            name='name',
-            field=models.CharField(db_column='tenchinhanh', max_length=100, unique=True, verbose_name='Tên chi nhánh'),
-        ),
-        migrations.AlterField(
-            model_name='branch',
-            name='opens_at',
-            field=models.TimeField(db_column='giomocua', verbose_name='Mở cửa'),
-        ),
-        migrations.AlterField(
-            model_name='branch',
-            name='phone',
-            field=models.CharField(db_column='sodienthoai', max_length=10, validators=[django.core.validators.RegexValidator('^0[0-9]{9}$', 'Số điện thoại gồm 10 chữ số, bắt đầu bằng 0.')], verbose_name='Điện thoại'),
-        ),
-        migrations.AlterField(
-            model_name='chair',
-            name='active',
-            field=models.BooleanField(db_column='hoatdong', default=True, verbose_name='Sẵn sàng'),
-        ),
-        migrations.AlterField(
-            model_name='chair',
-            name='branch',
-            field=models.ForeignKey(db_column='machinhanh', on_delete=django.db.models.deletion.PROTECT, related_name='chairs', to='salon.branch', verbose_name='Chi nhánh'),
-        ),
-        migrations.AlterField(
-            model_name='chair',
-            name='id',
-            field=models.BigAutoField(auto_created=True, db_column='maghe', primary_key=True, serialize=False, verbose_name='ID'),
-        ),
-        migrations.AlterField(
-            model_name='chair',
-            name='name',
-            field=models.CharField(db_column='tenghe', max_length=30, verbose_name='Tên ghế'),
-        ),
-        migrations.AlterField(
-            model_name='employee',
-            name='active',
-            field=models.BooleanField(db_column='hoatdong', default=True, verbose_name='Đang làm việc'),
-        ),
-        migrations.AlterField(
-            model_name='employee',
-            name='bio',
-            field=models.CharField(blank=True, db_column='gioithieu', max_length=250, verbose_name='Giới thiệu'),
-        ),
-        migrations.AlterField(
-            model_name='employee',
-            name='branch',
-            field=models.ForeignKey(db_column='machinhanh', on_delete=django.db.models.deletion.PROTECT, related_name='employees', to='salon.branch', verbose_name='Chi nhánh'),
-        ),
-        migrations.AlterField(
-            model_name='employee',
-            name='id',
-            field=models.BigAutoField(auto_created=True, db_column='manhanvien', primary_key=True, serialize=False, verbose_name='ID'),
-        ),
-        migrations.AlterField(
-            model_name='employee',
-            name='name',
-            field=models.CharField(db_column='hoten', max_length=100, verbose_name='Họ tên stylist'),
-        ),
-        migrations.AlterField(
-            model_name='employee',
-            name='specialty',
-            field=models.CharField(db_column='chuyenmon', max_length=150, verbose_name='Chuyên môn'),
-        ),
-        migrations.AlterField(
-            model_name='invoice',
-            name='appointment',
-            field=models.OneToOneField(db_column='malichhen', on_delete=django.db.models.deletion.PROTECT, related_name='invoice', to='salon.appointment'),
-        ),
-        migrations.AlterField(
-            model_name='invoice',
-            name='cashier',
-            field=models.ForeignKey(db_column='mathungan', on_delete=django.db.models.deletion.PROTECT, to=settings.AUTH_USER_MODEL),
-        ),
-        migrations.AlterField(
-            model_name='invoice',
-            name='id',
-            field=models.BigAutoField(auto_created=True, db_column='mahoadon', primary_key=True, serialize=False, verbose_name='ID'),
-        ),
-        migrations.AlterField(
-            model_name='invoice',
-            name='method',
-            field=models.CharField(choices=[('cash', 'Tiền mặt'), ('mock', 'Thẻ mô phỏng')], db_column='phuongthucthanhtoan', max_length=10, verbose_name='Phương thức'),
-        ),
-        migrations.AlterField(
-            model_name='invoice',
-            name='paid_at',
-            field=models.DateTimeField(auto_now_add=True, db_column='thoigianthanhtoan', verbose_name='Thanh toán lúc'),
-        ),
-        migrations.AlterField(
-            model_name='invoice',
-            name='total',
-            field=models.PositiveIntegerField(db_column='tongthanhtoan', verbose_name='Tổng thanh toán'),
-        ),
-        migrations.AlterField(
-            model_name='notification',
-            name='created_at',
-            field=models.DateTimeField(auto_now_add=True, db_column='ngaytao'),
-        ),
-        migrations.AlterField(
-            model_name='notification',
-            name='id',
-            field=models.BigAutoField(auto_created=True, db_column='mathongbao', primary_key=True, serialize=False, verbose_name='ID'),
-        ),
-        migrations.AlterField(
-            model_name='notification',
-            name='message',
-            field=models.CharField(db_column='noidung', max_length=250),
-        ),
-        migrations.AlterField(
-            model_name='notification',
-            name='recipient',
-            field=models.ForeignKey(db_column='manguoinhan', on_delete=django.db.models.deletion.CASCADE, related_name='notifications', to=settings.AUTH_USER_MODEL),
-        ),
-        migrations.AlterField(
-            model_name='review',
-            name='appointment',
-            field=models.OneToOneField(db_column='malichhen', on_delete=django.db.models.deletion.PROTECT, related_name='review', to='salon.appointment'),
-        ),
-        migrations.AlterField(
-            model_name='review',
-            name='comment',
-            field=models.CharField(blank=True, db_column='binhluan', max_length=500, verbose_name='Bình luận'),
-        ),
-        migrations.AlterField(
-            model_name='review',
-            name='created_at',
-            field=models.DateTimeField(auto_now_add=True, db_column='ngaytao'),
-        ),
-        migrations.AlterField(
-            model_name='review',
-            name='id',
-            field=models.BigAutoField(auto_created=True, db_column='madanhgia', primary_key=True, serialize=False, verbose_name='ID'),
-        ),
-        migrations.AlterField(
-            model_name='review',
-            name='rating',
-            field=models.PositiveSmallIntegerField(db_column='sosao', validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(5)], verbose_name='Số sao'),
-        ),
-        migrations.AlterField(
-            model_name='service',
-            name='active',
-            field=models.BooleanField(db_column='hoatdong', default=True, verbose_name='Cho phép đặt'),
-        ),
-        migrations.AlterField(
-            model_name='service',
-            name='description',
-            field=models.TextField(blank=True, db_column='mota', verbose_name='Mô tả'),
-        ),
-        migrations.AlterField(
-            model_name='service',
-            name='duration',
-            field=models.PositiveIntegerField(db_column='thoiluong', validators=[django.core.validators.MinValueValidator(15), django.core.validators.MaxValueValidator(240)], verbose_name='Thời lượng (phút)'),
-        ),
-        migrations.AlterField(
-            model_name='service',
-            name='id',
-            field=models.BigAutoField(auto_created=True, db_column='madichvu', primary_key=True, serialize=False, verbose_name='ID'),
-        ),
-        migrations.AlterField(
-            model_name='service',
-            name='kind',
-            field=models.CharField(choices=[('hair', 'Cắt & tạo kiểu'), ('care', 'Chăm sóc'), ('combo', 'Combo')], db_column='loaidichvu', default='hair', max_length=10, verbose_name='Nhóm'),
-        ),
-        migrations.AlterField(
-            model_name='service',
-            name='name',
-            field=models.CharField(db_column='tendichvu', max_length=100, unique=True, verbose_name='Tên dịch vụ'),
-        ),
-        migrations.AlterField(
-            model_name='service',
-            name='price',
-            field=models.PositiveIntegerField(db_column='giatien', validators=[django.core.validators.MinValueValidator(1000)], verbose_name='Giá (VNĐ)'),
-        ),
-        migrations.AlterField(
-            model_name='shift',
-            name='employee',
-            field=models.ForeignKey(db_column='manhanvien', on_delete=django.db.models.deletion.PROTECT, related_name='shifts', to='salon.employee', verbose_name='Stylist'),
-        ),
-        migrations.AlterField(
-            model_name='shift',
-            name='end_at',
-            field=models.DateTimeField(db_column='thoigianketthuc', verbose_name='Kết thúc'),
-        ),
-        migrations.AlterField(
-            model_name='shift',
-            name='id',
-            field=models.BigAutoField(auto_created=True, db_column='macalam', primary_key=True, serialize=False, verbose_name='ID'),
-        ),
-        migrations.AlterField(
-            model_name='shift',
-            name='start_at',
-            field=models.DateTimeField(db_column='thoigianbatdau', verbose_name='Bắt đầu'),
-        ),
-        migrations.AlterField(
-            model_name='user',
-            name='branch',
-            field=models.ForeignKey(blank=True, db_column='machinhanh', null=True, on_delete=django.db.models.deletion.PROTECT, to='salon.branch', verbose_name='Chi nhánh phụ trách'),
-        ),
-        migrations.AlterField(
-            model_name='user',
-            name='date_joined',
-            field=models.DateTimeField(db_column='ngaythamgia', default=django.utils.timezone.now, verbose_name='date joined'),
-        ),
-        migrations.AlterField(
-            model_name='user',
-            name='email',
-            field=models.EmailField(blank=True, db_column='thudientu', max_length=254, verbose_name='email address'),
-        ),
-        migrations.AlterField(
-            model_name='user',
-            name='first_name',
-            field=models.CharField(blank=True, db_column='ten', max_length=150, verbose_name='first name'),
-        ),
-        migrations.AlterField(
-            model_name='user',
-            name='full_name',
-            field=models.CharField(db_column='hoten', max_length=100, verbose_name='Họ tên'),
-        ),
-        migrations.AlterField(
-            model_name='user',
-            name='id',
-            field=models.BigAutoField(auto_created=True, db_column='manguoidung', primary_key=True, serialize=False, verbose_name='ID'),
-        ),
-        migrations.AlterField(
-            model_name='user',
-            name='is_active',
-            field=models.BooleanField(db_column='hoatdong', default=True, help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.', verbose_name='active'),
-        ),
-        migrations.AlterField(
-            model_name='user',
-            name='is_staff',
-            field=models.BooleanField(db_column='lanhanvien', default=False, help_text='Designates whether the user can log into this admin site.', verbose_name='staff status'),
-        ),
-        migrations.AlterField(
-            model_name='user',
-            name='is_superuser',
-            field=models.BooleanField(db_column='laquantri', default=False, help_text='Designates that this user has all permissions without explicitly assigning them.', verbose_name='superuser status'),
-        ),
-        migrations.AlterField(
-            model_name='user',
-            name='last_login',
-            field=models.DateTimeField(blank=True, db_column='landangnhapcuoi', null=True, verbose_name='last login'),
-        ),
-        migrations.AlterField(
-            model_name='user',
-            name='last_name',
-            field=models.CharField(blank=True, db_column='ho', max_length=150, verbose_name='last name'),
-        ),
-        migrations.AlterField(
-            model_name='user',
-            name='password',
-            field=models.CharField(db_column='matkhau', max_length=128, verbose_name='password'),
-        ),
-        migrations.AlterField(
-            model_name='user',
-            name='phone',
-            field=models.CharField(blank=True, db_column='sodienthoai', max_length=10, validators=[django.core.validators.RegexValidator('^0[0-9]{9}$', 'Số điện thoại gồm 10 chữ số, bắt đầu bằng 0.')], verbose_name='Số điện thoại'),
-        ),
-        migrations.AlterField(
-            model_name='user',
-            name='points',
-            field=models.PositiveIntegerField(db_column='diemtichluy', default=0, verbose_name='Điểm tích lũy'),
-        ),
-        migrations.AlterField(
-            model_name='user',
-            name='role',
-            field=models.CharField(choices=[('customer', 'Khách hàng'), ('receptionist', 'Lễ tân'), ('manager', 'Quản trị viên')], db_column='vaitro', default='customer', max_length=20, verbose_name='Vai trò'),
+        migrations.AlterField(
+            model_name="branch",
+            name="id",
+            field=models.BigAutoField(
+                auto_created=True,
+                db_column="machinhanh",
+                primary_key=True,
+                serialize=False,
+                verbose_name="ID",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="branch",
+            name="name",
+            field=models.CharField(
+                db_column="tenchinhanh", max_length=100, unique=True, verbose_name="Tên chi nhánh"
+            ),
+        ),
+        migrations.AlterField(
+            model_name="branch",
+            name="opens_at",
+            field=models.TimeField(db_column="giomocua", verbose_name="Mở cửa"),
         ),
         migrations.AlterField(
-            model_name='user',
-            name='username',
-            field=models.CharField(db_column='tendangnhap', error_messages={'unique': 'A user with that username already exists.'}, help_text='Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.', max_length=150, unique=True, validators=[django.contrib.auth.validators.UnicodeUsernameValidator()], verbose_name='username'),
+            model_name="branch",
+            name="phone",
+            field=models.CharField(
+                db_column="sodienthoai",
+                max_length=10,
+                validators=[
+                    django.core.validators.RegexValidator(
+                        "^0[0-9]{9}$", "Số điện thoại gồm 10 chữ số, bắt đầu bằng 0."
+                    )
+                ],
+                verbose_name="Điện thoại",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="chair",
+            name="active",
+            field=models.BooleanField(db_column="hoatdong", default=True, verbose_name="Sẵn sàng"),
+        ),
+        migrations.AlterField(
+            model_name="chair",
+            name="branch",
+            field=models.ForeignKey(
+                db_column="machinhanh",
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="chairs",
+                to="salon.branch",
+                verbose_name="Chi nhánh",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="chair",
+            name="id",
+            field=models.BigAutoField(
+                auto_created=True,
+                db_column="maghe",
+                primary_key=True,
+                serialize=False,
+                verbose_name="ID",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="chair",
+            name="name",
+            field=models.CharField(db_column="tenghe", max_length=30, verbose_name="Tên ghế"),
+        ),
+        migrations.AlterField(
+            model_name="employee",
+            name="active",
+            field=models.BooleanField(
+                db_column="hoatdong", default=True, verbose_name="Đang làm việc"
+            ),
+        ),
+        migrations.AlterField(
+            model_name="employee",
+            name="bio",
+            field=models.CharField(
+                blank=True, db_column="gioithieu", max_length=250, verbose_name="Giới thiệu"
+            ),
+        ),
+        migrations.AlterField(
+            model_name="employee",
+            name="branch",
+            field=models.ForeignKey(
+                db_column="machinhanh",
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="employees",
+                to="salon.branch",
+                verbose_name="Chi nhánh",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="employee",
+            name="id",
+            field=models.BigAutoField(
+                auto_created=True,
+                db_column="manhanvien",
+                primary_key=True,
+                serialize=False,
+                verbose_name="ID",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="employee",
+            name="name",
+            field=models.CharField(
+                db_column="hoten", max_length=100, verbose_name="Họ tên stylist"
+            ),
+        ),
+        migrations.AlterField(
+            model_name="employee",
+            name="specialty",
+            field=models.CharField(
+                db_column="chuyenmon", max_length=150, verbose_name="Chuyên môn"
+            ),
+        ),
+        migrations.AlterField(
+            model_name="invoice",
+            name="appointment",
+            field=models.OneToOneField(
+                db_column="malichhen",
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="invoice",
+                to="salon.appointment",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="invoice",
+            name="cashier",
+            field=models.ForeignKey(
+                db_column="mathungan",
+                on_delete=django.db.models.deletion.PROTECT,
+                to=settings.AUTH_USER_MODEL,
+            ),
+        ),
+        migrations.AlterField(
+            model_name="invoice",
+            name="id",
+            field=models.BigAutoField(
+                auto_created=True,
+                db_column="mahoadon",
+                primary_key=True,
+                serialize=False,
+                verbose_name="ID",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="invoice",
+            name="method",
+            field=models.CharField(
+                choices=[("cash", "Tiền mặt"), ("mock", "Thẻ mô phỏng")],
+                db_column="phuongthucthanhtoan",
+                max_length=10,
+                verbose_name="Phương thức",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="invoice",
+            name="paid_at",
+            field=models.DateTimeField(
+                auto_now_add=True, db_column="thoigianthanhtoan", verbose_name="Thanh toán lúc"
+            ),
+        ),
+        migrations.AlterField(
+            model_name="invoice",
+            name="total",
+            field=models.PositiveIntegerField(
+                db_column="tongthanhtoan", verbose_name="Tổng thanh toán"
+            ),
+        ),
+        migrations.AlterField(
+            model_name="notification",
+            name="created_at",
+            field=models.DateTimeField(auto_now_add=True, db_column="ngaytao"),
+        ),
+        migrations.AlterField(
+            model_name="notification",
+            name="id",
+            field=models.BigAutoField(
+                auto_created=True,
+                db_column="mathongbao",
+                primary_key=True,
+                serialize=False,
+                verbose_name="ID",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="notification",
+            name="message",
+            field=models.CharField(db_column="noidung", max_length=250),
+        ),
+        migrations.AlterField(
+            model_name="notification",
+            name="recipient",
+            field=models.ForeignKey(
+                db_column="manguoinhan",
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="notifications",
+                to=settings.AUTH_USER_MODEL,
+            ),
+        ),
+        migrations.AlterField(
+            model_name="review",
+            name="appointment",
+            field=models.OneToOneField(
+                db_column="malichhen",
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="review",
+                to="salon.appointment",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="review",
+            name="comment",
+            field=models.CharField(
+                blank=True, db_column="binhluan", max_length=500, verbose_name="Bình luận"
+            ),
+        ),
+        migrations.AlterField(
+            model_name="review",
+            name="created_at",
+            field=models.DateTimeField(auto_now_add=True, db_column="ngaytao"),
+        ),
+        migrations.AlterField(
+            model_name="review",
+            name="id",
+            field=models.BigAutoField(
+                auto_created=True,
+                db_column="madanhgia",
+                primary_key=True,
+                serialize=False,
+                verbose_name="ID",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="review",
+            name="rating",
+            field=models.PositiveSmallIntegerField(
+                db_column="sosao",
+                validators=[
+                    django.core.validators.MinValueValidator(1),
+                    django.core.validators.MaxValueValidator(5),
+                ],
+                verbose_name="Số sao",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="service",
+            name="active",
+            field=models.BooleanField(
+                db_column="hoatdong", default=True, verbose_name="Cho phép đặt"
+            ),
+        ),
+        migrations.AlterField(
+            model_name="service",
+            name="description",
+            field=models.TextField(blank=True, db_column="mota", verbose_name="Mô tả"),
+        ),
+        migrations.AlterField(
+            model_name="service",
+            name="duration",
+            field=models.PositiveIntegerField(
+                db_column="thoiluong",
+                validators=[
+                    django.core.validators.MinValueValidator(15),
+                    django.core.validators.MaxValueValidator(240),
+                ],
+                verbose_name="Thời lượng (phút)",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="service",
+            name="id",
+            field=models.BigAutoField(
+                auto_created=True,
+                db_column="madichvu",
+                primary_key=True,
+                serialize=False,
+                verbose_name="ID",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="service",
+            name="kind",
+            field=models.CharField(
+                choices=[("hair", "Cắt & tạo kiểu"), ("care", "Chăm sóc"), ("combo", "Combo")],
+                db_column="loaidichvu",
+                default="hair",
+                max_length=10,
+                verbose_name="Nhóm",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="service",
+            name="name",
+            field=models.CharField(
+                db_column="tendichvu", max_length=100, unique=True, verbose_name="Tên dịch vụ"
+            ),
+        ),
+        migrations.AlterField(
+            model_name="service",
+            name="price",
+            field=models.PositiveIntegerField(
+                db_column="giatien",
+                validators=[django.core.validators.MinValueValidator(1000)],
+                verbose_name="Giá (VNĐ)",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="shift",
+            name="employee",
+            field=models.ForeignKey(
+                db_column="manhanvien",
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="shifts",
+                to="salon.employee",
+                verbose_name="Stylist",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="shift",
+            name="end_at",
+            field=models.DateTimeField(db_column="thoigianketthuc", verbose_name="Kết thúc"),
+        ),
+        migrations.AlterField(
+            model_name="shift",
+            name="id",
+            field=models.BigAutoField(
+                auto_created=True,
+                db_column="macalam",
+                primary_key=True,
+                serialize=False,
+                verbose_name="ID",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="shift",
+            name="start_at",
+            field=models.DateTimeField(db_column="thoigianbatdau", verbose_name="Bắt đầu"),
+        ),
+        migrations.AlterField(
+            model_name="user",
+            name="branch",
+            field=models.ForeignKey(
+                blank=True,
+                db_column="machinhanh",
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                to="salon.branch",
+                verbose_name="Chi nhánh phụ trách",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="user",
+            name="date_joined",
+            field=models.DateTimeField(
+                db_column="ngaythamgia",
+                default=django.utils.timezone.now,
+                verbose_name="date joined",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="user",
+            name="email",
+            field=models.EmailField(
+                blank=True, db_column="thudientu", max_length=254, verbose_name="email address"
+            ),
+        ),
+        migrations.AlterField(
+            model_name="user",
+            name="first_name",
+            field=models.CharField(
+                blank=True, db_column="ten", max_length=150, verbose_name="first name"
+            ),
+        ),
+        migrations.AlterField(
+            model_name="user",
+            name="full_name",
+            field=models.CharField(db_column="hoten", max_length=100, verbose_name="Họ tên"),
+        ),
+        migrations.AlterField(
+            model_name="user",
+            name="id",
+            field=models.BigAutoField(
+                auto_created=True,
+                db_column="manguoidung",
+                primary_key=True,
+                serialize=False,
+                verbose_name="ID",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="user",
+            name="is_active",
+            field=models.BooleanField(
+                db_column="hoatdong",
+                default=True,
+                help_text="Designates whether this user should be treated as active. Unselect this instead of deleting accounts.",
+                verbose_name="active",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="user",
+            name="is_staff",
+            field=models.BooleanField(
+                db_column="lanhanvien",
+                default=False,
+                help_text="Designates whether the user can log into this admin site.",
+                verbose_name="staff status",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="user",
+            name="is_superuser",
+            field=models.BooleanField(
+                db_column="laquantri",
+                default=False,
+                help_text="Designates that this user has all permissions without explicitly assigning them.",
+                verbose_name="superuser status",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="user",
+            name="last_login",
+            field=models.DateTimeField(
+                blank=True, db_column="landangnhapcuoi", null=True, verbose_name="last login"
+            ),
+        ),
+        migrations.AlterField(
+            model_name="user",
+            name="last_name",
+            field=models.CharField(
+                blank=True, db_column="ho", max_length=150, verbose_name="last name"
+            ),
+        ),
+        migrations.AlterField(
+            model_name="user",
+            name="password",
+            field=models.CharField(db_column="matkhau", max_length=128, verbose_name="password"),
+        ),
+        migrations.AlterField(
+            model_name="user",
+            name="phone",
+            field=models.CharField(
+                blank=True,
+                db_column="sodienthoai",
+                max_length=10,
+                validators=[
+                    django.core.validators.RegexValidator(
+                        "^0[0-9]{9}$", "Số điện thoại gồm 10 chữ số, bắt đầu bằng 0."
+                    )
+                ],
+                verbose_name="Số điện thoại",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="user",
+            name="points",
+            field=models.PositiveIntegerField(
+                db_column="diemtichluy", default=0, verbose_name="Điểm tích lũy"
+            ),
+        ),
+        migrations.AlterField(
+            model_name="user",
+            name="role",
+            field=models.CharField(
+                choices=[
+                    ("customer", "Khách hàng"),
+                    ("receptionist", "Lễ tân"),
+                    ("manager", "Quản trị viên"),
+                ],
+                db_column="vaitro",
+                default="customer",
+                max_length=20,
+                verbose_name="Vai trò",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="user",
+            name="username",
+            field=models.CharField(
+                db_column="tendangnhap",
+                error_messages={"unique": "A user with that username already exists."},
+                help_text="Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
+                max_length=150,
+                unique=True,
+                validators=[django.contrib.auth.validators.UnicodeUsernameValidator()],
+                verbose_name="username",
+            ),
         ),
     ]
