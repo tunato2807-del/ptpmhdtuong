@@ -1,0 +1,7 @@
+target-version = "py312"
+line-length = 100
+exclude = [".agents", ".venv", "staticfiles", "node_modules"]
+
+[lint]
+# Critical syntax/name errors first; do not turn formatting into semantic rewrites.
+select = ["E9", "F63", "F7", "F82"]

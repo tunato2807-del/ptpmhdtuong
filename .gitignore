@@ -7,3 +7,4 @@ staticfiles/
 test-results/
 .coverage
 *.sqlite3
+node_modules/

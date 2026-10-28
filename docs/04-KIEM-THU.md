@@ -11,7 +11,7 @@ Python 3.12.14, Django 5.2.18, psycopg 3.3.6, PostgreSQL 17.11 native (Debian 17
 | `python scripts/dev.py setup --no-demo` | Đạt | Cài dependencies, kiểm tra PostgreSQL native, không có migration mới, collectstatic thành công; không nạp lại dữ liệu |
 | `manage.py check` | Đạt | 0 vấn đề |
 | `makemigrations --check --dry-run` | Đạt | No changes detected |
-| `manage.py test salon.tests --noinput` | Đạt | 160 test đã thực thi, 0 failed, 0 errors, 0 skipped |
+| `manage.py test salon.tests --noinput` | Đạt | 179 test đã thực thi, 0 failed, 0 errors, 0 skipped |
 | Migration tên cột tiếng Việt | Đạt | 80 cột/12 bảng; kiểu dữ liệu và toàn bộ bản ghi giữ nguyên; kiểm tra cả nâng cấp và hoàn tác |
 | `collectstatic --noinput` | Đạt | Static và manifest tạo thành công; chạy lại giữ nguyên tài nguyên không đổi |
 | `scripts/start.sh` | Đạt | Dùng PostgreSQL native đang chạy, kiểm tra migration và bật Django; không quản lý database qua container |
@@ -94,3 +94,8 @@ Trình duyệt kiểm tra thêm 48 trang/kích thước cho khu vận hành ở 
 Bằng chứng chi tiết và giới hạn tại [validation/13-NGHIEP-VU.txt](validation/13-NGHIEP-VU.txt). Email kiểm thử dùng locmem/file; không gửi Gmail/SMTP thật. Python thực thi cloud là 3.12, có workflow 3.14 nhưng chưa xác minh kết quả Actions mới. Chưa benchmark tải sản xuất hoặc cài Task Scheduler trên máy Windows người dùng.
 
 Sao lưu/phục hồi bản mở rộng: 34 bảng được phục hồi và đối chiếu số dòng. Đã phục hồi bản trước migration vào database thử rồi so sánh toàn bộ bản ghi/cột cũ của 13 bảng nghiệp vụ với database mới: trùng nhau, ngoại trừ last_login cập nhật do kiểm tra đăng nhập. Hai database thử đã được dọn.
+
+
+## Rà soát Agent Skills
+
+Bộ kiểm tra mới có 179 test PostgreSQL đạt, gồm phân quyền sau khóa, tài khoản/khôi phục mật khẩu, hoàn điểm theo cả hai thứ tự, nâng cấp số dư cũ, bộ đếm xác thực đồng thời và ngân sách truy vấn. 342 kiểm tra route/viewport và 48 màn hình vận hành đạt. Quét axe gồm 22 cặp trang/kích thước ở desktop/mobile, 0 vi phạm trong các quy tắc đã chạy. Định dạng 61 file Python có AST giống trước/sau; lint/build đạt. Chi tiết giới hạn và số đo CDP xem [tài liệu 14](14-AGENT-SKILLS.md), bằng chứng tại `validation/14-AGENT-SKILLS.txt`.

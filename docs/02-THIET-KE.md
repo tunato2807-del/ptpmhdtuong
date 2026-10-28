@@ -181,3 +181,10 @@ Chuỗi khóa: Branch trước Appointment/Invoice/Customer/Voucher; chuyển kh
 ![Các quan hệ dữ liệu mở rộng](diagrams/09-business-er.svg)
 
 Các use case, phạm vi quyền, công thức thu ròng/hoa hồng và chính sách cụ thể tại [tài liệu 13](13-NGHIEP-VU-NHIEU-CHI-NHANH.md). ER cũ mô tả các bảng lõi; ER mở rộng ở đây bổ sung các quan hệ mới. Các trường SQL đầy đủ ở từ điển dữ liệu.
+
+
+## 11. Rà soát bằng Agent Skills
+
+Bổ sung bảng kỹ thuật AuthRateBucket (`makhoa varchar(64)` PK HMAC, `thoigianhethan timestamptz` có index, `solan integer` không âm), nâng tổng số model ứng dụng lên 26. Các khóa chính nghiệp vụ vẫn là bigint; bộ đếm xác thực dùng khóa băm. Refund thêm `diemhoandadoitru integer`, PointEntry thêm loại `debt_recovery` để lưu đối trừ có kiểm toán. Migration 0008–0010 và chính sách email/đặt lại mật khẩu được trình bày ở [tài liệu 14](14-AGENT-SKILLS.md).
+
+Các bản ghi điểm và hóa đơn được giữ lại. Quyền và phân công được đọc lại sau khóa chi nhánh; reset mật khẩu chỉ ghi trường password sau khóa user. Tổng hợp chi nhánh tách nhóm theo từng bảng để tránh nhân doanh thu do join; lịch sử xử lý đọc 20 dòng/trang.

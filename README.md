@@ -2,7 +2,9 @@
 
 Dự án tiếng Việt dùng Django 5.2 LTS, PostgreSQL và giao diện riêng bằng HTML/CSS/JavaScript. Có trang khách hàng, trang cá nhân và cổng quản lý với chức năng thêm/sửa/xóa. Toàn bộ danh mục được quản lý tại `/quan-ly/thiet-lap/`; không dùng Django Admin. Chạy trực tiếp trên VS Code, không cần Docker hoặc Node.js.
 
-Xem [nghiệp vụ quản lý nhiều chi nhánh](docs/13-NGHIEP-VU-NHIEU-CHI-NHANH.md): tiếp nhận tại quầy, sức chứa, nghỉ đột xuất, cổng stylist, dịch vụ phát sinh, chờ thu, voucher, kho/chuyển kho, hoa hồng, hoàn tiền, chốt sổ và email nhắc lịch. **Cần migrate 0005–0007.**
+Xem [áp dụng 25 Agent Skills và hướng dẫn cập nhật](docs/14-AGENT-SKILLS.md): sửa quyền khôi phục tài khoản, hoàn điểm, truy vấn nhiều chi nhánh, giao diện dễ đọc, giới hạn đăng nhập và bộ kiểm tra tự động. **Bản mới cần migrate đến 0010.**
+
+Xem [nghiệp vụ quản lý nhiều chi nhánh](docs/13-NGHIEP-VU-NHIEU-CHI-NHANH.md): tiếp nhận tại quầy, sức chứa, nghỉ đột xuất, cổng stylist, dịch vụ phát sinh, chờ thu, voucher, kho/chuyển kho, hoa hồng, hoàn tiền, chốt sổ và email nhắc lịch.
 
 Xem [bản phối phông tiếng Việt và ảnh salon Việt Nam](docs/12-FONT-VA-HINH-ANH.md), gồm ảnh xem trước và danh sách file để copy.
 
@@ -114,7 +116,7 @@ Xóa yêu cầu xác nhận và POST/CSRF. Bản ghi có liên kết lịch hẹ
 
 ## Cập nhật từ phiên bản trước
 
-Giữ `.env` và database hiện có. Dừng web cũ, cập nhật mã, cài lại `requirements.txt`, chạy migrate và collectstatic rồi bật lại web. Không cần xóa database hoặc chạy lại seed để cập nhật. Bản vận hành nhiều chi nhánh thêm migration 0005–0007; `0002_vietnamese_column_names` vẫn đổi tên cột tại chỗ khi nâng cấp từ bản rất cũ. Các bảng kỹ thuật đã có trong database được giữ lại, không xóa dữ liệu lịch sử.
+Giữ `.env` và database hiện có. Dừng web cũ, cập nhật mã, cài lại `requirements.txt`, chạy migrate và collectstatic rồi bật lại web. Không cần xóa database hoặc chạy lại seed để cập nhật. Bản vận hành nhiều chi nhánh và rà soát chất lượng thêm migration 0005–0010; `0002_vietnamese_column_names` vẫn đổi tên cột tại chỗ khi nâng cấp từ bản rất cũ. Các bảng kỹ thuật đã có trong database được giữ lại, không xóa dữ liệu lịch sử.
 
 Nếu thay thư mục bằng ZIP mới, nhớ sao chép `.env` của bạn vào thư mục mới. Không đặt `.env` trong `.venv`. Dữ liệu PostgreSQL lưu trên máy chủ, không nằm trong ZIP.
 
@@ -142,7 +144,7 @@ Có thể đặt `BROWSER_EXECUTABLE` nếu đã có Chromium. Browser smoke ngh
 ## Tài liệu và cấu trúc
 
 - [Phân tích yêu cầu](docs/01-PHAN-TICH.md), [thiết kế](docs/02-THIET-KE.md), [triển khai](docs/03-TRIEN-KHAI.md), [kiểm thử](docs/04-KIEM-THU.md).
-- [Tên cột tiếng Việt của 25 bảng](docs/05-TEN-COT-DU-LIEU.md), [giao diện khách hàng](docs/06-GIAO-DIEN-KHACH-HANG.md), [quản trị và trang cá nhân](docs/07-QUAN-TRI-RIENG.md).
+- [Tên cột tiếng Việt của 26 bảng ứng dụng](docs/05-TEN-COT-DU-LIEU.md), [giao diện khách hàng](docs/06-GIAO-DIEN-KHACH-HANG.md), [quản trị và trang cá nhân](docs/07-QUAN-TRI-RIENG.md).
 - [Báo cáo Word](docs/BAO_CAO_PHAN_TICH_THIET_KE.docx), [nguồn ảnh/font](docs/NGUON-TAI-NGUYEN.md).
 
 `salon/management_views.py` xử lý CRUD, `salon/profile_views.py` xử lý hồ sơ/mật khẩu, `salon/forms.py` kiểm tra dữ liệu, `salon/services.py` xử lý đặt lịch/thanh toán có transaction. `templates/staff/` chứa cổng quản lý riêng; `static/css/management.css` định dạng các màn hình mới. `scripts/dev.py` chạy được trên Windows/Linux/macOS.

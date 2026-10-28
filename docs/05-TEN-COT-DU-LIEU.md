@@ -1,10 +1,10 @@
 # Tên thuộc tính trong các bảng dữ liệu
 
-Các cột của 25 bảng nghiệp vụ dùng tiếng Việt viết liền không dấu, chữ thường, không có dấu gạch dưới. Tên bảng giữ nguyên. Các kiểu dữ liệu vẫn bằng tiếng Anh. Migration đổi tên cột giữ nguyên kiểu dữ liệu cũ; các trường và bảng bổ sung có kiểu/ràng buộc theo thiết kế hiện tại.
+Các cột của 26 bảng ứng dụng (25 nghiệp vụ và bộ đếm xác thực) dùng tiếng Việt viết liền không dấu, chữ thường, không có dấu gạch dưới. Tên bảng giữ nguyên. Các kiểu dữ liệu vẫn bằng tiếng Anh. Migration đổi tên cột giữ nguyên kiểu dữ liệu cũ; các trường và bảng bổ sung có kiểu/ràng buộc theo thiết kế hiện tại.
 
 Django ánh xạ tên thuộc tính Python sang tên cột PostgreSQL bằng `db_column`. Ví dụ `User.full_name` truy vấn cột `hoten`, `Appointment.branch_id` truy vấn cột `machinhanh`. Các bảng kỹ thuật do Django quản lý (quyền, nhóm, session, bảng nối phân quyền) dùng quy ước của framework.
 
-Đã có database: chạy `python manage.py migrate --noinput` để áp dụng migration `0002_vietnamese_column_names` và các migration 0003–0007 bổ sung vận hành, kho, đối soát và lịch sử. Migration đổi tên cột không xóa và tạo lại dữ liệu. Tệp `0001_initial.py` được giữ nguyên để có thể nâng cấp và hoàn tác đúng lịch sử.
+Đã có database: chạy `python manage.py migrate --noinput` để áp dụng migration `0002_vietnamese_column_names` và các migration 0003–0010 bổ sung vận hành, kho, đối soát, lịch sử, hoàn điểm và giới hạn xác thực. Migration đổi tên cột không xóa và tạo lại dữ liệu. Tệp `0001_initial.py` được giữ nguyên để có thể nâng cấp và hoàn tác đúng lịch sử.
 
 Các giá trị enum như `booked`, `customer`, `cash` và các tham số API vẫn giữ nguyên; đây là giá trị dữ liệu/giao thức, không phải tên cột hoặc kiểu dữ liệu.
 
@@ -307,11 +307,20 @@ Các giá trị enum như `booked`, `customer`, `cash` và các tham số API v�
 | `invoice_id` | `mahoadon` | `bigint` | FK → salon_invoice.mahoadon; UNIQUE; NOT NULL |
 | `amount` | `sotienhoan` | `integer` | NOT NULL |
 | `points_debt_added` | `diemthieuthuhoi` | `integer` | NOT NULL |
+| `points_debt_repaid` | `diemhoandadoitru` | `integer` | NOT NULL |
 | `reason` | `lydo` | `varchar(250)` | NOT NULL |
 | `actor_id` | `manguoithuchien` | `bigint` | FK → salon_user.manguoidung; NOT NULL |
 | `created_at` | `ngaytao` | `timestamptz` | NOT NULL |
 
-## 25. Bảng salon_dailyclosing
+## 25. Bảng salon_authratebucket
+
+| Thuộc tính Python | Tên cột tiếng Việt | Kiểu dữ liệu | Ràng buộc chính |
+|---|---|---|---|
+| `key` | `makhoa` | `varchar(64)` | PK; NOT NULL |
+| `expires_at` | `thoigianhethan` | `timestamptz` | NOT NULL |
+| `count` | `solan` | `integer` | NOT NULL |
+
+## 26. Bảng salon_dailyclosing
 
 | Thuộc tính Python | Tên cột tiếng Việt | Kiểu dữ liệu | Ràng buộc chính |
 |---|---|---|---|

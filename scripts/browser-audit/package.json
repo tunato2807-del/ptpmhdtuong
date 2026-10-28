@@ -1,0 +1,10 @@
+{
+  "name": "gentleman-local-browser-audit",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Development-only accessibility checks; no app runtime dependency",
+  "packageManager": "npm@11.9.0",
+  "dependencies": {
+    "axe-core": "4.14.0"
+  }
+}

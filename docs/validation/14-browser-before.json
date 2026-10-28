@@ -1,0 +1,1305 @@
+{
+  "tool": "Playwright/Chromium CDP + axe-core",
+  "pages": [
+    {
+      "role": "anonymous",
+      "path": "/",
+      "width": 1440,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "targets": [
+            [
+              "label"
+            ],
+            [
+              ".gh-section-heading[data-reveal=\"\"] > div:nth-child(2) > p"
+            ],
+            [
+              ".gallery-bottom > span"
+            ],
+            [
+              ".gh-branch:nth-child(1) > .gh-branch-body > .location-label"
+            ],
+            [
+              ".gh-branch:nth-child(2) > .gh-branch-body > .location-label"
+            ],
+            [
+              ".gh-branch:nth-child(3) > .gh-branch-body > .location-label"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=1&employee=1\"] > .member-initials[aria-hidden=\"true\"]"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=1&employee=1\"] > div > span"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=1&employee=1\"] > div > small"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=1&employee=2\"] > .member-initials[aria-hidden=\"true\"]"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=1&employee=2\"] > div > span"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=1&employee=2\"] > div > small"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=2&employee=3\"] > .member-initials[aria-hidden=\"true\"]"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=2&employee=3\"] > div > span"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=2&employee=3\"] > div > small"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=2&employee=4\"] > .member-initials[aria-hidden=\"true\"]"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=2&employee=4\"] > div > span"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=2&employee=4\"] > div > small"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=3&employee=5\"] > .member-initials[aria-hidden=\"true\"]"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=3&employee=5\"] > div > span"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=3&employee=5\"] > div > small"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=3&employee=6\"] > .member-initials[aria-hidden=\"true\"]"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=3&employee=6\"] > div > span"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=3&employee=6\"] > div > small"
+            ],
+            [
+              "article:nth-child(1) > span"
+            ],
+            [
+              "article:nth-child(2) > span"
+            ],
+            [
+              "article:nth-child(3) > span"
+            ]
+          ]
+        }
+      ],
+      "passes": 25
+    },
+    {
+      "role": "anonymous",
+      "path": "/dang-nhap/",
+      "width": 1440,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "targets": [
+            [
+              "summary"
+            ]
+          ]
+        }
+      ],
+      "passes": 23
+    },
+    {
+      "role": "anonymous",
+      "path": "/dang-ky/",
+      "width": 1440,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "targets": [
+            [
+              ".form-field:nth-child(3) > .help-text"
+            ],
+            [
+              "li:nth-child(1)"
+            ],
+            [
+              "li:nth-child(2)"
+            ],
+            [
+              "li:nth-child(3)"
+            ],
+            [
+              "li:nth-child(4)"
+            ],
+            [
+              ".form-field:nth-child(7) > .help-text"
+            ]
+          ]
+        }
+      ],
+      "passes": 23
+    },
+    {
+      "role": "anonymous",
+      "path": "/quen-mat-khau/",
+      "width": 1440,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 21
+    },
+    {
+      "role": "customer",
+      "path": "/tai-khoan/",
+      "width": 1440,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "targets": [
+            [
+              "aside > p:nth-child(3)"
+            ],
+            [
+              ".profile-role"
+            ],
+            [
+              "div:nth-child(1) > dt"
+            ],
+            [
+              "div:nth-child(2) > dt"
+            ],
+            [
+              ".profile-note"
+            ],
+            [
+              "li:nth-child(1)"
+            ],
+            [
+              "li:nth-child(2)"
+            ],
+            [
+              "li:nth-child(3)"
+            ],
+            [
+              "li:nth-child(4)"
+            ],
+            [
+              ".form-field:nth-child(5) > .help-text"
+            ]
+          ]
+        }
+      ],
+      "passes": 25
+    },
+    {
+      "role": "customer",
+      "path": "/dat-lich/",
+      "width": 1440,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "targets": [
+            [
+              "section:nth-child(1) > h2 > .step-number"
+            ],
+            [
+              "section:nth-child(2) > h2 > .step-number"
+            ],
+            [
+              "section:nth-child(3) > h2 > .step-number"
+            ],
+            [
+              ".summary-line:nth-child(4) > span"
+            ],
+            [
+              ".summary-line:nth-child(5) > span"
+            ],
+            [
+              ".summary-line:nth-child(8) > span"
+            ]
+          ]
+        }
+      ],
+      "passes": 22
+    },
+    {
+      "role": "customer",
+      "path": "/lich-cua-toi/",
+      "width": 1440,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 22
+    },
+    {
+      "role": "manager",
+      "path": "/quan-ly/",
+      "width": 1440,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "targets": [
+            [
+              ".active"
+            ],
+            [
+              ".breadcrumb"
+            ],
+            [
+              ".environment-tag"
+            ],
+            [
+              ".rust.small.avatar"
+            ],
+            [
+              ".eyebrow"
+            ],
+            [
+              ".page-heading > div > p"
+            ],
+            [
+              ".btn-primary"
+            ],
+            [
+              "article:nth-child(1) > .stat-label"
+            ],
+            [
+              "article:nth-child(1) > .stat-foot"
+            ],
+            [
+              "article:nth-child(2) > .stat-label"
+            ],
+            [
+              "article:nth-child(2) > .stat-value > small"
+            ],
+            [
+              "article:nth-child(2) > .stat-foot"
+            ],
+            [
+              "article:nth-child(3) > .stat-label"
+            ],
+            [
+              "article:nth-child(3) > .stat-value > small"
+            ],
+            [
+              "article:nth-child(3) > .stat-foot"
+            ],
+            [
+              "article:nth-child(4) > .stat-label"
+            ],
+            [
+              "article:nth-child(4) > .stat-value > small"
+            ],
+            [
+              ".stat-foot > a[href$=\"ca-lam/\"]"
+            ],
+            [
+              ".revenue-panel > .panel-heading > div > p"
+            ],
+            [
+              ".legend"
+            ],
+            [
+              ".chart-column:nth-child(1) > .chart-label"
+            ],
+            [
+              ".chart-column:nth-child(2) > .chart-label"
+            ],
+            [
+              ".chart-column:nth-child(3) > .chart-label"
+            ],
+            [
+              ".chart-column:nth-child(4) > .chart-label"
+            ],
+            [
+              ".chart-column:nth-child(5) > .chart-label"
+            ],
+            [
+              ".chart-column:nth-child(6) > .chart-label"
+            ],
+            [
+              ".chart-column:nth-child(7) > .chart-label"
+            ],
+            [
+              ".team-panel > .panel-heading > div > p"
+            ],
+            [
+              ".tone-1"
+            ],
+            [
+              ".team-row:nth-child(2) > div > small"
+            ],
+            [
+              ".team-row:nth-child(2) > .team-count > small"
+            ],
+            [
+              ".tone-2"
+            ],
+            [
+              ".team-row:nth-child(3) > div > small"
+            ],
+            [
+              ".team-row:nth-child(3) > .team-count > small"
+            ],
+            [
+              ".tone-3"
+            ],
+            [
+              ".team-row:nth-child(4) > div > small"
+            ],
+            [
+              ".team-row:nth-child(4) > .team-count > small"
+            ],
+            [
+              ".tone-4"
+            ],
+            [
+              ".team-row:nth-child(5) > div > small"
+            ],
+            [
+              ".team-row:nth-child(5) > .team-count > small"
+            ],
+            [
+              ".tone-5"
+            ],
+            [
+              ".team-row:nth-child(6) > div > small"
+            ],
+            [
+              ".team-row:nth-child(6) > .team-count > small"
+            ],
+            [
+              ".tone-6"
+            ],
+            [
+              ".team-row:nth-child(7) > div > small"
+            ],
+            [
+              ".team-row:nth-child(7) > .team-count > small"
+            ],
+            [
+              ".appointments-panel > .panel-heading > div > p"
+            ],
+            [
+              "th:nth-child(1)"
+            ],
+            [
+              "th:nth-child(2)"
+            ],
+            [
+              "th:nth-child(3)"
+            ],
+            [
+              "th:nth-child(4)"
+            ],
+            [
+              "th:nth-child(5)"
+            ],
+            [
+              "h3"
+            ],
+            [
+              ".empty > p"
+            ],
+            [
+              "footer > span:nth-child(1)"
+            ],
+            [
+              "footer > span:nth-child(2)"
+            ]
+          ]
+        }
+      ],
+      "passes": 27
+    },
+    {
+      "role": "manager",
+      "path": "/quan-ly/van-hanh/",
+      "width": 1440,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "targets": [
+            [
+              ".active"
+            ],
+            [
+              ".breadcrumb"
+            ],
+            [
+              ".environment-tag"
+            ],
+            [
+              ".small"
+            ],
+            [
+              ".btn-primary"
+            ],
+            [
+              "article:nth-child(1) > .eyebrow"
+            ],
+            [
+              "article:nth-child(1) > p:nth-child(3)"
+            ],
+            [
+              "article:nth-child(1) > .summary-line:nth-child(4) > span"
+            ],
+            [
+              "article:nth-child(1) > .summary-line:nth-child(5) > span"
+            ],
+            [
+              "article:nth-child(1) > .summary-line:nth-child(6) > span"
+            ],
+            [
+              "article:nth-child(1) > .summary-line:nth-child(7) > span"
+            ],
+            [
+              "article:nth-child(1) > p:nth-child(8)"
+            ],
+            [
+              "article:nth-child(1) > .text-link"
+            ],
+            [
+              "article:nth-child(2) > .eyebrow"
+            ],
+            [
+              "article:nth-child(2) > p:nth-child(3)"
+            ],
+            [
+              "article:nth-child(2) > .summary-line:nth-child(4) > span"
+            ],
+            [
+              "article:nth-child(2) > .summary-line:nth-child(5) > span"
+            ],
+            [
+              "article:nth-child(2) > .summary-line:nth-child(6) > span"
+            ],
+            [
+              "article:nth-child(2) > .summary-line:nth-child(7) > span"
+            ],
+            [
+              "article:nth-child(2) > p:nth-child(8)"
+            ],
+            [
+              "article:nth-child(2) > .text-link"
+            ],
+            [
+              "article:nth-child(3) > .eyebrow"
+            ],
+            [
+              "article:nth-child(3) > p:nth-child(3)"
+            ],
+            [
+              "article:nth-child(3) > .summary-line:nth-child(4) > span"
+            ],
+            [
+              "article:nth-child(3) > .summary-line:nth-child(5) > span"
+            ],
+            [
+              "article:nth-child(3) > .summary-line:nth-child(6) > span"
+            ],
+            [
+              "article:nth-child(3) > .summary-line:nth-child(7) > span"
+            ],
+            [
+              "article:nth-child(3) > p:nth-child(8)"
+            ],
+            [
+              "article:nth-child(3) > .text-link"
+            ],
+            [
+              "th:nth-child(1)"
+            ],
+            [
+              "th:nth-child(2)"
+            ],
+            [
+              "th:nth-child(3)"
+            ],
+            [
+              "th:nth-child(4)"
+            ],
+            [
+              "footer > span:nth-child(1)"
+            ],
+            [
+              "footer > span:nth-child(2)"
+            ]
+          ]
+        }
+      ],
+      "passes": 24
+    },
+    {
+      "role": "manager",
+      "path": "/quan-ly/tai-nguyen/stylist/",
+      "width": 1440,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "targets": [
+            [
+              ".active"
+            ],
+            [
+              ".breadcrumb"
+            ],
+            [
+              ".environment-tag"
+            ],
+            [
+              ".small"
+            ],
+            [
+              ".btn-primary"
+            ],
+            [
+              "th:nth-child(1)"
+            ],
+            [
+              "th:nth-child(2)"
+            ],
+            [
+              "th:nth-child(3)"
+            ],
+            [
+              "footer > span:nth-child(1)"
+            ],
+            [
+              "footer > span:nth-child(2)"
+            ]
+          ]
+        }
+      ],
+      "passes": 21
+    },
+    {
+      "role": "manager",
+      "path": "/quan-ly/thiet-lap/",
+      "width": 1440,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "targets": [
+            [
+              ".active"
+            ],
+            [
+              ".breadcrumb"
+            ],
+            [
+              ".environment-tag"
+            ],
+            [
+              ".small"
+            ],
+            [
+              ".eyebrow"
+            ],
+            [
+              ".page-heading > div > p"
+            ],
+            [
+              ".panel.settings-card[href$=\"dich-vu/\"] > p"
+            ],
+            [
+              ".panel.settings-card[href$=\"dich-vu/\"] > .text-link"
+            ],
+            [
+              ".panel.settings-card[href$=\"chi-nhanh/\"] > p"
+            ],
+            [
+              ".panel.settings-card[href$=\"chi-nhanh/\"] > .text-link"
+            ],
+            [
+              "a[href$=\"stylist/\"] > p"
+            ],
+            [
+              "a[href$=\"stylist/\"] > .text-link"
+            ],
+            [
+              "a[href$=\"ghe/\"] > p"
+            ],
+            [
+              "a[href$=\"ghe/\"] > .text-link"
+            ],
+            [
+              ".panel.settings-card[href$=\"ca-lam/\"] > p"
+            ],
+            [
+              ".panel.settings-card[href$=\"ca-lam/\"] > .text-link"
+            ],
+            [
+              ".panel.settings-card[href$=\"tai-khoan/\"] > p"
+            ],
+            [
+              ".panel.settings-card[href$=\"tai-khoan/\"] > .text-link"
+            ],
+            [
+              ".info-note"
+            ],
+            [
+              "footer > span:nth-child(1)"
+            ],
+            [
+              "footer > span:nth-child(2)"
+            ]
+          ]
+        }
+      ],
+      "passes": 18
+    },
+    {
+      "role": "anonymous",
+      "path": "/",
+      "width": 390,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "targets": [
+            [
+              "label"
+            ],
+            [
+              ".gh-section-heading[data-reveal=\"\"] > div:nth-child(2) > p"
+            ],
+            [
+              ".gallery-bottom > span"
+            ],
+            [
+              ".gh-branch:nth-child(1) > .gh-branch-body > .location-label"
+            ],
+            [
+              ".gh-branch:nth-child(2) > .gh-branch-body > .location-label"
+            ],
+            [
+              ".gh-branch:nth-child(3) > .gh-branch-body > .location-label"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=1&employee=1\"] > div > span"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=1&employee=1\"] > div > small"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=1&employee=2\"] > div > span"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=1&employee=2\"] > div > small"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=2&employee=3\"] > div > span"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=2&employee=3\"] > div > small"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=2&employee=4\"] > div > span"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=2&employee=4\"] > div > small"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=3&employee=5\"] > div > span"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=3&employee=5\"] > div > small"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=3&employee=6\"] > div > span"
+            ],
+            [
+              "a[href=\"/dat-lich/?branch=3&employee=6\"] > div > small"
+            ],
+            [
+              "article:nth-child(1) > span"
+            ],
+            [
+              "article:nth-child(2) > span"
+            ],
+            [
+              "article:nth-child(3) > span"
+            ]
+          ]
+        }
+      ],
+      "passes": 25
+    },
+    {
+      "role": "anonymous",
+      "path": "/dang-nhap/",
+      "width": 390,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "targets": [
+            [
+              "summary"
+            ]
+          ]
+        }
+      ],
+      "passes": 22
+    },
+    {
+      "role": "anonymous",
+      "path": "/dang-ky/",
+      "width": 390,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "targets": [
+            [
+              ".form-field:nth-child(3) > .help-text"
+            ],
+            [
+              "li:nth-child(1)"
+            ],
+            [
+              "li:nth-child(2)"
+            ],
+            [
+              "li:nth-child(3)"
+            ],
+            [
+              "li:nth-child(4)"
+            ],
+            [
+              ".form-field:nth-child(7) > .help-text"
+            ]
+          ]
+        }
+      ],
+      "passes": 23
+    },
+    {
+      "role": "anonymous",
+      "path": "/quen-mat-khau/",
+      "width": 390,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 21
+    },
+    {
+      "role": "customer",
+      "path": "/tai-khoan/",
+      "width": 390,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "targets": [
+            [
+              ".profile-avatar"
+            ],
+            [
+              "aside > p:nth-child(3)"
+            ],
+            [
+              ".profile-role"
+            ],
+            [
+              "div:nth-child(1) > dt"
+            ],
+            [
+              "div:nth-child(2) > dt"
+            ],
+            [
+              ".profile-note"
+            ],
+            [
+              "li:nth-child(1)"
+            ],
+            [
+              "li:nth-child(2)"
+            ],
+            [
+              "li:nth-child(3)"
+            ],
+            [
+              "li:nth-child(4)"
+            ],
+            [
+              ".form-field:nth-child(5) > .help-text"
+            ]
+          ]
+        }
+      ],
+      "passes": 25
+    },
+    {
+      "role": "customer",
+      "path": "/dat-lich/",
+      "width": 390,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "targets": [
+            [
+              "section:nth-child(1) > h2 > .step-number"
+            ],
+            [
+              "section:nth-child(2) > h2 > .step-number"
+            ],
+            [
+              "section:nth-child(3) > h2 > .step-number"
+            ],
+            [
+              ".summary-line:nth-child(4) > span"
+            ],
+            [
+              ".summary-line:nth-child(5) > span"
+            ],
+            [
+              ".summary-line:nth-child(8) > span"
+            ]
+          ]
+        }
+      ],
+      "passes": 22
+    },
+    {
+      "role": "customer",
+      "path": "/lich-cua-toi/",
+      "width": 390,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [],
+      "passes": 22
+    },
+    {
+      "role": "manager",
+      "path": "/quan-ly/",
+      "width": 390,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "targets": [
+            [
+              ".breadcrumb"
+            ],
+            [
+              ".eyebrow"
+            ],
+            [
+              ".page-heading > div > p"
+            ],
+            [
+              ".btn-primary"
+            ],
+            [
+              "article:nth-child(1) > .stat-label"
+            ],
+            [
+              "article:nth-child(1) > .stat-foot"
+            ],
+            [
+              "article:nth-child(2) > .stat-label"
+            ],
+            [
+              "article:nth-child(2) > .stat-value > small"
+            ],
+            [
+              "article:nth-child(2) > .stat-foot"
+            ],
+            [
+              "article:nth-child(3) > .stat-label"
+            ],
+            [
+              "article:nth-child(3) > .stat-value > small"
+            ],
+            [
+              "article:nth-child(3) > .stat-foot"
+            ],
+            [
+              "article:nth-child(4) > .stat-label"
+            ],
+            [
+              "article:nth-child(4) > .stat-value > small"
+            ],
+            [
+              ".stat-foot > a[href$=\"ca-lam/\"]"
+            ],
+            [
+              ".revenue-panel > .panel-heading > div > p"
+            ],
+            [
+              ".legend"
+            ],
+            [
+              ".chart-column:nth-child(1) > .chart-label"
+            ],
+            [
+              ".chart-column:nth-child(2) > .chart-label"
+            ],
+            [
+              ".chart-column:nth-child(3) > .chart-label"
+            ],
+            [
+              ".chart-column:nth-child(4) > .chart-label"
+            ],
+            [
+              ".chart-column:nth-child(5) > .chart-label"
+            ],
+            [
+              ".chart-column:nth-child(6) > .chart-label"
+            ],
+            [
+              ".chart-column:nth-child(7) > .chart-label"
+            ],
+            [
+              ".appointments-panel > .panel-heading > div > p"
+            ],
+            [
+              "th:nth-child(1)"
+            ],
+            [
+              "th:nth-child(2)"
+            ],
+            [
+              "th:nth-child(3)"
+            ],
+            [
+              "h3"
+            ],
+            [
+              ".empty > p"
+            ],
+            [
+              "footer > span:nth-child(1)"
+            ],
+            [
+              "footer > span:nth-child(2)"
+            ]
+          ]
+        },
+        {
+          "id": "scrollable-region-focusable",
+          "impact": "serious",
+          "targets": [
+            [
+              ".table-scroll"
+            ]
+          ]
+        }
+      ],
+      "passes": 27
+    },
+    {
+      "role": "manager",
+      "path": "/quan-ly/van-hanh/",
+      "width": 390,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "targets": [
+            [
+              ".breadcrumb"
+            ],
+            [
+              ".btn-primary"
+            ],
+            [
+              "article:nth-child(1) > .eyebrow"
+            ],
+            [
+              "article:nth-child(1) > p:nth-child(3)"
+            ],
+            [
+              "article:nth-child(1) > .summary-line:nth-child(4) > span"
+            ],
+            [
+              "article:nth-child(1) > .summary-line:nth-child(5) > span"
+            ],
+            [
+              "article:nth-child(1) > .summary-line:nth-child(6) > span"
+            ],
+            [
+              "article:nth-child(1) > .summary-line:nth-child(7) > span"
+            ],
+            [
+              "article:nth-child(1) > p:nth-child(8)"
+            ],
+            [
+              "article:nth-child(1) > .text-link"
+            ],
+            [
+              "article:nth-child(2) > .eyebrow"
+            ],
+            [
+              "article:nth-child(2) > p:nth-child(3)"
+            ],
+            [
+              "article:nth-child(2) > .summary-line:nth-child(4) > span"
+            ],
+            [
+              "article:nth-child(2) > .summary-line:nth-child(5) > span"
+            ],
+            [
+              "article:nth-child(2) > .summary-line:nth-child(6) > span"
+            ],
+            [
+              "article:nth-child(2) > .summary-line:nth-child(7) > span"
+            ],
+            [
+              "article:nth-child(2) > p:nth-child(8)"
+            ],
+            [
+              "article:nth-child(2) > .text-link"
+            ],
+            [
+              "article:nth-child(3) > .eyebrow"
+            ],
+            [
+              "article:nth-child(3) > p:nth-child(3)"
+            ],
+            [
+              "article:nth-child(3) > .summary-line:nth-child(4) > span"
+            ],
+            [
+              "article:nth-child(3) > .summary-line:nth-child(5) > span"
+            ],
+            [
+              "article:nth-child(3) > .summary-line:nth-child(6) > span"
+            ],
+            [
+              "article:nth-child(3) > .summary-line:nth-child(7) > span"
+            ],
+            [
+              "article:nth-child(3) > p:nth-child(8)"
+            ],
+            [
+              "article:nth-child(3) > .text-link"
+            ],
+            [
+              "th:nth-child(1)"
+            ],
+            [
+              "th:nth-child(2)"
+            ],
+            [
+              "th:nth-child(3)"
+            ],
+            [
+              "th:nth-child(4)"
+            ],
+            [
+              "footer > span:nth-child(1)"
+            ],
+            [
+              "footer > span:nth-child(2)"
+            ]
+          ]
+        },
+        {
+          "id": "scrollable-region-focusable",
+          "impact": "serious",
+          "targets": [
+            [
+              ".business-table"
+            ]
+          ]
+        }
+      ],
+      "passes": 24
+    },
+    {
+      "role": "manager",
+      "path": "/quan-ly/tai-nguyen/stylist/",
+      "width": 390,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "targets": [
+            [
+              ".breadcrumb"
+            ],
+            [
+              ".btn-primary"
+            ],
+            [
+              "th:nth-child(1)"
+            ],
+            [
+              "th:nth-child(2)"
+            ],
+            [
+              "th:nth-child(3)"
+            ],
+            [
+              "footer > span:nth-child(1)"
+            ],
+            [
+              "footer > span:nth-child(2)"
+            ]
+          ]
+        }
+      ],
+      "passes": 21
+    },
+    {
+      "role": "manager",
+      "path": "/quan-ly/thiet-lap/",
+      "width": 390,
+      "status": 200,
+      "js_errors": [],
+      "overflow": false,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "targets": [
+            [
+              ".breadcrumb"
+            ],
+            [
+              ".eyebrow"
+            ],
+            [
+              ".page-heading > div > p"
+            ],
+            [
+              ".panel.settings-card[href$=\"dich-vu/\"] > p"
+            ],
+            [
+              ".panel.settings-card[href$=\"dich-vu/\"] > .text-link"
+            ],
+            [
+              ".panel.settings-card[href$=\"chi-nhanh/\"] > p"
+            ],
+            [
+              ".panel.settings-card[href$=\"chi-nhanh/\"] > .text-link"
+            ],
+            [
+              "a[href$=\"stylist/\"] > p"
+            ],
+            [
+              "a[href$=\"stylist/\"] > .text-link"
+            ],
+            [
+              "a[href$=\"ghe/\"] > p"
+            ],
+            [
+              "a[href$=\"ghe/\"] > .text-link"
+            ],
+            [
+              ".panel.settings-card[href$=\"ca-lam/\"] > p"
+            ],
+            [
+              ".panel.settings-card[href$=\"ca-lam/\"] > .text-link"
+            ],
+            [
+              ".panel.settings-card[href$=\"tai-khoan/\"] > p"
+            ],
+            [
+              ".panel.settings-card[href$=\"tai-khoan/\"] > .text-link"
+            ],
+            [
+              ".info-note"
+            ],
+            [
+              "footer > span:nth-child(1)"
+            ],
+            [
+              "footer > span:nth-child(2)"
+            ]
+          ]
+        }
+      ],
+      "passes": 18
+    }
+  ],
+  "lab_home": [
+    {
+      "lcp": 1708,
+      "cls": 0.3011322927334889,
+      "load": 4590.29999999702
+    },
+    {
+      "lcp": 1532,
+      "cls": 0.30140557026639403,
+      "load": 4559.5
+    },
+    {
+      "lcp": 1600,
+      "cls": 0.3011322927334889,
+      "load": 4571.39999999851
+    }
+  ],
+  "browser": "154.0.8037.57"
+}

@@ -1,8 +1,11 @@
 name: Django validation
 on: [push, pull_request]
+permissions:
+  contents: read
 jobs:
   test-and-build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     strategy:
       matrix:
         python-version: ['3.12', '3.14']
@@ -22,12 +25,40 @@ jobs:
         run: |
           sudo systemctl start postgresql
           sudo -u postgres psql -c 'CREATE DATABASE gentleman;'
-          sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'ci-local-only';"
+          pg_ci_password=$(python -c 'import secrets; print(secrets.token_hex(24))')
+          echo "::add-mask::$pg_ci_password"
+          printf 'POSTGRES_PASSWORD=%s\n' "$pg_ci_password" >> "$GITHUB_ENV"
+          sudo -u postgres psql -c "ALTER USER postgres PASSWORD '$pg_ci_password';"
       - name: Install dependencies
         run: |
           python -m venv .venv
-          .venv/bin/python -m pip install -r requirements.txt
+          .venv/bin/python -m pip install --upgrade pip==26.2
+          .venv/bin/python -m pip install -r requirements-quality.txt
+      - name: Lint, formatting and known vulnerability audit
+        run: |
+          .venv/bin/python scripts/verify_agent_skills.py
+          .venv/bin/ruff check salon config scripts
+          .venv/bin/ruff format --check salon config scripts
+          .venv/bin/python -m pip_audit -r requirements.txt
       - name: Check and test
-        env:
-          POSTGRES_PASSWORD: ci-local-only
         run: python scripts/dev.py check
+      - uses: actions/setup-node@v4
+        if: matrix.python-version == '3.12'
+        with:
+          node-version: '22'
+      - name: Browser and accessibility checks
+        if: matrix.python-version == '3.12'
+        run: |
+          npm install --global npm@11.9.0 --ignore-scripts
+          npm ci --ignore-scripts --prefix scripts/browser-audit
+          .venv/bin/python -m playwright install --with-deps chromium
+          .venv/bin/python manage.py migrate --noinput
+          .venv/bin/python manage.py seed_demo
+          .venv/bin/python manage.py runserver 127.0.0.1:8000 --noreload > /tmp/gentleman-ci.log 2>&1 &
+          for attempt in $(seq 1 30); do curl -fsS http://127.0.0.1:8000/health/ && break; sleep 1; done
+          .venv/bin/python scripts/quality_browser.py
+      - uses: actions/upload-artifact@v4
+        if: always() && matrix.python-version == '3.12'
+        with:
+          name: browser-quality
+          path: test-results/quality-browser.json

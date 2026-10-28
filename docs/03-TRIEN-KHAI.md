@@ -79,3 +79,8 @@ Bản mới cần migrate 0003/0004. Hướng dẫn SMTP/local email, lịch s�
 ## Vận hành nhiều chi nhánh
 
 Cập nhật 28/10/2026 cần chạy migrate 0005–0007. Lệnh `dispatch_emails` được chạy định kỳ để gửi xác nhận/nhắc lịch; mặc định chỉ ghi email file khi DEBUG. Hướng dẫn chi tiết cấu hình và Task Scheduler tại [tài liệu 13](13-NGHIEP-VU-NHIEU-CHI-NHANH.md). Không có tác vụ định kỳ được cài tự động trên máy người dùng.
+
+
+## Cập nhật Agent Skills và hardening
+
+Chạy sao lưu trước, cập nhật mã, cài requirements, migrate đến 0010 và collectstatic. Bộ đếm giới hạn xác thực dùng PostgreSQL, tự dọn có giới hạn khi có yêu cầu mới; có thể lên lịch `manage.py prune_auth_limits` mỗi ngày. Không thay `.env` hoặc tạo lại database. Xem [tài liệu 14](14-AGENT-SKILLS.md) để dùng skill, kiểm tra lint/audit/trình duyệt và tìm lỗi bằng X-Request-ID.

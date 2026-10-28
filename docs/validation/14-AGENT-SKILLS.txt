@@ -1,0 +1,69 @@
+Agent Skills validation — 2026-10-28
+Source: addyosmani/agent-skills aeac41d4d005999432bb7312f7ff06383a91d59d, MIT
+25 skills + shared references: 39 upstream files verified by SHA256.
+
+Environment: Python 3.12.14; Django 5.2.18; psycopg 3.3.6; PostgreSQL 17.11 native.
+Browser: Playwright 1.62.0; Chromium 154.0.8037.57; axe-core 4.14.0.
+
+RED evidence: initial 11 new tests -> 10 failures; reverse-refund-order baseline already passed.
+Findings corrected: recovery-email takeover; stale reset full-save; post-lock chain-role
+and stylist-assignment checks; refund-order points/debt; N+1/unbounded history reads.
+Hardening RED: login threshold and no-store/CSP headers absent -> 2 failures.
+Cycle 2 auth review: username whitespace bypass -> regression 200 != 429, then fixed.
+Mutation: remove fresh stylist-assignment guard -> PermissionDenied assertion FAILED;
+original bytes restored, final regression suite GREEN.
+
+Final PostgreSQL suite: 179 tests, 109.144s, OK (0 failed/errors/skips).
+Includes real parallel DB connections for authentication counter and existing branch/
+booking/payment/voucher/stock concurrency; forward/re-run legacy debt migration;
+source updater checksum/path rejection/rollback and portable hidden workflow paths.
+manage.py check: no issues.
+makemigrations --check --dry-run: no changes detected.
+migrate --check: all applied through 0010.
+collectstatic: successful; 47 postprocessed assets.
+Ruff critical rules E9/F63/F7/F82: pass.
+Ruff format --check: 74 Python files pass.
+Mechanical formatting commit: 61 files, identical ast.dump before/after, no semantic differences.
+
+Query measurements, same PostgreSQL fixtures (12 branches/stylists; 30 history entries):
+branch board 101 -> 11 (budget15); stylist resources16 ->4 (budget8);
+schedule28 ->6 (budget10); appointment history37 ->7 (budget12).
+No cache/index speculation; grouped/joined reads and 20-entry history pages.
+
+Browser interface:342 route/viewport checks across320/390/768/1024/1440/1920px PASS.
+Checks assets, bounded SVGs, profile/settings layouts, visible POST logout for roles.
+Business browser: walk-in/branch isolation/stylist/service changes/voucher quote/pay/
+commission/PDF/stock transfer/absence/refund/closing,48 operational viewport views PASS.
+No JavaScript/asset errors in these runs.
+Axe:22 page+viewport checks (11 routes,1440x1000 and390x844), WCAG2A/2AA/2.1AA tags.
+Before:18 checks had violations (contrast and keyboard-scroll focus).
+After:0 violations,0 document overflows,all200,0 JS errors in that scope.
+Raw selectors/results:14-browser-before.json and14-browser-after.json.
+
+CDP mobile lab:4xCPU,150ms network latency,200000B/s download,93750B/s upload,
+cold cache,390x844,reduced-motion,3 fresh contexts each. Median values:
+LCP1600ms ->1600ms; CLS0.301132 ->0.039507; load4571.4ms ->4260.6ms.
+A font-preload trial worsened LCP and was discarded. Hidden secondary slideshow images
+now load after initial page load. These are local lab samples,not field Web Vitals,
+not INP,not production throughput or statistical proof across devices.
+
+Dependency audit: pinned runtime requirements (13 resolved packages) no known advisories.
+Installed application virtualenv: no known advisories after updating pip25.0.1 ->26.2.
+Audit found only old pip advisories before upgrade,not a runtime Django package issue.
+Nested npm lock audit:0 vulnerabilities; axe-core only; frozen npm ci --ignore-scripts.
+Python runtime dependencies include all resolved transitives at exact versions.
+
+Safe telemetry verified: route template/request ID/method/status/duration only;
+reset token and query email absent in captured log. No external SMTP/payment/model
+calls. Email tests use locmem; demo server uses existing local email configuration.
+Two independent same-family fresh-context reviewers; bounded second cycle reviewed
+changed artifacts. User chose existing reviewers,declined extra-model review.
+
+CI configured native PostgreSQL,Python3.12/3.14,lint/format/audit/tests/browser.
+Local execution verified3.12 only; GitHub Actions outcome must be checked separately.
+No public deployment,TLS,real SMTP or compliance certification claimed.
+
+Data preservation verification:
+PASS: all original fields/rows in 27 business tables (706 rows) equal restored pre-upgrade snapshot, excluding last_login only. Restore validated all 34 table counts and checksum.
+Removed only the owned temporary comparison database; source database untouched.
+The 27 salon_ physical tables include the 25 application models and two auth membership joins.
