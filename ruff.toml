@@ -1,6 +1,6 @@
 target-version = "py312"
 line-length = 100
-exclude = [".agents", ".venv", "staticfiles", "node_modules"]
+exclude = [".agents", ".specify", ".venv", "staticfiles", "node_modules"]
 
 [lint]
 # Critical syntax/name errors first; do not turn formatting into semantic rewrites.

@@ -2,6 +2,8 @@
 
 Dự án tiếng Việt dùng Django 5.2 LTS, PostgreSQL và giao diện riêng bằng HTML/CSS/JavaScript. Có trang khách hàng, trang cá nhân và cổng quản lý với chức năng thêm/sửa/xóa. Toàn bộ danh mục được quản lý tại `/quan-ly/thiet-lap/`; không dùng Django Admin. Chạy trực tiếp trên VS Code, không cần Docker hoặc Node.js.
 
+Đã tích hợp [**GitHub Spec Kit 1.3.0**](docs/16-SPEC-KIT.md) cho Copilot trong VS Code và Codex: đặc tả → kế hoạch → công việc → triển khai → kiểm chứng. Có constitution riêng cho dự án, helper Python và lệnh cập nhật bằng terminal. Các lệnh `/speckit-*` dùng trong ô chat, không phải PowerShell.
+
 Giao diện mới: [**Mẫu 3 — The Blue Edition**](docs/15-GIAO-DIEN-BLUE-EDITION.md), có ảnh chụp thực tế và lệnh cập nhật trong terminal VS Code. Trang chủ dạng tạp chí xanh dương, phiếu đặt lịch trực tiếp, thẻ thành viên và bảng điều phối theo chi nhánh.
 
 Xem [áp dụng 25 Agent Skills và hướng dẫn cập nhật](docs/14-AGENT-SKILLS.md): sửa quyền khôi phục tài khoản, hoàn điểm, truy vấn nhiều chi nhánh, giao diện dễ đọc, giới hạn đăng nhập và bộ kiểm tra tự động. **Bản mới cần migrate đến 0010.**

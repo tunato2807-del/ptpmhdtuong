@@ -10,6 +10,47 @@ from scripts import cap_nhat_du_an as updater
 
 
 class SourceUpdaterTests(SimpleTestCase):
+    def test_spec_kit_public_files_are_allowed_but_machine_state_is_not(self):
+        public = (
+            ".specify/.gitignore",
+            ".specify/LICENSE",
+            ".specify/source.json",
+            ".specify/integration.json",
+            ".specify/init-options.json",
+            ".specify/integrations/copilot.manifest.json",
+            ".specify/integrations/codex.manifest.json",
+            ".specify/integrations/speckit.manifest.json",
+            ".specify/memory/constitution.md",
+            ".specify/scripts/python/common.py",
+            ".specify/templates/spec-template.md",
+            ".specify/workflows/speckit/workflow.yml",
+            ".specify/workflows/workflow-registry.json",
+            ".github/skills/speckit-specify/SKILL.md",
+            ".agents/skills/speckit-plan/SKILL.md",
+            "specs/001-adopt-spec-kit/spec.md",
+        )
+        updater.validate_manifest(self.manifest(dict.fromkeys(public, b"public workflow")))
+        for private in (
+            ".specify/feature.json",
+            ".specify/auth.json",
+            ".specify/integrations/packages.json",
+            ".specify/integrations/packages/adapter.py",
+            ".specify/extensions/private/local-config.yml",
+            ".specify/memory/.env",
+            ".github/skills/speckit-specify/.env",
+            ".codex/auth.json",
+        ):
+            with self.subTest(path=private), self.assertRaises(ValueError):
+                updater.validate_manifest(self.manifest({private: b"private"}))
+
+    def test_manifest_can_grow_with_specs_but_is_still_bounded(self):
+        files = {f"docs/spec-{n}.md": b"spec" for n in range(401)}
+        updater.validate_manifest(self.manifest(files))
+        with self.assertRaises(ValueError):
+            updater.validate_manifest(
+                self.manifest({f"docs/spec-{n}.md": b"spec" for n in range(1001)})
+            )
+
     def test_portable_workflows_are_allowed_but_credentials_remain_blocked(self):
         files = {
             name: b"workflow"
@@ -58,6 +99,9 @@ class SourceUpdaterTests(SimpleTestCase):
             "manage.py": b"# current\n",
             "templates/features/page.html": b"<h1>Ready</h1>",
             "docs/report.docx": b"PK binary document",
+            ".specify/memory/constitution.md": b"project rules",
+            ".github/skills/speckit-plan/SKILL.md": b"plan workflow",
+            "specs/001-adopt-spec-kit/spec.md": b"feature specification",
         }
         manifest = self.manifest(files)
 
@@ -70,6 +114,8 @@ class SourceUpdaterTests(SimpleTestCase):
             root = Path(tmp)
             (root / "manage.py").write_bytes(b"# old\n")
             (root / ".env").write_bytes(b"private sentinel")
+            (root / ".specify").mkdir()
+            (root / ".specify/feature.json").write_bytes(b"local feature sentinel")
             with (
                 patch.object(updater, "fetch", side_effect=fetch),
                 patch("sys.argv", ["updater", "--project", tmp]),
@@ -82,6 +128,11 @@ class SourceUpdaterTests(SimpleTestCase):
                 files["templates/features/page.html"],
             )
             self.assertEqual((root / ".env").read_bytes(), b"private sentinel")
+            self.assertEqual(
+                (root / ".specify/feature.json").read_bytes(), b"local feature sentinel"
+            )
+            for name in files:
+                self.assertEqual((root / name).read_bytes(), files[name])
             self.assertEqual((root / "docs/report.docx").read_bytes(), b"PK binary document")
             backups = list((root / ".local").glob("*/sao-luu/manage.py"))
             self.assertEqual(len(backups), 1)

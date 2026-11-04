@@ -28,6 +28,12 @@ PREFIXES = (
     ".agents/skills/",
     ".agents/references/",
     ".github/workflows/",
+    ".github/skills/speckit-",
+    ".specify/memory/",
+    ".specify/scripts/",
+    ".specify/templates/",
+    ".specify/workflows/speckit/",
+    "specs/",
 )
 ROOT_FILES = {
     "manage.py",
@@ -42,7 +48,17 @@ ROOT_FILES = {
     ".github/copilot-instructions.md",
     ".agents/LICENSE.agent-skills",
     ".agents/agent-skills-source.json",
+    ".specify/.gitignore",
+    ".specify/LICENSE",
+    ".specify/source.json",
+    ".specify/init-options.json",
+    ".specify/integration.json",
+    ".specify/integrations/copilot.manifest.json",
+    ".specify/integrations/codex.manifest.json",
+    ".specify/integrations/speckit.manifest.json",
+    ".specify/workflows/workflow-registry.json",
 }
+MAX_MANIFEST_FILES = 1000
 
 
 def fetch(url):
@@ -63,7 +79,7 @@ def fetch(url):
 def validate_manifest(manifest):
     ref = manifest.get("ref", "")
     files = manifest.get("files", [])
-    if not re.fullmatch(r"[0-9a-f]{40}", ref) or not 1 <= len(files) <= 400:
+    if not re.fullmatch(r"[0-9a-f]{40}", ref) or not 1 <= len(files) <= MAX_MANIFEST_FILES:
         raise ValueError("Manifest khong hop le.")
     seen = set()
     for item in files:

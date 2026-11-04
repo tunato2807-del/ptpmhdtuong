@@ -8,6 +8,14 @@ The 25 upstream workflows live under `.agents/skills/<name>/SKILL.md`; shared ch
 
 Use code-review/security for sensitive changes, performance-optimization only after measurement, frontend-ui-engineering for accessible interface changes, and test-driven-development for bug regressions. See `docs/quality/plan.md` and `docs/14-AGENT-SKILLS.md` for the application audit and evidence.
 
+## Spec Kit
+
+GitHub Spec Kit v1.3.0 is pinned in `.specify/source.json`; its constitution is `.specify/memory/constitution.md`. Copilot uses `.github/skills/speckit-*/`, Codex uses `.agents/skills/speckit-*/`. For a scoped feature use specify → plan → tasks → analyze → implement → converge; use clarify/checklist when useful. Existing engineering skills support the implementation. Read the selected feature only, rather than every spec/skill.
+
+Feature artifacts live in `specs/<id>/`. `.specify/feature.json` is per-checkout state and must not be committed or shipped; select `SPECIFY_FEATURE_DIRECTORY` explicitly if needed. The constitution complements these invariants and the user's authorized scope; do not add redundant approvals from template examples. Use Vietnamese for feature documents and user-facing guidance.
+
+Generated helper examples use `python3`: on Windows run `.\.venv\Scripts\python.exe .specify\scripts\python\<helper>.py`, on Linux `.venv/bin/python .specify/scripts/python/<helper>.py`. CLI is optional developer tooling, not a web dependency. Native events are disabled. Verify with `python scripts/verify_spec_kit.py --smoke`; see `docs/16-SPEC-KIT.md` for update and chat syntax. Do not reinitialize the live project with `--force` to repair the website.
+
 ## Commands
 
 ```sh

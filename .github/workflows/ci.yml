@@ -37,6 +37,7 @@ jobs:
       - name: Lint, formatting and known vulnerability audit
         run: |
           .venv/bin/python scripts/verify_agent_skills.py
+          .venv/bin/python scripts/verify_spec_kit.py --smoke
           .venv/bin/ruff check salon config scripts
           .venv/bin/ruff format --check salon config scripts
           .venv/bin/python -m pip_audit -r requirements.txt

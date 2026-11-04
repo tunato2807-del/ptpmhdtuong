@@ -1,0 +1,236 @@
+{
+  "repository": "https://github.com/github/spec-kit",
+  "tag": "v1.3.0",
+  "version": "1.3.0",
+  "commit": "34a0d388eac671d656eb05b125ad3ed6056168ed",
+  "license": "MIT",
+  "installed_on": "2026-11-04",
+  "generation": {
+    "cli": "specify-cli 1.3.0",
+    "integrations": [
+      "copilot",
+      "codex"
+    ],
+    "script": "py",
+    "native_events": false,
+    "notes": "Official scaffold generated in an isolated directory, then merged as new paths. Constitution is project-owned, not part of the immutable upstream inventory. No external adapters or hooks installed."
+  },
+  "files": [
+    {
+      "path": ".agents/skills/speckit-analyze/SKILL.md",
+      "sha256": "1b1233a3a92cba277cc3f80533b3999a3194f2566b569e1deefad304fad3530a",
+      "generated_from": "templates/commands/analyze.md"
+    },
+    {
+      "path": ".agents/skills/speckit-checklist/SKILL.md",
+      "sha256": "cf754e4fdb350bac26b0955b0af06bf4ac8f8ff0907e6db696e8f93b06844273",
+      "generated_from": "templates/commands/checklist.md"
+    },
+    {
+      "path": ".agents/skills/speckit-clarify/SKILL.md",
+      "sha256": "569c830d56f4d7b6a0ee6f6c6741820472724a8d1f6021912b44cd55888a8fcd",
+      "generated_from": "templates/commands/clarify.md"
+    },
+    {
+      "path": ".agents/skills/speckit-constitution/SKILL.md",
+      "sha256": "06bf15100066a86df4c5edfac35b16ecfe216751bdbc68db2d98357e9e751508",
+      "generated_from": "templates/commands/constitution.md"
+    },
+    {
+      "path": ".agents/skills/speckit-converge/SKILL.md",
+      "sha256": "dc28f28b48f7c74f3828404f0832504358da358d631b12d7dab06266546504a0",
+      "generated_from": "templates/commands/converge.md"
+    },
+    {
+      "path": ".agents/skills/speckit-implement/SKILL.md",
+      "sha256": "ca79e1f816ede6230466e04249be8d3a1f396a9ea2f4c8e8ffc4af3ca5afda8e",
+      "generated_from": "templates/commands/implement.md"
+    },
+    {
+      "path": ".agents/skills/speckit-plan/SKILL.md",
+      "sha256": "dffe72852101b265bd93461691caec528b3e0d06459fc7f8d543191cdabe714e",
+      "generated_from": "templates/commands/plan.md"
+    },
+    {
+      "path": ".agents/skills/speckit-specify/SKILL.md",
+      "sha256": "68e3e7d68ddd87608f1910f616dc8639c059ff577c5789736db71ead1c45a70e",
+      "generated_from": "templates/commands/specify.md"
+    },
+    {
+      "path": ".agents/skills/speckit-tasks/SKILL.md",
+      "sha256": "50612808eaee6c5fe32c64329661ba4d833d03fcbf9d7d318ea158e89eb30712",
+      "generated_from": "templates/commands/tasks.md"
+    },
+    {
+      "path": ".github/skills/speckit-analyze/SKILL.md",
+      "sha256": "0d477ddf85d16ccc041c565c2650751b2659df8f642809bb90a658a9e82556e6",
+      "generated_from": "templates/commands/analyze.md"
+    },
+    {
+      "path": ".github/skills/speckit-checklist/SKILL.md",
+      "sha256": "5dad58bdf1c96cdad26dd9516a910357d8340699342d6091c3a269bac4f9fdb4",
+      "generated_from": "templates/commands/checklist.md"
+    },
+    {
+      "path": ".github/skills/speckit-clarify/SKILL.md",
+      "sha256": "e210163cf5e971b235e1ef85adc491d95b643ca52970e2ea0c780f26553f9947",
+      "generated_from": "templates/commands/clarify.md"
+    },
+    {
+      "path": ".github/skills/speckit-constitution/SKILL.md",
+      "sha256": "52cb0205843488db72df34c9680d0ee1721e5effd6126be8e991040325c35c2a",
+      "generated_from": "templates/commands/constitution.md"
+    },
+    {
+      "path": ".github/skills/speckit-converge/SKILL.md",
+      "sha256": "21094f4211b2e85f8347b8cd53399bd9efe4fb07accab7ec678873bd894a6f0d",
+      "generated_from": "templates/commands/converge.md"
+    },
+    {
+      "path": ".github/skills/speckit-implement/SKILL.md",
+      "sha256": "4eee791d10e795caad12aaea492261971bea5da91d30e4b9dc7261f23e24fdbe",
+      "generated_from": "templates/commands/implement.md"
+    },
+    {
+      "path": ".github/skills/speckit-plan/SKILL.md",
+      "sha256": "58db9f79097a0d773986fa3ed471008ad654f05d55af399aed8e82b11c8fff6c",
+      "generated_from": "templates/commands/plan.md"
+    },
+    {
+      "path": ".github/skills/speckit-specify/SKILL.md",
+      "sha256": "e4d0f636ae8664c606e618e32a6ed775c4f1de015cedd26fe8e77771cbb1af11",
+      "generated_from": "templates/commands/specify.md"
+    },
+    {
+      "path": ".github/skills/speckit-tasks/SKILL.md",
+      "sha256": "7372c725752dbac7d2bcf54648866ce0eb28b3ca9038ed37cf9d07cd4a1cc195",
+      "generated_from": "templates/commands/tasks.md"
+    },
+    {
+      "path": ".specify/.gitignore",
+      "sha256": "0a61c5378b0bb2e0f85babff99c8b166f2170a2c12378cd17d929aa19296ec88"
+    },
+    {
+      "path": ".specify/LICENSE",
+      "upstream_path": "LICENSE",
+      "sha256": "2510b446bc1f0cf9702453075d20cd88631e20e5642658edb7325d9c1eb534f7"
+    },
+    {
+      "path": ".specify/init-options.json",
+      "sha256": "e1fe789168f1f7b6333f8c725d6a65f7568d96fe6efc4d406b830521852403d1"
+    },
+    {
+      "path": ".specify/integration.json",
+      "sha256": "86848e765f356f91e3fe4f6617a1dc7def9abe0a42748ebffa437bd4e0a9b54a"
+    },
+    {
+      "path": ".specify/integrations/codex.manifest.json",
+      "sha256": "47c151143125e17a5361744b9e1024c19536b863395e01047306fc3c62b771e0"
+    },
+    {
+      "path": ".specify/integrations/copilot.manifest.json",
+      "sha256": "0a8382e5f3b882677cd12314628c81ed6f372530d3b351edbfcab7178e51d58e"
+    },
+    {
+      "path": ".specify/integrations/speckit.manifest.json",
+      "sha256": "80f0b9e580f15066efcf7aed2e72ab56b2c2f9e848290a74d10a751b9a74e4c5"
+    },
+    {
+      "path": ".specify/memory/.constitution-template.json",
+      "sha256": "8fc4b39294bae0c10d59547ad7d415b6f0e890d656cbf7171dd567f4e9054711"
+    },
+    {
+      "path": ".specify/scripts/bash/check-prerequisites.sh",
+      "sha256": "e127735bbc5ac42181e2a3c773a2d639979f865f18e74a1a977cdf53392a0a7d",
+      "upstream_path": "scripts/bash/check-prerequisites.sh"
+    },
+    {
+      "path": ".specify/scripts/bash/common.sh",
+      "sha256": "53cb1c23e349db4586c272436ce35c6e2f36a9c0b5351a85e0b216d9887a26b7",
+      "upstream_path": "scripts/bash/common.sh"
+    },
+    {
+      "path": ".specify/scripts/bash/create-new-feature.sh",
+      "sha256": "972f03ed8ca5ee17b7baad6d56d821d46269d77abc337496beafb0fe85a725f2",
+      "upstream_path": "scripts/bash/create-new-feature.sh"
+    },
+    {
+      "path": ".specify/scripts/bash/resolve-template.sh",
+      "sha256": "829e227096abc8bf0889889ec9f792f503ca5d395b7836a8a7eb739ee75214e7",
+      "upstream_path": "scripts/bash/resolve-template.sh"
+    },
+    {
+      "path": ".specify/scripts/bash/setup-plan.sh",
+      "sha256": "d378ec66ba20d2da01c71dad8935062c1c27f0bba890be9a6d3dda52ea056a4e",
+      "upstream_path": "scripts/bash/setup-plan.sh"
+    },
+    {
+      "path": ".specify/scripts/bash/setup-tasks.sh",
+      "sha256": "4a33dd1e6c32ddc7d570f4b538572c54069192573eed0ec654d9fb826e31a4fe",
+      "upstream_path": "scripts/bash/setup-tasks.sh"
+    },
+    {
+      "path": ".specify/scripts/python/check_prerequisites.py",
+      "sha256": "367e0e7cf8d384167aa60d2a99ba8d40ef9ca1e49b8a35f3ec44c9c759416600",
+      "upstream_path": "scripts/python/check_prerequisites.py"
+    },
+    {
+      "path": ".specify/scripts/python/common.py",
+      "sha256": "3715c954539619dcfbe1d4ea825b12c74c658763722544625939bc65391904a7",
+      "upstream_path": "scripts/python/common.py"
+    },
+    {
+      "path": ".specify/scripts/python/create_new_feature.py",
+      "sha256": "bbea1d8d3c3275fccb4fb02c40a244446657385caf72211c1853376ca78f7295",
+      "upstream_path": "scripts/python/create_new_feature.py"
+    },
+    {
+      "path": ".specify/scripts/python/resolve_template.py",
+      "sha256": "9e383c7f1e4cdbb2367e390457d5f47839bf96ca76451be87bd89465e638c2f3",
+      "upstream_path": "scripts/python/resolve_template.py"
+    },
+    {
+      "path": ".specify/scripts/python/setup_plan.py",
+      "sha256": "3738fbdc16a1418a12079c974208123c815866fc0401060e9c41a37d2c8e9eaa",
+      "upstream_path": "scripts/python/setup_plan.py"
+    },
+    {
+      "path": ".specify/scripts/python/setup_tasks.py",
+      "sha256": "124a0a2ea5f213edf90c01b34d9f68d2609b20d1a1964c06106ed91ccb490ae1",
+      "upstream_path": "scripts/python/setup_tasks.py"
+    },
+    {
+      "path": ".specify/templates/checklist-template.md",
+      "sha256": "856532b3cb66171c662cc16f16b31a5856e4655a8666aad1e545bbfc7f603ca1",
+      "upstream_path": "templates/checklist-template.md"
+    },
+    {
+      "path": ".specify/templates/constitution-template.md",
+      "sha256": "ce7549540fa45543cca797a150201d868e64495fdff39dc38246fb17bd4024b3",
+      "upstream_path": "templates/constitution-template.md"
+    },
+    {
+      "path": ".specify/templates/plan-template.md",
+      "sha256": "7e637502d41eccf0ca672496636365691fdca62ef37b27ec07fcb412dbfa90d4",
+      "upstream_path": "templates/plan-template.md"
+    },
+    {
+      "path": ".specify/templates/spec-template.md",
+      "sha256": "3945437fc35cd30a5b2bf7beea680337c3516826d3efa5a6b92c4a7eca1ba28e",
+      "upstream_path": "templates/spec-template.md"
+    },
+    {
+      "path": ".specify/templates/tasks-template.md",
+      "sha256": "fc29a233f6f5a27ca31f1aa46b596af6500c627441c6e62b2bc4a1d721525842",
+      "upstream_path": "templates/tasks-template.md"
+    },
+    {
+      "path": ".specify/workflows/speckit/workflow.yml",
+      "sha256": "177761c5e7df28126beea043b5cb45aeaf7958090c022dc11ac71399422fcfbc"
+    },
+    {
+      "path": ".specify/workflows/workflow-registry.json",
+      "sha256": "d87c556c87a87ea5146966219c72841d5dde14ae7a763935fb28e7022d271fc9"
+    }
+  ]
+}
