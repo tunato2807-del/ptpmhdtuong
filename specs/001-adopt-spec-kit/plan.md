@@ -8,11 +8,16 @@ Tạo scaffold bằng Specify CLI 1.3.0 trong thư mục tạm, sau đó ghép c
 
 ## Technical Context
 
-**Language/Version**: Python 3.12–3.14 của dự án; CLI 1.3.0 yêu cầu Python >=3.11.  
-**Dependencies**: Specify CLI trong môi trường công cụ riêng; helper được cài dùng thư viện chuẩn.  
-**Storage**: File Markdown/JSON; không có thay đổi PostgreSQL hoặc migration.  
-**Testing**: kiểm tra nguồn/hash, helper trong thư mục tạm, Django SimpleTestCase cho updater, check/lint.  
-**Platform**: Windows PowerShell trong VS Code; kiểm tra trực tiếp trên Linux/Python 3.12.  
+**Language/Version**: Python 3.12–3.14 của dự án; CLI 1.3.0 yêu cầu Python >=3.11.
+
+**Dependencies**: Specify CLI trong môi trường công cụ riêng; helper được cài dùng thư viện chuẩn.
+
+**Storage**: File Markdown/JSON; không có thay đổi PostgreSQL hoặc migration.
+
+**Testing**: kiểm tra nguồn/hash, helper trong thư mục tạm, Django SimpleTestCase cho updater, check/lint.
+
+**Platform**: Windows PowerShell trong VS Code; kiểm tra trực tiếp trên Linux/Python 3.12.
+
 **Scope**: 9 skill/integration × 2 integration; một bộ template/helper dùng chung.
 
 ## Constitution Check

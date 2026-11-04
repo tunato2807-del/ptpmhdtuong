@@ -1,8 +1,11 @@
 # Feature Specification: Tích hợp GitHub Spec Kit
 
-**Feature Directory**: specs/001-adopt-spec-kit  
-**Created**: 2026-11-04  
-**Status**: Implemented; local verification recorded in tasks.md  
+**Feature Directory**: specs/001-adopt-spec-kit
+
+**Created**: 2026-11-04
+
+**Status**: Implemented; local verification recorded in tasks.md
+
 **Input**: “Hãy bổ sung vào dự án của tôi https://github.com/github/spec-kit”.
 
 ## User Scenarios & Testing
