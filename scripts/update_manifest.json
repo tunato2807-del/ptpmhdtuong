@@ -1,5 +1,5 @@
 {
-  "ref": "b5f59b5bdeb8cf408c4c8bd254fe69bffa7616df",
+  "ref": "1e1a5da498df5050609ee76a28aab716dc8aa466",
   "files": [
     {
       "path": ".agents/LICENSE.agent-skills",
@@ -1115,7 +1115,7 @@
     },
     {
       "path": "specs/001-adopt-spec-kit/plan.md",
-      "sha256": "1b266f653c0add9bf5c747e02459180116a10e97a374d49868e5f4b2d44f3bef"
+      "sha256": "b38cd15ab77d0b27fd005da51fe27f95ebc8ae93213771aedb796192b9aa59ae"
     },
     {
       "path": "specs/001-adopt-spec-kit/quickstart.md",
@@ -1123,7 +1123,7 @@
     },
     {
       "path": "specs/001-adopt-spec-kit/spec.md",
-      "sha256": "3bc07b196d265abe0b53ab4105b3d8fbfdebd10a65efd088b405fba98cf88d54"
+      "sha256": "cdd97a60c617116648b44e3d5cbe5931cef1aeebed82b8cae22c457ff00f5242"
     },
     {
       "path": "specs/001-adopt-spec-kit/tasks.md",
