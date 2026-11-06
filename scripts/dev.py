@@ -21,7 +21,11 @@ def run(*args):
 def main():
     parser = argparse.ArgumentParser(description="Chạy GENTLEMAN với PostgreSQL cài sẵn trên máy.")
     parser.add_argument("command", choices=["setup", "start", "check"])
-    parser.add_argument("--no-demo", action="store_true", help="Không nạp dữ liệu mẫu khi setup.")
+    parser.add_argument(
+        "--no-demo",
+        action="store_true",
+        help="Tương thích lệnh cũ; setup hiện không tự nạp dữ liệu mẫu.",
+    )
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=int(os.getenv("PORT", "8000")))
     args = parser.parse_args()
@@ -41,8 +45,6 @@ def main():
     run("manage.py", "check_database")
     if args.command == "setup":
         run("manage.py", "migrate", "--noinput")
-        if not args.no_demo and os.getenv("LOAD_DEMO_DATA", "1") == "1":
-            run("manage.py", "seed_demo")
         run("manage.py", "check")
         run("manage.py", "collectstatic", "--noinput")
         print("Sẵn sàng. Chạy: python scripts/dev.py start", flush=True)

@@ -2,6 +2,8 @@
 
 Dự án tiếng Việt dùng Django 5.2 LTS, PostgreSQL và giao diện riêng bằng HTML/CSS/JavaScript. Có trang khách hàng, trang cá nhân và cổng quản lý với chức năng thêm/sửa/xóa. Toàn bộ danh mục được quản lý tại `/quan-ly/thiet-lap/`; không dùng Django Admin. Chạy trực tiếp trên VS Code, không cần Docker hoặc Node.js.
 
+Dữ liệu thực tế: [trạng thái lấy nguồn chính thức 30Shine](docs/17-DU-LIEU-THUC-30SHINE.md). Setup không còn tự tạo dữ liệu/tài khoản mẫu; dữ liệu 30Shine chỉ được nhập sau khi đối chiếu nguồn. Tài khoản, lịch hẹn và chứng từ đang có được giữ nguyên.
+
 Đã tích hợp [**GitHub Spec Kit 1.3.0**](docs/16-SPEC-KIT.md) cho Copilot trong VS Code và Codex: đặc tả → kế hoạch → công việc → triển khai → kiểm chứng. Có constitution riêng cho dự án, helper Python và lệnh cập nhật bằng terminal. Các lệnh `/speckit-*` dùng trong ô chat, không phải PowerShell.
 
 Giao diện mới: [**Mẫu 3 — The Blue Edition**](docs/15-GIAO-DIEN-BLUE-EDITION.md), có ảnh chụp thực tế và lệnh cập nhật trong terminal VS Code. Trang chủ dạng tạp chí xanh dương, phiếu đặt lịch trực tiếp, thẻ thành viên và bảng điều phối theo chi nhánh.
@@ -59,7 +61,7 @@ Thay `MAT_KHAU_POSTGRES_CUA_BAN` bằng mật khẩu PostgreSQL thực tế, kh�
 ```powershell
 .\.venv\Scripts\python.exe manage.py check_database
 .\.venv\Scripts\python.exe manage.py migrate
-.\.venv\Scripts\python.exe manage.py seed_demo
+.\.venv\Scripts\python.exe manage.py create_manager
 .\.venv\Scripts\python.exe manage.py collectstatic --noinput
 .\.venv\Scripts\python.exe manage.py runserver
 ```
@@ -78,19 +80,15 @@ python scripts/dev.py start
 python scripts/dev.py check
 ```
 
-`setup` chỉ tạo `.venv` khi thiếu, cài thư viện, kiểm tra kết nối, migrate, nạp mẫu và collectstatic. Nếu thiếu `.env`, script tạo bản mẫu và dừng để bạn điền mật khẩu rồi chạy lại. Dùng `--no-demo` để bỏ nạp dữ liệu mẫu. Script không cài hoặc khởi động dịch vụ PostgreSQL của máy bạn.
+`setup` chỉ tạo `.venv` khi thiếu, cài thư viện, kiểm tra kết nối, migrate và collectstatic; không tự nạp dữ liệu hoặc tài khoản mẫu. Nếu thiếu `.env`, script tạo bản mẫu và dừng để bạn điền mật khẩu rồi chạy lại. `--no-demo` được giữ để tương thích lệnh cũ; setup luôn không nạp mẫu, kể cả máy còn `LOAD_DEMO_DATA=1`. Script không cài hoặc khởi động dịch vụ PostgreSQL của máy bạn.
 
 Trên Linux/macOS, dùng `python3` thay `python`; `bash scripts/setup.sh`, `start.sh`, `check.sh` là các lệnh bọc tương đương. Đổi cổng web bằng `python scripts/dev.py start --port 8001`. Server mặc định chỉ lắng nghe loopback.
 
 ## Tài khoản và các màn hình
 
-| Vai trò | Tên đăng nhập | Mật khẩu demo |
-|---|---|---|
-| Quản trị | `admin` | `Gentleman@2026` |
-| Lễ tân Quận 1 | `letan` | `Gentleman@2026` |
-| Khách hàng | `khachhang` | `Gentleman@2026` |
+Giữ tài khoản quản lý hiện có của bạn. Với database mới, chạy `.\.venv\Scripts\python.exe manage.py create_manager` trong terminal tương tác và nhập tên đăng nhập, họ tên, email và mật khẩu của chính bạn. Mật khẩu không hiển thị khi nhập, được kiểm tra độ mạnh và lưu bằng cơ chế băm; lệnh không ghi đè hoặc tăng quyền tài khoản đã tồn tại. Khách hàng đăng ký qua trang Đăng ký; nhân sự được quản lý trong cổng riêng.
 
-Tài khoản mẫu chỉ dùng để trình diễn. `seed_demo` chỉ chạy khi DEBUG=1, không đặt lại mật khẩu tài khoản đã có, không nhân đôi lịch mẫu; chạy lại bổ sung ca cho ngày hiện tại và 30 ngày tới.
+Không chạy `seed_demo` để lấy dữ liệu thật. Công cụ cũ chỉ còn phục vụ các bài kiểm tra có fixture riêng; dữ liệu đã có trong database không bị tự động xóa hoặc gán lại nhãn thành dữ liệu thực tế.
 
 | Đường dẫn | Chức năng |
 |---|---|
@@ -130,7 +128,7 @@ Nếu thay thư mục bằng ZIP mới, nhớ sao chép `.env` của bạn vào 
 python scripts/dev.py check
 ```
 
-182 kiểm thử hiện tại dùng PostgreSQL thực và database test riêng. Tài khoản PostgreSQL chạy tests cần quyền CREATEDB và tạo `btree_gist`. Lệnh check thu thập static trước tests để manifest nhận đủ ảnh/font/CSS mới.
+189 kiểm thử hiện tại dùng PostgreSQL thực và database test riêng. Tài khoản PostgreSQL chạy tests cần quyền CREATEDB và tạo `btree_gist`. Lệnh check thu thập static trước tests để manifest nhận đủ ảnh/font/CSS mới.
 
 Browser checks tùy chọn, cần server local DEBUG=1 có dữ liệu mẫu. `scripts/interface_smoke.py` kiểm tra bố cục, CSS/font, biểu tượng và đăng xuất ở sáu kích thước màn hình. Các kiểm tra khác:
 

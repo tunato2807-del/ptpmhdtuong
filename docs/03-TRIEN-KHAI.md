@@ -22,7 +22,7 @@ Chỉ sao chép khi chưa có `.env`. Giữ file cấu hình cũ khi cập nhậ
 ```powershell
 .\.venv\Scripts\python.exe manage.py check_database
 .\.venv\Scripts\python.exe manage.py migrate
-.\.venv\Scripts\python.exe manage.py seed_demo
+.\.venv\Scripts\python.exe manage.py create_manager
 .\.venv\Scripts\python.exe manage.py collectstatic --noinput
 .\.venv\Scripts\python.exe manage.py runserver
 ```
@@ -41,11 +41,11 @@ Mỗi cloud task đã cách ly, dùng checkout `/workspace/ptpmhdtuong`; không 
 
 Dừng web, giữ `.env` và database, cập nhật mã, cài lại requirements, migrate, collectstatic và khởi động lại. Không nạp lại demo để nâng cấp. Bản quản trị riêng không thêm bảng/cột hoặc migration mới. Migration 0002 đổi tên 80 cột nghiệp vụ sang tiếng Việt không dấu, giữ kiểu dữ liệu và dữ liệu. Không sửa migration 0001 đã áp dụng.
 
-`seed_demo` chỉ DEBUG=1, không đổi mật khẩu tài khoản đã có và không nhân đôi lịch mẫu. Chạy lại có thể bổ sung ca làm cho hiện tại và 30 ngày tới. Lịch mẫu cũ vẫn giữ ngày gốc; tạo lịch mới để trình diễn ở ngày hiện tại.
+Setup không tự nạp dữ liệu hoặc tài khoản mẫu. Với database mới, `create_manager` yêu cầu bạn nhập danh tính và mật khẩu thật trong terminal; lệnh không ghi đè hoặc tăng quyền tài khoản đã tồn tại. Nếu nâng cấp bản đang dùng, giữ tài khoản hiện có, không cần tạo lại. Lệnh seed_demo cũ không phải nguồn dữ liệu thực tế và không nằm trong quy trình thiết lập thông thường.
 
 ## 5. Sử dụng cổng quản lý riêng
 
-Đăng nhập `admin` → Thiết lập & nhân sự (`/quan-ly/thiet-lap/`). Quản lý trực tiếp dịch vụ, chi nhánh, stylist, ghế, ca làm và tài khoản. Có tìm kiếm, phân trang, tạo, sửa và xác nhận xóa. Quyền dựa vào vai trò manager. Không cần bật staff/superuser hoặc truy cập trang quản trị có sẵn của framework.
+Đăng nhập bằng tài khoản quản trị chuỗi của bạn → Thiết lập & nhân sự (`/quan-ly/thiet-lap/`). Quản lý trực tiếp dịch vụ, chi nhánh, stylist, ghế, ca làm và tài khoản. Có tìm kiếm, phân trang, tạo, sửa và xác nhận xóa. Quyền dựa vào vai trò manager. Không cần bật staff/superuser hoặc truy cập trang quản trị có sẵn của framework.
 
 Mọi người đăng nhập đều có trang `/tai-khoan/` để sửa họ tên/điện thoại/email và đổi mật khẩu. Đổi mật khẩu yêu cầu mật khẩu hiện tại và giữ phiên đăng nhập hiện tại. Vai trò, điểm và quyền không sửa từ trang cá nhân.
 
