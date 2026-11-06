@@ -23,3 +23,7 @@
 Ngày 06/11/2026, yêu cầu HTTPS qua proxy của môi trường tới https://30shine.com/ bị từ chối ở CONNECT với HTTP 403. Runtime báo policy restricted/enforced và chưa có host 30Shine. Bản nháp cấu hình có sẵn 30shine.com và www.30shine.com; đã lưu lại giữ nguyên các custom host khác, công cụ xác nhận saved/requires_publish=true. Lưu draft không áp dụng policy cho runtime. Cần người dùng Review/Save và Publish môi trường trước khi đọc nguồn.
 
 Không có bản ghi 30Shine mới được thu thập, kiểm chứng hay nhập trong phần chuẩn bị này.
+
+## Quantity target / local collection path
+
+Người dùng bổ sung mục tiêu 100 bản ghi cho mỗi bảng. Đã có audit_data_targets đọc số lượng và collector đọc JSON-LD chính thức trên máy truy cập được nguồn. Target là mục tiêu, không cho phép nhân bản hoặc tạo dữ liệu giả. Các bảng giao dịch/nội bộ cần dữ liệu thật của đơn vị; collector chỉ tạo gói nguồn để đối chiếu, không tự nhập vào bảng vận hành.

@@ -2,6 +2,8 @@
 
 Dự án tiếng Việt dùng Django 5.2 LTS, PostgreSQL và giao diện riêng bằng HTML/CSS/JavaScript. Có trang khách hàng, trang cá nhân và cổng quản lý với chức năng thêm/sửa/xóa. Toàn bộ danh mục được quản lý tại `/quan-ly/thiet-lap/`; không dùng Django Admin. Chạy trực tiếp trên VS Code, không cần Docker hoặc Node.js.
 
+Công cụ [kiểm đếm và thu thập với mục tiêu 100 bản ghi thật](docs/18-MUC-TIEU-100-BAN-GHI-THAT.md): báo số còn thiếu ở 26 bảng, lấy danh mục JSON-LD công khai từ 30Shine khi truy cập được; không tạo dữ liệu bù và không tự nhập giao dịch giả.
+
 Dữ liệu thực tế: [trạng thái lấy nguồn chính thức 30Shine](docs/17-DU-LIEU-THUC-30SHINE.md). Setup không còn tự tạo dữ liệu/tài khoản mẫu; dữ liệu 30Shine chỉ được nhập sau khi đối chiếu nguồn. Tài khoản, lịch hẹn và chứng từ đang có được giữ nguyên.
 
 Đã tích hợp [**GitHub Spec Kit 1.3.0**](docs/16-SPEC-KIT.md) cho Copilot trong VS Code và Codex: đặc tả → kế hoạch → công việc → triển khai → kiểm chứng. Có constitution riêng cho dự án, helper Python và lệnh cập nhật bằng terminal. Các lệnh `/speckit-*` dùng trong ô chat, không phải PowerShell.
@@ -128,7 +130,7 @@ Nếu thay thư mục bằng ZIP mới, nhớ sao chép `.env` của bạn vào 
 python scripts/dev.py check
 ```
 
-189 kiểm thử hiện tại dùng PostgreSQL thực và database test riêng. Tài khoản PostgreSQL chạy tests cần quyền CREATEDB và tạo `btree_gist`. Lệnh check thu thập static trước tests để manifest nhận đủ ảnh/font/CSS mới.
+200 kiểm thử hiện tại dùng PostgreSQL thực và database test riêng. Tài khoản PostgreSQL chạy tests cần quyền CREATEDB và tạo `btree_gist`. Lệnh check thu thập static trước tests để manifest nhận đủ ảnh/font/CSS mới.
 
 Browser checks tùy chọn, cần server local DEBUG=1 có dữ liệu mẫu. `scripts/interface_smoke.py` kiểm tra bố cục, CSS/font, biểu tượng và đăng xuất ở sáu kích thước màn hình. Các kiểm tra khác:
 

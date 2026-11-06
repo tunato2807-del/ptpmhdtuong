@@ -36,3 +36,7 @@ Kế hoạch và phần còn chờ tại [specs/002-official-30shine-data](../sp
 ## Kiểm tra phần chuẩn bị
 
 Đã chạy 189 kiểm thử Django trên PostgreSQL và tất cả đều đạt, gồm 5 kiểm thử mới cho setup/login/tạo manager. Django check, migration drift, collectstatic và Ruff đạt; không có migration mới. Kết quả này chỉ kiểm chứng thay đổi phần mềm, không phải bằng chứng đã xác minh hay nhập dữ liệu 30Shine.
+
+## Mục tiêu 100 bản ghi
+
+Đã bổ sung công cụ kiểm đếm từng bảng và collector có giới hạn số mục, bằng chứng nguồn và báo thiếu; xem [hướng dẫn chạy trên Windows](18-MUC-TIEU-100-BAN-GHI-THAT.md). Collector không tự tạo bản ghi hoặc nhập vào database khi nguồn thiếu/bị chặn. Lượt thử cloud vẫn thu được 0 mục do chưa mở được kết nối chính thức; phần nhập dữ liệu vẫn đang chờ.
