@@ -1,5 +1,5 @@
 {
-  "ref": "7aeec353d6221156c5bcbc80352a4fb80decdbfd",
+  "ref": "e7d33afb6162b3d99ebe9f7699afe5ec221b526f",
   "files": [
     {
       "path": ".agents/LICENSE.agent-skills",
@@ -375,7 +375,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "76503fff29ed2f6476aeddf3a4561dda9f7ad9a9da5e47d0c3cb241cd3b5d233"
+      "sha256": "b011510bdefce5aa3b4a7aca3b0bca522c8529a896182531819037eedb37b8a0"
     },
     {
       "path": "config/__init__.py",
@@ -459,7 +459,11 @@
     },
     {
       "path": "docs/17-DU-LIEU-THUC-30SHINE.md",
-      "sha256": "739874667fa159f7d0747fc98cfe44312331896b71af2e6631c24350b4ead791"
+      "sha256": "134dc85c0ff42d7a1714eea37e6ce8b66675f53982d3f729ec62c32241ec4da6"
+    },
+    {
+      "path": "docs/18-MUC-TIEU-100-BAN-GHI-THAT.md",
+      "sha256": "8affa65b84f05800006e40795a72aad0a122e41a81db4e7ddd2b123e2f3a1bad"
     },
     {
       "path": "docs/BAO_CAO_PHAN_TICH_THIET_KE.docx",
@@ -866,6 +870,10 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
+      "path": "salon/management/commands/audit_data_targets.py",
+      "sha256": "02fda5b975ff1627b86963bfbaaeece8298735c97ffd082fb4b5322957f74acd"
+    },
+    {
       "path": "salon/management/commands/backup_database.py",
       "sha256": "858258a82b71648a57745ec190cbb615a2fa0ef81b0775be66f01aeab7b55320"
     },
@@ -994,6 +1002,10 @@
       "sha256": "befa0b474695279d258c0898303f27f2cf30628a89741c1109926926ee7fa136"
     },
     {
+      "path": "salon/tests/test_data_targets.py",
+      "sha256": "641b3fddfa2238745f1e956c42849755c39ae5f4f54524ba60c43f60749da711"
+    },
+    {
       "path": "salon/tests/test_features.py",
       "sha256": "aacabf31ad02129271c38304ec765b3b651955be6cb8cde1289ae2339cbc405d"
     },
@@ -1008,6 +1020,10 @@
     {
       "path": "salon/tests/test_navigation.py",
       "sha256": "fd18b32ee5a98cb277af8a8307e59738e490bfd967dff58d9209327cea912400"
+    },
+    {
+      "path": "salon/tests/test_official_collection.py",
+      "sha256": "61b445cb64b1eda1861a3a70bb373fc7078f55b8bff9517c0926530630f96ac2"
     },
     {
       "path": "salon/tests/test_operations.py",
@@ -1072,6 +1088,10 @@
     {
       "path": "scripts/check.sh",
       "sha256": "25b4180c8485c1d9b2f8d65df40684b4fc92ab8892561af456ca4e647a94e71a"
+    },
+    {
+      "path": "scripts/collect_30shine.py",
+      "sha256": "d56604d38e31f4a788596d0ec084da0f7b340d3c994c7fe57e84fce47537803a"
     },
     {
       "path": "scripts/customer_ui_smoke.py",
@@ -1147,11 +1167,11 @@
     },
     {
       "path": "specs/002-official-30shine-data/spec.md",
-      "sha256": "c616239ad3fdc4a997a67938d53f5d7ba2197186fd07309b7824d413f348fae7"
+      "sha256": "699e8eb462000b1c1da02bc8823c5e6f78100f59ada9d37447883e85036a3dfb"
     },
     {
       "path": "specs/002-official-30shine-data/tasks.md",
-      "sha256": "82a46c1a3360fac693a74ed4bc6785d08585e716bfc80b039e8d8d6a99ba433e"
+      "sha256": "8fb6dc75df6c91f2f348833c5695cb0f5b75f843d1805771a672bd81fd883d6e"
     },
     {
       "path": "static/css/app.css",
