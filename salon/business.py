@@ -237,10 +237,16 @@ def change_services(*, actor, pk, service_ids, reason):
         raise ValidationError("Chọn dịch vụ đang hoạt động.")
     old = {i.service_id: i for i in a.items.all()}
     before = snapshot(a)
+    # Keep time allocated for extensions/late arrivals in addition to service snapshots.
+    extra_time = max(
+        a.end_at - a.start_at - timedelta(minutes=sum(i.duration for i in old.values())),
+        timedelta(),
+    )
     # Unchanged lines keep their original price/duration snapshots.
     duration = sum(old[s.pk].duration if s.pk in old else s.duration for s in selected)
+    duration += extra_time / timedelta(minutes=1)
     if duration > 480:
-        raise ValidationError("Tổng thời lượng tối đa 8 giờ.")
+        raise ValidationError("Tổng thời gian phục vụ, gồm thời gian cộng thêm, tối đa 8 giờ.")
     end = validate_slot(
         a.branch, a.employee, a.start_at, duration, exclude_id=a.pk, allow_past=True
     )
@@ -390,11 +396,13 @@ def close_day(*, actor, branch_id, day, counted, reason):
     ensure_open_day(branch, day)
     if Appointment.objects.filter(
         branch=branch,
-        status__in=["checked_in", "in_service", "awaiting_payment"],
+        status__in=[*ACTIVE_STATUSES, Appointment.Status.AWAITING_PAYMENT],
         start_at__date__lte=day,
     ).exists():
         raise ValidationError(
-            "Còn khách đang chờ, phục vụ hoặc chờ thanh toán. Xử lý các lịch này trước khi chốt."
+            "Còn lịch đã đặt, đã check-in, đang phục vụ hoặc chờ thanh toán. "
+            "Xử lý hết các lịch đến ngày chốt. Lịch chưa check-in có thể hủy "
+            "hoặc ghi nhận không đến đúng quy định."
         )
     expected, count = cash_totals(branch, day)
     if counted != expected and not reason.strip():

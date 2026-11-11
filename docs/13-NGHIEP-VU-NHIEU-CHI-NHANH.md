@@ -112,7 +112,9 @@ Với lịch chưa check-in, chọn “Đổi lịch / stylist”, xem giờ tr�
 
 ### Dịch vụ phát sinh
 
-Trước khi hoàn tất phục vụ, lễ tân chọn danh sách dịch vụ sau điều chỉnh, nhập lý do và xác nhận khách đồng ý. Dòng giữ nguyên dùng giá/thời lượng snapshot cũ; dòng mới dùng giá hiện tại. Tính lại toàn bộ khoảng phục vụ, kiểm tra xung đột và lưu lịch sử trước/sau. Không sửa dịch vụ sau khi chuyển sang chờ thu hoặc đã thu tiền.
+Trước khi hoàn tất phục vụ, lễ tân chọn danh sách dịch vụ sau điều chỉnh, nhập lý do và xác nhận khách đồng ý. Dòng giữ nguyên dùng giá/thời lượng snapshot cũ; dòng mới dùng giá và thời lượng hiện tại. Tính lại toàn bộ khoảng phục vụ, kiểm tra xung đột và lưu lịch sử trước/sau. Không sửa dịch vụ sau khi chuyển sang chờ thu hoặc đã thu tiền.
+
+Khi lưu dịch vụ, giữ phần thời gian đã cộng thêm do gia hạn hoặc check-in muộn; chỉ cộng/trừ thời lượng dịch vụ được thêm/bỏ. Ví dụ: cắt 30 phút + gia hạn 30 phút, sau đó thêm gội 30 phút thì khoảng phục vụ là 90 phút. Lưu lại cùng danh sách không làm mất gia hạn. Tổng khoảng phục vụ, gồm thời gian cộng thêm, tối đa 8 giờ; nếu lấn sang lịch khác hoặc vượt ca/giờ mở cửa thì từ chối và giữ nguyên lịch, dịch vụ, lịch sử.
 
 ### Hoàn tất và thu tiền
 
@@ -147,7 +149,9 @@ Quản lý trong phạm vi chi nhánh ghi nhận hoàn **toàn bộ** số thự
 
 Thu ròng theo kỳ = tổng hóa đơn có `paid_at` trong kỳ − hoàn tiền có `created_at` trong kỳ, kể cả hoàn cho hóa đơn kỳ trước. File Excel/PDF/CSV báo cáo giao dịch có dòng hoàn âm. Các bảng phân bổ theo dịch vụ/stylist vẫn là thu hóa đơn trước hoàn và ghi rõ ý nghĩa.
 
-Chốt sổ ngày: tiền mặt hệ thống = tiền mặt thu − tiền mặt hoàn trong ngày; không tính tiền đầu ca hoặc giao dịch thẻ. Quản lý nhập số thực đếm, bắt buộc giải trình nếu chênh lệch. Cần xử lý xong các lịch đang chờ/đang phục vụ/chờ thanh toán của ngày đó trước khi chốt. Chốt một lần/chi nhánh/ngày; sau chốt không thu/hoàn hoặc nhận thêm lịch phục vụ trong ngày đã chốt. Không xóa/sửa bản chốt.
+Chốt sổ ngày: tiền mặt hệ thống = tiền mặt thu − tiền mặt hoàn trong ngày; không tính tiền đầu ca hoặc giao dịch thẻ. Quản lý nhập số thực đếm, bắt buộc giải trình nếu chênh lệch. Cần xử lý xong các lịch đã đặt, đã check-in, đang phục vụ hoặc chờ thanh toán có ngày hẹn nhỏ hơn hoặc bằng ngày chốt tại chi nhánh đó. Lịch tương lai sau ngày chốt và lịch ở chi nhánh khác không chặn chốt. Với lịch chưa check-in, tiếp tục phục vụ, hủy theo quyền hoặc ghi nhận không đến sau thời gian chờ; hệ thống không tự xử lý thay để ép chốt. Khi chốt bị từ chối, ngày vẫn mở để tiếp tục vận hành.
+
+Chốt một lần/chi nhánh/ngày; sau chốt không thu/hoàn hoặc nhận thêm lịch phục vụ trong ngày đã chốt. Không xóa/sửa bản chốt. Các bản chốt cũ không được tự động mở lại bởi bản sửa này.
 
 Hoàn tiền một phần, mở lại sổ, trả lương, công nợ nhà cung cấp và điều chuyển lịch đã phục vụ sang chi nhánh khác chưa nằm trong quy trình này; khi cần phải thêm chứng từ và quyền duyệt tương ứng.
 
