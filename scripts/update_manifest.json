@@ -1,5 +1,5 @@
 {
-  "ref": "e7d33afb6162b3d99ebe9f7699afe5ec221b526f",
+  "ref": "d468293d738d18d5059c3b25652da4287e711ad7",
   "files": [
     {
       "path": ".agents/LICENSE.agent-skills",
@@ -443,7 +443,7 @@
     },
     {
       "path": "docs/13-NGHIEP-VU-NHIEU-CHI-NHANH.md",
-      "sha256": "b0181c2bce36d57c1103d3eed0fdc34de336b51953ce1200726a8356768cbb39"
+      "sha256": "13d8d2149772a82dd7eb3cc2cc363f3365abc12e0a4533674a3127ef39f9e567"
     },
     {
       "path": "docs/14-AGENT-SKILLS.md",
@@ -766,6 +766,10 @@
       "sha256": "6961a745822b47ac4561da1ee06dfef4de36fa16b30557f0135e539c31c19342"
     },
     {
+      "path": "docs/validation/19-CHOT-SO-VA-THOI-GIAN-PHUC-VU.md",
+      "sha256": "af6af154596186a8d4961afd56c10169d119cee7fa51f99da97ec236ae68b062"
+    },
+    {
       "path": "docs/validation/blue-edition-browser.json",
       "sha256": "a1fdd5d90c970e44c9a130fc073db2dfeef9af6d07e79d55a6bc13fb5786b1f1"
     },
@@ -823,7 +827,7 @@
     },
     {
       "path": "salon/business.py",
-      "sha256": "29f2dc2b667bad7b8b1068f8fba3bf5fa0ca51bc19ca1fe34f705f770d0d99fa"
+      "sha256": "9c9cc056c8c10e45c5a6797545cd9ec09169bc34b6d9827b5bd6a6646329c06c"
     },
     {
       "path": "salon/business_forms.py",
@@ -996,6 +1000,10 @@
     {
       "path": "salon/tests/test_business.py",
       "sha256": "eb0193b2032ba819f2871cd5b40a62e5e6338b2bd09b354977a6d9e9ac19d077"
+    },
+    {
+      "path": "salon/tests/test_closing_and_service_duration.py",
+      "sha256": "7f78f5ac4dafe53b037fddd68e0549b9f8acdde9757a32f3aa0b708f5d37a669"
     },
     {
       "path": "salon/tests/test_column_migration.py",
@@ -1172,6 +1180,18 @@
     {
       "path": "specs/002-official-30shine-data/tasks.md",
       "sha256": "8fb6dc75df6c91f2f348833c5695cb0f5b75f843d1805771a672bd81fd883d6e"
+    },
+    {
+      "path": "specs/003-closing-and-service-duration/plan.md",
+      "sha256": "aa05017f05537dca6265a7afc0202905882077d71d085249f2cc2309d51cf086"
+    },
+    {
+      "path": "specs/003-closing-and-service-duration/spec.md",
+      "sha256": "6a7a03ddd877e8a17ba4e269b9befd718c4b933fcb8ea9d3c83c2f61c33ebcf1"
+    },
+    {
+      "path": "specs/003-closing-and-service-duration/tasks.md",
+      "sha256": "e817b04707a30dfcee3b0c16d06d109e32c3f65b581f9b20639cd1492d8340a8"
     },
     {
       "path": "static/css/app.css",
