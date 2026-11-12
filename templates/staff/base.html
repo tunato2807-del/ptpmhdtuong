@@ -5,7 +5,7 @@
 <nav aria-label="Quản lý">
 <a href="{% url 'business_board' %}" class="{% if nav_section == 'business' %}active{% endif %}">{% include 'partials/blue_icon.html' with icon='grid' %}<span>Điều hành</span></a>
 <a href="{% url 'dashboard' %}" class="{% if nav_section == 'dashboard' %}active{% endif %}">{% include 'partials/blue_icon.html' with icon='chart' %}<span>Tổng quan</span></a>
-<a href="{% url 'business_walkin' %}">{% include 'partials/blue_icon.html' with icon='plus' %}<span>Tiếp nhận</span></a>
+<a href="{% url 'business_walkin' %}" data-quick-dialog>{% include 'partials/blue_icon.html' with icon='plus' %}<span>Tiếp nhận</span></a>
 <a href="{% url 'schedule' %}" class="{% if nav_section == 'schedule' %}active{% endif %}">{% include 'partials/blue_icon.html' with icon='calendar' %}<span>Lịch & ca làm</span></a>
 <a href="{% url 'customers' %}" class="{% if nav_section == 'customers' %}active{% endif %}">{% include 'partials/blue_icon.html' with icon='users' %}<span>Khách hàng</span></a>
 <a href="{% url 'catalog' %}" class="{% if nav_section == 'catalog' %}active{% endif %}">{% include 'partials/blue_icon.html' with icon='scissors' %}<span>Dịch vụ</span></a>

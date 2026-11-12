@@ -101,31 +101,33 @@ try:
         stylist_link = page.locator(".be-stylist-list > a").first
         values = parse_qs(urlsplit(stylist_link.get_attribute("href")).query)
         stylist_link.click()
-        expect(page.locator("#id_branch")).to_have_value(values["branch"][0])
-        expect(page.locator("#id_employee")).to_have_value(values["employee"][0])
-        expect(page.locator(".mobile-booking")).to_have_count(0)
+        expect(page.get_by_role("dialog")).to_be_visible()
+        expect(page.locator('[data-quick-id="id_branch"]')).to_have_value(values["branch"][0])
+        expect(page.locator('[data-quick-id="id_employee"]')).to_have_value(values["employee"][0])
+        expect(page.get_by_role("dialog").locator(".mobile-booking")).to_have_count(0)
         page.goto(BASE_URL + "/")
         page.locator("#quick-branch").select_option(index=1)
         selected_branch = page.locator("#quick-branch").input_value()
         page.get_by_role("button", name="Chọn lịch của bạn").click()
-        expect(page.locator("#id_branch")).to_have_value(selected_branch)
+        expect(page.get_by_role("dialog")).to_be_visible()
+        expect(page.locator('[data-quick-id="id_branch"]')).to_have_value(selected_branch)
         page.locator('input[name="services"]').first.check()
-        page.locator("#id_employee").select_option(index=1)
+        page.locator('[data-quick-id="id_employee"]').select_option(index=1)
         slot = page.locator(".slot-button").first
         expect(slot).to_be_visible()
         chosen_time = slot.inner_text()
         slot.click()
-        expect(page.locator("#summary-time")).to_have_text(chosen_time)
-        expect(page.locator("#submit-booking")).to_be_enabled()
-        expect(page.locator("#summary-branch")).to_have_text(
-            page.locator("#id_branch option:checked").inner_text()
+        expect(page.locator('[data-quick-id="summary-time"]')).to_have_text(chosen_time)
+        expect(page.locator('[data-quick-id="submit-booking"]')).to_be_enabled()
+        expect(page.locator('[data-quick-id="summary-branch"]')).to_have_text(
+            page.locator('[data-quick-id="id_branch"] option:checked').inner_text()
         )
-        assert page.locator("#summary-total").inner_text() != "0 ₫"
+        assert page.locator('[data-quick-id="summary-total"]').inner_text() != "0 ₫"
         capture(page, "booking-1440.png")
         # Changing duration invalidates the previous slot immediately, including the ticket.
         page.locator('input[name="services"]').nth(1).check()
-        expect(page.locator("#summary-time")).to_have_text("—")
-        expect(page.locator("#submit-booking")).to_be_disabled()
+        expect(page.locator('[data-quick-id="summary-time"]')).to_have_text("—")
+        expect(page.locator('[data-quick-id="submit-booking"]')).to_be_disabled()
         expect(page.locator(".slot-button").first).to_be_visible()
         for width in (320, 390, 768, 1024, 1200, 1440):
             page.set_viewport_size({"width": width, "height": 844})

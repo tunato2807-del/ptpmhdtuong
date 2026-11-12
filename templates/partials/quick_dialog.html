@@ -1,0 +1,48 @@
+<button class="quick-launcher" type="button" data-quick-menu aria-haspopup="dialog" aria-controls="quick-dialog">{% include 'partials/blue_icon.html' with icon='grid' %}<span>Thao tác nhanh</span></button>
+<dialog id="quick-dialog" class="quick-dialog" aria-labelledby="quick-dialog-title">
+  <header class="quick-dialog-header">
+    <button type="button" class="quick-back" data-quick-back hidden aria-label="Quay lại cửa sổ trước">←</button>
+    <div class="quick-dialog-heading"><span class="quick-eyebrow">GENTLEMAN · THAO TÁC TẠI CHỖ</span><h2 id="quick-dialog-title" tabindex="-1">Thao tác nhanh</h2></div>
+    <a class="quick-open-page" data-quick-page href="#" target="_blank" rel="noopener" hidden>Mở trang riêng ↗</a>
+    <button type="button" class="quick-close" data-quick-close aria-label="Đóng cửa sổ">Đóng <span aria-hidden="true">×</span></button>
+  </header>
+  <p class="quick-status" data-quick-status role="status" aria-live="polite"></p>
+  <div class="quick-dialog-body" data-quick-body></div>
+  <footer class="quick-dialog-footer" data-quick-footer hidden><span>Kiểm tra thông tin trước khi xác nhận.</span><div data-quick-submit></div></footer>
+</dialog>
+<template id="quick-menu-content">
+  <p class="quick-intro">Chọn việc bạn cần làm. Form và bảng sẽ mở ngay tại đây.</p>
+  <nav class="quick-tools" aria-label="Công cụ theo tài khoản">
+    {% if user.is_authenticated %}
+      {% if user.is_operator %}
+      <a href="{% url 'business_walkin' %}"><strong>Tiếp nhận khách</strong><span>Tạo lịch và hồ sơ tại quầy</span></a>
+      <a href="{% url 'schedule' %}"><strong>Lịch hẹn & ca làm</strong><span>Mở lịch để check-in và xử lý</span></a>
+      <a href="{% url 'customers' %}"><strong>Khách hàng</strong><span>Tra cứu và cập nhật liên hệ</span></a>
+      <a href="{% url 'reports' %}"><strong>Báo cáo</strong><span>Lọc, xem bảng và xuất file</span></a>
+      {% if user.can_manage_branch %}
+      <a href="{% url 'business_stock' %}"><strong>Kho & vật tư</strong><span>Nhập, xuất và xem tồn chi nhánh</span></a>
+      <a href="{% url 'business_closing' %}"><strong>Đối soát & chốt sổ</strong><span>Kiểm tra tiền mặt trong ngày</span></a>
+      <a href="{% url 'business_interruptions' %}"><strong>Lịch nghỉ & điều phối</strong><span>Quản lý các khoảng tạm nghỉ</span></a>
+      <a href="{% url 'business_commissions' %}"><strong>Hoa hồng</strong><span>Đối chiếu theo stylist</span></a>
+      <a href="{% url 'business_resources' 'stylist' %}"><strong>Nhân sự</strong><span>Stylist và tài khoản liên kết</span></a>
+      <a href="{% url 'business_resources' 'ca-lam' %}"><strong>Ca làm</strong><span>Thêm và điều chỉnh ca</span></a>
+      <a href="{% url 'business_resources' 'ghe' %}"><strong>Ghế cắt</strong><span>Quản lý sức chứa của chi nhánh</span></a>
+      <a href="{% url 'business_resources' 'voucher' %}"><strong>Voucher</strong><span>Ưu đãi trong phạm vi được giao</span></a>
+      {% endif %}
+      {% if user.is_manager %}<a href="{% url 'resource_list' 'dich-vu' %}"><strong>Dịch vụ & combo</strong><span>Thêm, sửa, nhập và xuất danh mục</span></a><a href="{% url 'settings' %}"><strong>Thiết lập toàn chuỗi</strong><span>Chi nhánh, tài khoản và danh mục</span></a>{% endif %}
+      {% elif user.is_stylist %}<a href="{% url 'stylist_portal' %}"><strong>Lịch làm việc của tôi</strong><span>Lịch được phân công và phục vụ</span></a>
+      {% else %}
+      <a href="{% url 'booking' %}"><strong>Đặt lịch mới</strong><span>Chọn dịch vụ, stylist và giờ trống</span></a>
+      <a href="{% url 'my_appointments' %}"><strong>Lịch hẹn của tôi</strong><span>Xem chi tiết, đổi hoặc hủy lịch</span></a>
+      <a href="{% url 'points' %}"><strong>Điểm tích lũy</strong><span>Tra cứu lịch sử điểm</span></a>
+      {% endif %}
+      <a href="{% url 'profile' %}#profile-form"><strong>Thông tin cá nhân</strong><span>Cập nhật hồ sơ của tôi</span></a>
+      <a href="{% url 'profile' %}#password-form"><strong>Đổi mật khẩu</strong><span>Mở ngay form bảo mật tài khoản</span></a>
+      <a href="{% url 'notifications' %}"><strong>Thông báo</strong><span>Các cập nhật dành cho bạn</span></a>
+    {% else %}
+      <a href="{% url 'booking' %}"><strong>Đặt lịch</strong><span>Đăng nhập để chọn lịch hẹn</span></a>
+      <a href="{% url 'login' %}" data-quick-native><strong>Đăng nhập</strong><span>Truy cập tài khoản của bạn</span></a>
+      <a href="{% url 'register' %}" data-quick-native><strong>Đăng ký</strong><span>Tạo tài khoản khách hàng</span></a>
+    {% endif %}
+  </nav>
+</template>

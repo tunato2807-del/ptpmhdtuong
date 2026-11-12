@@ -35,6 +35,7 @@ Local cloud PostgreSQL is already provisioned at its configured address; on Wind
 - Preserve invoice, stock and points ledgers; correct with an auditable entry, not deletion. Prices/durations are appointment snapshots.
 - SQL column names are Vietnamese ASCII without spaces/underscores through `db_column`; Python names and SQL types remain English.
 - Keep decorative typography scoped, Vietnamese marks intact, small SVG sizes bounded, logout visible, reduced-motion supported.
+- Quick dialogs use native dialog + same-origin HTML in static/js/dialog-*.js and quick-dialog.js. Initialize dynamic forms with gentleman:content and its root; imported IDs use data-quick-id. Read form action/method with getAttribute because legitimate controls have those names. Preserve CSRF, POST submitters, validation, focus and uncertain-result handling; never replay a POST automatically. Browser regressions: scripts/quick_dialog_browser.py after collectstatic, using a separate test database.
 - No external email/payment calls during tests. Use locmem/file email and isolated synthetic accounts/browser profiles. Clean only the fixtures the test created.
 - Do not log credentials, reset URLs/tokens, request bodies, cookies, email addresses, phone numbers or database row contents.
 - New financial/auth behavior gets a failing regression test before the fix. Run relevant checks; do not disable tests to make them pass.

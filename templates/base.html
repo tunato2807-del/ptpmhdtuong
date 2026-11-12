@@ -11,7 +11,9 @@
   <link rel="stylesheet" href="{% static 'css/editorial-fonts.css' %}?v=20261028-1">
   <link rel="stylesheet" href="{% static 'css/typography.css' %}?v=20261028-1">
   <link rel="stylesheet" href="{% static 'css/editorial.css' %}?v=20261028-1">
-  <script src="{% static 'js/app.js' %}?v=20261029-blue1" defer></script>
+  <script src="{% static 'js/app.js' %}?v=20261112-dialog1" defer></script>
+  <script src="{% static 'js/booking-form.js' %}?v=20261112-dialog1" defer></script>
+  <script src="{% static 'js/form-controls.js' %}?v=20261112-dialog1" defer></script>
   <script src="{% static 'js/customer.js' %}?v=20261028-1" defer></script>
   <link rel="stylesheet" href="{% static 'css/motion.css' %}?v=20261028-1">
   <script src="{% static 'js/motion.js' %}?v=20261028-1" defer></script>
@@ -19,6 +21,10 @@
   <link rel="stylesheet" href="{% static 'css/quality.css' %}?v=20261028-2">
   <link rel="stylesheet" href="{% static 'css/blue-edition.css' %}?v=20261029-blue1">
   <script src="{% static 'js/blue-edition.js' %}?v=20261029-blue1" defer></script>
+  <link rel="stylesheet" href="{% static 'css/quick-dialog.css' %}?v=20261112-dialog1">
+  <script src="{% static 'js/dialog-content.js' %}?v=20261112-dialog1" defer></script>
+  <script src="{% static 'js/dialog-actions.js' %}?v=20261112-dialog1" defer></script>
+  <script src="{% static 'js/quick-dialog.js' %}?v=20261112-dialog1" defer></script>
   <noscript><link rel="stylesheet" href="{% static 'css/no-js.css' %}"></noscript>
   {% block head %}{% endblock %}
 </head>
@@ -47,5 +53,6 @@
 </footer>
 {% block mobile_booking %}<a class="mobile-booking btn btn-primary" href="{% url 'booking' %}">Dành một lịch hẹn cho bạn <span aria-hidden="true"><svg width="20" height="20" class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></a>{% endblock %}
 {% endblock %}
+{% include 'partials/quick_dialog.html' %}
 {% block scripts %}{% endblock %}
 </body></html>

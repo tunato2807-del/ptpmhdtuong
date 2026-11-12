@@ -2,6 +2,8 @@
 
 Dự án tiếng Việt dùng Django 5.2 LTS, PostgreSQL và giao diện riêng bằng HTML/CSS/JavaScript. Có trang khách hàng, trang cá nhân và cổng quản lý với chức năng thêm/sửa/xóa. Toàn bộ danh mục được quản lý tại `/quan-ly/thiet-lap/`; không dùng Django Admin. Chạy trực tiếp trên VS Code, không cần Docker hoặc Node.js.
 
+Giao diện thao tác tại chỗ: [**form và bảng mở trong cửa sổ nổi**](docs/20-FORM-VA-BANG-MO-TAI-CHO.md), menu Thao tác nhanh theo quyền, thanh lưu cố định, Đóng/Esc và giữ vị trí danh sách.
+
 Công cụ [kiểm đếm và thu thập với mục tiêu 100 bản ghi thật](docs/18-MUC-TIEU-100-BAN-GHI-THAT.md): báo số còn thiếu ở 26 bảng, lấy danh mục JSON-LD công khai từ 30Shine khi truy cập được; không tạo dữ liệu bù và không tự nhập giao dịch giả.
 
 Dữ liệu thực tế: [trạng thái lấy nguồn chính thức 30Shine](docs/17-DU-LIEU-THUC-30SHINE.md). Setup không còn tự tạo dữ liệu/tài khoản mẫu; dữ liệu 30Shine chỉ được nhập sau khi đối chiếu nguồn. Tài khoản, lịch hẹn và chứng từ đang có được giữ nguyên.

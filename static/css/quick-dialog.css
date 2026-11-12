@@ -1,0 +1,81 @@
+/* Local interaction layer; inherits Blue Edition typography and colour tokens. */
+html { scrollbar-gutter:stable; }
+.quick-launcher { position:fixed; right:1.25rem; bottom:1.25rem; z-index:80; display:none; align-items:center; gap:.5rem; min-height:48px; padding:.75rem 1rem; border:1px solid var(--blue); border-radius:10px; color:var(--white); background:var(--blue); font:600 .875rem var(--body); cursor:pointer; box-shadow:0 4px 16px #172a5420; }
+.quick-ready .quick-launcher { display:flex; }
+.quick-launcher svg { width:20px; height:20px; flex:none; }
+.quick-dialog-open { overflow:hidden; }
+.quick-dialog-open .quick-launcher { visibility:hidden; }
+.quick-dialog { width:min(1160px,calc(100% - 2rem)); max-width:none; max-height:calc(100dvh - 2rem); padding:0; border:1px solid var(--line); border-radius:14px; color:var(--ink); background:var(--paper); box-shadow:0 16px 64px #172a5430; }
+.quick-dialog[open] { display:flex; flex-direction:column; animation:quick-enter .18s ease-out; }
+.quick-dialog::backdrop { background:#172a5480; }
+.quick-dialog-header { display:flex; align-items:center; gap:.75rem; flex:none; padding:1rem 1.25rem; border-bottom:1px solid var(--line); background:var(--white); }
+.quick-dialog-heading { flex:1; min-width:0; }
+.quick-eyebrow { color:var(--blue); font-size:.625rem; font-weight:700; letter-spacing:.08em; }
+.quick-dialog-heading h2 { margin:.25rem 0 0; font:700 1.125rem/1.4 var(--heading); overflow-wrap:anywhere; }
+.quick-close,.quick-back { min-height:44px; padding:.5rem .75rem; border:1px solid var(--line); border-radius:8px; background:var(--white); color:var(--ink); font:600 .875rem var(--body); cursor:pointer; flex:none; }
+.quick-close span { margin-left:.25rem; font-size:1.25rem; }
+.quick-back { font-size:1.25rem; }
+.quick-open-page { font-size:.75rem; color:var(--blue); white-space:nowrap; }
+.quick-status { margin:0; padding:0 1.25rem; font-size:.875rem; }
+.quick-status:not(:empty) { padding-top:.75rem; padding-bottom:.75rem; border-bottom:1px solid var(--line); }
+.quick-dialog-body { min-height:100px; overflow:auto; overscroll-behavior:contain; padding:1.25rem; flex:1; scroll-behavior:auto; }
+.quick-dialog-body > main { width:100%; min-width:0; }
+.quick-dialog-body .public-section,.quick-dialog-body .feature-page,.quick-dialog-body .profile-page,.quick-dialog-body .detail-page,.quick-dialog-body .be-booking-screen { width:100%; max-width:none; margin:0; padding:0; }
+.quick-dialog-body .staff-footer,.quick-dialog-body .be-section-masthead,.quick-dialog-body .be-booking-heading,.quick-dialog-body .be-step-rail { display:none; }
+.quick-dialog-body .be-booking-workspace { display:grid; grid-template-columns:minmax(0,1fr) 290px; gap:1.25rem; }
+.quick-dialog-body .be-booking-fields { min-width:0; }
+.quick-dialog-body .slot-button { transition:none; }
+.quick-dialog-body .be-ticket { position:static; }
+.quick-dialog-body .table-scroll,.quick-dialog-body .business-table { max-width:100%; }
+.quick-dialog-body .page-heading { margin:0 0 1rem; }
+.quick-dialog-body .page-heading,.quick-dialog-body .profile-heading { animation:none; }
+.quick-dialog-body .resource-heading { display:none; }
+.quick-dialog-body .page-heading h1 { font-size:1.5rem; }
+.quick-dialog-body .detail-grid { grid-template-columns:minmax(0,1.3fr) minmax(260px,1fr); }
+.quick-dialog-body [data-quick-proxied] { display:none !important; }
+.quick-dialog-footer { display:flex; align-items:center; justify-content:space-between; gap:1rem; flex:none; padding:.75rem 1.25rem; border-top:1px solid var(--line); background:var(--white); }
+.quick-dialog-footer > span { font-size:.75rem; color:var(--muted); }
+.quick-dialog-footer > div { display:flex; gap:.5rem; flex-wrap:wrap; }
+.quick-dialog-footer button { min-height:44px; }
+.quick-intro { margin:0 0 1rem; color:var(--muted); }
+.quick-tools { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.75rem; }
+.quick-tools a { display:flex; flex-direction:column; justify-content:center; min-height:82px; padding:1rem; border:1px solid var(--line); border-radius:10px; color:var(--ink); background:var(--white); text-decoration:none; }
+.quick-tools a:hover { border-color:var(--blue); background:var(--pale); }
+.quick-tools strong { font-size:1rem; }
+.quick-tools span { color:var(--muted); font-size:.8125rem; }
+.quick-skeleton { display:grid; gap:.75rem; padding:1rem 0; }
+.quick-skeleton span { display:block; height:1.5rem; width:80%; border-radius:4px; background:var(--line); animation:quick-pulse 1s ease-in-out infinite alternate; }
+.quick-skeleton span:nth-child(2) { width:95%; height:5rem; }
+.quick-skeleton span:nth-child(3) { width:60%; }
+.quick-dialog :focus-visible,.quick-launcher:focus-visible { outline:3px solid var(--blue); outline-offset:3px; }
+.quick-dialog [hidden] { display:none !important; }
+@keyframes quick-enter { from { transform:translateY(8px); } to { transform:none; } }
+@keyframes quick-pulse { to { opacity:.45; } }
+@media(max-width:800px) {
+  .quick-dialog { width:calc(100% - 1rem); max-height:calc(100dvh - 1rem); border-radius:10px; }
+  .quick-dialog-header,.quick-dialog-body { padding:.875rem; }
+  .quick-eyebrow { display:none; }
+  .quick-dialog-heading h2 { font-size:1rem; }
+  .quick-open-page { display:none; }
+  .quick-dialog-body .be-booking-workspace,.quick-dialog-body .detail-grid,.quick-dialog-body .resource-form-layout,.quick-dialog-body .profile-layout { grid-template-columns:minmax(0,1fr); }
+  .quick-dialog-footer { padding:.75rem .875rem; }
+  .quick-dialog-footer > span { display:none; }
+  .quick-dialog-footer > div { width:100%; }
+  .quick-dialog-footer button { flex:1; }
+  .quick-launcher { right:.75rem; bottom:.75rem; }
+  .customer-app .quick-launcher { bottom:5.5rem; }
+  .quick-tools { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media(max-width:420px) {
+  .quick-tools { gap:.5rem; }
+  .quick-tools a { min-height:64px; padding:.625rem; }
+  .quick-tools strong { font-size:.8125rem; line-height:1.4; }
+  .quick-tools span { display:none; }
+}
+@media(prefers-reduced-motion:reduce) { .quick-dialog[open],.quick-skeleton span { animation:none; } }
+@media print {
+  body.quick-dialog-open > :not(.quick-dialog),.quick-dialog-header,.quick-dialog-footer,.quick-status,.quick-launcher { display:none !important; }
+  .quick-dialog[open] { position:static; width:100%; max-height:none; border:0; box-shadow:none; }
+  .quick-dialog-body { overflow:visible; padding:0; }
+  .quick-dialog-open { overflow:visible; }
+}
