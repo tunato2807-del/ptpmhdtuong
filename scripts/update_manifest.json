@@ -1,5 +1,5 @@
 {
-  "ref": "d468293d738d18d5059c3b25652da4287e711ad7",
+  "ref": "2d1e3dd2bfb09f9429c6abdaad3e9d9e0eafbce4",
   "files": [
     {
       "path": ".agents/LICENSE.agent-skills",
@@ -247,7 +247,7 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "sha256": "547581f74bce8627d14f255dff27cf382c8cfe9b78c31a7e44165afe4e905380"
+      "sha256": "a4cd4dda2a92e072faf1a66cb3a931e008a0084a39e7f23d631815f2b3e7a3c2"
     },
     {
       "path": ".gitignore",
@@ -371,11 +371,11 @@
     },
     {
       "path": "AGENTS.md",
-      "sha256": "e71d8b59092e0b41d0eb1894aa7bd067df7b1906b66e10f9949a404705285ff2"
+      "sha256": "068ea12ae59cffe03ade68fbc62a1c488b9af8a7e8f1814193fe92948779cbdd"
     },
     {
       "path": "README.md",
-      "sha256": "b011510bdefce5aa3b4a7aca3b0bca522c8529a896182531819037eedb37b8a0"
+      "sha256": "389516cf957d62b7a6ebec56576d6833e8fb34987684ecd9e8632b18bd0307a8"
     },
     {
       "path": "config/__init__.py",
@@ -464,6 +464,10 @@
     {
       "path": "docs/18-MUC-TIEU-100-BAN-GHI-THAT.md",
       "sha256": "8affa65b84f05800006e40795a72aad0a122e41a81db4e7ddd2b123e2f3a1bad"
+    },
+    {
+      "path": "docs/20-FORM-VA-BANG-MO-TAI-CHO.md",
+      "sha256": "83c86a322071479e560da2c8a3fafb0da66504e629354142c076d3dc83978683"
     },
     {
       "path": "docs/BAO_CAO_PHAN_TICH_THIET_KE.docx",
@@ -662,6 +666,22 @@
       "sha256": "bc017bafc71b5628911213cb669ae84b8f98eab3056a14275ff3bf6b78616f1f"
     },
     {
+      "path": "docs/screenshots/dialogs/booking-390.png",
+      "sha256": "600e634731b7dd9ea238b2744e979077a250f36392ae9ccb9550bb811297ed8a"
+    },
+    {
+      "path": "docs/screenshots/dialogs/form-320.png",
+      "sha256": "4adca1521ab11dbd724d93ebdd0241d48fb2431560b4b67d6206f2a5f03721f0"
+    },
+    {
+      "path": "docs/screenshots/dialogs/tools-1440.png",
+      "sha256": "f48d54dc52d39153df632c25cd049f87e4fb38709743bc0012f3974bc8ce397f"
+    },
+    {
+      "path": "docs/screenshots/dialogs/tools-320.png",
+      "sha256": "f46c9aa333162c9f6724ebb889197535cf550ff954ae714a4c340ec8e671bb7a"
+    },
+    {
       "path": "docs/screenshots/editorial/experience.png",
       "sha256": "026580f7f233ac518365b432572cc52b4b60661ff77c51803c60d87f6cc5acf1"
     },
@@ -768,6 +788,10 @@
     {
       "path": "docs/validation/19-CHOT-SO-VA-THOI-GIAN-PHUC-VU.md",
       "sha256": "af6af154596186a8d4961afd56c10169d119cee7fa51f99da97ec236ae68b062"
+    },
+    {
+      "path": "docs/validation/20-FORM-VA-BANG-MO-TAI-CHO.md",
+      "sha256": "7824dc83f839cc68a16ba894d1cda2a81bc0cd26bd7cee83bc5be3db61f4b323"
     },
     {
       "path": "docs/validation/blue-edition-browser.json",
@@ -1103,7 +1127,7 @@
     },
     {
       "path": "scripts/customer_ui_smoke.py",
-      "sha256": "07a774dc770258d46e2a44f67248783e7efd7c2545aed7c40cbfd8202249a377"
+      "sha256": "2472a5bb86627561306d0a1d79849e033f5837790d2d1fdf4eeea66ab69148fe"
     },
     {
       "path": "scripts/dev.py",
@@ -1132,6 +1156,10 @@
     {
       "path": "scripts/quality_browser.py",
       "sha256": "bab6896f7fd4c00010e1f62e4948519a472c9c237c1036bf2bdc07f3857d2757"
+    },
+    {
+      "path": "scripts/quick_dialog_browser.py",
+      "sha256": "c5fbe5322706aa1db8057079fc211f54e59a459b12fa4159d74fd9e8582b8084"
     },
     {
       "path": "scripts/setup.sh",
@@ -1194,6 +1222,18 @@
       "sha256": "e817b04707a30dfcee3b0c16d06d109e32c3f65b581f9b20639cd1492d8340a8"
     },
     {
+      "path": "specs/004-quick-dialogs/plan.md",
+      "sha256": "8775b4ca153d181bfa499a32ea09621aec13b2dece7d77130da49ae762f72383"
+    },
+    {
+      "path": "specs/004-quick-dialogs/spec.md",
+      "sha256": "417867fc0f0b1ff788413d41c602816e42423cc9e072e14d44b388ecd73f9af9"
+    },
+    {
+      "path": "specs/004-quick-dialogs/tasks.md",
+      "sha256": "b9e29c25da01175465ae2c9f5c1d415ed04afe8467c7a64397450d1c8687f5c0"
+    },
+    {
       "path": "static/css/app.css",
       "sha256": "8fa5e4fc37c1163a389ba4b0ed895fe1b71643735897b58dfb86a95d58f86df0"
     },
@@ -1232,6 +1272,10 @@
     {
       "path": "static/css/quality.css",
       "sha256": "1e06532ad7d27f5a96e1736797993efe30e9286f34bf1aff290c05cc83989096"
+    },
+    {
+      "path": "static/css/quick-dialog.css",
+      "sha256": "30de4d6c3072040419b94877536d5df1fd0d51cd7f5ea6ec1ded666cc067f2af"
     },
     {
       "path": "static/css/typography.css",
@@ -1351,19 +1395,39 @@
     },
     {
       "path": "static/js/app.js",
-      "sha256": "075c99accdbe436ac4f716583c7e31a71a43ce6edcbfa07aae1c619a28dd834d"
+      "sha256": "22f34dce59444f123d3b109b43f4f2b19b7710ddd4c217edecb509caee9bcbaf"
     },
     {
       "path": "static/js/blue-edition.js",
       "sha256": "835a980577d52245e91a3db71f02677b0f844369a0dc9d6736568d0e206cb0d5"
     },
     {
+      "path": "static/js/booking-form.js",
+      "sha256": "919974d5bd4285e7a2a3a7129f6d82f219419dd9488c89f7be56466b818ddcbb"
+    },
+    {
       "path": "static/js/customer.js",
       "sha256": "8f519a1072ffb9057da3833420b6f82d56209c60e3c2a18936d656dfc6374e29"
     },
     {
+      "path": "static/js/dialog-actions.js",
+      "sha256": "95642c4b6bc837bdbe7662f4a3aa40a1992b8adc6385a00ad7bb83221dda8dce"
+    },
+    {
+      "path": "static/js/dialog-content.js",
+      "sha256": "8e903730e5811714fdf4ee1035c506105035b4a79b03bab8d8731d36edc4bdb9"
+    },
+    {
+      "path": "static/js/form-controls.js",
+      "sha256": "bfcea83bcf1b21be9be57a6bef9c319ea43f0b44b09fd7a33f22db96a7ebf790"
+    },
+    {
       "path": "static/js/motion.js",
       "sha256": "08a9843fdcaed81dbcc8fe34ccf508f6ab875dd55c891073af8b23dba05abc47"
+    },
+    {
+      "path": "static/js/quick-dialog.js",
+      "sha256": "3f97c898993b66ae8db255fb2cb3a6098efb4d9b8ca54c7b0a0d121a4ca6bce6"
     },
     {
       "path": "templates/403.html",
@@ -1415,7 +1479,7 @@
     },
     {
       "path": "templates/base.html",
-      "sha256": "55960a46451c69cb70f34cffe00d9370974f14ea7a8f3e77b6bda92ce78b4fa8"
+      "sha256": "d0b2f2cc48ca5e6876daefbf5cd5fbf2bb58c32ca1b12da129a85b667adb5337"
     },
     {
       "path": "templates/business/activation.html",
@@ -1514,6 +1578,10 @@
       "sha256": "ba45e06ed2385c65910b49911d19923b3d559ca3a58b1bc0072f1aae4531523c"
     },
     {
+      "path": "templates/partials/quick_dialog.html",
+      "sha256": "a7032ef78537e8a161811867edea4ed6308f99148ddea2408eafd155ee60a267"
+    },
+    {
       "path": "templates/public/appointment_detail.html",
       "sha256": "21a9c20851c72ef200e1466b040b98da09cd69c06726db946c405d37e191e37f"
     },
@@ -1539,7 +1607,7 @@
     },
     {
       "path": "templates/staff/base.html",
-      "sha256": "4f51e7cbf26e4dbd250776d71fe2ca701ecb1d3c7dfcc7ba2ff6a2bfaa32843e"
+      "sha256": "ef4a8f3fef091f58fc1f51fb591af59c4be7d0b36c0f348f90eff704da4129a0"
     },
     {
       "path": "templates/staff/branches.html",
