@@ -1,0 +1,133 @@
+/* A Vietnamese barber house: navy, paper, warm metal and real salon photography. */
+.barber-club .club-home { overflow-wrap: anywhere; }
+.barber-club .club-home h2 { font: 600 clamp(36px, 4.5vw, 64px)/1.18 var(--club-display); letter-spacing: .5px; }
+.barber-club .club-home h2 em { display: inline-block; font-size: .69em; line-height: 1.6; letter-spacing: -.5px; }
+.barber-club .club-section { padding: 88px max(5%, calc((100% - 1240px)/2)); }
+.barber-club .club-section-heading { text-align: center; margin: 0 auto 48px; max-width: 760px; }
+.barber-club .club-section-heading h2 { margin: 16px 0; }
+.barber-club .club-section-heading > p:last-child { margin-top: 16px; }
+.barber-club .club-hero { display: grid; grid-template-columns: 48% 52%; background: var(--navy); color: #fff; }
+.barber-club .club-hero-copy { padding: 44px 24px 56px; text-align: center; position: relative; z-index: 1; }
+.barber-club .club-hero-copy .club-kicker { color: #cfdee7; font-size: 10px; letter-spacing: 1.8px; }
+.barber-club .club-crest { display: block; width: 80px; height: 94px; color: var(--club-copper); margin: 28px auto 16px; }
+.barber-club .club-hero-wordmark { display: block; font: 600 clamp(44px, 5.5vw, 88px)/1.1 var(--club-display); letter-spacing: 3px; color: #f1dfc5; }
+.barber-club .club-hero-submark { display: block; font: 600 12px/2 var(--body); letter-spacing: 6px; color: #f1dfc5; margin-top: 8px; }
+.barber-club .club-hero .club-ornament { color: var(--club-copper); margin: 20px auto; }
+.barber-club .club-hero h1 { font: 600 clamp(28px, 3vw, 42px)/1.4 var(--heading); letter-spacing: -.5px; color: #fff; }
+.barber-club .club-hero h1 em { font-size: .85em; color: #f1dfc5; }
+.barber-club .club-hero-copy > p:not(.club-kicker) { color: #dce7ee; font-size: 15px; line-height: 1.9; margin: 20px 0 24px; }
+.barber-club .club-hero-actions { display: flex; align-items: center; justify-content: center; gap: 24px; flex-wrap: wrap; }
+.barber-club .club-hero .btn-primary { background: #f1dfc5; border-color: #f1dfc5; color: var(--navy); }
+.barber-club .club-hero .btn-primary:hover { background: #fff; border-color: #fff; }
+.barber-club .club-hero-link { color: #fff; font-size: 13px; padding: 12px 0; border-bottom: 1px solid #90aaba; }
+.barber-club .club-hero-link:hover { color: #f1dfc5; }
+.barber-club .club-hero :focus-visible { outline-color: #f1dfc5; }
+.barber-club .club-hero-media { position: relative; overflow: hidden; isolation: isolate; min-width: 0; background: #254b64; }
+.barber-club .club-hero-media .hero-slide { position: absolute; inset: 0; height: 100%; width: 100%; object-fit: cover; object-position: 50% 45%; }
+.barber-club .club-hero-media::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, #153b5333, transparent 35%), linear-gradient(0deg, #153b53bb, transparent 28%); z-index: 1; }
+.barber-club .club-photo-caption { position: absolute; left: 32px; bottom: 92px; right: 24px; z-index: 2; font: 600 10px/1.8 var(--body); letter-spacing: 2px; color: white; }
+.barber-club .club-hero .slideshow-controls { top: auto; right: auto; left: 24px; bottom: 24px; color: #fff; background: var(--navy); border-color: #90aaba; border-radius: 2px; }
+.barber-club .club-hero .slideshow-controls button { color: white; border-radius: 2px; }
+.barber-club .club-hero .slideshow-controls button:hover { background: #365c73; }
+.barber-club .club-hero .slideshow-count { color: white; }
+.barber-club .club-appointment { display: grid; grid-template-columns: minmax(0,1fr) minmax(200px,300px) auto; gap: 32px; align-items: end; padding: 28px 5%; background: #e4edf2; border-bottom: 1px solid var(--line); }
+.barber-club .club-appointment strong { display: block; font: 600 19px/1.6 var(--heading); margin-top: 8px; }
+.barber-club .club-appointment .btn { min-height: 48px; margin-bottom: 0; }
+.barber-club .club-intro { text-align: center; background: var(--paper); }
+.barber-club .club-intro h2 { margin: 24px 0; }
+.barber-club .club-intro > p:not(.club-kicker) { max-width: 680px; margin: 16px auto; line-height: 1.9; }
+.barber-club .club-text-link { display: inline-flex; align-items: center; gap: 20px; padding: 12px 0; margin-top: 12px; border-bottom: 1px solid var(--blue); font-size: 14px; font-weight: 600; color: var(--blue); }
+.barber-club .club-services { background: #edf2f4; border-block: 1px solid var(--line); }
+.barber-club .club-service-layout { display: grid; grid-template-columns: minmax(0, .7fr) minmax(0,1.3fr); align-items: start; gap: 64px; }
+.barber-club .club-service-photo { padding: 12px; border: 1px solid #abbfc9; background: #f8f7f3; }
+.barber-club .club-service-photo img { width: 100%; height: auto; border-radius: 0; }
+.barber-club .club-service-photo figcaption { padding: 24px 16px 12px; }
+.barber-club .club-service-photo figcaption > span { font-size: 10px; letter-spacing: 2px; color: var(--muted); }
+.barber-club .club-service-photo strong { display: block; font: italic 500 28px/1.5 var(--serif); margin-top: 12px; }
+.barber-club .club-home .be-service-menu { margin: 0; border-top: 1px solid #9fb4c0; }
+.barber-club .club-home .be-service-menu > a { display: grid; grid-template-columns: 24px minmax(0,1fr) auto; align-items: start; padding: 28px 0; gap: 16px; border-bottom: 1px solid #bccdd6; }
+.barber-club .club-home .be-service-menu h3 { font: 600 19px/1.5 var(--heading); color: var(--navy); }
+.barber-club .club-home .be-service-menu p { font-size: 14px; margin: 8px 0; line-height: 1.7; }
+.barber-club .club-home .be-menu-duration { font-size: 11px; color: var(--muted); letter-spacing: .5px; }
+.barber-club .club-home .be-menu-index { color: var(--muted); font-size: 13px; }
+.barber-club .club-home .be-menu-price { font-size: 16px; color: var(--navy); white-space: nowrap; }
+.barber-club .club-home .be-menu-price svg { display: block; margin: 12px 0 0 auto; }
+.barber-club .club-home .be-menu-footnote { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; padding-top: 24px; font-size: 12px; }
+.barber-club .club-home .be-menu-footnote > span { font-size: 12px; letter-spacing: 0; }
+.barber-club .club-home .be-menu-footnote a { display: inline-flex; gap: 12px; align-items: center; min-height: 44px; font-weight: 600; }
+.barber-club .club-quote { position: relative; padding: 64px 5%; text-align: center; background: #dfeaf0; border-bottom: 1px solid var(--line); }
+.barber-club .club-quote > p { font: 500 clamp(24px, 3vw, 40px)/1.7 var(--heading); color: var(--navy); }
+.barber-club .club-quote > span { display: block; font-size: 10px; letter-spacing: 3px; margin: 24px 0; color: #466175; }
+.barber-club .club-gallery { background: var(--navy); color: #f8f7f3; }
+.barber-club .club-gallery .club-kicker { color: #e0c29c; }
+.barber-club .club-gallery .club-section-heading > p:last-child { color: #cbd9e1; }
+.barber-club .club-gallery h2 { color: #f8f7f3; }
+.barber-club .club-gallery-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 32px; align-items: start; }
+.barber-club .club-gallery-room { grid-row: span 2; padding-top: 64px; }
+.barber-club .club-gallery-grid img { width: 100%; height: auto; border-radius: 2px; }
+.barber-club .club-gallery-grid figcaption { padding: 16px 0; }
+.barber-club .club-gallery-grid figcaption > span { display: block; font-size: 10px; color: #d2b48d; letter-spacing: 2px; }
+.barber-club .club-gallery-grid strong { display: block; margin-top: 8px; font: italic 500 23px/1.5 var(--serif); }
+.barber-club .club-gallery-source { text-align: center; font-size: 12px; color: #cbd9e1; margin-top: 32px; }
+.barber-club .club-team { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.15fr); gap: 64px; align-items: center; }
+.barber-club .club-team-photo img { width: 100%; height: auto; border-radius: 2px; }
+.barber-club .club-team-photo figcaption { font-size: 11px; margin-top: 12px; color: var(--muted); }
+.barber-club .club-team-copy > h2 { margin: 16px 0; }
+.barber-club .club-team-copy > p:not(.club-kicker) { font-size: 15px; line-height: 1.8; }
+.barber-club .club-home .be-stylist-list { display: grid; grid-template-columns: 1fr; margin-top: 28px; border-top: 1px solid var(--line); }
+.barber-club .club-home .be-stylist-list > a { display: flex; align-items: center; gap: 16px; min-width: 0; padding: 20px 0; border-bottom: 1px solid var(--line); border-right: 0; }
+.barber-club .club-home .be-stylist-list > a > div { flex: 1; min-width: 0; }
+.barber-club .club-home .be-stylist-list strong { font-size: 15px; }
+.barber-club .club-home .be-stylist-list small { display: block; font-size: 12px; margin-top: 4px; color: var(--muted); }
+.barber-club .club-home .be-stylist-list .avatar { background: #e4edf2; color: var(--navy); flex: 0 0 44px; }
+.barber-club .club-locations { background: #eaf0f3; border-block: 1px solid var(--line); }
+.barber-club .club-home .be-branch-links { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 24px; }
+.barber-club .club-home .be-branch-links > a { display: block; border: 1px solid #b7cbd5; padding: 28px; background: var(--paper); }
+.barber-club .club-home .be-branch-links > a:hover { border-color: var(--blue); background: #fff; }
+.barber-club .club-home .be-branch-links small { font-size: 10px; }
+.barber-club .club-home .be-branch-links strong { font: 600 22px/1.5 var(--heading); letter-spacing: -.4px; margin: 16px 0; }
+.barber-club .club-home .be-branch-links p { font-size: 14px; line-height: 1.8; }
+.barber-club .club-home .be-branch-links a > span { font-size: 13px; margin-top: 24px; }
+.barber-club .club-photo-credit { text-align: center; padding: 24px 5%; font-size: 11px; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .barber-club .club-home .be-stylist-list > a { transition: padding .2s ease, background .2s ease; }
+  .barber-club .club-home .be-stylist-list > a:hover { padding-inline: 12px; background: #eaf0f3; }
+}
+@media (max-width: 1024px) {
+  .barber-club .club-section { padding: 64px 5%; }
+  .barber-club .club-hero-copy { padding: 32px 20px; }
+  .barber-club .club-hero-actions { gap: 12px; }
+  .barber-club .club-appointment { gap: 20px; grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
+  .barber-club .club-appointment > div { grid-column: 1/-1; }
+  .barber-club .club-appointment > button { align-self: end; }
+  .barber-club .club-service-layout, .barber-club .club-team { gap: 32px; }
+  .barber-club .club-home .be-branch-links { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 700px) {
+  .barber-club .club-hero { grid-template-columns: 1fr; }
+  .barber-club .club-hero-copy { padding: 32px 20px 40px; }
+  .barber-club .club-hero-wordmark { font-size: clamp(44px, 11vw, 64px); }
+  .barber-club .club-crest { width: 64px; height: 76px; margin-top: 20px; }
+  .barber-club .club-hero h1 { font-size: 30px; }
+  .barber-club .club-hero-media { aspect-ratio: 1/1; }
+  .barber-club .club-photo-caption { left: 20px; bottom: 84px; font-size: 9px; }
+  .barber-club .club-hero .slideshow-controls { left: 16px; bottom: 16px; }
+  .barber-club .club-appointment { grid-template-columns: 1fr; padding: 28px 6%; }
+  .barber-club .club-appointment strong { font-size: 17px; }
+  .barber-club .club-section { padding: 48px 6%; }
+  .barber-club .club-section-heading { margin-bottom: 32px; }
+  .barber-club .club-kicker { font-size: 10px; letter-spacing: 1.4px; }
+  .barber-club .club-service-layout, .barber-club .club-team { grid-template-columns: 1fr; }
+  .barber-club .club-service-photo { max-width: 340px; margin: 0 auto; }
+  .barber-club .club-home .be-service-menu > a { grid-template-columns: 20px minmax(0,1fr); gap: 12px; padding: 24px 0; }
+  .barber-club .club-home .be-menu-price { grid-column: 2; display: flex; align-items: center; gap: 24px; }
+  .barber-club .club-home .be-menu-price svg { display: inline-block; margin: 0; }
+  .barber-club .club-home .be-service-menu h3 { font-size: 17px; }
+  .barber-club .club-quote { padding: 40px 6%; }
+  .barber-club .club-gallery-grid { grid-template-columns: 1fr; gap: 24px; }
+  .barber-club .club-gallery-room { grid-row: auto; padding-top: 0; }
+  .barber-club .club-gallery-care { margin-left: 24px; }
+  .barber-club .club-gallery-detail { margin-right: 24px; }
+  .barber-club .club-gallery-grid strong { font-size: 21px; }
+  .barber-club .club-home .be-branch-links { grid-template-columns: 1fr; gap: 16px; }
+}

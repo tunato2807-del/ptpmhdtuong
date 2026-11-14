@@ -1,0 +1,81 @@
+/* Shared palette and chrome. Decorative type is scoped to the brand/homepage. */
+.blue-edition.barber-club {
+  --blue: #285f82;
+  --navy: #153b53;
+  --ink: #19384b;
+  --muted: #536775;
+  --paper: #f8f7f3;
+  --pale: #eaf0f3;
+  --line: #ccd9df;
+  --club-copper: #d2b48d;
+  --club-display: 'Barlow Condensed', 'Be Vietnam Pro', 'Segoe UI', sans-serif;
+}
+.barber-club.customer-app .public-header {
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+.barber-club .club-brand-name {
+  display: block;
+  color: var(--navy);
+  font: 600 30px/1 var(--club-display);
+  letter-spacing: 1.5px;
+  text-align: center;
+}
+.barber-club .club-brand-name > span {
+  display: block;
+  margin-top: 7px;
+  font: 600 8px/1.5 var(--body);
+  letter-spacing: 3px;
+}
+.barber-club .session-button { color: var(--blue); border-color: var(--line); }
+.barber-club .session-button:hover { background: var(--pale); }
+.barber-club .public-footer { background: var(--navy); color: #f8f7f3; }
+.barber-club .public-footer :is(p, .be-wordmark) { color: #f8f7f3; }
+.barber-club .public-footer .club-brand-name { color: #f1dfc5; text-align: left; }
+.barber-club .public-footer :is(.footer-links > span, .footer-bottom) { color: #cbd9e1; }
+.barber-club .public-footer a:hover { color: var(--club-copper); }
+.barber-club .public-footer .footer-top-link { background: #f8f7f3; color: var(--navy); }
+.barber-club .public-footer :focus-visible { outline-color: var(--club-copper); }
+.barber-club .footer-bottom { border-color: #416074; }
+.barber-club .be-ticket { border-top-color: var(--blue); }
+.barber-club .be-live-rail { background: var(--navy); }
+.barber-club .quick-launcher { background: var(--blue); color: white; }
+.barber-club .quick-launcher:hover { background: var(--navy); color: white; }
+.barber-club .club-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #9b7549;
+  font-size: 9px;
+  margin: 24px auto;
+}
+.barber-club .club-ornament::before,
+.barber-club .club-ornament::after { content: ''; width: 56px; height: 1px; background: currentColor; }
+.barber-club .club-kicker {
+  display: block;
+  color: var(--blue);
+  font: 600 11px/1.8 var(--body);
+  letter-spacing: 2px;
+}
+@media (max-width: 600px) {
+  .barber-club .club-brand-name { font-size: 24px; letter-spacing: .5px; }
+  .barber-club .club-brand-name > span { font-size: 7px; letter-spacing: 2px; margin-top: 4px; }
+}
+@media (max-width: 760px) {
+  /* One action row leaves more content visible than two floating rows. */
+  .barber-club.quick-ready.customer-app .mobile-booking,
+  .barber-club.customer-app .quick-launcher {
+    width: calc(50% - 18px);
+    min-height: 52px;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    padding: 8px;
+    justify-content: center;
+    gap: 8px;
+    font-size: 12px;
+    border-radius: 3px;
+  }
+  .barber-club.quick-ready.customer-app .mobile-booking { left: 12px; right: auto; }
+  .barber-club.customer-app .quick-launcher { right: 12px; border: 1px solid var(--blue); background: var(--paper); color: var(--blue); }
+  .barber-club.customer-app .quick-launcher svg { display: none; }
+}

@@ -10,7 +10,7 @@ Dữ liệu thực tế: [trạng thái lấy nguồn chính thức 30Shine](doc
 
 Đã tích hợp [**GitHub Spec Kit 1.3.0**](docs/16-SPEC-KIT.md) cho Copilot trong VS Code và Codex: đặc tả → kế hoạch → công việc → triển khai → kiểm chứng. Có constitution riêng cho dự án, helper Python và lệnh cập nhật bằng terminal. Các lệnh `/speckit-*` dùng trong ô chat, không phải PowerShell.
 
-Giao diện mới: [**Mẫu 3 — The Blue Edition**](docs/15-GIAO-DIEN-BLUE-EDITION.md), có ảnh chụp thực tế và lệnh cập nhật trong terminal VS Code. Trang chủ dạng tạp chí xanh dương, phiếu đặt lịch trực tiếp, thẻ thành viên và bảng điều phối theo chi nhánh.
+Giao diện mới: [**Barber Club sắc xanh**](docs/21-GIAO-DIEN-BARBER-CLUB.md), phong cách barber cổ điển, ảnh chụp salon Việt Nam, xanh navy/xanh khói phối trắng ngà. Có ảnh xem trước và lệnh cập nhật trong terminal VS Code; giữ form tại chỗ, thẻ thành viên và bảng điều phối theo chi nhánh. [Mẫu 3 — Blue Edition](docs/15-GIAO-DIEN-BLUE-EDITION.md) là tài liệu của phiên bản trước.
 
 Xem [áp dụng 25 Agent Skills và hướng dẫn cập nhật](docs/14-AGENT-SKILLS.md): sửa quyền khôi phục tài khoản, hoàn điểm, truy vấn nhiều chi nhánh, giao diện dễ đọc, giới hạn đăng nhập và bộ kiểm tra tự động. **Bản mới cần migrate đến 0010.**
 

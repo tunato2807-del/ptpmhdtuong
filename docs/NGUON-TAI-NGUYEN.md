@@ -38,3 +38,9 @@ Be Vietnam Pro dùng các subset latin, latin-ext, vietnamese hiện có. Lora v
 ## Biểu tượng
 
 SVG đường nét viết trực tiếp trong template, có kích thước giới hạn. `static/images/barber.svg` là tài nguyên lịch sử không còn được dùng trên giao diện khách hàng.
+
+Ngày 14/11/2026: thêm biểu trưng barber tự vẽ trong `templates/partials/club_crest.html`
+và `static/images/club-favicon.svg`. Không lấy logo từ gentlemen-barberclubs.de.
+Bản Barber Club dùng lại bộ ảnh nguyên file đã liệt kê ở trên, không thêm ảnh
+không rõ nguồn. Tham khảo bố cục từ năm ảnh người dùng gửi; truy cập trực tiếp
+website tham khảo bị môi trường chặn (CONNECT 403).

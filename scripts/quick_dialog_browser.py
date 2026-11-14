@@ -89,6 +89,40 @@ class QuickDialogBrowser(Fixtures, LiveServerTestCase):
             expect(dialog).not_to_be_visible()
             expect(link).to_be_focused()
 
+    def test_barber_club_home_responsive_accessibility(self):
+        """Audit the real page with photos loaded, including the authenticated header."""
+        axe = (ROOT / "scripts/browser-audit/node_modules/axe-core/axe.min.js").read_text()
+        output = ROOT / "test-results/barber-club"
+        output.mkdir(parents=True, exist_ok=True)
+        with self.browser_page(viewport={"width": 1440, "height": 1000}) as page:
+            for width in (320, 768, 1024, 1440):
+                page.set_viewport_size({"width": width, "height": 1000})
+                page.goto(self.live_server_url + reverse("home"))
+                page.emulate_media(reduced_motion="reduce")
+                page.evaluate("document.fonts.ready")
+                page.evaluate("document.documentElement.style.scrollBehavior = 'auto'")
+                height = page.locator("body").evaluate("el => el.scrollHeight")
+                for y in range(0, height, 700):
+                    page.evaluate("y => window.scrollTo(0, y)", y)
+                    page.wait_for_timeout(50)
+                page.evaluate("window.scrollTo(0, 0)")
+                page.wait_for_function("""() => [...document.images].every(
+                    image => image.complete && image.naturalWidth > 0)""")
+                self.assertLessEqual(page.locator("html").evaluate("el => el.scrollWidth"), width)
+                expect(page.get_by_role("heading", level=1)).to_have_count(1)
+                expect(page.get_by_role("button", name="Đăng xuất", exact=True)).to_be_visible()
+                expect(page.get_by_role("link", name="Đặt lịch ngay", exact=True)).to_be_visible()
+                page.screenshot(path=str(output / f"home-{width}.png"), full_page=True)
+                page.evaluate(axe)
+                violations = page.evaluate("""async () => (await axe.run()).violations
+                    .filter(v => ['serious','critical'].includes(v.impact))
+                    .map(v => ({id:v.id, nodes:v.nodes.map(n=>n.target)}))""")
+                self.assertEqual(violations, [], (width, violations))
+            # Real booking parameters remain available through the redesigned hero.
+            page.get_by_role("link", name="Đặt lịch ngay", exact=True).click()
+            expect(page.get_by_role("dialog")).to_be_visible()
+            expect(page.locator('[data-quick-id="booking-form"]')).to_be_visible()
+
     def open_services(self, page):
         page.goto(self.live_server_url + reverse("settings"))
         page.locator(

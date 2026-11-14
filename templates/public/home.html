@@ -1,16 +1,79 @@
-{% extends 'base.html' %}{% load static salon_tags %}
-{% block title %}GENTLEMAN · Một đường cắt. Một chất riêng.{% endblock %}
-{% block head %}<link rel="preload" as="image" href="{% static 'images/photos/salon-lounge.jpg' %}" fetchpriority="high">{% endblock %}
+{% extends 'base.html' %}
+{% load static salon_tags %}
+{% block title %}GENTLEMAN · Chỉn chu theo cách của bạn{% endblock %}
+{% block head %}
+<link rel="preload" as="image" href="{% static 'images/photos/salon-lounge.jpg' %}" fetchpriority="high">
+<link rel="stylesheet" href="{% static 'css/barber-club-home.css' %}?v=20261113-club1">
+{% endblock %}
 {% block content %}
-<section class="be-cover">
-  <div class="be-cover-meta"><span>G / JOURNAL — THE BLUE EDITION</span><span>GENTLEMAN · VIỆT NAM</span><span>GOOD HAIR, GOOD COMPANY.</span></div>
-  <div class="be-cover-title"><div class="be-margin-note"><span class="be-asterisk">{% include 'partials/blue_icon.html' with icon='star' %}</span><span>MỘT CHÚT<br>THAY ĐỔI.<br>NHIỀU HƠN<br>TỰ TIN.</span></div><div><p class="be-eyebrow">DÀNH CHO PHIÊN BẢN BẠN YÊU THÍCH</p><h1>Một đường cắt.<br><em>Một chất riêng.</em></h1><p class="be-cover-description">Kiểu tóc hợp với bạn. Khoảng thời gian dành cho bạn.<br>Ghé GENTLEMAN, để phần chỉn chu chúng tôi lo.</p></div><a class="be-booking-stamp" href="{% url 'booking' %}"><span>HẸN MỘT<br>NGÀY ĐẸP</span>{% include 'partials/icon_arrow.html' %}<small>BOOK YOUR SEAT</small></a></div>
-  <div class="be-photo-spread"><figure class="be-photo-note be-first"><img src="{% static 'images/photos/precision-cut.png' %}" alt="Stylist chăm chút đường cắt cho khách" width="369" height="468"><figcaption>01 / CHĂM CHÚT</figcaption></figure><div class="be-main-photo" data-slideshow role="region" aria-roledescription="trình chiếu" aria-label="Trải nghiệm tại Gentleman"><img class="hero-slide is-active" src="{% static 'images/photos/salon-lounge.jpg' %}" alt="Trò chuyện và tư vấn tại salon" width="700" height="700" fetchpriority="high"><img class="hero-slide" data-src="{% static 'images/photos/consultation.jpg' %}" alt="Stylist và khách cùng trao đổi về kiểu tóc" width="765" height="766" decoding="async" aria-hidden="true"><div class="be-photo-label"><span>Ở ĐÂY, PHONG CÁCH BẮT ĐẦU TỪ BẠN.</span><div class="slideshow-controls" hidden><button type="button" data-slide-step="-1" aria-label="Ảnh trước">←</button><span class="slideshow-count">01 / 02</span><button type="button" data-slide-step="1" aria-label="Ảnh tiếp theo">→</button><button type="button" data-slide-toggle>Dừng tự chuyển</button></div></div></div><figure class="be-photo-note be-second"><img src="{% static 'images/photos/salon-interior.jpg' %}" alt="Không gian salon rộng và sáng" width="475" height="475"><figcaption>02 / THẢNH THƠI</figcaption></figure><span class="be-spread-caption">A LITTLE TIME FOR YOURSELF.</span></div>
-  <form class="be-appointment-slip" action="{% url 'booking' %}" method="get"><div class="be-slip-title"><span>{% include 'partials/blue_icon.html' with icon='calendar' %}</span><div><small>PHIẾU HẸN CỦA BẠN</small><strong>Ghé lúc nào thuận tiện?</strong></div></div><label for="quick-branch">Chi nhánh<select id="quick-branch" name="branch"><option value="">Chọn điểm hẹn</option>{% for branch in branches %}<option value="{{ branch.pk }}">{{ branch.name }}</option>{% endfor %}</select></label><button class="btn btn-primary" type="submit">Chọn lịch của bạn {% include 'partials/icon_arrow.html' %}</button></form>
-</section>
-<div class="be-blue-ribbon"><span>CẮT GỌN.</span><i>{% include 'partials/blue_icon.html' with icon='star' %}</i><span>SỐNG CHẤT.</span><i>{% include 'partials/blue_icon.html' with icon='star' %}</i><span>LÀ CHÍNH MÌNH.</span><i>{% include 'partials/blue_icon.html' with icon='star' %}</i></div>
-<section class="be-service-editorial" id="dich-vu"><div class="be-service-intro" data-reveal><p class="be-eyebrow">01 — THE SERVICE EDIT</p><h2>Ít cầu kỳ.<br><em>Nhiều tinh tế.</em></h2><p>Từ một đường cắt gọn đến một khoảng thư giãn. Chọn cách bạn muốn chăm sóc bản thân.</p><img src="{% static 'images/photos/grooming.png' %}" alt="Khoảng thư giãn khi chăm sóc tóc tại salon" width="361" height="215" loading="lazy"><small>TAKE A BREATH. TAKE YOUR TIME.</small></div><div class="be-service-menu">{% for service in services %}<a href="{% url 'booking' %}?service={{ service.pk }}" data-reveal><span class="be-menu-index">{{ forloop.counter|stringformat:'02d' }}</span><div><h3>{{ service.name }}</h3><p>{{ service.description }}</p><span class="be-menu-duration">{{ service.duration }} PHÚT · {{ service.get_kind_display }}</span></div><div class="be-menu-price">{{ service.price|money }}{% include 'partials/icon_arrow.html' %}</div></a>{% empty %}<div class="empty"><h3>Dịch vụ đang được cập nhật.</h3><p>Hẹn bạn quay lại sớm.</p></div>{% endfor %}<div class="be-menu-footnote"><span>Thanh toán tại cửa hàng sau dịch vụ.</span><span>RÕ GIÁ. ĐÚNG HẸN.</span></div></div></section>
-<section class="be-location-editorial" id="chi-nhanh"><div><p class="be-eyebrow">02 — YOUR NEIGHBOURHOOD</p><h2>Một điểm hẹn.<br><em>Ngay gần bạn.</em></h2></div><div class="be-branch-links">{% for branch in branches %}<a href="{% url 'booking' %}?branch={{ branch.pk }}"><small>GENTLEMAN / {{ forloop.counter|stringformat:'02d' }}</small><strong>{{ branch.name }}</strong><p>{{ branch.address }}</p><span>{{ branch.opens_at|time:'H:i' }} – {{ branch.closes_at|time:'H:i' }} {% include 'partials/icon_arrow.html' %}</span></a>{% empty %}<p>Chi nhánh đang được cập nhật.</p>{% endfor %}</div></section>
-<section class="be-stylist-section" id="stylist"><div id="phong-cach"><p class="be-eyebrow">03 — THE PEOPLE BEHIND YOUR STYLE</p><h2>Bạn kể điều mình muốn.<br><em>Chúng tôi lắng nghe.</em></h2><p>Cùng stylist tìm một kiểu tóc dễ chăm, dễ diện và hợp với bạn.</p>{% if review_stats.count %}<p class="be-rating">{{ review_stats.average|floatformat:1 }} / 5 · {{ review_stats.count }} đánh giá sau dịch vụ{% if demo_mode %} · dữ liệu mẫu{% endif %}</p>{% endif %}</div><div class="be-stylist-list">{% for employee in stylists %}<a href="{% url 'booking' %}?branch={{ employee.branch_id }}&employee={{ employee.pk }}"><span class="avatar">{{ employee.initials }}</span><div><strong>{{ employee.name }}</strong><small>{{ employee.specialty }} · {{ employee.branch.name }}</small></div>{% include 'partials/icon_arrow.html' %}</a>{% empty %}<p>Đội ngũ stylist đang được cập nhật.</p>{% endfor %}</div></section>
-<p class="photo-footnote be-photo-source">Ảnh tham khảo từ 30Shine; không phải ảnh chi nhánh hoặc nhân viên Gentleman trong dữ liệu mẫu.</p>
+<div class="club-home">
+  {% include 'public/club/hero.html' %}
+  <section class="club-intro club-section" aria-labelledby="club-intro-title">
+    <div class="club-ornament" aria-hidden="true">◆</div>
+    <p class="club-kicker">MỘT KHOẢNG RIÊNG GIỮA NHỊP PHỐ</p>
+    <h2 id="club-intro-title">Ghé ngồi. Thảnh thơi.<br><em>Để chúng tôi chăm chút.</em></h2>
+    <p>Một mái tóc gọn gàng, một cuộc trò chuyện dễ chịu. Đôi khi, chỉ cần dành chút thời gian cho mình để bắt đầu ngày mới tự tin hơn.</p>
+    <p>Tại GENTLEMAN, hãy kể về kiểu tóc bạn thích và nhịp sống của bạn. Chúng tôi cùng bạn tìm một diện mạo vừa vặn, dễ chăm sóc mỗi ngày.</p>
+    <a class="club-text-link" href="{% url 'booking' %}">Dành một lịch hẹn cho mình {% include 'partials/icon_arrow.html' %}</a>
+    <div class="club-ornament" aria-hidden="true">◆</div>
+  </section>
+  <section class="club-services club-section" id="dich-vu" aria-labelledby="club-services-title">
+    <div class="club-section-heading" data-reveal>
+      <p class="club-kicker">TỪNG CHI TIẾT, MỘT CHÚT CHĂM CHÚT</p>
+      <h2 id="club-services-title">DỊCH VỤ <em>& bảng giá</em></h2>
+      <p>Chọn dịch vụ phù hợp. Xem giá và thời lượng trước khi hẹn.</p>
+    </div>
+    <div class="club-service-layout">
+      <figure class="club-service-photo" data-reveal>
+        <img src="{% static 'images/photos/precision-cut.png' %}" alt="Stylist tỉa tóc bằng kéo cho khách tại salon Việt Nam" width="369" height="468" loading="lazy">
+        <figcaption><span>01 / ĐƯỜNG CẮT</span><strong>Đẹp từ những<br>điều vừa vặn.</strong></figcaption>
+      </figure>
+      <div class="be-service-menu">
+        {% for service in services %}
+        <a href="{% url 'booking' %}?service={{ service.pk }}" data-reveal>
+          <span class="be-menu-index">{{ forloop.counter|stringformat:'02d' }}</span>
+          <div><h3>{{ service.name }}</h3><p>{{ service.description }}</p><span class="be-menu-duration">{{ service.duration }} phút · {{ service.get_kind_display }}</span></div>
+          <div class="be-menu-price">{{ service.price|money }}{% include 'partials/icon_arrow.html' %}</div>
+        </a>
+        {% empty %}<div class="empty"><h3>Dịch vụ đang được cập nhật.</h3><p>Hẹn bạn quay lại sớm.</p></div>{% endfor %}
+        <div class="be-menu-footnote"><span>Giá rõ ràng trước khi đặt lịch.</span><a href="{% url 'feature_search' %}">Tìm dịch vụ {% include 'partials/icon_arrow.html' %}</a></div>
+      </div>
+    </div>
+  </section>
+  <section class="club-quote" aria-label="Tinh thần Gentleman">
+    <div class="club-ornament" aria-hidden="true">◆</div>
+    <p>“Phong cách không cần ồn ào.<br><em>Chỉ cần đúng là bạn.</em>”</p>
+    <span>THE GENTLEMAN SPIRIT</span>
+    <div class="club-ornament" aria-hidden="true">◆</div>
+  </section>
+  {% include 'public/club/gallery.html' %}
+  <section class="club-team club-section" id="stylist" aria-labelledby="club-team-title">
+    <figure class="club-team-photo" data-reveal>
+      <img src="{% static 'images/photos/consultation.jpg' %}" alt="Khách và stylist trao đổi về kiểu tóc tại 30Shine" width="765" height="766" loading="lazy">
+      <figcaption>Ảnh tư vấn tham khảo · 30Shine</figcaption>
+    </figure>
+    <div class="club-team-copy">
+      <p class="club-kicker">NGƯỜI ĐỒNG HÀNH CÙNG PHONG CÁCH</p>
+      <h2 id="club-team-title">BẠN CHIA SẺ.<br><em>Chúng tôi lắng nghe.</em></h2>
+      <p>Chọn stylist và chi nhánh bạn muốn ghé. Lịch trống được hiển thị ngay khi đặt hẹn.</p>
+      {% if review_stats.count %}<p class="be-rating">{{ review_stats.average|floatformat:1 }} / 5 · {{ review_stats.count }} đánh giá sau dịch vụ{% if demo_mode %} · dữ liệu mẫu{% endif %}</p>{% endif %}
+      <div class="be-stylist-list">
+        {% for employee in stylists %}
+        <a href="{% url 'booking' %}?branch={{ employee.branch_id }}&employee={{ employee.pk }}">
+          <span class="avatar">{{ employee.initials }}</span><div><strong>{{ employee.name }}</strong><small>{{ employee.specialty }} · {{ employee.branch.name }}</small></div>{% include 'partials/icon_arrow.html' %}
+        </a>
+        {% empty %}<p>Đội ngũ stylist đang được cập nhật.</p>{% endfor %}
+      </div>
+    </div>
+  </section>
+  <section class="club-locations club-section" id="chi-nhanh" aria-labelledby="club-locations-title">
+    <div class="club-section-heading"><p class="club-kicker">HẸN BẠN Ở MỘT GÓC PHỐ QUEN</p><h2 id="club-locations-title">ĐIỂM HẸN <em>gần bạn</em></h2><p>Chọn chi nhánh để xem stylist và khung giờ còn trống.</p></div>
+    <div class="be-branch-links">
+      {% for branch in branches %}
+      <a href="{% url 'booking' %}?branch={{ branch.pk }}"><small>GENTLEMAN / {{ forloop.counter|stringformat:'02d' }}</small><strong>{{ branch.name }}</strong><p>{{ branch.address }}</p><span>{{ branch.opens_at|time:'H:i' }} – {{ branch.closes_at|time:'H:i' }} {% include 'partials/icon_arrow.html' %}</span></a>
+      {% empty %}<p>Chi nhánh đang được cập nhật.</p>{% endfor %}
+    </div>
+  </section>
+  <p class="club-photo-credit">Ảnh trải nghiệm tham khảo từ 30Shine, không đại diện chi nhánh hay nhân viên GENTLEMAN. Đây là dự án học tập độc lập.</p>
+</div>
 {% endblock %}

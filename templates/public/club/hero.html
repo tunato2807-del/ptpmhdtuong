@@ -1,0 +1,26 @@
+{% load static %}
+<section class="club-hero" aria-labelledby="club-hero-title">
+  <div class="club-hero-copy">
+    <p class="club-kicker">CHĂM CHÚT DIỆN MẠO · THẢNH THƠI TINH THẦN</p>
+    {% include 'partials/club_crest.html' %}
+    <span class="club-hero-wordmark" aria-hidden="true">GENTLEMAN</span>
+    <span class="club-hero-submark" aria-hidden="true">BARBER HOUSE</span>
+    <div class="club-ornament" aria-hidden="true">◆</div>
+    <h1 id="club-hero-title">Chỉn chu.<br><em>Theo cách của bạn.</em></h1>
+    <p>Một đường cắt hợp ý.<br>Một khoảng thời gian cho riêng mình.</p>
+    <div class="club-hero-actions"><a class="btn btn-primary" href="{% url 'booking' %}">Đặt lịch ngay {% include 'partials/icon_arrow.html' %}</a><a class="club-hero-link" href="#dich-vu">Khám phá dịch vụ ↓</a></div>
+  </div>
+  <div class="club-hero-media" data-slideshow role="region" aria-roledescription="trình chiếu" aria-label="Trải nghiệm tại Gentleman">
+    <img class="hero-slide is-active" src="{% static 'images/photos/salon-lounge.jpg' %}" alt="Khách và nhân viên trò chuyện trong không gian salon tại Việt Nam" width="700" height="700" fetchpriority="high">
+    <img class="hero-slide" data-src="{% static 'images/photos/consultation.jpg' %}" alt="Stylist cùng khách trao đổi và tư vấn kiểu tóc" width="765" height="766" decoding="async" aria-hidden="true">
+    <span class="club-photo-caption">MỘT CUỘC HẸN. MỘT DIỆN MẠO MỚI.</span>
+    <div class="slideshow-controls" hidden>
+      <button type="button" data-slide-step="-1" aria-label="Ảnh trước">←</button><span class="slideshow-count">01 / 02</span><button type="button" data-slide-step="1" aria-label="Ảnh tiếp theo">→</button><button type="button" data-slide-toggle>Dừng tự chuyển</button>
+    </div>
+  </div>
+</section>
+<form class="club-appointment" action="{% url 'booking' %}" method="get">
+  <div><span class="club-kicker">GHẾ ĐÃ SẴN SÀNG</span><strong>Hôm nay, dành chút thời gian cho bạn.</strong></div>
+  <label for="quick-branch">Chọn chi nhánh<select id="quick-branch" name="branch"><option value="">Chọn điểm hẹn</option>{% for branch in branches %}<option value="{{ branch.pk }}">{{ branch.name }}</option>{% endfor %}</select></label>
+  <button class="btn btn-primary" type="submit">Chọn lịch của bạn {% include 'partials/icon_arrow.html' %}</button>
+</form>
