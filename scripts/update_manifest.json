@@ -1,5 +1,5 @@
 {
-  "ref": "2d1e3dd2bfb09f9429c6abdaad3e9d9e0eafbce4",
+  "ref": "bd08be6bd809d0b020597c96e933dac725f454c5",
   "files": [
     {
       "path": ".agents/LICENSE.agent-skills",
@@ -375,7 +375,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "389516cf957d62b7a6ebec56576d6833e8fb34987684ecd9e8632b18bd0307a8"
+      "sha256": "df2123fe843cd43eaaed4ee12e5416cabe1c8bc6de938fd0dddd2348a3a2aab4"
     },
     {
       "path": "config/__init__.py",
@@ -470,12 +470,16 @@
       "sha256": "83c86a322071479e560da2c8a3fafb0da66504e629354142c076d3dc83978683"
     },
     {
+      "path": "docs/21-GIAO-DIEN-BARBER-CLUB.md",
+      "sha256": "6b61c7bad4561a43356bfef928a223614379238b3c15df256d4750fab372ac63"
+    },
+    {
       "path": "docs/BAO_CAO_PHAN_TICH_THIET_KE.docx",
       "sha256": "48dc86ce8286c84d83e9f4d9beaa7ca43b2daf0333f9d21bf44eb7e6abea1fc7"
     },
     {
       "path": "docs/NGUON-TAI-NGUYEN.md",
-      "sha256": "aac463188e27d16380190ca30c0328a09e2f226e3f96e73f16e10a305302539e"
+      "sha256": "738464f6bcd5c741ebb2c54b245f6afa0677be2e7f190b81b402a9a57207c798"
     },
     {
       "path": "docs/diagrams/01-use-case.mmd",
@@ -596,6 +600,14 @@
     {
       "path": "docs/quality/spec.md",
       "sha256": "e93ea4895d2c2c84944bc0822e5a08e91f77f99b3331eff03aebc92e0e855c7a"
+    },
+    {
+      "path": "docs/screenshots/barber-club/home-1440.png",
+      "sha256": "507d35c19ff714324535edc2ff5552ae82f0328657ecc3a4eae456da3c1c48f6"
+    },
+    {
+      "path": "docs/screenshots/barber-club/home-320.png",
+      "sha256": "bdc86a1ddf7f18e2d0906cfecee452a8030c722513d3033e1f83f1e76428ced5"
     },
     {
       "path": "docs/screenshots/blue/account-1440.png",
@@ -792,6 +804,10 @@
     {
       "path": "docs/validation/20-FORM-VA-BANG-MO-TAI-CHO.md",
       "sha256": "7824dc83f839cc68a16ba894d1cda2a81bc0cd26bd7cee83bc5be3db61f4b323"
+    },
+    {
+      "path": "docs/validation/21-GIAO-DIEN-BARBER-CLUB.md",
+      "sha256": "de55f13a1c8805f25506639e239bb2d7b81f70f3eef6cc7e1ef044e3e317b4a3"
     },
     {
       "path": "docs/validation/blue-edition-browser.json",
@@ -1159,7 +1175,7 @@
     },
     {
       "path": "scripts/quick_dialog_browser.py",
-      "sha256": "c5fbe5322706aa1db8057079fc211f54e59a459b12fa4159d74fd9e8582b8084"
+      "sha256": "5bdb1528713d1232d644cd264e7cd20cd8eb0159999c0dbe0eb772e5f33830d4"
     },
     {
       "path": "scripts/setup.sh",
@@ -1234,8 +1250,28 @@
       "sha256": "b9e29c25da01175465ae2c9f5c1d415ed04afe8467c7a64397450d1c8687f5c0"
     },
     {
+      "path": "specs/005-asian-blue-barber-club/plan.md",
+      "sha256": "a2ea0a17a2b974a1b07708f684351d714023185c347b740dfd478450f715ad6d"
+    },
+    {
+      "path": "specs/005-asian-blue-barber-club/spec.md",
+      "sha256": "f7d1c3896951f19a677a3b6002d983197aa6faa4d995f15f0301b63f89235919"
+    },
+    {
+      "path": "specs/005-asian-blue-barber-club/tasks.md",
+      "sha256": "f9c687b0256641f64680985ad74a5daebf14128b48bf454baee343bd5f59d5f9"
+    },
+    {
       "path": "static/css/app.css",
       "sha256": "8fa5e4fc37c1163a389ba4b0ed895fe1b71643735897b58dfb86a95d58f86df0"
+    },
+    {
+      "path": "static/css/barber-club-home.css",
+      "sha256": "ace8c013eab6b39d7175294fd06da552d4411de8c84386da3e92ad26217c5bc6"
+    },
+    {
+      "path": "static/css/barber-club.css",
+      "sha256": "8d83439427581a20b7fc4cf24b4dbb0bbb2a4b5e19ea05d9b4724c54a8a49296"
     },
     {
       "path": "static/css/blue-edition.css",
@@ -1366,6 +1402,10 @@
       "sha256": "3bc04306499ba6853ec6916e5e73d3f738ee32d32ba232fe3f1d01f46e465adf"
     },
     {
+      "path": "static/images/club-favicon.svg",
+      "sha256": "230df07e086c75efd5cb6226ef414b0c9a2266768b3b6cf6a31bdb044a5cfdcd"
+    },
+    {
       "path": "static/images/photos/consultation.jpg",
       "sha256": "766199c47d682419fa029c6fab291643b49ce0ada6b362e28005333d71490979"
     },
@@ -1479,7 +1519,7 @@
     },
     {
       "path": "templates/base.html",
-      "sha256": "d0b2f2cc48ca5e6876daefbf5cd5fbf2bb58c32ca1b12da129a85b667adb5337"
+      "sha256": "22ad24ae36e0b0631c955a5a767a067e113cda51544c1dfbdd7b57c7f40fc038"
     },
     {
       "path": "templates/business/activation.html",
@@ -1562,6 +1602,10 @@
       "sha256": "b7025a8b6dd66092019d637dbc25ac21dc7dc5f705880104671746e4b8a7743e"
     },
     {
+      "path": "templates/partials/club_crest.html",
+      "sha256": "1f7efe176ec3c99b0ff2dae753c2c480c8f7b1884a6cf2ee1ba0ebd70ec2db3a"
+    },
+    {
       "path": "templates/partials/form_fields.html",
       "sha256": "f27f2e55e488318d1ba74dcef8bac338a7f3c35e08bca697fe40237aecdf0da3"
     },
@@ -1590,8 +1634,16 @@
       "sha256": "97dbd8a786a3fe50da5208c64ed6a6b4ff867b7da696eab1ea1aa16b478d3701"
     },
     {
+      "path": "templates/public/club/gallery.html",
+      "sha256": "189485f9cf156b689faeb6a09f84da6c390297bb37ddb813700df45c0306bcc4"
+    },
+    {
+      "path": "templates/public/club/hero.html",
+      "sha256": "32cde8ce4ea8f8f3d723cc2df02ffd63e809f5bfd0f374d122e7a71217a5cbcb"
+    },
+    {
       "path": "templates/public/home.html",
-      "sha256": "fa4c9a27d024aa835429ed28e998c0884b7725c5e7a61471581cdb059407d649"
+      "sha256": "89630e7a9268d85fae5e4a8fbd909a3e0c6f2207f4cc8dd662b2bd9173f30963"
     },
     {
       "path": "templates/public/invoice.html",
